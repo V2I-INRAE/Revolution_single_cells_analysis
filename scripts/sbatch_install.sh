@@ -13,7 +13,4 @@ module purge
 module load compilers/gcc/12.2.0
 module load statistics/R/4.6.1
 
-# renv package itself lives here until it is copied into the project library
-export R_LIBS_USER=/work/project/revo-pig-sc/r-env/R/libs
-
 Rscript scripts/install_packages.R
