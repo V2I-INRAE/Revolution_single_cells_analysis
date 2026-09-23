@@ -54,9 +54,14 @@ raw_data/
 # AI
 .agents/
 .pi/
+AGENTS.md
 
 # logs
 logs/
+
+# analysis outputs (Seurat RDS and derived files)
+output/
+results/
 
 # env
 renv/
