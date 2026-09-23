@@ -1,24 +1,10 @@
 #!/bin/bash
-# Download all REVO sample folders from Genotoul to the local Mac, in priority order.
-# Prevent your Mac from sleeping before running: caffeinate -i bash download_reads.sh
-# Re-run anytime — rsync resumes interrupted folders (--partial) and skips done files.
+# Download all REVO sample folders from Genotoul to your local computer.
 
 SRC="genobioinfo:/work/project/revo-pig-sc/Revolution_single_cells_analysis/raw_data"
 DEST="/Users/fbraza/Documents/PROJECTS/REVOLUTION/RESULTS/SINGLE_CELLS/reads"
 mkdir -p "$DEST"
 
-# Prefer the Homebrew rsync 3.x — the macOS system rsync (openrsync) is limited
-# (no --info=progress2, and flaky with other rsync-3 options).
-if [ -x /opt/homebrew/bin/rsync ]; then        # Apple Silicon
-  RSYNC=/opt/homebrew/bin/rsync
-elif [ -x /usr/local/bin/rsync ]; then         # Intel Mac
-  RSYNC=/usr/local/bin/rsync
-else
-  RSYNC=rsync
-fi
-echo "Using rsync: $RSYNC ($("$RSYNC" --version | head -1))"
-
-# Priority order — edit freely (controls first, then treatments)
 FOLDERS=(
   REVO26-C REVO27-C REVO29-C REVO30-C REVO31-C
   REVO26-N4 REVO26-N10 REVO27-N4 REVO27-N10
@@ -28,9 +14,10 @@ FOLDERS=(
 )
 
 # --- Option A (default): sequential, one folder after another ---
+# --- USE THIS IF YOU HAVE NOT SETUP THE SSH KEY WITH THE CLUSTER ---
 for f in "${FOLDERS[@]}"; do
   echo "=== $(date '+%H:%M:%S') downloading $f ==="
-  "$RSYNC" -avh \
+  rsync -avh \
     --partial \
     --partial-dir=.rsync-partial \
     --progress \
@@ -38,10 +25,7 @@ for f in "${FOLDERS[@]}"; do
 done
 
 # --- Option B (tested 2026-09-22): 6 parallel streams, aggregate ~1.5 MB/s ---
-# xargs -P N = number of SIMULTANEOUS transfers (not the number of folders).
-# Per-stream speed stayed at 250 kB/s with -P 6 (limit is per-connection).
-# Uncomment the block below and comment out the loop above to use it.
-#
+# --- Use this if you ssh key with cluster because rsync opens several ssh connections ---
 # printf '%s\n' "${FOLDERS[@]}" | xargs -P 6 -I{} \
 #   "$RSYNC" -avh \
 #     --partial \
