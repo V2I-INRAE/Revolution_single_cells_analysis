@@ -59,9 +59,10 @@ AGENTS.md
 # logs
 logs/
 
-# analysis outputs (Seurat RDS and derived files)
+# analysis outputs (Seurat RDS and derived files); results/qc is versioned
 output/
-results/
+results/*
+!results/qc
 
 # env
 renv/
