@@ -8,7 +8,7 @@ suppressPackageStartupMessages({
 
 read_filtered_matrix <- function(folder_raw, sample_id) {
   # --- get path to the zipped filtered matrix
-  mex_zip <-file.path(
+  mex_zip <- file.path(
     folder_raw,
     sample_id,
     paste0(sample_id, "_RSEC_MolsPerCell_MEX.zip")
@@ -27,7 +27,7 @@ read_filtered_matrix <- function(folder_raw, sample_id) {
 }
 
 build_seurat_obj <- function(unzipped_mex_dir, sample_id) {
-  counts <- Seurat::Read10X(data.dir = unzipped_mex_dir) # genes x cells, RSEC counts
+  counts <- Seurat::Read10X(data.dir = unzipped_mex_dir)
   colnames(counts) <- paste(sample_id, colnames(counts), sep = "_")
 
   # --- Pig mitochondrial gene names do not have the MT-prefix
@@ -80,7 +80,7 @@ collect_qc_summary <- function(seurat_obj, sample_id, stage) {
   )
 }
 
-# One violin figure per metric: 23 panels (5 columns), before and after
+# --- One violin figure per metric: 23 panels (5 columns), before and after
 # filtering side by side in each panel. Saved to results/qc/.
 plot_qc_violin <- function(qc_summary, metric) {
   stage_colours <- c(before = "grey70", after = "#2C7FB8")
@@ -103,6 +103,8 @@ plot_qc_violin <- function(qc_summary, metric) {
   )
   print(p)
   dev.off()
+
+  invisible(NULL)
 }
 
 # One scatter figure: 23 panels (5 columns), "before" points drawn under
@@ -124,6 +126,8 @@ plot_qc_scatter <- function(qc_summary, x, y, name) {
   )
   print(p)
   dev.off()
+
+  invisible(NULL)
 }
 
 # Cross-sample QC figures, built from the per-cell summaries collected in
@@ -206,7 +210,7 @@ filter_outliers <- function(seurat_obj) {
     nCount_RNA = mad_bounds(seurat_obj$nCount_RNA),
     nFeature_RNA = mad_bounds(seurat_obj$nFeature_RNA, lower_floor = 200),
     percent.mt = mad_bounds(seurat_obj$percent.mt, upper_cap = 20),
-    log10GenesPerUMI = mad_bounds(seurat_obj$log10GenesPerUMI) # only lower bound used
+    log10GenesPerUMI = mad_bounds(seurat_obj$log10GenesPerUMI)
   )
   cat("\nMAD thresholds:\n")
   print(round(t(sapply(thresholds, identity)), 2))
@@ -235,7 +239,7 @@ filter_outliers <- function(seurat_obj) {
   ))
 
   n_cells_imported <- ncol(seurat_obj)
-  clean_seurat_obj <- subset(seurat_obj, subset = qc_outlier == FALSE)
+  clean_seurat_obj <- subset(seurat_obj, subset = seurat_obj$qc_outlier == FALSE)
   cat(sprintf(
     "\nCells after filtering: %d (%.1f%% of imported)\n",
     ncol(clean_seurat_obj), 100 * ncol(clean_seurat_obj) / n_cells_imported
