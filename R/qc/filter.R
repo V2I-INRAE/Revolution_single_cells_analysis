@@ -64,6 +64,82 @@ inspect_seurat_qc <- function(seurat_obj) {
   return(seurat_obj)
 }
 
+# --- Per-cell QC values, appended across samples in main.R and used by
+# plot_qc_comparison. `stage` is "before" or "after" outlier filtering.
+collect_qc_summary <- function(seurat_obj, sample_id, stage) {
+  data.frame(
+    sample_id = sample_id,
+    cell = colnames(seurat_obj),
+    stage = stage,
+    nFeature_RNA = seurat_obj$nFeature_RNA,
+    nCount_RNA = seurat_obj$nCount_RNA,
+    percent.mt = seurat_obj$percent.mt,
+    percent.ribo = seurat_obj$percent.ribo,
+    log10GenesPerUMI = seurat_obj$log10GenesPerUMI,
+    row.names = NULL
+  )
+}
+
+# One violin figure per metric: 23 panels (5 columns), before and after
+# filtering side by side in each panel. Saved to results/qc/.
+plot_qc_violin <- function(qc_summary, metric) {
+  stage_colours <- c(before = "grey70", after = "#2C7FB8")
+  p <- ggplot(qc_summary, aes(stage, .data[[metric]], fill = stage)) +
+    geom_violin(linewidth = 0.3) +
+    facet_wrap(~sample_id, ncol = 5) +
+    scale_fill_manual(values = stage_colours) +
+    theme_classic(base_size = 12) +
+    theme(
+      strip.text = element_text(size = 8),
+      axis.text.x = element_blank(),
+      axis.ticks.x = element_blank()
+    ) +
+    labs(
+      title = paste("QC violin -", metric),
+      x = NULL, y = metric, fill = "stage"
+    )
+  png(file.path("results", "qc", paste0("qc_violin_", metric, ".png")),
+    width = 4000, height = 3400, res = 300
+  )
+  print(p)
+  dev.off()
+}
+
+# One scatter figure: 23 panels (5 columns), "before" points drawn under
+# the "after" ones so the cells removed by filtering stay visible.
+plot_qc_scatter <- function(qc_summary, x, y, name) {
+  stage_colours <- c(before = "grey70", after = "#2C7FB8")
+  p <- ggplot(qc_summary, aes(.data[[x]], .data[[y]], colour = stage)) +
+    geom_point(size = 0.15, alpha = 0.3) +
+    facet_wrap(~sample_id, ncol = 5) +
+    scale_colour_manual(values = stage_colours) +
+    theme_classic(base_size = 12) +
+    theme(strip.text = element_text(size = 8)) +
+    labs(
+      title = paste("QC scatter -", y, "vs", x),
+      x = x, y = y, colour = "stage"
+    )
+  png(file.path("results", "qc", paste0("qc_scatter_", name, ".png")),
+    width = 4000, height = 3400, res = 300
+  )
+  print(p)
+  dev.off()
+}
+
+# Cross-sample QC figures, built from the per-cell summaries collected in
+# main.R (before and after filtering). Called once, outside the loop.
+plot_qc_comparison <- function(qc_summary) {
+  qc_summary$stage <- factor(qc_summary$stage, levels = c("before", "after"))
+  metrics <- c(
+    "nFeature_RNA", "nCount_RNA", "percent.mt",
+    "percent.ribo", "log10GenesPerUMI"
+  )
+  for (metric in metrics) plot_qc_violin(qc_summary, metric)
+  plot_qc_scatter(qc_summary, "nCount_RNA", "nFeature_RNA", "features")
+  plot_qc_scatter(qc_summary, "nFeature_RNA", "percent.mt", "mt")
+  invisible(NULL)
+}
+
 save_qc_plot <- function(plot, name, width, height, before_after, sample_id) {
   plot_dir <- file.path("results", "qc", before_after, sample_id)
 
@@ -98,7 +174,7 @@ plot_qc <- function(seurat_obj, before_after, sample_id) {
     data.frame(metric = m, values = seurat_obj[[m]][, 1])
   }))
 
-  qc_histograms <- ggplot(md_long, aes(values)) +
+  qc_histograms <- ggplot(md_long, aes(md_long$values)) +
     geom_histogram(
       bins = 60, fill = "grey25", colour = "white",
       linewidth = 0.1

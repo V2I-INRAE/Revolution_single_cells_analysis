@@ -278,6 +278,9 @@ detect_doublets <- function(
     n_doublets, 100 * mean(obj$doublet_class == "Doublet")
   ))
 
+  # UMAP on the temporary embedding, used only for the comparison plots
+  obj <- RunUMAP(obj, dims = pcs, seed.use = seed, verbose = FALSE)
+
   # One row per cell, for the cross-sample comparison plots
   umap <- Embeddings(obj, "umap")
   summary <- data.frame(

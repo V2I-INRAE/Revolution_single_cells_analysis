@@ -17,7 +17,8 @@ samples <- c(
   "REVO31-N8", "REVO31-P10", "REV31-P4"
 )
 
-# Variable placeholder for the plot summary
+# Variable placeholder for the plot summaries
+qc_summary <- NULL
 doublet_summary <- NULL
 
 for (sample in samples) {
@@ -26,14 +27,14 @@ for (sample in samples) {
   obj <- build_seurat_obj(mex_dir, sample)
   obj <- inspect_seurat_qc(obj)
 
-  # plot before filtering
-  plot_qc(obj, "before_filtering", sample)
+  # collect the qc data before filtering
+  qc_summary <- rbind(qc_summary, collect_qc_summary(obj, sample, "before"))
 
   # filter_outliers
   obj <- filter_outliers(obj)
 
-  # plot after filtering
-  plot_qc(obj, "after_filtering", sample)
+  # collect the qc data after filtering
+  qc_summary <- rbind(qc_summary, collect_qc_summary(obj, sample, "after"))
 
   # compute doublets
   obj_with_doublets <- detect_doublets(obj, sample)
@@ -45,6 +46,7 @@ for (sample in samples) {
   obj <- subset(obj_with_doublets$obj, doublet_class == "Singlet")
 }
 
-# outside the loop: comparison plots to keep track of the doublet
-# identification across samples
+# outside the loop: comparison plots to keep track of the qc filtering
+# and of the doublet identification across samples
+plot_qc_comparison(qc_summary)
 plot_doublet_comparison(doublet_summary)
