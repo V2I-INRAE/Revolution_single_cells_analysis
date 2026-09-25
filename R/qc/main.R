@@ -6,6 +6,7 @@ suppressPackageStartupMessages({
   library(patchwork)
 })
 
+source("R/qc/io.R")
 source("R/qc/filter.R")
 source("R/qc/doublets.R")
 source("R/qc/plots.R")
@@ -27,53 +28,29 @@ for (sample in samples) {
   mex_dir <- read_filtered_matrix("data/raw_data", sample)
   obj <- build_seurat_obj(mex_dir, sample)
 
-  # -- Building the metadata
-  obj$sample <- sample
-  sample_parts <- strsplit(sample, "-", fixed = TRUE)[[1]]
-  condition <- sample_parts[[2]]
-  obj$pig <- sample_parts[[1]]
-  obj$pressure <- switch(
-    substr(condition, 1, 1),
-    C = "None",
-    P = "positive",
-    N = "negative",
-    stop("Unknown pressure code in sample ID: ", sample)
-  )
-  obj$time_point <- if (condition == "C") {
-    "T0H"
-  } else {
-    paste0("T", substring(condition, 2), "H")
-  }
-
   obj <- inspect_seurat_qc(obj)
 
-  # collect the qc data before filtering
+  # collect the qc data before filtering for later plotting
   qc_summary <- rbind(qc_summary, collect_qc_summary(obj, sample, "before"))
 
-  # filter_outliers
   obj <- filter_outliers(obj)
 
-  # collect the qc data after filtering
+  # collect the qc data after filtering for later plotting
   qc_summary <- rbind(qc_summary, collect_qc_summary(obj, sample, "after"))
 
-  # compute doublets
   obj_with_doublets <- detect_doublets(obj, sample)
 
-  # append the doublet data to the data frame
+  # --- Here we append the doublet data to the data frame for later plotting
   doublet_summary <- rbind(doublet_summary, obj_with_doublets$summary)
 
-  # filter the doublets out of the object in the loop (singlets only)
+  # --- We filter the doublets out of the object in the loop (singlets only)
   obj <- subset(obj_with_doublets$obj, doublet_class == "Singlet")
 
-  # collect the cleaned object for the final concatenation
+  # --- We collect the cleaned object for the final concatenation
   clean_objs[[sample]] <- obj
 }
 
 plot_qc_comparison(qc_summary)
 plot_doublet_comparison(doublet_summary)
 
-
-concat_dir <- file.path("data", "clean_concatenated_data")
-dir.create(concat_dir, showWarnings = FALSE, recursive = TRUE)
-concatenated <- merge(clean_objs[[1]], y = clean_objs[-1])
-saveRDS(concatenated, file.path(concat_dir, "clean_concatenated.rds"))
+write_concatenated_obj(clean_objs)
