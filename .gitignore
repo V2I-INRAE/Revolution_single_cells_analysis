@@ -48,8 +48,8 @@ po/*~
 # RStudio Connect folder
 connect/
 
-# Raw sequencing data (too large for git)
-raw_data/
+# Sequencing data (too large for git)
+data/
 
 # AI
 .agents/

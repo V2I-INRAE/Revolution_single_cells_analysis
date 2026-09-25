@@ -92,9 +92,14 @@ filter_outliers <- function(seurat_obj, ribo_min = 2.5) {
     nCount_RNA = mad_bounds(seurat_obj$nCount_RNA),
     nFeature_RNA = mad_bounds(seurat_obj$nFeature_RNA, lower_floor = 200),
     percent.mt = mad_bounds(seurat_obj$percent.mt, upper_cap = 20),
-    # ribosomal content: documented fixed threshold (not MAD). Usual
-    # practice keeps cells above 5%; we currently try ribo_min = 2.5.
-    percent.ribo = c(lower = ribo_min, upper = Inf),
+    # --- Ribosomal content: filtering DISABLED for now.
+    # Even the lenient 2.5% floor was too stringent: on REV30-P4 it alone
+    # flagged 1470/13422 cells (11%), dropping retention 88.4% -> 80.4%.
+    # Lungs and ex vivo perfused tissue contain genuinely low
+    # transcriptionally active cells, so percent.ribo stays descriptive
+    # only. To re-enable, uncomment the thresholds entry and the
+    # flag_low_ribo line below. Usual practice is a 5% floor.
+    # percent.ribo = c(lower = ribo_min, upper = Inf),
     log10GenesPerUMI = mad_bounds(seurat_obj$log10GenesPerUMI) # only lower bound used
   )
   cat("\nMAD thresholds:\n")
@@ -105,7 +110,7 @@ filter_outliers <- function(seurat_obj, ribo_min = 2.5) {
   seurat_obj$flag_low_genes <- seurat_obj$nFeature_RNA < thresholds$nFeature_RNA["lower"]
   seurat_obj$flag_high_genes <- seurat_obj$nFeature_RNA > thresholds$nFeature_RNA["upper"]
   seurat_obj$flag_high_mt <- seurat_obj$percent.mt > thresholds$percent.mt["upper"]
-  seurat_obj$flag_low_ribo <- seurat_obj$percent.ribo < thresholds$percent.ribo["lower"]
+  # seurat_obj$flag_low_ribo <- seurat_obj$percent.ribo < thresholds$percent.ribo["lower"]
   seurat_obj$flag_low_complexity <- seurat_obj$log10GenesPerUMI < thresholds$log10GenesPerUMI["lower"]
 
   flag_cols <- grep("^flag_", colnames(seurat_obj[[]]), value = TRUE)

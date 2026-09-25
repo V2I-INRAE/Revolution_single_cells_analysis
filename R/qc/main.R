@@ -21,15 +21,17 @@ samples <- c(
 # Variable placeholder for the plot summaries
 qc_summary <- NULL
 doublet_summary <- NULL
+clean_objs <- list()
 
 for (sample in samples) {
-  # Use the function implemented before
-  mex_dir <- read_filtered_matrix("raw_data", sample)
+  mex_dir <- read_filtered_matrix("data/raw_data", sample)
   obj <- build_seurat_obj(mex_dir, sample)
 
+  # -- Building the metadata
+  obj$sample <- sample
   sample_parts <- strsplit(sample, "-", fixed = TRUE)[[1]]
   condition <- sample_parts[[2]]
-  obj$sample <- sample_parts[[1]]
+  obj$pig <- sample_parts[[1]]
   obj$pressure <- switch(
     substr(condition, 1, 1),
     C = "None",
@@ -62,9 +64,16 @@ for (sample in samples) {
 
   # filter the doublets out of the object in the loop (singlets only)
   obj <- subset(obj_with_doublets$obj, doublet_class == "Singlet")
+
+  # collect the cleaned object for the final concatenation
+  clean_objs[[sample]] <- obj
 }
 
-# outside the loop: comparison plots to keep track of the qc filtering
-# and of the doublet identification across samples
 plot_qc_comparison(qc_summary)
 plot_doublet_comparison(doublet_summary)
+
+
+concat_dir <- file.path("data", "clean_concatenated_data")
+dir.create(concat_dir, showWarnings = FALSE, recursive = TRUE)
+concatenated <- merge(clean_objs[[1]], y = clean_objs[-1])
+saveRDS(concatenated, file.path(concat_dir, "clean_concatenated.rds"))

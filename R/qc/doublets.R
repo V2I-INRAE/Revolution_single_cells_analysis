@@ -219,18 +219,21 @@ detect_doublets <- function(
     row.names = NULL
   )
 
-  # --- We remove the temporary embedding and just keep counts
-  # and doublet metadata only for filtering
+  # --- We remove the temporary embedding and keep counts, doublet
+  # metadata and all sample/QC metadata (sample, pig, pressure,
+  # time_point, flags, QC metrics) so objects can be concatenated later.
+  # Only the temporary DoubletFinder columns and the preliminary
+  # clustering are dropped.
   counts <- GetAssayData(obj, assay = "RNA", layer = "counts")
   clean_obj <- CreateSeuratObject(
     counts = counts,
     project = paste0(sample_id, "_doublets")
   )
-  doublet_meta <- data.frame(
-    doublet_score = obj$doublet_score,
-    doublet_class = obj$doublet_class,
-    row.names = colnames(obj)
+  drop_cols <- grep(
+    "^(pANN_|DF\\.classifications_|RNA_snn_res|seurat_clusters$)", colnames(obj[[]]),
+    value = TRUE
   )
+  doublet_meta <- obj@meta.data[, setdiff(colnames(obj[[]]), drop_cols), drop = FALSE]
   clean_obj <- AddMetaData(clean_obj, doublet_meta)
 
   return(list(obj = clean_obj, summary = summary))
