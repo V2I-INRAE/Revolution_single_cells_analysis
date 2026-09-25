@@ -227,7 +227,7 @@ detect_doublets <- function(
   counts <- GetAssayData(obj, assay = "RNA", layer = "counts")
   clean_obj <- CreateSeuratObject(
     counts = counts,
-    project = paste0(sample_id, "_doublets")
+    project = sample_id
   )
   drop_cols <- grep(
     "^(pANN_|DF\\.classifications_|RNA_snn_res|seurat_clusters$)", colnames(obj[[]]),

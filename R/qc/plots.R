@@ -34,9 +34,9 @@ plot_doublet_comparison <- function(doublet_summary) {
   p_umap <- ggplot(
     doublet_summary,
     aes(
-      doublet_summary$UMAP1,
-      doublet_summary$UMAP2,
-      colour = doublet_summary$doublet_class
+      UMAP1,
+      UMAP2,
+      colour = doublet_class
     )
   ) +
     geom_point(size = 0.1, alpha = 0.4) +
@@ -58,9 +58,9 @@ plot_doublet_comparison <- function(doublet_summary) {
   p_violin <- ggplot(
     doublet_summary,
     aes(
-      doublet_summary$sample_id,
-      doublet_summary$nFeature_RNA,
-      fill = doublet_summary$doublet_class
+      sample_id,
+      nFeature_RNA,
+      fill = doublet_class
     )
   ) +
     geom_violin(linewidth = 0.3) +
@@ -188,7 +188,7 @@ plot_qc <- function(seurat_obj, before_after, sample_id) {
     data.frame(metric = m, values = seurat_obj[[m]][, 1])
   }))
 
-  qc_histograms <- ggplot(md_long, aes(md_long$values)) +
+  qc_histograms <- ggplot(md_long, aes(values)) +
     geom_histogram(
       bins = 60, fill = "grey25", colour = "white",
       linewidth = 0.1
