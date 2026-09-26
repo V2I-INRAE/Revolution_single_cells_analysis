@@ -1,4 +1,4 @@
-# QC metrics and cell filtering for the REVO samples
+# QC metrics and outlier labeling for the REVO samples
 
 suppressPackageStartupMessages({
   library(Seurat)
@@ -57,36 +57,35 @@ mad_bounds <- function(x, lower_floor = -Inf, upper_cap = Inf, n_mad = 5) {
   )
 }
 
-filter_outliers <- function(seurat_obj) {
-  selected_cells <- WhichCells(
-    seurat_obj,
-    expression = (
-      (nFeature_RNA > 200 & nFeature_RNA <= 5500) & (log10GenesPerUMI > 0.8)
-    )
+label_qc_outliers <- function(seurat_obj) {
+  seurat_obj$flag_low_features <- seurat_obj$nFeature_RNA <= 200
+  seurat_obj$flag_high_features <- seurat_obj$nFeature_RNA > 5500
+  seurat_obj$flag_low_complexity <- seurat_obj$log10GenesPerUMI <= 0.8
+
+  initial_outlier <- (
+    seurat_obj$flag_low_features |
+      seurat_obj$flag_high_features |
+      seurat_obj$flag_low_complexity
   )
-
-  selected_features <- rownames(seurat_obj)[
-    Matrix::rowSums(seurat_obj[["RNA"]]$counts > 0) > 3
-  ]
-
-  seurat_obj <- subset(
-    seurat_obj,
-    cells = selected_cells,
-    features = selected_features
-  )
-
-  mt_percent <- seurat_obj[["percent.mt"]]
+  mt_percent <- seurat_obj$percent.mt[!initial_outlier]
   mt_max <- mad_bounds(mt_percent, upper_cap = 20)["upper"]
-  clean_seurat_obj <- subset(seurat_obj, seurat_obj$percent.mt <= mt_max)
+  seurat_obj$flag_high_mt <- seurat_obj$percent.mt > mt_max
 
-  cat(sprintf(
-    "QC: %d/%d cells, %d/%d genes retained (mt ceiling %.2f%%)\n",
-    ncol(clean_seurat_obj),
-    ncol(seurat_obj),
-    nrow(clean_seurat_obj),
-    nrow(seurat_obj),
-    mt_max
-  ))
+  flag_cols <- c(
+    "flag_low_features", "flag_high_features",
+    "flag_low_complexity", "flag_high_mt"
+  )
+  seurat_obj$qc_outlier <- rowSums(seurat_obj[[]][, flag_cols]) > 0
 
-  return(clean_seurat_obj)
+  cat("\nFlagged cells:\n")
+  for (col in c(flag_cols, "qc_outlier")) {
+    flag <- seurat_obj[[col]][[1]]
+    cat(sprintf(
+      "  %-22s %6d (%5.1f%%)\n",
+      col, sum(flag), 100 * mean(flag)
+    ))
+  }
+  cat(sprintf("  mitochondrial ceiling %.2f%%\n", mt_max))
+
+  return(seurat_obj)
 }
