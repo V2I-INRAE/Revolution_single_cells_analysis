@@ -1,7 +1,7 @@
 # Doublet detection with DoubletFinder for BD Rhapsody samples.
 #
-# Method (run per sample, on the Seurat object already filtered of QC outliers):
-#   - preliminary embedding (temporary, stripped afterwards):
+# Method (run per sample, on the QC-labeled Seurat object):
+#   - preliminary embedding (temporary and not returned):
 #     LogNormalize -> HVG (2000) -> ScaleData -> PCA (1:20) -> neighbors ->
 #     clusters (Louvain, resolution 0.6)
 #   - expected doublet rate: BD Rhapsody microwell multiplet table
@@ -19,9 +19,9 @@
 #     (1 - prop)
 #   - DoubletFinder 2.0.6: paramSweep -> summarizeSweep -> find.pK
 #     (max BCmetric) -> doubletFinder(pN = 0.25)
-#   - output: doublet_score (pANN) and doublet_class metadata on a
-#     counts-only object, plus a per-cell summary table for the
-#     cross-sample comparison plots (plot_doublet_comparison).
+#   - output: doublet_score (pANN) and doublet_class metadata joined by
+#     cell barcode to the original object, plus a per-cell summary table
+#     for the cross-sample comparison plots (plot_doublet_comparison).
 
 suppressPackageStartupMessages({
   library(Seurat)
@@ -142,9 +142,9 @@ find_optimal_pk <- function(seurat_obj, pcs = 1:20, seed = 1234) {
 
 #' Detect doublets in one sample and flag them (no removal)
 #'
-#' Input : Seurat object filtered of QC outliers.
+#' Input : Original Seurat object with QC outliers labeled.
 #' Output: list(
-#' obj = counts-only Seurat object with two metadata columns:
+#' obj = original Seurat object with two additional metadata columns:
 #' doublet_score (pANN, 0-1) and doublet_class ("Singlet"/"Doublet");
 #' summary = one row per cell (sample, UMAP coordinates, score, class, QC metrics)
 #' for plot_doublet_comparison).
@@ -219,22 +219,19 @@ detect_doublets <- function(
     row.names = NULL
   )
 
-  # --- We remove the temporary embedding and keep counts, doublet
-  # metadata and all sample/QC metadata (sample, pig, pressure,
-  # time_point, QC metrics) so objects can be concatenated later.
-  # Only the temporary DoubletFinder columns and the preliminary
-  # clustering are dropped.
-  counts <- GetAssayData(obj, assay = "RNA", layer = "counts")
-  clean_obj <- CreateSeuratObject(
-    counts = counts,
-    project = sample_id
+  # --- Join the classifications to the original object by cell barcode.
+  # The temporary normalization, embedding and clustering remain only in obj.
+  doublet_meta <- data.frame(
+    doublet_score = obj$doublet_score,
+    doublet_class = obj$doublet_class,
+    row.names = colnames(obj)
   )
-  drop_cols <- grep(
-    "^(pANN_|DF\\.classifications_|RNA_snn_res|seurat_clusters$)", colnames(obj[[]]),
-    value = TRUE
+  stopifnot(
+    setequal(rownames(doublet_meta), colnames(seurat_obj)),
+    anyDuplicated(rownames(doublet_meta)) == 0
   )
-  doublet_meta <- obj@meta.data[, setdiff(colnames(obj[[]]), drop_cols), drop = FALSE]
-  clean_obj <- AddMetaData(clean_obj, doublet_meta)
+  doublet_meta <- doublet_meta[colnames(seurat_obj), , drop = FALSE]
+  seurat_obj <- AddMetaData(seurat_obj, doublet_meta)
 
-  return(list(obj = clean_obj, summary = summary))
+  return(list(obj = seurat_obj, summary = summary))
 }
