@@ -65,8 +65,14 @@ mad_bounds <- function(x, lower_floor = -Inf, upper_cap = Inf, n_mad = 5) {
 }
 
 label_qc_outliers <- function(seurat_obj) {
+  feature_max <- mad_bounds(
+    seurat_obj$nFeature_RNA,
+    upper_cap = 5000,
+    n_mad = 4
+  )["upper"]
+
   seurat_obj$flag_low_features <- seurat_obj$nFeature_RNA <= 200
-  seurat_obj$flag_high_features <- seurat_obj$nFeature_RNA > 5500
+  seurat_obj$flag_high_features <- seurat_obj$nFeature_RNA > feature_max
   seurat_obj$flag_low_complexity <- seurat_obj$log10GenesPerUMI <= 0.8
 
   initial_outlier <- (
@@ -92,6 +98,7 @@ label_qc_outliers <- function(seurat_obj) {
       col, sum(flag), 100 * mean(flag)
     ))
   }
+  cat(sprintf("  nFeature_RNA ceiling %.2f\n", feature_max))
   cat(sprintf("  mitochondrial ceiling %.2f%%\n", mt_max))
 
   return(seurat_obj)

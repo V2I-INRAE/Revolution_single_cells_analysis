@@ -17,7 +17,7 @@ save_doublet_plot <- function(plot, name, plot_dir, width, height) {
 
 # --- Plot to check doublet cells on umaps and as violin plots in each sample
 plot_doublet_comparison <- function(doublet_summary) {
-  plot_dir <- file.path("results", "qc", "doublets")
+  plot_dir <- file.path("results", "qc")
   doublet_summary$sample_id <- factor(
     doublet_summary$sample_id,
     levels = unique(doublet_summary$sample_id)
