@@ -5,9 +5,17 @@ suppressPackageStartupMessages({
 })
 
 inspect_seurat_qc <- function(seurat_obj) {
-  seurat_obj[["percent.mt"]] <- PercentageFeatureSet(seurat_obj, pattern = "^MT-")
-  seurat_obj[["percent.ribo"]] <- PercentageFeatureSet(seurat_obj, pattern = "^RP[LS]")
-  seurat_obj$log10GenesPerUMI <- log10(seurat_obj$nFeature_RNA) / log10(seurat_obj$nCount_RNA)
+  seurat_obj[["percent.mt"]] <- PercentageFeatureSet(
+    seurat_obj,
+    pattern = "^MT-"
+  )
+  seurat_obj[["percent.ribo"]] <- PercentageFeatureSet(
+    seurat_obj,
+    pattern = "^RP[LS]"
+  )
+  seurat_obj$log10GenesPerUMI <- (
+    log10(seurat_obj$nFeature_RNA) / log10(seurat_obj$nCount_RNA)
+  )
 
   qs <- function(x) round(quantile(x, c(0, 0.25, 0.5, 0.75, 1)), 2)
   summary_tbl <- rbind(
@@ -50,27 +58,34 @@ mad_bounds <- function(x, lower_floor = -Inf, upper_cap = Inf, n_mad = 5) {
 }
 
 filter_outliers <- function(seurat_obj) {
-  cells <- WhichCells(
+  selected_cells <- WhichCells(
     seurat_obj,
-    expression = nFeature_RNA > 200 & nFeature_RNA <= 5500
+    expression = (
+      (nFeature_RNA > 200 & nFeature_RNA <= 5500) & (log10GenesPerUMI > 0.8)
+    )
   )
-  counts <- GetAssayData(
-    seurat_obj,
-    assay = "RNA", layer = "counts"
-  )[, cells, drop = FALSE]
-  genes <- rownames(counts)[Matrix::rowSums(counts > 0) > 3]
-  clean_seurat_obj <- subset(seurat_obj, cells = cells, features = genes)
 
-  # Filter on mitochondrial fraction of retained genes; keep original QC
-  # metadata for comparable before/after plots.
-  counts <- GetAssayData(clean_seurat_obj, assay = "RNA", layer = "counts")
-  mt_counts <- Matrix::colSums(counts[grep("^MT-", rownames(counts)), , drop = FALSE])
-  mt_percent <- 100 * mt_counts / Matrix::colSums(counts)
+  selected_features <- rownames(seurat_obj)[
+    Matrix::rowSums(seurat_obj[["RNA"]]$counts > 0) > 3
+  ]
+
+  seurat_obj <- subset(
+    seurat_obj,
+    cells = selected_cells,
+    features = selected_features
+  )
+
+  mt_percent <- seurat_obj[["percent.mt"]]
   mt_max <- mad_bounds(mt_percent, upper_cap = 20)["upper"]
-  clean_seurat_obj <- subset(clean_seurat_obj, cells = colnames(counts)[mt_percent <= mt_max])
+  clean_seurat_obj <- subset(seurat_obj, seurat_obj$percent.mt <= mt_max)
+
   cat(sprintf(
     "QC: %d/%d cells, %d/%d genes retained (mt ceiling %.2f%%)\n",
-    ncol(clean_seurat_obj), ncol(seurat_obj), nrow(clean_seurat_obj), nrow(seurat_obj), mt_max
+    ncol(clean_seurat_obj),
+    ncol(seurat_obj),
+    nrow(clean_seurat_obj),
+    nrow(seurat_obj),
+    mt_max
   ))
 
   return(clean_seurat_obj)
