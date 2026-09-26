@@ -1,4 +1,4 @@
-# QC metrics and MAD-based outlier filtering for the REVO samples
+# QC metrics and cell filtering for the REVO samples
 
 suppressPackageStartupMessages({
   library(Seurat)
@@ -49,53 +49,28 @@ mad_bounds <- function(x, lower_floor = -Inf, upper_cap = Inf, n_mad = 5) {
   )
 }
 
-filter_outliers <- function(seurat_obj, ribo_min = 2.5) {
-  thresholds <- list(
-    nCount_RNA = mad_bounds(seurat_obj$nCount_RNA),
-    nFeature_RNA = mad_bounds(seurat_obj$nFeature_RNA, lower_floor = 200),
-    percent.mt = mad_bounds(seurat_obj$percent.mt, upper_cap = 20),
-    # --- Ribosomal content: filtering DISABLED for now.
-    # Even the lenient 2.5% floor was too stringent: on REV30-P4 it alone
-    # flagged 1470/13422 cells (11%), dropping retention 88.4% -> 80.4%.
-    # Lungs and ex vivo perfused tissue contain genuinely low
-    # transcriptionally active cells, so percent.ribo stays descriptive
-    # only. To re-enable, uncomment the thresholds entry and the
-    # flag_low_ribo line below. Usual practice is a 5% floor.
-    # percent.ribo = c(lower = ribo_min, upper = Inf),
-    log10GenesPerUMI = mad_bounds(seurat_obj$log10GenesPerUMI) # only lower bound used
+filter_outliers <- function(seurat_obj) {
+  cells <- WhichCells(
+    seurat_obj,
+    expression = nFeature_RNA > 200 & nFeature_RNA <= 5500
   )
-  cat("\nMAD thresholds:\n")
-  print(round(t(sapply(thresholds, identity)), 2))
+  counts <- GetAssayData(
+    seurat_obj,
+    assay = "RNA", layer = "counts"
+  )[, cells, drop = FALSE]
+  genes <- rownames(counts)[Matrix::rowSums(counts > 0) > 3]
+  clean_seurat_obj <- subset(seurat_obj, cells = cells, features = genes)
 
-  seurat_obj$flag_low_count <- seurat_obj$nCount_RNA < thresholds$nCount_RNA["lower"]
-  seurat_obj$flag_high_count <- seurat_obj$nCount_RNA > thresholds$nCount_RNA["upper"]
-  seurat_obj$flag_low_genes <- seurat_obj$nFeature_RNA < thresholds$nFeature_RNA["lower"]
-  seurat_obj$flag_high_genes <- seurat_obj$nFeature_RNA > thresholds$nFeature_RNA["upper"]
-  seurat_obj$flag_high_mt <- seurat_obj$percent.mt > thresholds$percent.mt["upper"]
-  # seurat_obj$flag_low_ribo <- seurat_obj$percent.ribo < thresholds$percent.ribo["lower"]
-  seurat_obj$flag_low_complexity <- seurat_obj$log10GenesPerUMI < thresholds$log10GenesPerUMI["lower"]
-
-  flag_cols <- grep("^flag_", colnames(seurat_obj[[]]), value = TRUE)
-  seurat_obj$qc_outlier <- rowSums(seurat_obj[[]][, flag_cols]) > 0
-
-  cat("\nFlagged cells:\n")
-  for (col in c(flag_cols, "qc_outlier")) {
-    v <- seurat_obj[[col]][[1]]
-    cat(sprintf(
-      "  %-20s %6d (%5.1f%%)\n",
-      col, sum(v), 100 * mean(v)
-    ))
-  }
+  # Filter on mitochondrial fraction of retained genes; keep original QC
+  # metadata for comparable before/after plots.
+  counts <- GetAssayData(clean_seurat_obj, assay = "RNA", layer = "counts")
+  mt_counts <- Matrix::colSums(counts[grep("^MT-", rownames(counts)), , drop = FALSE])
+  mt_percent <- 100 * mt_counts / Matrix::colSums(counts)
+  mt_max <- mad_bounds(mt_percent, upper_cap = 20)["upper"]
+  clean_seurat_obj <- subset(clean_seurat_obj, cells = colnames(counts)[mt_percent <= mt_max])
   cat(sprintf(
-    "Cells kept if outliers removed: %d (%.1f%%)\n",
-    sum(!seurat_obj$qc_outlier), 100 * mean(!seurat_obj$qc_outlier)
-  ))
-
-  n_cells_imported <- ncol(seurat_obj)
-  clean_seurat_obj <- subset(seurat_obj, subset = seurat_obj$qc_outlier == FALSE)
-  cat(sprintf(
-    "\nCells after filtering: %d (%.1f%% of imported)\n",
-    ncol(clean_seurat_obj), 100 * ncol(clean_seurat_obj) / n_cells_imported
+    "QC: %d/%d cells, %d/%d genes retained (mt ceiling %.2f%%)\n",
+    ncol(clean_seurat_obj), ncol(seurat_obj), nrow(clean_seurat_obj), nrow(seurat_obj), mt_max
   ))
 
   return(clean_seurat_obj)

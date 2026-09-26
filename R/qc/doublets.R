@@ -221,7 +221,7 @@ detect_doublets <- function(
 
   # --- We remove the temporary embedding and keep counts, doublet
   # metadata and all sample/QC metadata (sample, pig, pressure,
-  # time_point, flags, QC metrics) so objects can be concatenated later.
+  # time_point, QC metrics) so objects can be concatenated later.
   # Only the temporary DoubletFinder columns and the preliminary
   # clustering are dropped.
   counts <- GetAssayData(obj, assay = "RNA", layer = "counts")
