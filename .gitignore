@@ -55,6 +55,7 @@ data/
 .agents/
 .pi/
 AGENTS.md
+.amp/
 
 # logs
 logs/
@@ -69,5 +70,4 @@ renv/
 
 # Rplots artifacts
 Rplots.pdf
-
 
