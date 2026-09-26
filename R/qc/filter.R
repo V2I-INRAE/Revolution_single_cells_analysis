@@ -1,4 +1,4 @@
-# QC metrics and outlier labeling for the REVO samples
+# QC metrics, outlier labeling and cell filtering for the REVO samples
 
 suppressPackageStartupMessages({
   library(Seurat)
@@ -34,16 +34,23 @@ inspect_seurat_qc <- function(seurat_obj) {
 
 # --- Per-cell QC values, appended across samples in main.R and used by
 # plot_qc_comparison. `stage` is "before" or "after" outlier filtering.
-collect_qc_summary <- function(seurat_obj, sample_id, stage) {
+collect_qc_summary <- function(
+  seurat_obj,
+  sample_id,
+  stage,
+  cells = colnames(seurat_obj)
+) {
+  metadata <- seurat_obj[[]][cells, , drop = FALSE]
+
   data.frame(
     sample_id = sample_id,
-    cell = colnames(seurat_obj),
+    cell = rownames(metadata),
     stage = stage,
-    nFeature_RNA = seurat_obj$nFeature_RNA,
-    nCount_RNA = seurat_obj$nCount_RNA,
-    percent.mt = seurat_obj$percent.mt,
-    percent.ribo = seurat_obj$percent.ribo,
-    log10GenesPerUMI = seurat_obj$log10GenesPerUMI,
+    nFeature_RNA = metadata$nFeature_RNA,
+    nCount_RNA = metadata$nCount_RNA,
+    percent.mt = metadata$percent.mt,
+    percent.ribo = metadata$percent.ribo,
+    log10GenesPerUMI = metadata$log10GenesPerUMI,
     row.names = NULL
   )
 }
@@ -88,4 +95,57 @@ label_qc_outliers <- function(seurat_obj) {
   cat(sprintf("  mitochondrial ceiling %.2f%%\n", mt_max))
 
   return(seurat_obj)
+}
+
+filter_labeled_cells <- function(seurat_obj) {
+  stopifnot(all(
+    c("qc_outlier", "doublet_class") %in% colnames(seurat_obj[[]])
+  ))
+
+  is_doublet <- seurat_obj$doublet_class == "Doublet"
+  seurat_obj$keep_cell <- !seurat_obj$qc_outlier & !is_doublet
+  seurat_obj$exclusion_reason <- "retained"
+  seurat_obj$exclusion_reason[
+    seurat_obj$qc_outlier & !is_doublet
+  ] <- "qc_outlier"
+  seurat_obj$exclusion_reason[
+    !seurat_obj$qc_outlier & is_doublet
+  ] <- "doublet"
+  seurat_obj$exclusion_reason[seurat_obj$qc_outlier & is_doublet] <- (
+    "qc_outlier+doublet"
+  )
+
+  selected_cells <- colnames(seurat_obj)[seurat_obj$keep_cell]
+  counts <- GetAssayData(
+    seurat_obj,
+    assay = "RNA", layer = "counts"
+  )[, selected_cells, drop = FALSE]
+  selected_features <- rownames(counts)[Matrix::rowSums(counts > 0) > 3]
+
+  clean_seurat_obj <- subset(
+    seurat_obj,
+    cells = selected_cells,
+    features = selected_features
+  )
+
+  cat("\nCombined filtering:\n")
+  for (reason in c("qc_outlier", "doublet", "qc_outlier+doublet")) {
+    n_removed <- sum(seurat_obj$exclusion_reason == reason)
+    cat(sprintf(
+      "  %-22s %6d (%5.1f%%)\n",
+      reason,
+      n_removed,
+      100 * n_removed / ncol(seurat_obj)
+    ))
+  }
+  cat(sprintf(
+    "  cells retained         %6d (%5.1f%%)\n",
+    ncol(clean_seurat_obj), 100 * ncol(clean_seurat_obj) / ncol(seurat_obj)
+  ))
+  cat(sprintf(
+    "  genes retained         %6d (%5.1f%%)\n",
+    nrow(clean_seurat_obj), 100 * nrow(clean_seurat_obj) / nrow(seurat_obj)
+  ))
+
+  return(clean_seurat_obj)
 }
