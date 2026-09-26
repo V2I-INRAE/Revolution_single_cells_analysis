@@ -48,19 +48,26 @@ po/*~
 # RStudio Connect folder
 connect/
 
-# Raw sequencing data (too large for git)
-raw_data/
+# Sequencing data (too large for git)
+data/
 
 # AI
 .agents/
 .pi/
+AGENTS.md
+.amp/
 
 # logs
 logs/
 
+# analysis outputs (Seurat RDS and derived files); results/qc is versioned
+output/
+results/*
+!results/qc
+
 # env
 renv/
 
-
-
+# Rplots artifacts
+Rplots.pdf
 
