@@ -6,7 +6,6 @@ run_lognormalize <- function(seurat_obj,
                              normalization_method = "LogNormalize",
                              scale_factor = 10000,
                              verbose = TRUE) {
-
   message("Running LogNormalize normalization")
   message("  Method: ", normalization_method)
   message("  Scale factor: ", scale_factor)
@@ -25,10 +24,13 @@ run_lognormalize <- function(seurat_obj,
 }
 
 find_hvgs <- function(seurat_obj,
-                     selection_method = "vst",
-                     n_features = 2000,
-                     verbose = TRUE) {
 
+                      selection_method = "vst",
+                        n_features = 2000,
+  verbose = TRUE
+) {
+  
+                      verbose = TRUE) {
   message("Finding highly variable genes")
   message("  Method: ", selection_method)
   message("  Number of features: ", n_features)
