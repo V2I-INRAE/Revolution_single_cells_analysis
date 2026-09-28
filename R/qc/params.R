@@ -7,7 +7,8 @@ qc_params <- list(
       "ND1", "ND2", "ND3", "ND4", "ND5", "ND6"
     ),
     mitochondrial_pattern = "^MT-",
-    ribosomal_pattern = "^RP[LS]"
+    ribosomal_pattern = "^RP[LS]",
+    min_ribo_percent = 2.5
   ),
   filtering = list(
     min_features = 200,

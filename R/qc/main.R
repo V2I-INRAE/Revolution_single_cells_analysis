@@ -8,7 +8,8 @@ suppressPackageStartupMessages({
 source("R/qc/params.R")
 source("R/qc/io.R")
 source("R/qc/filter.R")
-source("R/qc/doublets.R")
+source("R/qc/reduce.R")
+source("R/qc/doublet_finder.R")
 source("R/qc/plots.R")
 
 samples <- c(
@@ -29,28 +30,50 @@ for (sample in samples) {
   obj <- build_seurat_obj(mex_dir, sample)
   obj <- inspect_seurat_qc(obj)
 
-  # --- Collect QC data before and after outlier labeling for later plotting
-  qc_summary <- rbind(qc_summary, collect_qc_summary(obj, sample, "before"))
   obj <- label_qc_outliers(obj)
   cells_passing_qc <- colnames(obj)[!obj$qc_outlier]
-  qc_summary <- rbind(
-    qc_summary,
-    collect_qc_summary(obj, sample, "after", cells_passing_qc)
+
+  # --- Prepare the temporary reduction and diagnostic UMAP coordinates
+  reduced_obj <- preprocess_for_doublets(obj)
+  coordinates <- compute_diagnostic_umap(reduced_obj)
+
+  # --- Label doublets and copy the calls to the original object
+  doublet_obj <- detect_doublets(reduced_obj, sample)
+  obj <- add_doublet_calls(obj, doublet_obj)
+  doublet_summary <- rbind(
+    doublet_summary,
+    collect_doublet_summary(obj, sample, coordinates)
   )
 
-  # --- Label doublets on the original object and collect data for plotting
-  obj_with_doublets <- detect_doublets(obj, sample)
-  doublet_summary <- rbind(doublet_summary, obj_with_doublets$summary)
+  # --- Collect QC data with the diagnostic UMAP coordinates
+  qc_summary <- rbind(
+    qc_summary,
+    collect_qc_summary(
+      obj,
+      sample,
+      "before",
+      coordinates = coordinates
+    ),
+    collect_qc_summary(
+      obj,
+      sample,
+      "after",
+      coordinates = coordinates,
+      cells = cells_passing_qc
+    )
+  )
 
   # --- We filter QC outliers and doublets in one operation
-  obj <- filter_labeled_cells(obj_with_doublets$obj)
+  obj <- filter_labeled_cells(obj)
 
   # --- We collect the cleaned object for the final concatenation
   clean_objs[[sample]] <- obj
 }
 
-# --- Generate the QC and doublet comparison plots across all samples
+# --- Generate the QC, doublet and ribosomal comparison plots across all samples
 plot_qc_comparison(qc_summary)
 plot_doublet_comparison(doublet_summary)
+plot_doublet_nfeature_violin(doublet_summary)
+plot_ribo_comparison(qc_summary)
 
 write_concatenated_obj(clean_objs)
