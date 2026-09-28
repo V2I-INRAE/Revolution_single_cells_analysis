@@ -52,7 +52,9 @@ plot_variable_features <- function(
   valid <- is.finite(plot_data$mean) & plot_data$mean > 0 &
     is.finite(plot_data$variance)
   if (any(!valid)) {
-    message("Rows omitted from plotting (non-finite statistics or non-positive mean):")
+    message(
+      "Rows omitted from plotting (non-finite statistics or non-positive mean):"
+    )
     print(table(plot_data$sample[!valid]))
   }
 
