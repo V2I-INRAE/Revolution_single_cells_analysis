@@ -2,10 +2,12 @@ suppressPackageStartupMessages({
   library(Seurat)
 })
 
-run_sctransform <- function(seurat_obj,
-                            vars_to_regress = NULL,
-                            n_genes = 3000,
-                            verbose = TRUE) {
+run_sctransform <- function(
+  seurat_obj,
+  vars_to_regress = NULL,
+  n_genes = 3000,
+  verbose = TRUE
+) {
 
   message("Running SCTransform normalization")
   message("  Variables to regress: ", paste(vars_to_regress, collapse = ", "))
@@ -14,11 +16,14 @@ run_sctransform <- function(seurat_obj,
   # Check if vars_to_regress exist in metadata
   missing_vars <- setdiff(vars_to_regress, colnames(seurat_obj@meta.data))
   if (length(missing_vars) > 0) {
-    warning("Variables not found in metadata: ", paste(missing_vars, collapse = ", "))
-    vars_to_regress <- intersect(vars_to_regress, colnames(seurat_obj@meta.data))
+    warning(
+      "Variables not found in metadata: ", paste(missing_vars, collapse = ", ")
+    )
+    vars_to_regress <- intersect(
+      vars_to_regress, colnames(seurat_obj@meta.data)
+    )
   }
 
-  # Run SCTransform
   seurat_obj <- SCTransform(
     seurat_obj,
     vars.to.regress = vars_to_regress,

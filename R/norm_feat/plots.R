@@ -4,23 +4,26 @@ suppressPackageStartupMessages({
   library(ggprism)
 })
 
-plot_variable_features <- function(seurat_obj,
-                                   output_dir = NULL,
-                                   width = 9,
-                                   height = 15,
-                                   filename = "variable_features.png") {
+plot_variable_features <- function(
+  seurat_obj,
+  output_dir = NULL,
+  width = 9,
+  height = 15,
+  filename = "variable_features.png"
+) {
 
   message("Plotting variable features")
 
   assay <- seurat_obj[[DefaultAssay(seurat_obj)]]
   consensus <- VariableFeatures(assay)
   metadata <- seurat_obj[[]]
-  stopifnot(length(consensus) > 0, "sample" %in% colnames(metadata))
 
   if (inherits(assay, "SCTAssay")) {
     tables <- lapply(levels(assay), function(model) {
       stats <- SCTResults(assay, slot = "feature.attributes", model = model)
-      cells <- rownames(SCTResults(assay, slot = "cell.attributes", model = model))
+      cells <- rownames(
+        SCTResults(assay, slot = "cell.attributes", model = model)
+      )
       sample <- unique(as.character(metadata[cells, "sample"]))
       stopifnot(length(sample) == 1, !anyNA(sample))
       data.frame(
@@ -52,14 +55,17 @@ plot_variable_features <- function(seurat_obj,
     message("Rows omitted from plotting (non-finite statistics or non-positive mean):")
     print(table(plot_data$sample[!valid]))
   }
+
   plot_data <- plot_data[valid, ]
   sample_order <- unique(as.character(metadata$sample))
-  stopifnot(setequal(unique(plot_data$sample), sample_order))
   plot_data$sample <- factor(plot_data$sample, levels = sample_order)
   # Draw consensus features last so they remain visible over other genes.
   plot_data <- plot_data[order(plot_data$selected), ]
 
-  p <- ggplot(plot_data, aes(mean, variance, colour = selected)) +
+  p <- ggplot(
+    plot_data,
+    aes(mean, plot_data$variance, colour = plot_data$selected)
+  ) +
     geom_point(size = 0.35, alpha = 0.6) +
     facet_wrap(~sample, ncol = 5) +
     scale_x_log10() +
@@ -77,7 +83,9 @@ plot_variable_features <- function(seurat_obj,
     ) +
     labs(
       title = paste(DefaultAssay(seurat_obj), "variable features by sample"),
-      subtitle = paste(length(consensus), "consensus HVGs highlighted across samples"),
+      subtitle = paste(
+        length(consensus), "consensus HVGs highlighted across samples"
+      ),
       x = axis_labels[1],
       y = paste(axis_labels[2], "(square-root scale)"), colour = NULL
     )
@@ -92,20 +100,24 @@ plot_variable_features <- function(seurat_obj,
   invisible(p)
 }
 
-# Binary membership, not expression: differing HVGs alone do not imply batch effects.
-plot_hvg_overlap <- function(seurat_obj,
-                             output_dir = NULL,
-                             width = 12,
-                             height = 8,
-                             filename = "hvg_overlap.png") {
+# -- To check HVG profile similitude
+plot_hvg_overlap <- function(
+  seurat_obj,
+  output_dir = NULL,
+  width = 12,
+  height = 8,
+  filename = "hvg_overlap.png"
+) {
+
   assay <- seurat_obj[[DefaultAssay(seurat_obj)]]
   consensus <- VariableFeatures(assay)
   metadata <- seurat_obj[[]]
 
   if (inherits(assay, "SCTAssay")) {
-    # simplify = FALSE bypasses the cached consensus and returns per-model HVGs.
+    # -- simplify = FALSE to return per-model HVGs and not the global hvgs.
     hvgs <- VariableFeatures(
-      assay, layer = levels(assay), nfeatures = length(consensus),
+      assay,
+      layer = levels(assay), nfeatures = length(consensus),
       simplify = FALSE
     )
     cells <- lapply(names(hvgs), function(model) {
@@ -113,9 +125,9 @@ plot_hvg_overlap <- function(seurat_obj,
     })
     method <- "SCT"
   } else {
-    # VST feature statistics belong to count layers, not normalized data layers.
     hvgs <- VariableFeatures(
-      assay, method = "vst", layer = "^counts($|\\.)", simplify = FALSE
+      assay,
+      method = "vst", layer = "^counts($|\\.)", simplify = FALSE
     )
     cells <- lapply(names(hvgs), function(layer) Cells(assay, layer = layer))
     method <- "LogNormalize"
@@ -129,19 +141,26 @@ plot_hvg_overlap <- function(seurat_obj,
     sample
   }, character(1))
   sample_order <- unique(as.character(metadata$sample))
+
+  # -- Just to be sure we have one per sample and the consensus which are the
+  # 3000 HVGs selected from the different samples
   if (anyDuplicated(names(hvgs)) || !setequal(names(hvgs), sample_order) ||
-      any(lengths(hvgs) == 0L) || length(consensus) == 0L) {
+    any(lengths(hvgs) == 0L) || length(consensus) == 0L) {
     stop("Expected one nonempty HVG set per sample and a consensus selection.")
   }
+
   hvgs <- hvgs[sample_order]
   hvgs$Consensus <- consensus
   genes <- unique(unlist(hvgs, use.names = FALSE))
-  membership <- t(vapply(hvgs, function(x) as.integer(genes %in% x),
-                         integer(length(genes))))
+  membership <- t(vapply(
+    hvgs, function(x) as.integer(genes %in% x),
+    integer(length(genes))
+  ))
   colnames(membership) <- genes
 
   pheatmap::pheatmap(
-    membership, cluster_rows = FALSE, cluster_cols = TRUE,
+    membership,
+    cluster_rows = FALSE, cluster_cols = TRUE,
     color = c("grey90", "grey20"), breaks = c(-0.5, 0.5, 1.5),
     legend_breaks = c(0, 1), legend_labels = c("Not selected", "Selected"),
     show_colnames = FALSE, border_color = NA,

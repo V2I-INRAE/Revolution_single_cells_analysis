@@ -26,6 +26,7 @@ obj_sct <- run_sctransform(
   vars_to_regress = NULL,
   n_genes = n_features
 )
+saveRDS(obj_sct, file.path(data_dir, "sct.rds"))
 
 # --- LogNormalize: restart from the same input, not from the SCT result.
 set.seed(seed)
@@ -36,11 +37,9 @@ obj_log <- scale_data(
   features = VariableFeatures(obj_log),
   vars_to_regress = NULL
 )
-
-saveRDS(obj_sct, file.path(data_dir, "sct.rds"))
 saveRDS(obj_log, file.path(data_dir, "lognorm.rds"))
 
-# --- Compare selected genes; overlap alone does not establish a better method.
+# --- Just to check overlap and distinct between the two methods
 sct_features <- VariableFeatures(obj_sct, assay = "SCT")
 log_features <- VariableFeatures(obj_log, assay = "RNA")
 all_features <- union(sct_features, log_features)
@@ -66,24 +65,26 @@ comparison <- data.frame(
   n_union = length(all_features),
   jaccard = length(shared_features) / length(all_features)
 )
-print(comparison)
+
 write.csv(
   comparison,
   file.path(output_dir, "variable_feature_comparison.csv"),
   row.names = FALSE
 )
 
-# Distinct filenames prevent the two routes' figures from overwriting.
 plot_variable_features(
-  obj_sct, output_dir = output_dir, filename = "variable_features_sct.png"
+  obj_sct,
+  output_dir = output_dir, filename = "variable_features_sct.png"
 )
 plot_variable_features(
-  obj_log, output_dir = output_dir, filename = "variable_features_lognorm.png"
+  obj_log,
+  output_dir = output_dir, filename = "variable_features_lognorm.png"
 )
 plot_hvg_overlap(
-  obj_sct, output_dir = output_dir, filename = "hvg_overlap_sct.png"
+  obj_sct,
+  output_dir = output_dir, filename = "hvg_overlap_sct.png"
 )
 plot_hvg_overlap(
-  obj_log, output_dir = output_dir, filename = "hvg_overlap_lognorm.png"
+  obj_log,
+  output_dir = output_dir, filename = "hvg_overlap_lognorm.png"
 )
-writeLines(capture.output(sessionInfo()), file.path(output_dir, "session_info.txt"))

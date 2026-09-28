@@ -2,10 +2,12 @@ suppressPackageStartupMessages({
   library(Seurat)
 })
 
-run_lognormalize <- function(seurat_obj,
-                             normalization_method = "LogNormalize",
-                             scale_factor = 10000,
-                             verbose = TRUE) {
+run_lognormalize <- function(
+  seurat_obj,
+  normalization_method = "LogNormalize",
+  scale_factor = 10000,
+  verbose = TRUE
+) {
   message("Running LogNormalize normalization")
   message("  Method: ", normalization_method)
   message("  Scale factor: ", scale_factor)
@@ -23,14 +25,12 @@ run_lognormalize <- function(seurat_obj,
   return(seurat_obj)
 }
 
-find_hvgs <- function(seurat_obj,
-
-                      selection_method = "vst",
-                        n_features = 2000,
+find_hvgs <- function(
+  seurat_obj,
+  selection_method = "vst",
+  n_features = 2000,
   verbose = TRUE
 ) {
-  
-                      verbose = TRUE) {
   message("Finding highly variable genes")
   message("  Method: ", selection_method)
   message("  Number of features: ", n_features)
@@ -52,11 +52,12 @@ find_hvgs <- function(seurat_obj,
   return(seurat_obj)
 }
 
-scale_data <- function(seurat_obj,
-                      features = NULL,
-                      vars_to_regress = NULL,
-                      verbose = TRUE) {
-
+scale_data <- function(
+  seurat_obj,
+  features = NULL,
+  vars_to_regress = NULL,
+  verbose = TRUE
+) {
   message("Scaling data")
 
   # Use all genes if not specified
@@ -72,8 +73,13 @@ scale_data <- function(seurat_obj,
     message("  Variables to regress: ", paste(vars_to_regress, collapse = ", "))
     missing_vars <- setdiff(vars_to_regress, colnames(seurat_obj@meta.data))
     if (length(missing_vars) > 0) {
-      warning("Variables not found in metadata: ", paste(missing_vars, collapse = ", "))
-      vars_to_regress <- intersect(vars_to_regress, colnames(seurat_obj@meta.data))
+      warning(
+        "Variables not found in metadata: ",
+        paste(missing_vars, collapse = ", ")
+      )
+      vars_to_regress <- intersect(
+        vars_to_regress, colnames(seurat_obj@meta.data)
+      )
     }
   }
 
