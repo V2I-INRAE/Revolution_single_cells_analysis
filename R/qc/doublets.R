@@ -1,27 +1,9 @@
 # Doublet detection with DoubletFinder for BD Rhapsody samples.
-#
-# Method (run per sample, on the QC-labeled Seurat object):
-#   - preliminary embedding (temporary and not returned):
-#     LogNormalize -> HVG (2000) -> ScaleData -> PCA (1:20) -> neighbors ->
-#     clusters (Louvain, resolution 0.6)
-#   - expected doublet rate: BD Rhapsody microwell multiplet table
-#     (BD Rhapsody Instrument User Guide, Doc ID 214062, Poisson-based,
-#     keyed on captured cells): 10,000 -> 2.4%, 12,000 -> 2.8%,
-#     15,000 -> 3.5%, 17,000 -> 4.0%. The rate is interpolated at the
-#     sample's cell count (bd_multiplet_rate). Note: this information is
-#     NOT present in the pipeline reports (no "Multiplet" fields).
 #   - protocol precedent: Li et al., Current Protocols 2024
 #     (doi 10.1002/cpz1.963) - interpolate BD's table at the dataset cell
 #     count, feed the rate to DoubletFinder, and LABEL doublets instead of
 #     removing them. We label here; removal happens in main.R, in the loop.
-#   - homotypic adjustment from the preliminary clusters (no external
-#     annotations): prop = sum((cluster size / N)^2); nExp is adjusted by
-#     (1 - prop)
-#   - DoubletFinder 2.0.6: paramSweep -> summarizeSweep -> find.pK
-#     (max BCmetric) -> doubletFinder(pN = 0.25)
-#   - output: doublet_score (pANN) and doublet_class metadata joined by
-#     cell barcode to the original object, plus a per-cell summary table
-#     for the cross-sample comparison plots (plot_doublet_comparison).
+
 
 suppressPackageStartupMessages({
   library(Seurat)
@@ -29,67 +11,22 @@ suppressPackageStartupMessages({
   library(ggplot2)
 })
 
-# BD Rhapsody estimated multiplet rate table (Instrument User Guide,
-# Doc ID 214062): captured cells -> multiplet rate (%)
-bd_multiplet_table <- data.frame(
-  cells = c(
-    100,
-    500,
-    1000,
-    2000,
-    3000,
-    4000,
-    5000,
-    6000,
-    7000,
-    8000,
-    9000,
-    10000,
-    11000,
-    12000,
-    13000,
-    14000,
-    15000,
-    16000,
-    17000
-  ),
-  rate = c(
-    0.0,
-    0.1,
-    0.2,
-    0.5,
-    0.7,
-    1.0,
-    1.2,
-    1.4,
-    1.7,
-    1.9,
-    2.1,
-    2.4,
-    2.6,
-    2.8,
-    3.1,
-    3.3,
-    3.5,
-    3.8,
-    4.0
-  )
-)
-
 # --- Linear interpolation of the BD values.
 # As such we can use sample specific doublet rate
-bd_multiplet_rate <- function(n_cells) {
+bd_multiplet_rate <- function(
+  n_cells,
+  table = qc_params$doublets$bd_multiplet_table
+) {
   rate <- approx(
-    bd_multiplet_table$cells,
-    bd_multiplet_table$rate,
+    table$cells,
+    table$rate,
     xout = n_cells,
     rule = 2
   )$y
-  if (n_cells > max(bd_multiplet_table$cells) ||
-    n_cells < min(bd_multiplet_table$cells)) {
+  if (n_cells > max(table$cells) || n_cells < min(table$cells)) {
     warning(
       "Cell count outside BD table range; rate clamped to ",
-      min(bd_multiplet_table$rate), "-", max(bd_multiplet_table$rate), "%"
+      min(table$rate), "-", max(table$rate), "%"
     )
   }
   return(rate / 100)
@@ -98,24 +35,29 @@ bd_multiplet_rate <- function(n_cells) {
 # --- Prepare the data for doublets identification
 preprocess_for_doublets <- function(
   seurat_obj,
-  nvar = 2000,
-  pcs = 1:20,
-  resolution = 0.6,
-  seed = 1234
+  params = qc_params$doublets
 ) {
-  set.seed(seed)
+  set.seed(params$seed)
   seurat_obj <- NormalizeData(seurat_obj, verbose = FALSE)
   seurat_obj <- FindVariableFeatures(seurat_obj,
-    nfeatures = nvar,
+    nfeatures = params$n_variable_features,
     verbose = FALSE
   )
   seurat_obj <- ScaleData(seurat_obj, verbose = FALSE)
-  seurat_obj <- RunPCA(seurat_obj, npcs = max(pcs), verbose = FALSE)
-  seurat_obj <- FindNeighbors(seurat_obj, dims = pcs, verbose = FALSE)
+  seurat_obj <- RunPCA(
+    seurat_obj,
+    npcs = max(params$pcs),
+    verbose = FALSE
+  )
+  seurat_obj <- FindNeighbors(
+    seurat_obj,
+    dims = params$pcs,
+    verbose = FALSE
+  )
   seurat_obj <- FindClusters(seurat_obj,
-    resolution = resolution,
-    algorithm = 1,
-    random.seed = seed,
+    resolution = params$cluster_resolution,
+    algorithm = params$cluster_algorithm,
+    random.seed = params$seed,
     verbose = FALSE
   )
   return(seurat_obj)
@@ -124,18 +66,18 @@ preprocess_for_doublets <- function(
 
 # --- Leverages cell annotations to model the proportion of homotypic doublets.
 # --- Here we use the annonated cluster provided by the
-estimate_homotypic <- function(seurat_obj, resolution = 0.6) {
-  cluster_col <- paste0("RNA_snn_res.", resolution)
+estimate_homotypic <- function(seurat_obj, params = qc_params$doublets) {
+  cluster_col <- paste0("RNA_snn_res.", params$cluster_resolution)
   stopifnot(cluster_col %in% colnames(seurat_obj[[]]))
   clusters <- seurat_obj[[cluster_col]][[1]]
   modelHomotypic(clusters)
 }
 
 # --- pK selection from the DoubletFinder parameter sweep
-find_optimal_pk <- function(seurat_obj, pcs = 1:20, seed = 1234) {
-  set.seed(seed) # paramSweep samples cells to build artificial doublets
-  sweep_res <- paramSweep(seurat_obj, PCs = pcs, sct = FALSE)
-  sweep_stats <- summarizeSweep(sweep_res, GT = FALSE)
+find_optimal_pk <- function(seurat_obj, params = qc_params$doublets) {
+  set.seed(params$seed) # paramSweep samples cells to build artificial doublets
+  sweep_res <- paramSweep(seurat_obj, PCs = params$pcs, sct = params$sct)
+  sweep_stats <- summarizeSweep(sweep_res, GT = params$ground_truth)
   bcmvn <- find.pK(sweep_stats)
   return(bcmvn)
 }
@@ -152,34 +94,36 @@ find_optimal_pk <- function(seurat_obj, pcs = 1:20, seed = 1234) {
 detect_doublets <- function(
   seurat_obj,
   sample_id,
-  pcs = 1:20,
-  pN = 0.25,
-  resolution = 0.6, doublet_rate = NULL,
-  seed = 1234
+  params = qc_params$doublets,
+  doublet_rate = params$expected_rate
 ) {
 
   n_cells <- ncol(seurat_obj)
-  rate <- doublet_rate %||% bd_multiplet_rate(n_cells)
+  rate <- doublet_rate %||% bd_multiplet_rate(
+    n_cells,
+    params$bd_multiplet_table
+  )
   n_exp <- round(rate * n_cells)
 
-  obj <- preprocess_for_doublets(seurat_obj,
-    pcs = pcs,
-    resolution = resolution, seed = seed
-  )
+  obj <- preprocess_for_doublets(seurat_obj, params)
 
-  homotypic <- estimate_homotypic(obj, resolution)
+  homotypic <- estimate_homotypic(obj, params)
   n_exp_adj <- round(n_exp * (1 - homotypic))
-  n_exp_adj <- max(n_exp_adj, 1)
+  n_exp_adj <- max(n_exp_adj, params$min_expected_doublets)
 
-  bcmvn <- find_optimal_pk(obj, pcs = pcs, seed = seed)
+  bcmvn <- find_optimal_pk(obj, params)
   # pK comes back as a factor: as.character() first or as.numeric() gives
   # the level index, not the pK value
   pK <- as.numeric(as.character(bcmvn$pK[which.max(bcmvn$BCmetric)]))
   stopifnot(!is.na(pK), pK > 0, pK <= 1)
 
-  set.seed(seed)
+  set.seed(params$seed)
   obj <- doubletFinder(obj,
-    PCs = pcs, pN = pN, pK = pK, nExp = n_exp_adj,
+    PCs = params$pcs,
+    pN = params$pN,
+    pK = pK,
+    nExp = n_exp_adj,
+    sct = params$sct
   )
 
   pann_col <- grep("^pANN_", colnames(obj[[]]), value = TRUE)
@@ -202,7 +146,12 @@ detect_doublets <- function(
   ))
 
   # UMAP on the temporary embedding, used only for the comparison plots
-  obj <- RunUMAP(obj, dims = pcs, seed.use = seed, verbose = FALSE)
+  obj <- RunUMAP(
+    obj,
+    dims = params$pcs,
+    seed.use = params$seed,
+    verbose = FALSE
+  )
 
   # One row per cell, for the cross-sample comparison plots
   umap <- Embeddings(obj, "umap")

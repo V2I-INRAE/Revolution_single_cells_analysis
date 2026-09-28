@@ -3,9 +3,9 @@
 suppressPackageStartupMessages({
   library(Seurat)
   library(ggplot2)
-  library(patchwork)
 })
 
+source("R/qc/params.R")
 source("R/qc/io.R")
 source("R/qc/filter.R")
 source("R/qc/doublets.R")

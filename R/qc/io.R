@@ -33,10 +33,7 @@ build_seurat_obj <- function(unzipped_mex_dir, sample_id) {
   colnames(counts) <- paste(sample_id, colnames(counts), sep = "_")
 
   # --- Pig mitochondrial gene names do not have the MT-prefix
-  mito_genes <- c(
-    "ATP6", "ATP8", "COX1", "COX2", "COX3", "CYTB",
-    "ND1", "ND2", "ND3", "ND4", "ND5", "ND6"
-  )
+  mito_genes <- qc_params$metrics$mitochondrial_genes
   idx <- match(mito_genes, rownames(counts))
   stopifnot(!anyNA(idx))
   rownames(counts)[idx] <- paste0("MT-", mito_genes)

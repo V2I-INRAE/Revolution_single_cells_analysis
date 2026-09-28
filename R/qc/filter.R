@@ -7,11 +7,11 @@ suppressPackageStartupMessages({
 inspect_seurat_qc <- function(seurat_obj) {
   seurat_obj[["percent.mt"]] <- PercentageFeatureSet(
     seurat_obj,
-    pattern = "^MT-"
+    pattern = qc_params$metrics$mitochondrial_pattern
   )
   seurat_obj[["percent.ribo"]] <- PercentageFeatureSet(
     seurat_obj,
-    pattern = "^RP[LS]"
+    pattern = qc_params$metrics$ribosomal_pattern
   )
   seurat_obj$log10GenesPerUMI <- (
     log10(seurat_obj$nFeature_RNA) / log10(seurat_obj$nCount_RNA)
@@ -55,7 +55,7 @@ collect_qc_summary <- function(
   )
 }
 
-mad_bounds <- function(x, lower_floor = -Inf, upper_cap = Inf, n_mad = 5) {
+mad_bounds <- function(x, n_mad, lower_floor = -Inf, upper_cap = Inf) {
   med <- median(x)
   mad_x <- mad(x)
   c(
@@ -65,15 +65,20 @@ mad_bounds <- function(x, lower_floor = -Inf, upper_cap = Inf, n_mad = 5) {
 }
 
 label_qc_outliers <- function(seurat_obj) {
+  params <- qc_params$filtering
   feature_max <- mad_bounds(
     seurat_obj$nFeature_RNA,
-    upper_cap = 5000,
-    n_mad = 4
+    upper_cap = params$max_features_cap,
+    n_mad = params$feature_mad_multiplier
   )["upper"]
 
-  seurat_obj$flag_low_features <- seurat_obj$nFeature_RNA <= 200
+  seurat_obj$flag_low_features <- (
+    seurat_obj$nFeature_RNA <= params$min_features
+  )
   seurat_obj$flag_high_features <- seurat_obj$nFeature_RNA > feature_max
-  seurat_obj$flag_low_complexity <- seurat_obj$log10GenesPerUMI <= 0.8
+  seurat_obj$flag_low_complexity <- (
+    seurat_obj$log10GenesPerUMI <= params$min_log10_genes_per_umi
+  )
 
   initial_outlier <- (
     seurat_obj$flag_low_features |
@@ -81,7 +86,11 @@ label_qc_outliers <- function(seurat_obj) {
       seurat_obj$flag_low_complexity
   )
   mt_percent <- seurat_obj$percent.mt[!initial_outlier]
-  mt_max <- mad_bounds(mt_percent, upper_cap = 20)["upper"]
+  mt_max <- mad_bounds(
+    mt_percent,
+    upper_cap = params$max_mito_percent_cap,
+    n_mad = params$mito_mad_multiplier
+  )["upper"]
   seurat_obj$flag_high_mt <- seurat_obj$percent.mt > mt_max
 
   flag_cols <- c(
@@ -127,7 +136,9 @@ filter_labeled_cells <- function(seurat_obj) {
     seurat_obj,
     assay = "RNA", layer = "counts"
   )[, selected_cells, drop = FALSE]
-  selected_features <- rownames(counts)[Matrix::rowSums(counts > 0) > 3]
+  selected_features <- rownames(counts)[
+    Matrix::rowSums(counts > 0) >= qc_params$filtering$min_cells_per_feature
+  ]
 
   clean_seurat_obj <- subset(
     seurat_obj,
