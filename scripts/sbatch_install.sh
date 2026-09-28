@@ -13,4 +13,4 @@ module purge
 module load compilers/gcc/12.2.0
 module load statistics/R/4.6.1
 
-Rscript scripts/install_packages.R
+Rscript scripts/install_packages.R "$@"
