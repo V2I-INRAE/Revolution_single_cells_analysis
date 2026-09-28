@@ -24,4 +24,7 @@ exec > "logs/$(date +%Y%m%d-%H%M)-qc-pipeline.log" 2>&1
 module purge
 module load statistics/R/4.6.1
 
+source .venv-scrublet/bin/activate || exit 1
+export RETICULATE_PYTHON="$VIRTUAL_ENV/bin/python"
+
 Rscript R/qc/main.R

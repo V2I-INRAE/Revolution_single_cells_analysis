@@ -10,6 +10,7 @@ source("R/qc/io.R")
 source("R/qc/filter.R")
 source("R/qc/reduce.R")
 source("R/qc/doublet_finder.R")
+source("R/qc/scrublet.R")
 source("R/qc/plots.R")
 
 samples <- c(
@@ -23,7 +24,9 @@ samples <- c(
 # Variable placeholder for the plot summaries
 qc_summary <- NULL
 doublet_summary <- NULL
-clean_objs <- list()
+scrublet_summary <- NULL
+clean_doubletfinder_objs <- list()
+clean_scrublet_objs <- list()
 
 for (sample in samples) {
   mex_dir <- read_filtered_matrix("data/raw_data", sample)
@@ -40,10 +43,16 @@ for (sample in samples) {
   # --- Label doublets and copy the calls to the original object
   doublet_obj <- detect_doublets(reduced_obj, sample)
   obj <- add_doublet_calls(obj, doublet_obj)
-  doublet_summary <- rbind(
-    doublet_summary,
-    collect_doublet_summary(obj, sample, coordinates)
+  sample_summary <- collect_doublet_summary(obj, sample, coordinates)
+  doublet_summary <- rbind(doublet_summary, sample_summary)
+
+  # --- Run Scrublet on the same cells and reuse the diagnostic UMAP coordinates
+  obj <- detect_scrublet_doublets(obj)
+  sample_summary$doublet_score <- obj$doublet_scores
+  sample_summary$doublet_class <- ifelse(
+    obj$predicted_doublets, "Doublet", "Singlet"
   )
+  scrublet_summary <- rbind(scrublet_summary, sample_summary)
 
   # --- Collect QC data with the diagnostic UMAP coordinates
   qc_summary <- rbind(
@@ -63,17 +72,20 @@ for (sample in samples) {
     )
   )
 
-  # --- We filter QC outliers and doublets in one operation
-  obj <- filter_labeled_cells(obj)
-
-  # --- We collect the cleaned object for the final concatenation
-  clean_objs[[sample]] <- obj
+  # --- Filter independently from the same labeled object
+  clean_doubletfinder_objs[[sample]] <- filter_labeled_cells(obj, "DoubletFinder")
+  clean_scrublet_objs[[sample]] <- filter_labeled_cells(obj, "Scrublet")
 }
 
 # --- Generate the QC, doublet and ribosomal comparison plots across all samples
 plot_qc_comparison(qc_summary)
 plot_doublet_comparison(doublet_summary)
 plot_doublet_nfeature_violin(doublet_summary)
+plot_doublet_comparison(scrublet_summary, method = "Scrublet", prefix = "scrublet")
+plot_doublet_nfeature_violin(scrublet_summary, method = "Scrublet", prefix = "scrublet")
 plot_ribo_comparison(qc_summary)
 
-write_concatenated_obj(clean_objs)
+write_concatenated_obj(clean_doubletfinder_objs, "clean_concatenated_doubletfinder.rds")
+rm(clean_doubletfinder_objs)
+gc()
+write_concatenated_obj(clean_scrublet_objs, "clean_concatenated_scrublet.rds")

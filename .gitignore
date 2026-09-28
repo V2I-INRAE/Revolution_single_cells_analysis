@@ -67,7 +67,7 @@ results/*
 
 # env
 renv/
+.venv-scrublet/
 
 # Rplots artifacts
 Rplots.pdf
-

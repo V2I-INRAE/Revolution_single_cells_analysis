@@ -133,23 +133,17 @@ label_qc_outliers <- function(seurat_obj) {
   return(seurat_obj)
 }
 
-filter_labeled_cells <- function(seurat_obj) {
-  stopifnot(all(
-    c("qc_outlier", "doublet_class") %in% colnames(seurat_obj[[]])
-  ))
+filter_labeled_cells <- function(seurat_obj, doublet_method) {
+  if (doublet_method == "DoubletFinder") {
+    is_doublet <- seurat_obj$doublet_class == "Doublet"
+  } else if (doublet_method == "Scrublet") {
+    is_doublet <- seurat_obj$predicted_doublets
+  } else {
+    stop("doublet_method must be 'DoubletFinder' or 'Scrublet'")
+  }
 
-  is_doublet <- seurat_obj$doublet_class == "Doublet"
+  seurat_obj$doublet_filter_method <- doublet_method
   seurat_obj$keep_cell <- !seurat_obj$qc_outlier & !is_doublet
-  seurat_obj$exclusion_reason <- "retained"
-  seurat_obj$exclusion_reason[
-    seurat_obj$qc_outlier & !is_doublet
-  ] <- "qc_outlier"
-  seurat_obj$exclusion_reason[
-    !seurat_obj$qc_outlier & is_doublet
-  ] <- "doublet"
-  seurat_obj$exclusion_reason[seurat_obj$qc_outlier & is_doublet] <- (
-    "qc_outlier+doublet"
-  )
 
   selected_cells <- colnames(seurat_obj)[seurat_obj$keep_cell]
   counts <- GetAssayData(
@@ -166,16 +160,7 @@ filter_labeled_cells <- function(seurat_obj) {
     features = selected_features
   )
 
-  cat("\nCombined filtering:\n")
-  for (reason in c("qc_outlier", "doublet", "qc_outlier+doublet")) {
-    n_removed <- sum(seurat_obj$exclusion_reason == reason)
-    cat(sprintf(
-      "  %-22s %6d (%5.1f%%)\n",
-      reason,
-      n_removed,
-      100 * n_removed / ncol(seurat_obj)
-    ))
-  }
+  cat("\nCombined filtering:", doublet_method, "\n")
   cat(sprintf(
     "  cells retained         %6d (%5.1f%%)\n",
     ncol(clean_seurat_obj), 100 * ncol(clean_seurat_obj) / ncol(seurat_obj)

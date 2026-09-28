@@ -61,9 +61,9 @@ build_seurat_obj <- function(unzipped_mex_dir, sample_id) {
   return(seurat_obj)
 }
 
-write_concatenated_obj <- function(seurat_objs) {
+write_concatenated_obj <- function(seurat_objs, filename) {
   concat_dir <- file.path("data", "clean_concatenated_data")
   dir.create(concat_dir, showWarnings = FALSE, recursive = TRUE)
   concatenated <- merge(seurat_objs[[1]], y = seurat_objs[-1])
-  saveRDS(concatenated, file.path(concat_dir, "clean_concatenated.rds"))
+  saveRDS(concatenated, file.path(concat_dir, filename))
 }

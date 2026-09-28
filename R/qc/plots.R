@@ -50,8 +50,12 @@ build_qc_umap <- function(
     scale_alpha_manual(values = point_alphas, guide = "none")
 }
 
-# --- Plot DoubletFinder calls on the per-sample diagnostic UMAPs
-plot_doublet_comparison <- function(doublet_summary) {
+# --- Plot either method's calls on the per-sample diagnostic UMAPs
+plot_doublet_comparison <- function(
+  doublet_summary,
+  method = "DoubletFinder",
+  prefix = "doublet"
+) {
   plot_dir <- file.path("results", "qc")
   class_colours <- c(Singlet = "#DDDDDB", Doublet = "#D83746")
   p_umap <- build_qc_umap(
@@ -67,7 +71,7 @@ plot_doublet_comparison <- function(doublet_summary) {
     theme(strip.text = element_text(size = 8)) +
     labs(
       title = paste(
-        "DoubletFinder calls per sample",
+        method, "calls per sample",
         "(UMAP coordinates are per-sample)"
       ),
       colour = "class"
@@ -75,7 +79,7 @@ plot_doublet_comparison <- function(doublet_summary) {
 
   save_qc_plot(
     p_umap,
-    "doublet_comparison_umap",
+    paste0(prefix, "_comparison_umap"),
     plot_dir,
     4000,
     3400
@@ -84,8 +88,12 @@ plot_doublet_comparison <- function(doublet_summary) {
   invisible(NULL)
 }
 
-# --- Compare nFeature_RNA between DoubletFinder classifications
-plot_doublet_nfeature_violin <- function(doublet_summary) {
+# --- Compare nFeature_RNA between either method's classifications
+plot_doublet_nfeature_violin <- function(
+  doublet_summary,
+  method = "DoubletFinder",
+  prefix = "doublet"
+) {
   plot_dir <- file.path("results", "qc")
   class_colours <- c(Singlet = "#DDDDDB", Doublet = "#D83746")
   doublet_summary$sample_id <- factor(
@@ -112,13 +120,13 @@ plot_doublet_nfeature_violin <- function(doublet_summary) {
     theme_classic(base_size = 12) +
     theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
     labs(
-      title = "nFeature_RNA by DoubletFinder class",
+      title = paste("nFeature_RNA by", method, "class"),
       x = "sample", fill = "class"
     )
 
   save_qc_plot(
     p_violin,
-    "doublet_comparison_nfeature_violin",
+    paste0(prefix, "_comparison_nfeature_violin"),
     plot_dir,
     3200,
     1800
