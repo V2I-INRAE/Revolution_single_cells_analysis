@@ -13,16 +13,19 @@ plot_integration_umaps <- function(
   seed = 1234,
   width = 15,
   height = 6,
-  filename = NULL
+  filename = NULL,
+  selected_umaps = Reductions(seurat_obj)
 ) {
   group_by <- match.arg(group_by)
   grouping <- plot_grouping(seurat_obj[[]], group_by)
   plot_obj <- seurat_obj
   plot_obj$integration_group <- grouping$values
   reductions <- c(
-    Unintegrated = "umap", Harmony = "umap_harmony", CCA = "umap_cca"
+    Unintegrated = "umap", Harmony = "umap_harmony", CCA = "umap_cca",
+    scVI = "umap_scvi"
   )
-  reductions <- reductions[reductions %in% Reductions(seurat_obj)]
+  reductions <- reductions[reductions %in% selected_umaps]
+  stopifnot(all(reductions %in% Reductions(seurat_obj)))
   if (length(reductions) == 0L) stop("No comparison UMAPs found in the object.")
   panels <- lapply(names(reductions), function(method) {
     DimPlot(
@@ -49,8 +52,8 @@ plot_integration_metrics <- function(
 ) {
   scores <- diagnostics$scores
   scores$method <- factor(scores$reduction,
-    levels = c("pca", "harmony", "integrated_cca"),
-    labels = c("Unintegrated", "Harmony", "CCA")
+    levels = c("pca", "harmony", "integrated_cca", "integrated_scvi"),
+    labels = c("Unintegrated", "Harmony", "CCA", "scVI")
   )
   ilisi <- ggplot(
     scores, aes(x = .data$method, y = .data$ilisi, fill = .data$method)
