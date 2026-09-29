@@ -64,22 +64,11 @@ plot_pca_loadings <- function(
   invisible(p)
 }
 
-plot_pca_grouping <- function(
-  seurat_obj,
-  group_by = c("sample", "pressure", "time", "pressure_time"),
-  output_dir = NULL,
-  seed = 1234,
-  width = 15,
-  height = 5,
-  filename = NULL
+plot_grouping <- function(
+  metadata,
+  group_by = c("sample", "pressure", "time", "pressure_time")
 ) {
   group_by <- match.arg(group_by)
-  n_computed <- ncol(Embeddings(seurat_obj, reduction = "pca"))
-  if (n_computed < 6L) {
-    stop("The requested PC1-6 panel requires at least six computed PCs.")
-  }
-
-  metadata <- seurat_obj[[]]
   required <- switch(
     group_by,
     sample = "sample",
@@ -90,7 +79,7 @@ plot_pca_grouping <- function(
   missing_columns <- setdiff(required, colnames(metadata))
   if (length(missing_columns) > 0L) {
     stop(
-      "Missing PCA grouping metadata: ",
+      "Missing plotting metadata: ",
       paste(missing_columns, collapse = ", ")
     )
   }
@@ -146,8 +135,26 @@ plot_pca_grouping <- function(
     stop("PCA grouping produced missing labels.")
   }
 
+  list(values = values, title = legend_title)
+}
+
+plot_pca_grouping <- function(
+  seurat_obj,
+  group_by = c("sample", "pressure", "time", "pressure_time"),
+  output_dir = NULL,
+  seed = 1234,
+  width = 15,
+  height = 5,
+  filename = NULL
+) {
+  group_by <- match.arg(group_by)
+  n_computed <- ncol(Embeddings(seurat_obj, reduction = "pca"))
+  if (n_computed < 6L) {
+    stop("The requested PC1-6 panel requires at least six computed PCs.")
+  }
+  grouping <- plot_grouping(seurat_obj[[]], group_by)
   plot_obj <- seurat_obj
-  plot_obj$pca_group <- values
+  plot_obj$pca_group <- grouping$values
   panels <- lapply(list(1:2, 3:4, 5:6), function(dims) {
     DimPlot(
       plot_obj,
@@ -157,7 +164,7 @@ plot_pca_grouping <- function(
       shuffle = TRUE,
       seed = seed
     ) +
-      labs(colour = legend_title)
+      labs(colour = grouping$title)
   })
   p <- patchwork::wrap_plots(panels, ncol = 3) +
     patchwork::plot_layout(guides = "collect") &
