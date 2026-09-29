@@ -1,9 +1,9 @@
 #!/bin/bash
 #SBATCH -J integration-pipeline
 #SBATCH -p workq
-#SBATCH -c 4
+#SBATCH -c 8
 #SBATCH --mem=128G
-#SBATCH -t 06:00:00
+#SBATCH -t 24:00:00
 #SBATCH -o logs/integration-pipeline-%j.out
 
 if [[ $# -ne 1 ]]; then
