@@ -44,6 +44,11 @@ run_sctransform <- function(
     n_genes
   )
   VariableFeatures(seurat_obj) <- variable_features
+  SeuratObject::LayerData(
+    seurat_obj, assay = "SCT", layer = "scale.data"
+  ) <- SeuratObject::LayerData(
+    seurat_obj, assay = "SCT", layer = "scale.data"
+  )[variable_features, , drop = FALSE]
 
   message("SCTransform complete")
   message("  Default assay: ", DefaultAssay(seurat_obj))
