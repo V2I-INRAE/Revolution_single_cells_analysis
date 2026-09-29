@@ -4,8 +4,8 @@ suppressPackageStartupMessages({
 
 run_pca_analysis <- function(
   seurat_obj,
+  n_pcs,
   features = NULL,
-  n_pcs = 50,
   verbose = TRUE
 ) {
   message("Running PCA analysis")

@@ -4,8 +4,8 @@ suppressPackageStartupMessages({
 
 run_lognormalize <- function(
   seurat_obj,
-  normalization_method = "LogNormalize",
-  scale_factor = 10000,
+  normalization_method,
+  scale_factor,
   verbose = TRUE
 ) {
   message("Running LogNormalize normalization")
@@ -27,8 +27,8 @@ run_lognormalize <- function(
 
 find_hvgs <- function(
   seurat_obj,
-  selection_method = "vst",
-  n_features = 2000,
+  selection_method,
+  n_features,
   verbose = TRUE
 ) {
   message("Finding highly variable genes")
@@ -54,8 +54,8 @@ find_hvgs <- function(
 
 scale_data <- function(
   seurat_obj,
+  vars_to_regress,
   features = NULL,
-  vars_to_regress = NULL,
   verbose = TRUE
 ) {
   message("Scaling data")

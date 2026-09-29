@@ -4,8 +4,9 @@ suppressPackageStartupMessages({
 
 run_sctransform <- function(
   seurat_obj,
-  vars_to_regress = NULL,
-  n_genes = 3000,
+  vars_to_regress,
+  n_genes,
+  feature_buffer,
   verbose = TRUE
 ) {
 
@@ -27,7 +28,7 @@ run_sctransform <- function(
   seurat_obj <- SCTransform(
     seurat_obj,
     vars.to.regress = vars_to_regress,
-    variable.features.n = n_genes + 100,
+    variable.features.n = n_genes + feature_buffer,
     verbose = verbose
   )
 
