@@ -1,0 +1,132 @@
+"sample_id","method","rule","class","n","q1","median","q3"
+"REVO26-C","Scrublet","Automatic threshold","Doublet",1,2070,2070,2070
+"REVO26-P10","Scrublet","Automatic threshold","Doublet",1,3198,3198,3198
+"REVO27-C","Scrublet","Automatic threshold","Doublet",2,4747.25,5244.5,5741.75
+"REVO27-N4","Scrublet","Automatic threshold","Doublet",4,1279.5,1612,3272.25
+"REVO27-P10","Scrublet","Automatic threshold","Doublet",2,2288.75,2389.5,2490.25
+"REVO27-P4","Scrublet","Automatic threshold","Doublet",1,3349,3349,3349
+"REVO29-N4","Scrublet","Automatic threshold","Doublet",6,1565.75,2857.5,4159
+"REVO30-C","Scrublet","Automatic threshold","Doublet",1,2010,2010,2010
+"REVO30-N10","Scrublet","Automatic threshold","Doublet",2,3059.25,3819.5,4579.75
+"REVO30-N4","Scrublet","Automatic threshold","Doublet",1,1974,1974,1974
+"REVO30-P10","Scrublet","Automatic threshold","Doublet",1,2040,2040,2040
+"REVO30-P4","Scrublet","Automatic threshold","Doublet",5,960,2419,2859
+"REVO31-C","Scrublet","Automatic threshold","Doublet",2,1350.75,1867.5,2384.25
+"REVO31-N4","Scrublet","Automatic threshold","Doublet",1,2232,2232,2232
+"REVO31-N8","Scrublet","Automatic threshold","Doublet",2,2646.75,4080.5,5514.25
+"REVO31-P10","Scrublet","Automatic threshold","Doublet",5,1832,1882,3348
+"REVO26-C","Scrublet","Current score > 0.15","Doublet",254,1655.75,2524.5,3993
+"REVO26-N10","Scrublet","Current score > 0.15","Doublet",361,1268,1973,4130
+"REVO26-N4","Scrublet","Current score > 0.15","Doublet",233,1960,3583,4837
+"REVO26-P10","Scrublet","Current score > 0.15","Doublet",232,1259,1747.5,2477.25
+"REVO26-P4","Scrublet","Current score > 0.15","Doublet",385,1654,2420,3547
+"REVO27-C","Scrublet","Current score > 0.15","Doublet",189,1926,2592,3650
+"REVO27-N10","Scrublet","Current score > 0.15","Doublet",191,1353.5,2163,3679
+"REVO27-N4","Scrublet","Current score > 0.15","Doublet",254,1891,3300.5,4830
+"REVO27-P10","Scrublet","Current score > 0.15","Doublet",279,1544.5,2454,4612
+"REVO27-P4","Scrublet","Current score > 0.15","Doublet",225,1546,2179,3754
+"REVO29-C","Scrublet","Current score > 0.15","Doublet",336,1398.25,2454,3503
+"REVO29-N4","Scrublet","Current score > 0.15","Doublet",201,2837,4239,5142
+"REVO29-P4","Scrublet","Current score > 0.15","Doublet",281,1660,2545,3848
+"REVO30-C","Scrublet","Current score > 0.15","Doublet",260,1480.5,2231,3039.25
+"REVO30-N10","Scrublet","Current score > 0.15","Doublet",322,1110.5,1803.5,3410.5
+"REVO30-N4","Scrublet","Current score > 0.15","Doublet",298,1386,2035.5,3010.25
+"REVO30-P10","Scrublet","Current score > 0.15","Doublet",660,1328.25,1862.5,2935.25
+"REVO30-P4","Scrublet","Current score > 0.15","Doublet",316,1311.25,2214,3302.5
+"REVO31-C","Scrublet","Current score > 0.15","Doublet",180,1324,2070.5,2928.5
+"REVO31-N4","Scrublet","Current score > 0.15","Doublet",225,1851,2953,4172
+"REVO31-N8","Scrublet","Current score > 0.15","Doublet",337,1257,1912,2848
+"REVO31-P10","Scrublet","Current score > 0.15","Doublet",294,1254,1943.5,3970.75
+"REVO31-P4","Scrublet","Current score > 0.15","Doublet",375,1449,2362,3897.5
+"REVO26-C","DoubletFinder","Selected pK","Doublet",287,2413.5,3099,3821.5
+"REVO26-N10","DoubletFinder","Selected pK","Doublet",500,4579,5262.5,5905
+"REVO26-N4","DoubletFinder","Selected pK","Doublet",348,1629,3330,4955.75
+"REVO26-P10","DoubletFinder","Selected pK","Doublet",301,4303,5026,5678
+"REVO26-P4","DoubletFinder","Selected pK","Doublet",452,1462.75,2339,3648.5
+"REVO27-C","DoubletFinder","Selected pK","Doublet",272,4590.25,5258.5,5841.25
+"REVO27-N10","DoubletFinder","Selected pK","Doublet",324,1936.75,3294,5048.25
+"REVO27-N4","DoubletFinder","Selected pK","Doublet",295,4569,5014,5498.5
+"REVO27-P10","DoubletFinder","Selected pK","Doublet",357,4908,5452,6076
+"REVO27-P4","DoubletFinder","Selected pK","Doublet",320,1298.5,1922,3090
+"REVO29-C","DoubletFinder","Selected pK","Doublet",424,1323,2072.5,2916.25
+"REVO29-N4","DoubletFinder","Selected pK","Doublet",237,2894,4095,5251
+"REVO29-P4","DoubletFinder","Selected pK","Doublet",357,4076,4997,5672
+"REVO30-C","DoubletFinder","Selected pK","Doublet",409,4142,4926,5649
+"REVO30-N10","DoubletFinder","Selected pK","Doublet",430,4185.25,4851.5,5466.25
+"REVO30-N4","DoubletFinder","Selected pK","Doublet",408,1106.75,1671.5,2545.5
+"REVO30-P10","DoubletFinder","Selected pK","Doublet",624,3886.25,4475.5,5135.5
+"REVO30-P4","DoubletFinder","Selected pK","Doublet",381,3936,4545,5167
+"REVO31-C","DoubletFinder","Selected pK","Doublet",220,4060,5092.5,5784.75
+"REVO31-N4","DoubletFinder","Selected pK","Doublet",299,4852.5,5554,6183
+"REVO31-N8","DoubletFinder","Selected pK","Doublet",434,4734,5461.5,6191.25
+"REVO31-P10","DoubletFinder","Selected pK","Doublet",342,1585.5,2826.5,4830.75
+"REVO31-P4","DoubletFinder","Selected pK","Doublet",405,4441,5061,5543
+"REVO26-C","Scrublet","Automatic threshold","Singlet",11603,1303.5,1814,2731
+"REVO26-N10","Scrublet","Automatic threshold","Singlet",15279,1091.5,1696,3091
+"REVO26-N4","Scrublet","Automatic threshold","Singlet",12587,1265,1877,3167
+"REVO26-P10","Scrublet","Automatic threshold","Singlet",11898,862,1411,2280.75
+"REVO26-P4","Scrublet","Automatic threshold","Singlet",14596,1166,1624,2556.25
+"REVO27-C","Scrublet","Automatic threshold","Singlet",11243,1342,1804,2760.5
+"REVO27-N10","Scrublet","Automatic threshold","Singlet",12264,1055,1770.5,3317
+"REVO27-N4","Scrublet","Automatic threshold","Singlet",11891,1334,1885,3085.5
+"REVO27-P10","Scrublet","Automatic threshold","Singlet",12803,1184,1806,3231.5
+"REVO27-P4","Scrublet","Automatic threshold","Singlet",12306,1238,1794.5,2842.75
+"REVO29-C","Scrublet","Automatic threshold","Singlet",13952,1134,1582,2379
+"REVO29-N4","Scrublet","Automatic threshold","Singlet",10628,1527,2291.5,3591
+"REVO29-P4","Scrublet","Automatic threshold","Singlet",12991,1278,1800,2739
+"REVO30-C","Scrublet","Automatic threshold","Singlet",13832,1079.75,1597,2420
+"REVO30-N10","Scrublet","Automatic threshold","Singlet",14265,932,1428,2552
+"REVO30-N4","Scrublet","Automatic threshold","Singlet",13851,1062,1478,2318
+"REVO30-P10","Scrublet","Automatic threshold","Singlet",17081,946,1397,2370
+"REVO30-P4","Scrublet","Automatic threshold","Singlet",13417,1036,1472,2447
+"REVO31-C","Scrublet","Automatic threshold","Singlet",10415,1124,1568,2347
+"REVO31-N4","Scrublet","Automatic threshold","Singlet",11870,1313,1911,3227.75
+"REVO31-N8","Scrublet","Automatic threshold","Singlet",14240,1070.75,1630,2766.75
+"REVO31-P10","Scrublet","Automatic threshold","Singlet",12638,1035,1575,2995.75
+"REVO31-P4","Scrublet","Automatic threshold","Singlet",13706,1174,1670.5,2786.75
+"REVO26-C","Scrublet","Current score > 0.15","Singlet",11350,1299,1804,2707
+"REVO26-N10","Scrublet","Current score > 0.15","Singlet",14918,1086,1693,3067
+"REVO26-N4","Scrublet","Current score > 0.15","Singlet",12354,1260,1865.5,3125
+"REVO26-P10","Scrublet","Current score > 0.15","Singlet",11667,857,1403,2277
+"REVO26-P4","Scrublet","Current score > 0.15","Singlet",14211,1163,1606,2519
+"REVO27-C","Scrublet","Current score > 0.15","Singlet",11056,1338,1795,2743.5
+"REVO27-N10","Scrublet","Current score > 0.15","Singlet",12073,1050,1765,3310
+"REVO27-N4","Scrublet","Current score > 0.15","Singlet",11641,1329,1870,3042
+"REVO27-P10","Scrublet","Current score > 0.15","Singlet",12526,1177,1793,3212.75
+"REVO27-P4","Scrublet","Current score > 0.15","Singlet",12082,1235,1787,2833
+"REVO29-C","Scrublet","Current score > 0.15","Singlet",13616,1131,1573.5,2348.25
+"REVO29-N4","Scrublet","Current score > 0.15","Singlet",10433,1519,2261,3557
+"REVO29-P4","Scrublet","Current score > 0.15","Singlet",12710,1272,1789,2716.75
+"REVO30-C","Scrublet","Current score > 0.15","Singlet",13573,1075,1587,2404
+"REVO30-N10","Scrublet","Current score > 0.15","Singlet",13945,927,1424,2539
+"REVO30-N4","Scrublet","Current score > 0.15","Singlet",13554,1060,1470,2290.75
+"REVO30-P10","Scrublet","Current score > 0.15","Singlet",16422,940,1379,2339.75
+"REVO30-P4","Scrublet","Current score > 0.15","Singlet",13106,1033,1460,2423
+"REVO31-C","Scrublet","Current score > 0.15","Singlet",10237,1122,1560,2333
+"REVO31-N4","Scrublet","Current score > 0.15","Singlet",11646,1308,1896.5,3198.75
+"REVO31-N8","Scrublet","Current score > 0.15","Singlet",13905,1068,1624,2758
+"REVO31-P10","Scrublet","Current score > 0.15","Singlet",12349,1033,1567,2973
+"REVO31-P4","Scrublet","Current score > 0.15","Singlet",13331,1169,1657,2751
+"REVO26-C","DoubletFinder","Selected pK","Singlet",11317,1294,1791,2675
+"REVO26-N10","DoubletFinder","Selected pK","Singlet",14779,1069.5,1652,2894.5
+"REVO26-N4","DoubletFinder","Selected pK","Singlet",12239,1258.5,1864,3108
+"REVO26-P10","DoubletFinder","Selected pK","Singlet",11598,849.25,1380,2186
+"REVO26-P4","DoubletFinder","Selected pK","Singlet",14144,1163,1607,2516
+"REVO27-C","DoubletFinder","Selected pK","Singlet",10973,1331,1781,2651
+"REVO27-N10","DoubletFinder","Selected pK","Singlet",11940,1042,1747,3263
+"REVO27-N4","DoubletFinder","Selected pK","Singlet",11600,1324,1850.5,2969
+"REVO27-P10","DoubletFinder","Selected pK","Singlet",12448,1165,1766,3008.25
+"REVO27-P4","DoubletFinder","Selected pK","Singlet",11987,1237.5,1792,2839
+"REVO29-C","DoubletFinder","Selected pK","Singlet",13528,1131,1572,2352
+"REVO29-N4","DoubletFinder","Selected pK","Singlet",10397,1516,2252,3557
+"REVO29-P4","DoubletFinder","Selected pK","Singlet",12634,1264.25,1767.5,2646.75
+"REVO30-C","DoubletFinder","Selected pK","Singlet",13424,1068,1564,2310
+"REVO30-N10","DoubletFinder","Selected pK","Singlet",13837,918,1392,2374
+"REVO30-N4","DoubletFinder","Selected pK","Singlet",13444,1061,1475,2312
+"REVO30-P10","DoubletFinder","Selected pK","Singlet",16458,930,1360.5,2173.75
+"REVO30-P4","DoubletFinder","Selected pK","Singlet",13041,1025,1443,2320
+"REVO31-C","DoubletFinder","Selected pK","Singlet",10197,1115,1546,2281
+"REVO31-N4","DoubletFinder","Selected pK","Singlet",11572,1302.75,1873,3066
+"REVO31-N8","DoubletFinder","Selected pK","Singlet",13808,1056,1590,2600.5
+"REVO31-P10","DoubletFinder","Selected pK","Singlet",12301,1027,1558,2915
+"REVO31-P4","DoubletFinder","Selected pK","Singlet",13301,1160,1632,2617

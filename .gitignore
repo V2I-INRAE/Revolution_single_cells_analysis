@@ -64,6 +64,10 @@ logs/
 output/
 results/*
 !results/qc
+!results/doublets/
+results/doublets/*
+!results/doublets/*.csv
+!results/doublets/*.png
 
 # env
 renv/
