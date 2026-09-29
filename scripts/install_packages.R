@@ -34,6 +34,7 @@ pkgs <- list(
   ),
   github = c(
     DoubletFinder = "chris-mcginnis-ucsf/DoubletFinder",
+    scrubletR = "Moonerss/scrubletR@1c08e58c7a551406819263603161d49e3055effc",
     lisi = "immunogenomics/lisi",
     SeuratData = "satijalab/seurat-data",
     Azimuth = "satijalab/azimuth"
