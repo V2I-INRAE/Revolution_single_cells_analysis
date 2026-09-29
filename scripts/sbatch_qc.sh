@@ -2,8 +2,8 @@
 #SBATCH -J qc-pipeline
 #SBATCH -p workq
 #SBATCH -c 6
-#SBATCH --mem=64G
-#SBATCH -t 02:30:00
+#SBATCH --mem=128G
+#SBATCH -t 05:00:00
 #SBATCH -o logs/qc-pipeline-%j.out
 
 # Run the QC pipeline (R/qc/main.R) as a batch job. All output goes to
