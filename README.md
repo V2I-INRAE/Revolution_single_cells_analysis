@@ -49,24 +49,73 @@ may differ. Any existing `clean_concatenated.rds` is left untouched.
 
 ## Integration comparison
 
-From the analysis directory, run `Rscript R/integration/main.R` inside a suitable
-compute allocation. Full-data CCA memory and runtime need to be assessed before
-submitting a production job; a small pilot does not establish those requirements.
+From the analysis directory, select one integration method:
 
-The driver reads the existing `data/norm_feat/lognorm.rds` and `sct.rds`
-sequentially, without renormalizing or changing sample layers/models. Each route
-compares unintegrated PCA with the enabled sample-level integration methods using
-dimensions 1–30. In `main.R`, `does_harmony` and `does_cca` control integration,
-UMAP computation and diagnostics. Currently Harmony is enabled and CCA disabled.
+```bash
+sbatch scripts/sbatch_integration.sh harmony
+sbatch scripts/sbatch_integration.sh cca
+sbatch scripts/sbatch_integration.sh scvi
+# Direct invocation inside a suitable compute allocation:
+Rscript R/integration/main.R harmony
+```
+
+The method is required and case-insensitive; extra or unknown arguments fail.
+Full-data CCA/scVI memory and runtime need to be assessed before submitting a
+production job; a small pilot does not establish those requirements.
+
+All downstream integration methods read only `data/norm_feat/lognorm.rds`,
+without renormalizing or changing sample layers. The `norm_feat` pipeline remains
+unchanged, and existing SCT files/results are retained but are not processed by
+the integration driver. Each invocation compares unintegrated PCA with exactly
+the selected sample-level integration method using dimensions 1–30, including
+only those two reductions in UMAP plots and diagnostics.
 Pressure and time are plotting variables, not correction variables. Corrected
 representations are sensitivity analyses, not automatically preferred results.
 
-Objects containing the selected UMAPs are saved to `data/integration/`. Comparison
-plots display only UMAPs present in each object, separately for each route.
-PNGs and diagnostic results are saved to `results/integration/`. Raw sample LISI
-and silhouette scores use the same 20,000 cells sampled proportionally by sample
-across both routes, with seed 1234 and LISI perplexity 30. The sampled IDs, per-cell
-scores, summaries and run settings are retained. These metrics describe sample
+### scVI
+
+Restore the separate CPU Python environment from the analysis directory:
+
+```bash
+uv venv --python 3.12.13 .venv-scvi
+uv pip sync --python .venv-scvi/bin/python --torch-backend=cpu requirements-scvi.txt
+export RETICULATE_PYTHON="$PWD/.venv-scvi/bin/python"
+```
+
+Use a fresh R session, not one already bound to `.venv-scrublet`. The R wrapper
+dependency is SeuratWrappers, recorded in `renv.lock`. Select `scvi` as the method
+to run the implemented helper. No GPU support is configured in this environment.
+
+For the LogNormalize input, `run_scvi_integration()` uses its exactly 3,000 existing
+RNA HVGs. The model receives **original RNA counts**,
+never log-normalized values, corrected SCT counts or residuals. Missing selected
+genes in any RNA count layer stop the run. Sample batches come from those layers;
+the wrapper joins counts internally without modifying the saved RNA assay.
+The output reduction is `integrated_scvi`, with UMAP `umap_scvi`.
+
+scVI uses seed 1234 (including Python), 30 latent dimensions, two hidden
+layers and negative-binomial likelihood. `max_epochs = NULL` uses scvi-tools'
+automatic epoch limit; the helper accepts an explicit limit for pilots. The
+wrapper returns an embedding, not a saved model or training history. Selected
+genes and settings are retained in `obj@misc$scvi`. A short pilot checks
+compatibility, not convergence or biological preservation.
+
+Objects are saved as `data/integration/<method>/<run_id>/lognorm.rds`.
+PNGs and diagnostics go to `results/integration/<method>/<run_id>/`, with
+`lognorm` in their filenames and a run-specific `diagnostic_cells.csv`.
+The run ID is `job-<SLURM_JOB_ID>` under Slurm, otherwise a timestamp plus PID.
+Existing run directories are never reused: reruns/requeues with the same method
+and job ID stop. A failed reservation can leave an empty directory; a checkpoint
+can survive a later diagnostic failure. Neither indicates a completed run.
+Logs include the method and job ID (PID outside Slurm), plus a timestamp;
+Slurm's bootstrap log remains `logs/integration-pipeline-<job_id>.out`.
+
+Raw sample LISI
+and silhouette scores use the same 20,000 cells across selected reductions,
+sampled proportionally by sample with seed 1234 and LISI perplexity 30. The sampled
+IDs, per-cell scores, summaries and run settings are retained. When comparing
+separate method runs, check the ordered cell/sample pairs in `diagnostic_cells.csv`
+and input/version provenance, not just the seed. These metrics describe sample
 mixing; without independent cell-type labels they do not establish preservation
 of biology. Original assays, counts, metadata and PCA are retained.
 

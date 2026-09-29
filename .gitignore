@@ -5,6 +5,7 @@
 # Session Data files
 .RData
 .RDataTmp
+*.rds
 
 # User-specific files
 .Ruserdata
@@ -67,7 +68,7 @@ results/*
 
 # env
 renv/
-.venv-scrublet/
+.venv*/
 
 # Rplots artifacts
 Rplots.pdf
