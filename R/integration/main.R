@@ -1,5 +1,3 @@
-# Sample-level correction is a sensitivity analysis, not a replacement for the
-# unintegrated reference. Pressure and time are never correction variables.
 args <- commandArgs(trailingOnly = TRUE)
 if (length(args) != 1L || !tolower(args[[1]]) %in% c("harmony", "cca", "scvi")) {
   stop("Usage: Rscript R/integration/main.R <harmony|cca|scvi>")
@@ -27,7 +25,7 @@ output_dir <- file.path("results", "integration", method, run_id)
 routes <- "lognorm"
 dims <- 1:30
 seed <- 1234
-n_diagnostic_cells <- 20000
+n_diagnostic_cells <- 50000
 perplexity <- 30
 
 reductions <- c(umap = "pca", switch(method,

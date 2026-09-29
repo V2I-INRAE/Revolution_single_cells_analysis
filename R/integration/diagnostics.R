@@ -6,10 +6,11 @@ sample_diagnostic_cells <- function(metadata, n_cells = 20000, seed = 1234) {
   stopifnot(!anyNA(metadata$sample), anyDuplicated(rownames(metadata)) == 0L)
   groups <- split(rownames(metadata), as.character(metadata$sample))
   n_cells <- min(n_cells, nrow(metadata))
-  # Largest-remainder allocation preserves proportions and the exact total.
+
   expected <- n_cells * lengths(groups) / nrow(metadata)
   allocation <- floor(expected)
   remaining <- n_cells - sum(allocation)
+  
   if (remaining > 0L) {
     extra <- order(expected - allocation, decreasing = TRUE)[seq_len(remaining)]
     allocation[extra] <- allocation[extra] + 1L
