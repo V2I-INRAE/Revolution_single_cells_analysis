@@ -2,6 +2,7 @@
 # Install all R packages required by the scrnaseq-seurat-core-analysis workflow.
 # Runs inside the renv project so packages land in the project library on /work,
 # then records exact versions in renv.lock (snapshot type = "all").
+# Optional package names restrict installation, e.g. Rscript scripts/install_packages.R glmGamPoi.
 
 ncpus <- max(1L, as.integer(Sys.getenv("SLURM_CPUS_PER_TASK", "1")))
 options(Ncpus = ncpus, repos = c(CRAN = "https://cloud.r-project.org"))
@@ -25,6 +26,7 @@ pkgs <- list(
     svglite = "svglite"
   ),
   bioc = c(
+    glmGamPoi = "glmGamPoi",
     SingleR = "SingleR",
     celldex = "celldex",
     SingleCellExperiment = "SingleCellExperiment",
@@ -40,6 +42,13 @@ pkgs <- list(
     Azimuth = "satijalab/azimuth"
   )
 )
+
+requested <- commandArgs(trailingOnly = TRUE)
+if (length(requested) > 0) {
+  unknown <- setdiff(requested, unlist(lapply(pkgs, names)))
+  if (length(unknown) > 0) stop("Unknown packages: ", paste(unknown, collapse = ", "))
+  pkgs <- lapply(pkgs, function(x) x[names(x) %in% requested])
+}
 
 status <- c()
 
@@ -80,6 +89,7 @@ if (length(failed) > 0) {
 }
 
 message("\nWriting renv.lock ...")
+options(repos = BiocManager::repositories())
 renv::snapshot(type = "all", prompt = FALSE)
 message("Done. Lockfile: ", file.path(getwd(), "renv.lock"))
 

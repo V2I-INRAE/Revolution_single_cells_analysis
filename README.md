@@ -47,6 +47,29 @@ which method controlled removal. `doublet_class` always means DoubletFinder.
 The minimum-three-cells gene filter runs separately in each branch, so gene sets
 may differ. Any existing `clean_concatenated.rds` is left untouched.
 
+## Integration comparison
+
+From the analysis directory, run `Rscript R/integration/main.R` inside a suitable
+compute allocation. Full-data CCA memory and runtime need to be assessed before
+submitting a production job; a small pilot does not establish those requirements.
+
+The driver reads the existing `data/norm_feat/lognorm.rds` and `sct.rds`
+sequentially, without renormalizing or changing sample layers/models. Each route
+compares unintegrated PCA with the enabled sample-level integration methods using
+dimensions 1–30. In `main.R`, `does_harmony` and `does_cca` control integration,
+UMAP computation and diagnostics. Currently Harmony is enabled and CCA disabled.
+Pressure and time are plotting variables, not correction variables. Corrected
+representations are sensitivity analyses, not automatically preferred results.
+
+Objects containing the selected UMAPs are saved to `data/integration/`. Comparison
+plots display only UMAPs present in each object, separately for each route.
+PNGs and diagnostic results are saved to `results/integration/`. Raw sample LISI
+and silhouette scores use the same 20,000 cells sampled proportionally by sample
+across both routes, with seed 1234 and LISI perplexity 30. The sampled IDs, per-cell
+scores, summaries and run settings are retained. These metrics describe sample
+mixing; without independent cell-type labels they do not establish preservation
+of biology. Original assays, counts, metadata and PCA are retained.
+
 ## Getting data locally
 
 If you want to work locally you can download the data using the scirpt `scripts/download_reads.sh`
