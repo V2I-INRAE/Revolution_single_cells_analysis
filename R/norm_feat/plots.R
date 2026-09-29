@@ -4,6 +4,177 @@ suppressPackageStartupMessages({
   library(ggprism)
 })
 
+plot_pca_elbow <- function(
+  seurat_obj,
+  output_dir = NULL,
+  ndims = 50,
+  width = 8,
+  height = 6,
+  filename = "pca_elbow.png"
+) {
+  n_computed <- ncol(Embeddings(seurat_obj, reduction = "pca"))
+  p <- ElbowPlot(
+    seurat_obj,
+    reduction = "pca",
+    ndims = min(ndims, n_computed)
+  ) +
+    theme_prism() +
+    labs(title = "PCA elbow plot")
+
+  if (!is.null(output_dir)) {
+    png_file <- file.path(output_dir, filename)
+    ggsave(png_file, plot = p, width = width, height = height, dpi = 300)
+    message("  Saved: ", png_file)
+  }
+
+  invisible(p)
+}
+
+plot_pca_loadings <- function(
+  seurat_obj,
+  output_dir = NULL,
+  dims = 1:5,
+  n_features = 30,
+  width = 15,
+  height = 12,
+  filename = "pca_loadings.png"
+) {
+  n_computed <- ncol(Embeddings(seurat_obj, reduction = "pca"))
+  dims <- dims[dims <= n_computed]
+  if (length(dims) == 0L) {
+    stop("None of the requested loading dimensions was computed.")
+  }
+
+  p <- VizDimLoadings(
+    seurat_obj,
+    dims = dims,
+    nfeatures = n_features,
+    reduction = "pca",
+    ncol = min(3L, length(dims)),
+    balanced = TRUE
+  ) &
+    theme_prism()
+
+  if (!is.null(output_dir)) {
+    png_file <- file.path(output_dir, filename)
+    ggsave(png_file, plot = p, width = width, height = height, dpi = 300)
+    message("  Saved: ", png_file)
+  }
+
+  invisible(p)
+}
+
+plot_pca_grouping <- function(
+  seurat_obj,
+  group_by = c("sample", "pressure", "time", "pressure_time"),
+  output_dir = NULL,
+  seed = 1234,
+  width = 15,
+  height = 5,
+  filename = NULL
+) {
+  group_by <- match.arg(group_by)
+  n_computed <- ncol(Embeddings(seurat_obj, reduction = "pca"))
+  if (n_computed < 6L) {
+    stop("The requested PC1-6 panel requires at least six computed PCs.")
+  }
+
+  metadata <- seurat_obj[[]]
+  required <- switch(
+    group_by,
+    sample = "sample",
+    pressure = "pressure",
+    time = "time_point",
+    pressure_time = c("pressure", "time_point")
+  )
+  missing_columns <- setdiff(required, colnames(metadata))
+  if (length(missing_columns) > 0L) {
+    stop(
+      "Missing PCA grouping metadata: ",
+      paste(missing_columns, collapse = ", ")
+    )
+  }
+
+  pressure <- as.character(metadata$pressure)
+  time <- as.character(metadata$time_point)
+  if (group_by != "sample") {
+    unknown_pressure <- setdiff(
+      unique(pressure),
+      c("None", "C", "positive", "negative")
+    )
+    if (length(unknown_pressure) > 0L || anyNA(pressure)) {
+      stop("Unexpected or missing pressure values in PCA metadata.")
+    }
+    pressure[pressure == "None"] <- "C"
+  }
+  if (group_by %in% c("time", "pressure_time")) {
+    unknown_time <- setdiff(unique(time), c("T0H", "T4H", "T8H", "T10H"))
+    if (length(unknown_time) > 0L || anyNA(time)) {
+      stop("Unexpected or missing time values in PCA metadata.")
+    }
+    time[time == "T8H"] <- "T10H"
+  }
+
+  if (group_by == "sample") {
+    values <- as.character(metadata$sample)
+    if (anyNA(values) || any(values == "")) {
+      stop("Missing sample values in PCA metadata.")
+    }
+    values <- factor(values, levels = unique(values))
+    legend_title <- "Sample"
+  } else if (group_by == "pressure") {
+    values <- factor(pressure, levels = c("C", "positive", "negative"))
+    legend_title <- "Pressure"
+  } else if (group_by == "time") {
+    values <- factor(time, levels = c("T0H", "T4H", "T10H"))
+    legend_title <- "Time"
+  } else {
+    if (any(time != "T0H" & pressure == "C")) {
+      stop("Control pressure is only expected at T0H.")
+    }
+    values <- ifelse(time == "T0H", "C", paste(pressure, time, sep = "_"))
+    values <- factor(
+      values,
+      levels = c(
+        "C", "positive_T4H", "negative_T4H",
+        "positive_T10H", "negative_T10H"
+      )
+    )
+    legend_title <- "Pressure and time"
+  }
+  if (anyNA(values)) {
+    stop("PCA grouping produced missing labels.")
+  }
+
+  plot_obj <- seurat_obj
+  plot_obj$pca_group <- values
+  panels <- lapply(list(1:2, 3:4, 5:6), function(dims) {
+    DimPlot(
+      plot_obj,
+      reduction = "pca",
+      group.by = "pca_group",
+      dims = dims,
+      shuffle = TRUE,
+      seed = seed
+    ) +
+      labs(colour = legend_title)
+  })
+  p <- patchwork::wrap_plots(panels, ncol = 3) +
+    patchwork::plot_layout(guides = "collect") &
+    theme(legend.position = "bottom")
+
+  if (!is.null(output_dir)) {
+    if (is.null(filename)) {
+      filename <- paste0("pca_", group_by, ".png")
+    }
+    png_file <- file.path(output_dir, filename)
+    ggsave(png_file, plot = p, width = width, height = height, dpi = 300)
+    message("  Saved: ", png_file)
+  }
+
+  invisible(p)
+}
+
 plot_variable_features <- function(
   seurat_obj,
   output_dir = NULL,

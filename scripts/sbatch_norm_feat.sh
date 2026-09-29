@@ -2,8 +2,8 @@
 #SBATCH -J norm-feat-pipeline
 #SBATCH -p workq
 #SBATCH -c 6
-#SBATCH --mem=128G
-#SBATCH -t 02:30:00
+#SBATCH --mem=256G
+#SBATCH -t 05:00:00
 #SBATCH -o logs/norm-feat-pipeline-%j.out
 
 # Use the submission directory: Slurm runs a spool copy of this script.

@@ -27,13 +27,29 @@ run_sctransform <- function(
   seurat_obj <- SCTransform(
     seurat_obj,
     vars.to.regress = vars_to_regress,
-    variable.features.n = n_genes,
+    variable.features.n = n_genes + 100,
     verbose = verbose
   )
 
+  residual_features <- rownames(SeuratObject::LayerData(
+    seurat_obj,
+    assay = "SCT",
+    layer = "scale.data"
+  ))
+  variable_features <- head(
+    VariableFeatures(seurat_obj)[
+      VariableFeatures(seurat_obj) %in% residual_features
+    ],
+    n_genes
+  )
+  VariableFeatures(seurat_obj) <- variable_features
+
   message("SCTransform complete")
   message("  Default assay: ", DefaultAssay(seurat_obj))
-  message("  Variable features: ", length(VariableFeatures(seurat_obj)))
+  message(
+    "  Variable features with stored residuals: ",
+    length(variable_features)
+  )
 
-  return(seurat_obj)
+  seurat_obj
 }
