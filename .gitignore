@@ -65,6 +65,7 @@ logs/
 output/
 results/*
 !results/qc
+!results/norm_feat
 
 # env
 renv/
