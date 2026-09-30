@@ -10,7 +10,6 @@ source("R/integration/cca.R")
 source("R/integration/scvi.R")
 source("R/integration/reduce.R")
 source("R/integration/diagnostics.R")
-source("R/norm_feat/plots.R")
 source("R/integration/plots.R")
 
 input_dir <- file.path("data", "norm_feat")
@@ -83,14 +82,7 @@ for (route in routes) {
   # Keep the integrated checkpoint even if a subsequent diagnostic fails.
   saveRDS(obj, file.path(data_dir, paste0(route, ".rds")))
 
-  for (group_by in c("sample", "pressure", "time", "pressure_time")) {
-    plot_integration_umaps(
-      obj,
-      group_by = group_by, output_dir = output_dir, seed = seed,
-      selected_umaps = names(reductions),
-      filename = paste0("umap_", group_by, "_", route, ".png")
-    )
-  }
+  # Cross-method UMAP figures are generated separately once both checkpoints exist.
   diagnostics <- compute_integration_metrics(
     obj,
     cells = rownames(diagnostic_cells), dims = dims, perplexity = perplexity,
