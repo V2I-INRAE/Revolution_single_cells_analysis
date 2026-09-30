@@ -96,6 +96,10 @@ detect_doublets <- function(
   stopifnot(length(pann_col) == 1, length(class_col) == 1)
   seurat_obj$doublet_score <- seurat_obj[[pann_col]][[1]]
   seurat_obj$doublet_class <- seurat_obj[[class_col]][[1]]
+  seurat_obj@misc$doubletfinder <- list(
+    rate = rate, n_exp = n_exp, homotypic = homotypic,
+    n_exp_adj = n_exp_adj, pK = pK, params = params
+  )
 
   n_doublets <- sum(seurat_obj$doublet_class == "Doublet")
   cat("\nDoublet detection:", sample_id, "\n")
@@ -134,34 +138,7 @@ add_doublet_calls <- function(
   )
   doublet_meta <- doublet_meta[colnames(seurat_obj), , drop = FALSE]
   seurat_obj <- AddMetaData(seurat_obj, doublet_meta)
+  seurat_obj@misc$qc$doubletfinder <- doublet_obj@misc$doubletfinder
 
   return(seurat_obj)
-}
-
-# --- Build per-cell DoubletFinder data for the diagnostic plots
-collect_doublet_summary <- function(
-  seurat_obj,
-  sample_id,
-  coordinates
-) {
-  stopifnot(
-    all(c("doublet_score", "doublet_class") %in% colnames(seurat_obj[[]])),
-    all(c("cell", "UMAP1", "UMAP2") %in% colnames(coordinates)),
-    anyDuplicated(coordinates$cell) == 0
-  )
-  coordinate_idx <- match(colnames(seurat_obj), coordinates$cell)
-  stopifnot(!anyNA(coordinate_idx))
-
-  data.frame(
-    sample_id = sample_id,
-    cell = colnames(seurat_obj),
-    UMAP1 = coordinates$UMAP1[coordinate_idx],
-    UMAP2 = coordinates$UMAP2[coordinate_idx],
-    doublet_score = seurat_obj$doublet_score,
-    doublet_class = seurat_obj$doublet_class,
-    nFeature_RNA = seurat_obj$nFeature_RNA,
-    nCount_RNA = seurat_obj$nCount_RNA,
-    percent.mt = seurat_obj$percent.mt,
-    row.names = NULL
-  )
 }

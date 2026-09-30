@@ -40,39 +40,6 @@ inspect_seurat_qc <- function(seurat_obj) {
   return(seurat_obj)
 }
 
-# --- Per-cell QC values, appended across samples in main.R and used by
-# plot_qc_comparison. `stage` is "before" or "after" outlier filtering.
-collect_qc_summary <- function(
-  seurat_obj,
-  sample_id,
-  stage,
-  coordinates,
-  cells = colnames(seurat_obj)
-) {
-  stopifnot(
-    all(c("cell", "UMAP1", "UMAP2") %in% colnames(coordinates)),
-    anyDuplicated(coordinates$cell) == 0
-  )
-  metadata <- seurat_obj[[]][cells, , drop = FALSE]
-  coordinate_idx <- match(rownames(metadata), coordinates$cell)
-  stopifnot(!anyNA(coordinate_idx))
-
-  data.frame(
-    sample_id = sample_id,
-    cell = rownames(metadata),
-    stage = stage,
-    UMAP1 = coordinates$UMAP1[coordinate_idx],
-    UMAP2 = coordinates$UMAP2[coordinate_idx],
-    nFeature_RNA = metadata$nFeature_RNA,
-    nCount_RNA = metadata$nCount_RNA,
-    percent.mt = metadata$percent.mt,
-    percent.ribo = metadata$percent.ribo,
-    ribo_status = metadata$ribo_status,
-    log10GenesPerUMI = metadata$log10GenesPerUMI,
-    row.names = NULL
-  )
-}
-
 mad_bounds <- function(x, n_mad, lower_floor = -Inf, upper_cap = Inf) {
   med <- median(x)
   mad_x <- mad(x)
@@ -130,45 +97,47 @@ label_qc_outliers <- function(seurat_obj) {
   cat(sprintf("  nFeature_RNA ceiling %.2f\n", feature_max))
   cat(sprintf("  mitochondrial ceiling %.2f%%\n", mt_max))
 
+  seurat_obj@misc$qc <- list(
+    feature_max = unname(feature_max), mt_max = unname(mt_max)
+  )
   return(seurat_obj)
 }
 
-filter_labeled_cells <- function(seurat_obj, doublet_method) {
-  if (doublet_method == "DoubletFinder") {
-    is_doublet <- seurat_obj$doublet_class == "Doublet"
-  } else if (doublet_method == "Scrublet") {
-    is_doublet <- seurat_obj$predicted_doublets
-  } else {
-    stop("doublet_method must be 'DoubletFinder' or 'Scrublet'")
-  }
-
-  seurat_obj$doublet_filter_method <- doublet_method
-  seurat_obj$keep_cell <- !seurat_obj$qc_outlier & !is_doublet
-
-  selected_cells <- colnames(seurat_obj)[seurat_obj$keep_cell]
-  counts <- GetAssayData(
-    seurat_obj,
-    assay = "RNA", layer = "counts"
-  )[, selected_cells, drop = FALSE]
-  selected_features <- rownames(counts)[
-    Matrix::rowSums(counts > 0) >= qc_params$filtering$min_cells_per_feature
-  ]
-
-  clean_seurat_obj <- subset(
-    seurat_obj,
-    cells = selected_cells,
-    features = selected_features
+label_retained_cells <- function(seurat_obj) {
+  seurat_obj$keep_qc <- !seurat_obj$qc_outlier
+  seurat_obj$keep_doubletfinder <- (
+    seurat_obj$keep_qc & seurat_obj$doublet_class == "Singlet"
   )
+  seurat_obj$keep_scrublet <- (
+    seurat_obj$keep_qc & !seurat_obj$predicted_doublets
+  )
+  return(seurat_obj)
+}
 
-  cat("\nCombined filtering:", doublet_method, "\n")
-  cat(sprintf(
-    "  cells retained         %6d (%5.1f%%)\n",
-    ncol(clean_seurat_obj), 100 * ncol(clean_seurat_obj) / ncol(seurat_obj)
-  ))
-  cat(sprintf(
-    "  genes retained         %6d (%5.1f%%)\n",
-    nrow(clean_seurat_obj), 100 * nrow(clean_seurat_obj) / nrow(seurat_obj)
-  ))
-
-  return(clean_seurat_obj)
+# Filter the checkpoint layer by layer: a pooled gene filter changes the method.
+filter_labeled_cells <- function(seurat_obj, doublet_method) {
+  doublet_method <- match.arg(doublet_method, c("DoubletFinder", "Scrublet"))
+  keep_col <- paste0("keep_", tolower(doublet_method))
+  metadata <- seurat_obj[[]]
+  min_cells <- seurat_obj@misc$qc$params$filtering$min_cells_per_feature
+  samples <- seurat_obj@misc$qc$sample_order
+  objects <- setNames(lapply(samples, function(sample) {
+    cells <- rownames(metadata)[metadata$sample == sample & metadata[[keep_col]]]
+    stopifnot("No retained cells in sample" = length(cells) > 0)
+    counts <- LayerData(seurat_obj, assay = "RNA", layer = paste0("counts.", sample))
+    stopifnot(all(cells %in% colnames(counts)))
+    counts <- counts[, cells, drop = FALSE]
+    counts <- counts[Matrix::rowSums(counts > 0) >= min_cells, , drop = FALSE]
+    obj <- CreateSeuratObject(counts, project = sample)
+    # Preserve input QC measurements, including after the gene filter.
+    meta <- metadata[cells, setdiff(colnames(metadata), c("qc_umap_1", "qc_umap_2")), drop = FALSE]
+    obj <- AddMetaData(obj, meta)
+    obj$keep_cell <- meta[[keep_col]]
+    obj$doublet_filter_method <- doublet_method
+    message(sample, " / ", doublet_method, ": ", ncol(obj), " cells; ", nrow(obj), " genes")
+    obj
+  }), samples)
+  clean <- merge(objects[[1]], y = objects[-1], merge.data = FALSE)
+  clean@misc$qc <- seurat_obj@misc$qc
+  return(clean)
 }

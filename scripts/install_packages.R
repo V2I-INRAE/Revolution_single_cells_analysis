@@ -17,6 +17,7 @@ pkgs <- list(
     SoupX = "SoupX",
     Seurat = "Seurat",
     SeuratObject = "SeuratObject",
+    scCustomize = "scCustomize",
     ggplot2 = "ggplot2",
     ggprism = "ggprism",
     patchwork = "patchwork",
@@ -35,6 +36,7 @@ pkgs <- list(
     ComplexHeatmap = "ComplexHeatmap"
   ),
   github = c(
+    scplotter = "pwwang/scplotter",
     DoubletFinder = "chris-mcginnis-ucsf/DoubletFinder",
     scrubletR = "Moonerss/scrubletR@1c08e58c7a551406819263603161d49e3055effc",
     lisi = "immunogenomics/lisi",
@@ -70,7 +72,8 @@ for (pkg in names(pkgs$github)) {
     remotes::install_github(
       pkgs$github[[pkg]],
       upgrade = "never",      # never rebuild the already-installed dependency stack
-      dependencies = TRUE,
+      # scplotter's optional Giotto stack is not needed for Seurat QC figures.
+      dependencies = if (pkg == "scplotter") NA else TRUE,
       quiet = TRUE
     ),
     silent = TRUE

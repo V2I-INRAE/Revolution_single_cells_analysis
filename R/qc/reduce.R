@@ -50,9 +50,8 @@ compute_diagnostic_umap <- function(
   umap <- Embeddings(seurat_obj, "umap")
 
   data.frame(
-    cell = rownames(umap),
-    UMAP1 = umap[, 1],
-    UMAP2 = umap[, 2],
-    row.names = NULL
+    qc_umap_1 = umap[, 1],
+    qc_umap_2 = umap[, 2],
+    row.names = rownames(umap)
   )
 }

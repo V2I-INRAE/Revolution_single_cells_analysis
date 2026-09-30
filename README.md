@@ -35,8 +35,45 @@ BD expected rate and `threshold = NULL`, then classifies scores **> 0.15** as
 doublets in R. This avoids the package's manual-threshold argument bug without
 patching it. Automatic-threshold statistics printed by Python are not the final
 0.15 classifications. The Python bridge uses seed 0.
-Both methods are plotted before filtering. The pipeline applies the same QC flags
-and filters doublets independently with each method, saving two merged objects in
+The pipeline labels both methods before filtering. It saves all vendor-called
+input cells in `data/qc_labeled_data/labeled_concatenated.rds`, with separate
+sample count layers, original QC measurements, individual QC flags, both methods'
+scores/calls, and `keep_qc`, `keep_doubletfinder`, and `keep_scrublet` flags.
+`misc$qc` records the parameters, actual sample-specific ceilings, doublet
+settings, sample order and R session. `qc_umap_1`/`qc_umap_2` are independent
+per-sample diagnostic coordinates, not a shared embedding.
+
+`R/qc/plots.R` exports five scCustomize before/after figures (genes, UMIs,
+mitochondrial percentage, complexity and ribosomal percentage), each as an SVG
+and 300-DPI PNG in `results/qc/qc_before_after_*`. Each has all 23 samples above
+and **QC-only retained cells below**, on matching axes. Gene lines show 200 and
+5,000; the mitochondrial line shows the 20% cap; complexity shows a lower 0.8
+threshold. Actual upper gene/mitochondrial thresholds can be lower by sample.
+UMI plots have no cutoff lines. Ribosomal plots show a 2.5% descriptive reference
+line, not a filtering cutoff. Figures use original measurements
+before feature filtering. Dense point layers are rasterized in the SVG;
+axes, labels and violin outlines remain vector graphics.
+
+`plot_qc_umaps()` uses scplotter to export DoubletFinder, Scrublet, ribosomal
+status and QC-outlier maps as `results/qc/qc_umap_*`, also in PNG and SVG.
+For 23 samples, each figure is 20 by 26.2 inches with four columns and six rows.
+Every sample reuses its saved diagnostic coordinates across all four maps.
+Doublets/outliers are highlighted against grey singlets/QC-passing cells;
+ribosomal maps highlight the existing <2.5% descriptive category, not exclusions.
+UMAP points remain vector elements in SVG exports.
+
+Regenerate figures without rerunning doublet detection, from the analysis root:
+
+```r
+source("R/qc/plots.R")
+labeled <- readRDS("data/qc_labeled_data/labeled_concatenated.rds")
+plot_qc_comparison(labeled)
+plot_qc_umaps(labeled)
+```
+
+The old summary-table plotting functions have been replaced; existing image
+files are not deleted. After saving the checkpoint and figures, the pipeline filters doublets
+independently with each method, saving two merged objects in
 `data/clean_concatenated_data/`:
 
 - `clean_concatenated_doubletfinder.rds`
@@ -44,8 +81,10 @@ and filters doublets independently with each method, saving two merged objects i
 
 Both retain the two methods' scores and calls; `doublet_filter_method` identifies
 which method controlled removal. `doublet_class` always means DoubletFinder.
-The minimum-three-cells gene filter runs separately in each branch, so gene sets
-may differ. Any existing `clean_concatenated.rds` is left untouched.
+The minimum-three-cells gene filter runs separately in each sample and branch,
+so gene sets may differ. Clean outputs omit diagnostic coordinates and temporary
+preprocessing, but retain original QC metadata. Any existing
+`clean_concatenated.rds` is left untouched.
 
 ## Integration comparison
 
