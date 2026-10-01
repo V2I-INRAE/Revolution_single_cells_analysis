@@ -36,7 +36,7 @@ cluster_reduction <- function(obj, method, settings) {
     n_start = settings$n_start, n_iter = settings$n_iter,
     note = "All resolutions retained; active identity is the last, not a selected optimum"
   )
-  retun(obj)
+  obj
 }
 
 clustering_umap <- function(obj) {
@@ -71,21 +71,6 @@ clustering_umap <- function(obj) {
       identical(rownames(coordinates), colnames(obj)) &&
         ncol(coordinates) == 2L && all(is.finite(coordinates))
   )
-  obj@misc$clustering$umap <- name
-  obj@misc$clustering$umap_settings <- commands[[1]]@params
-  obj
-}
-  }
-  commands <- Filter(function(command) identical(command@params$reduction.name, name),
-    obj@commands)
-  stopifnot("Saved UMAP must document the selected reduction and dimensions" =
-    length(commands) == 1L &&
-      identical(commands[[1]]@params$reduction, config$reduction) &&
-      identical(commands[[1]]@params$dims, dims))
-  coordinates <- Embeddings(obj, name)
-  stopifnot("UMAP must contain finite, aligned coordinates for every cell" =
-    identical(rownames(coordinates), colnames(obj)) &&
-      ncol(coordinates) == 2L && all(is.finite(coordinates)))
   obj@misc$clustering$umap <- name
   obj@misc$clustering$umap_settings <- commands[[1]]@params
   obj
