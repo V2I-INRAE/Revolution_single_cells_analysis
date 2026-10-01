@@ -1,0 +1,3 @@
+"method","input_file","run_id"
+"scVI","/work/project/revo-pig-sc/analysis/data/integration/scvi/job-44227281/lognorm.rds","job-44227281"
+"Harmony","/work/project/revo-pig-sc/analysis/data/integration/harmony/job-44215822/lognorm.rds","job-44215822"
