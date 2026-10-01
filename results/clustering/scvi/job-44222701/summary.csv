@@ -1,0 +1,5 @@
+"resolution","n_clusters","min_cluster_size","n_small_clusters","absent_clusters","singleton_clusters","mean_silhouette","mean_cluster_silhouette","silhouette_status"
+0.1,26,53,0,0,0,0.151290058798697,0.276463796156649,"available"
+0.2,33,53,0,0,0,0.155431848554166,0.244396604738285,"available"
+0.3,34,53,0,0,0,0.154589675496279,0.241403000147735,"available"
+0.4,37,53,0,0,0,0.151790420100193,0.221371759515801,"available"

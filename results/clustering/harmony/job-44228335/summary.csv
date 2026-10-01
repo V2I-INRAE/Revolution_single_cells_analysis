@@ -1,0 +1,7 @@
+"resolution","n_clusters","min_cluster_size","n_small_clusters","absent_clusters","singleton_clusters","mean_silhouette","mean_cluster_silhouette","silhouette_status"
+0.05,15,3163,0,0,0,0.416702918300538,0.412919172214888,"available"
+0.1,18,1693,0,0,0,0.351858600887531,0.394394900277704,"available"
+0.15,20,1693,0,0,0,0.364591568481381,0.39740828795928,"available"
+0.2,22,1693,0,0,0,0.375437459573652,0.374780363524979,"available"
+0.25,22,1693,0,0,0,0.37634341749415,0.375412715498124,"available"
+0.3,24,914,0,0,0,0.347540615170466,0.338969424556309,"available"
