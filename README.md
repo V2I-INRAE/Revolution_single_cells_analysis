@@ -1,166 +1,99 @@
 # REVOLUTION
 
-Analysis of the paired lungs lobes single cells experiment.
+Single-cell analysis of paired lung lobes. Run commands from
+`/work/project/revo-pig-sc/analysis` on the cluster.
 
-## Setting up
+## Setup
 
-Our data and code is on the cluster @ `/work/project/revo-pig-sc`. A set of library have been installed. The script used for that is on `scripts` folder. When you `ssh` in the cluster:
+Restore R dependencies with `renv::restore()`. Batch scripts load the required
+modules; for interactive R, load `statistics/R/4.6.1` inside a compute allocation.
 
-```bash
-srun -c 8 --mem=64G --time=08:00:00 --cpu=6 --pty bash -i
-```
-
-Move to `/work/project/revo-pig-sc` and run:
+Create the separate Python environments once:
 
 ```bash
-module load statistics/R/4.6.1
-```
-
-### Scrublet environment
-
-From the analysis directory, create and activate the Python environment:
-
-```bash
+# QC / Scrublet
 uv python install 3.11.16
 uv venv --python 3.11.16 .venv-scrublet
-source .venv-scrublet/bin/activate
-uv pip sync requirements-scrublet.txt
-export RETICULATE_PYTHON="$VIRTUAL_ENV/bin/python"
-```
+uv pip sync --python .venv-scrublet/bin/python requirements-scrublet.txt
 
-Set this before starting R. `scripts/sbatch_qc.sh` activates the same environment.
-The R dependency is Moonerss/scrubletR, pinned in `renv.lock`; `renv::restore()`
-restores it. `R/qc/scrublet.R` calls `scrubletR::scrublet_R()` with the sample-specific
-BD expected rate and `threshold = NULL`, then classifies scores **> 0.15** as
-doublets in R. This avoids the package's manual-threshold argument bug without
-patching it. Automatic-threshold statistics printed by Python are not the final
-0.15 classifications. The Python bridge uses seed 0.
-The pipeline labels both methods before filtering. It saves all vendor-called
-input cells in `data/qc_labeled_data/labeled_concatenated.rds`, with separate
-sample count layers, original QC measurements, individual QC flags, both methods'
-scores/calls, and `keep_qc`, `keep_doubletfinder`, and `keep_scrublet` flags.
-`misc$qc` records the parameters, actual sample-specific ceilings, doublet
-settings, sample order and R session. `qc_umap_1`/`qc_umap_2` are independent
-per-sample diagnostic coordinates, not a shared embedding.
-
-`R/qc/plots.R` exports five scCustomize before/after figures (genes, UMIs,
-mitochondrial percentage, complexity and ribosomal percentage), each as an SVG
-and 300-DPI PNG in `results/qc/qc_before_after_*`. Each has all 23 samples above
-and **QC-only retained cells below**, on matching axes. Gene lines show 200 and
-5,000; the mitochondrial line shows the 20% cap; complexity shows a lower 0.8
-threshold. Actual upper gene/mitochondrial thresholds can be lower by sample.
-UMI plots have no cutoff lines. Ribosomal plots show a 2.5% descriptive reference
-line, not a filtering cutoff. Figures use original measurements
-before feature filtering. Dense point layers are rasterized in the SVG;
-axes, labels and violin outlines remain vector graphics.
-
-`plot_qc_umaps()` uses scplotter to export DoubletFinder, Scrublet, ribosomal
-status and QC-outlier maps as `results/qc/qc_umap_*`, also in PNG and SVG.
-For 23 samples, each figure is 20 by 26.2 inches with four columns and six rows.
-Every sample reuses its saved diagnostic coordinates across all four maps.
-Doublets/outliers are highlighted against grey singlets/QC-passing cells;
-ribosomal maps highlight the existing <2.5% descriptive category, not exclusions.
-UMAP points remain vector elements in SVG exports.
-
-Regenerate figures without rerunning doublet detection, from the analysis root:
-
-```r
-source("R/qc/plots.R")
-labeled <- readRDS("data/qc_labeled_data/labeled_concatenated.rds")
-plot_qc_comparison(labeled)
-plot_qc_umaps(labeled)
-```
-
-The old summary-table plotting functions have been replaced; existing image
-files are not deleted. After saving the checkpoint and figures, the pipeline filters doublets
-independently with each method, saving two merged objects in
-`data/clean_concatenated_data/`:
-
-- `clean_concatenated_doubletfinder.rds`
-- `clean_concatenated_scrublet.rds`
-
-Both retain the two methods' scores and calls; `doublet_filter_method` identifies
-which method controlled removal. `doublet_class` always means DoubletFinder.
-The minimum-three-cells gene filter runs separately in each sample and branch,
-so gene sets may differ. Clean outputs omit diagnostic coordinates and temporary
-preprocessing, but retain original QC metadata. Any existing
-`clean_concatenated.rds` is left untouched.
-
-## Integration comparison
-
-From the analysis directory, select one integration method:
-
-```bash
-sbatch scripts/sbatch_integration.sh harmony
-sbatch scripts/sbatch_integration.sh cca
-sbatch scripts/sbatch_integration.sh scvi
-# Direct invocation inside a suitable compute allocation:
-Rscript R/integration/main.R harmony
-```
-
-The method is required and case-insensitive; extra or unknown arguments fail.
-Full-data CCA/scVI memory and runtime need to be assessed before submitting a
-production job; a small pilot does not establish those requirements.
-
-All downstream integration methods read only `data/norm_feat/lognorm.rds`,
-without renormalizing or changing sample layers. The `norm_feat` pipeline remains
-unchanged, and existing SCT files/results are retained but are not processed by
-the integration driver. Each invocation compares unintegrated PCA with exactly
-the selected sample-level integration method using dimensions 1–30, including
-only those two reductions in UMAP plots and diagnostics.
-Pressure and time are plotting variables, not correction variables. Corrected
-representations are sensitivity analyses, not automatically preferred results.
-
-### scVI
-
-Restore the separate CPU Python environment from the analysis directory:
-
-```bash
+# scVI (CPU)
 uv venv --python 3.12.13 .venv-scvi
 uv pip sync --python .venv-scvi/bin/python --torch-backend=cpu requirements-scvi.txt
-export RETICULATE_PYTHON="$PWD/.venv-scvi/bin/python"
 ```
 
-Use a fresh R session, not one already bound to `.venv-scrublet`. The R wrapper
-dependency is SeuratWrappers, recorded in `renv.lock`. Select `scvi` as the method
-to run the implemented helper. No GPU support is configured in this environment.
+For interactive use, set `RETICULATE_PYTHON` to the chosen environment's Python
+before starting a fresh R session. QC activates Scrublet automatically; scVI uses
+the separate environment. See `renv.lock` and the requirements files for versions.
 
-For the LogNormalize input, `run_scvi_integration()` uses its exactly 3,000 existing
-RNA HVGs. The model receives **original RNA counts**,
-never log-normalized values, corrected SCT counts or residuals. Missing selected
-genes in any RNA count layer stop the run. Sample batches come from those layers;
-the wrapper joins counts internally without modifying the saved RNA assay.
-The output reduction is `integrated_scvi`, with UMAP `umap_scvi`.
+## Run the pipeline
 
-scVI uses seed 1234 (including Python), 30 latent dimensions, two hidden
-layers and negative-binomial likelihood. `max_epochs = NULL` uses scvi-tools'
-automatic epoch limit; the helper accepts an explicit limit for pilots. The
-wrapper returns an embedding, not a saved model or training history. Selected
-genes and settings are retained in `obj@misc$scvi`. A short pilot checks
-compatibility, not convergence or biological preservation.
+These examples use existing checkpoints. For a new analysis, substitute the
+upstream job IDs you intend to use; no stage automatically selects the latest run.
 
-Objects are saved as `data/integration/<method>/<run_id>/lognorm.rds`.
-PNGs and diagnostics go to `results/integration/<method>/<run_id>/`, with
-`lognorm` in their filenames and a run-specific `diagnostic_cells.csv`.
-The run ID is `job-<SLURM_JOB_ID>` under Slurm, otherwise a timestamp plus PID.
-Existing run directories are never reused: reruns/requeues with the same method
-and job ID stop. A failed reservation can leave an empty directory; a checkpoint
-can survive a later diagnostic failure. Neither indicates a completed run.
-Logs include the method and job ID (PID outside Slurm), plus a timestamp;
-Slurm's bootstrap log remains `logs/integration-pipeline-<job_id>.out`.
+```bash
+# QC: labels all input cells and saves both clean doublet-filtering branches
+sbatch scripts/sbatch_qc.sh
 
-Raw sample LISI
-and silhouette scores use the same 20,000 cells across selected reductions,
-sampled proportionally by sample with seed 1234 and LISI perplexity 30. The sampled
-IDs, per-cell scores, summaries and run settings are retained. When comparing
-separate method runs, check the ordered cell/sample pairs in `diagnostic_cells.csv`
-and input/version provenance, not just the seed. These metrics describe sample
-mixing; without independent cell-type labels they do not establish preservation
-of biology. Original assays, counts, metadata and PCA are retained.
+# Normalize the selected Scrublet-clean checkpoint
+sbatch scripts/sbatch_norm_feat.sh \
+  data/clean_concatenated_data/job-44194877/clean_concatenated_scrublet.rds
 
-## Getting data locally
+# Integration: choose harmony, scvi or cca
+sbatch scripts/sbatch_integration.sh harmony data/norm_feat/job-44212906/lognorm.rds
+sbatch scripts/sbatch_integration.sh scvi data/norm_feat/job-44212906/lognorm.rds
 
-If you want to work locally you can download the data using the scirpt `scripts/download_reads.sh`
+# Cluster a selected representation
+sbatch scripts/sbatch_clustering.sh unintegrated data/integration/harmony/job-44215822/lognorm.rds
+sbatch scripts/sbatch_clustering.sh harmony data/integration/harmony/job-44215822/lognorm.rds
+sbatch scripts/sbatch_clustering.sh scvi data/integration/scvi/job-44227281/lognorm.rds
 
->Use the sequential downloads if you download sequentially so that rsync opens just one ssh connection. For parallel download it is better to setup a ssh key with the cluster, otehrwise it will ask for inputing password each time it opens a ssh connection
- 
+# Compare saved scVI and Harmony UMAPs without refitting
+sbatch scripts/sbatch_integration_plots.sh 44227281 44215822
+```
+
+For dependent submissions, use Slurm `--dependency=afterok:<job_id>[:<job_id>...]`.
+See [clustering instructions](R/clustering/README.md) for clustering plots.
+
+## Outputs and tracking
+
+`<run_id>` is `job-<SLURM_JOB_ID>`, or a timestamp plus PID outside Slurm.
+Existing run directories are rejected, including on requeue. Flat RDS paths and
+compatibility links have been removed.
+
+| Stage | Checkpoints | Results |
+|---|---|---|
+| QC labeled | `data/qc_labeled_data/<run_id>/labeled_concatenated.rds` | `results/qc/<run_id>/` |
+| QC clean | `data/clean_concatenated_data/<run_id>/clean_concatenated_{doubletfinder,scrublet}.rds` | Same QC directory |
+| Normalization | `data/norm_feat/<run_id>/lognorm.rds` | `results/norm_feat/lognorm/<run_id>/` |
+| Integration | `data/integration/<method>/<run_id>/lognorm.rds` | `results/integration/<method>/<run_id>/` |
+| Clustering | `data/clustering/<method>/<run_id>/lognorm.rds` | `results/clustering/<method>/<run_id>/` |
+
+Logs are in `logs/`, with timestamps and job IDs for new runs. Check Slurm status
+and logs: a saved checkpoint may precede a later failure. [RUN_HISTORY.md](RUN_HISTORY.md)
+records historical jobs, inputs, outputs and outcomes.
+
+## Methods
+
+- **QC:** DoubletFinder and Scrublet are labeled before filtering and produce
+  separate clean branches. Scrublet uses scores >0.15 for final calls; its printed
+  automatic threshold is not the applied cutoff. QC before/after plots compare
+  all input cells with QC-only retained cells. Ribosomal percentage is descriptive,
+  not a filtering criterion. Settings: `R/qc/params.R`.
+- **Normalization:** LogNormalize, per-layer VST selection, 3,000 consensus
+  variable genes and 50-PC PCA. SCT checkpoints are historical only.
+  Settings: `R/norm_feat/params.R`.
+- **Integration:** corrects sample batches, not pressure/time. PCA/Harmony use
+  dimensions 1–30; scVI uses original RNA counts for 3,000 selected genes and
+  20 latent dimensions. Settings: `R/integration/params.R`.
+- **Clustering:** unintegrated uses preserved PCA; other routes use Harmony or
+  scVI. Settings: `R/clustering/params.R`. Mixing metrics do not establish
+  biological preservation, and clusters are not validated cell identities.
+
+Figures are PNG/SVG; saved objects retain run metadata. Historical shared-path
+figures remain in place and may contain products from multiple jobs.
+
+## Download raw reads
+
+Use `scripts/download_reads.sh` from your local computer after checking its
+source/destination paths. Sequential downloads reuse one SSH connection;
+parallel downloads are best used with SSH keys.
