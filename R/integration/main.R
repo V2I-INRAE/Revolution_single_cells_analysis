@@ -1,8 +1,11 @@
 args <- commandArgs(trailingOnly = TRUE)
-if (length(args) != 1L || !tolower(args[[1]]) %in% c("harmony", "cca", "scvi")) {
-  stop("Usage: Rscript R/integration/main.R <harmony|cca|scvi>")
+if (length(args) != 2L || !tolower(args[[1]]) %in% c("harmony", "cca", "scvi")) {
+  stop("Usage: Rscript R/integration/main.R <harmony|cca|scvi> <lognorm_input.rds>")
 }
 method <- tolower(args[[1]])
+input_file <- args[[2]]
+if (!file.exists(input_file)) stop("Input checkpoint not found: ", input_file)
+input_file <- normalizePath(input_file)
 
 source("R/integration/params.R")
 source("R/integration/io.R")
@@ -13,7 +16,6 @@ source("R/integration/reduce.R")
 source("R/integration/diagnostics.R")
 source("R/integration/plots.R")
 
-input_dir <- file.path("data", "norm_feat")
 job_id <- Sys.getenv("SLURM_JOB_ID")
 run_id <- if (nzchar(job_id)) {
   paste0("job-", job_id)
@@ -42,10 +44,9 @@ for (directory in c(data_dir, output_dir)) {
   }
 }
 message("Integration: ", method, "; route: lognorm; run: ", run_id,
-  "\nData: ", data_dir, "\nResults: ", output_dir)
+  "\nInput: ", input_file, "\nData: ", data_dir, "\nResults: ", output_dir)
 
 for (route in routes) {
-  input_file <- file.path(input_dir, paste0(route, ".rds"))
   obj <- read_integration_input(input_file, dims = dims)
   metadata <- obj[[]]
   diagnostic_cells <- sample_diagnostic_cells(

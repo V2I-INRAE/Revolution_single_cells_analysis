@@ -6,8 +6,8 @@
 #SBATCH -t 24:00:00
 #SBATCH -o logs/integration-pipeline-%j.out
 
-if [[ $# -ne 1 ]]; then
-  echo "Usage: sbatch scripts/sbatch_integration.sh <harmony|cca|scvi>" >&2
+if [[ $# -ne 2 ]]; then
+  echo "Usage: sbatch scripts/sbatch_integration.sh <harmony|cca|scvi> <lognorm_input.rds>" >&2
   exit 1
 fi
 method="${1,,}"

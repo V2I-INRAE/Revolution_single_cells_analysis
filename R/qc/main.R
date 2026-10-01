@@ -13,6 +13,21 @@ source("R/qc/doublet_finder.R")
 source("R/qc/scrublet.R")
 source("R/qc/plots.R")
 
+job_id <- Sys.getenv("SLURM_JOB_ID")
+run_id <- if (nzchar(job_id)) paste0("job-", job_id) else
+  paste(format(Sys.time(), "%Y%m%d-%H%M%S"), Sys.getpid(), sep = "-")
+labeled_dir <- file.path("data", "qc_labeled_data", run_id)
+clean_dir <- file.path("data", "clean_concatenated_data", run_id)
+output_dir <- file.path("results", "qc", run_id)
+for (directory in c(labeled_dir, clean_dir, output_dir)) {
+  dir.create(dirname(directory), recursive = TRUE, showWarnings = FALSE)
+  if (!dir.create(directory, showWarnings = FALSE)) {
+    stop("Cannot create new run directory: ", directory)
+  }
+}
+message("QC run: ", run_id, "\nLabeled data: ", labeled_dir,
+  "\nClean data: ", clean_dir, "\nResults: ", output_dir)
+
 samples <- c(
   "REVO26-C", "REVO26-N4", "REVO26-N10", "REVO26-P4", "REVO26-P10",
   "REVO27-C", "REVO27-N4", "REVO27-N10", "REVO27-P4", "REVO27-P10",
@@ -51,16 +66,17 @@ for (sample in samples) {
 labeled <- concatenate_qc_objects(labeled_objs)
 rm(labeled_objs)
 gc()
-write_qc_object(labeled, "data/qc_labeled_data/labeled_concatenated.rds")
+labeled@misc$qc$run_id <- run_id
+write_qc_object(labeled, file.path(labeled_dir, "labeled_concatenated.rds"))
 
 # These five figures compare all input cells with QC-only retained cells.
-plot_qc_comparison(labeled)
-plot_qc_umaps(labeled)
+plot_qc_comparison(labeled, plot_dir = output_dir)
+plot_qc_umaps(labeled, plot_dir = output_dir)
 
 for (method in c("DoubletFinder", "Scrublet")) {
   clean <- filter_labeled_cells(labeled, method)
   write_qc_object(clean, file.path(
-    "data/clean_concatenated_data",
+    clean_dir,
     paste0("clean_concatenated_", tolower(method), ".rds")
   ))
   rm(clean)

@@ -1,5 +1,13 @@
 # LogNormalize the Scrublet-clean cells and plot feature/PCA diagnostics.
 
+args <- commandArgs(trailingOnly = TRUE)
+if (length(args) != 1L) {
+  stop("Usage: Rscript R/norm_feat/main.R <clean_input.rds>")
+}
+input_file <- args[[1]]
+if (!file.exists(input_file)) stop("Input checkpoint not found: ", input_file)
+input_file <- normalizePath(input_file)
+
 suppressPackageStartupMessages({
   library(Seurat)
 })
@@ -10,14 +18,19 @@ source("R/norm_feat/lognorm.R")
 source("R/norm_feat/pca.R")
 source("R/norm_feat/plots.R")
 
-input_file <- file.path(
-  "data", "clean_concatenated_data", "clean_concatenated_scrublet.rds"
-)
-data_dir <- file.path("data", "norm_feat")
-output_dir <- file.path("results", "norm_feat", "lognorm")
-
-dir.create(data_dir, showWarnings = FALSE, recursive = TRUE)
-dir.create(output_dir, showWarnings = FALSE, recursive = TRUE)
+job_id <- Sys.getenv("SLURM_JOB_ID")
+run_id <- if (nzchar(job_id)) paste0("job-", job_id) else
+  paste(format(Sys.time(), "%Y%m%d-%H%M%S"), Sys.getpid(), sep = "-")
+data_dir <- file.path("data", "norm_feat", run_id)
+output_dir <- file.path("results", "norm_feat", "lognorm", run_id)
+for (directory in c(data_dir, output_dir)) {
+  dir.create(dirname(directory), recursive = TRUE, showWarnings = FALSE)
+  if (!dir.create(directory, showWarnings = FALSE)) {
+    stop("Cannot create new run directory: ", directory)
+  }
+}
+message("Normalization run: ", run_id, "\nInput: ", input_file,
+  "\nData: ", data_dir, "\nResults: ", output_dir)
 
 obj <- read_normalization_input(input_file)
 
@@ -42,6 +55,10 @@ obj_log <- run_pca_analysis(
   n_pcs = norm_feat_params$pca$n_pcs
 )
 
+obj_log@misc$norm_feat <- list(
+  input_file = input_file, run_id = run_id,
+  params = norm_feat_params, session_info = sessionInfo()
+)
 saveRDS(obj_log, file.path(data_dir, "lognorm.rds"))
 plot_variable_features(
   obj_log,

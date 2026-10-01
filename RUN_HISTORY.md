@@ -1,69 +1,104 @@
-# Integration and clustering run history
+# Pipeline run history
 
-Inventory audited **2026-10-01 (CEST)** in the shared `analysis` checkout, local `main` working tree (including uncommitted code). This is a historical ledger, **not** an instruction to rerun a job or a ranking of methods. Paths are relative to this directory. Slurm states and times come from `sacct` (local cluster time); parameters come from saved diagnostics/`analysis.rds`, run logs, and, where identified, historical code. A surviving file or a `COMPLETED` scheduler state alone does not establish the validity of every diagnostic. Current `params.R` must not be applied retroactively. Some input files were later replaced at the same path: a path alone is **not** a content hash or a complete snapshot of a historical input.
+Audited 2026-10-01. Times are CEST; dates are in 2026. Status comes from Slurm
+accounting; settings/inputs from logs and saved diagnostics. This is an inventory,
+not a recommendation of methods or resolutions. Submission commands: [README](README.md).
 
-## 1. Integration
+## QC and normalization: surviving files
 
-**Input/output types.** The normal input is a LogNormalize Seurat RDS with RNA count/normalized layers, selected variable genes and PCA: [`data/norm_feat/lognorm.rds`](data/norm_feat/lognorm.rds). Earlier pipeline runs also used an SCT Seurat RDS, `data/norm_feat/sct.rds`. Harmony corrects the **sample** batch on PCA components 1–30; it writes a Seurat RDS with the `harmony` reduction alongside the unchanged PCA. scVI chooses 3,000 existing LogNormalize RNA highly variable genes (HVGs), but trains on their **original RNA count layers**, with sample batches, not on normalized values or PCA. It writes a Seurat RDS with `integrated_scvi` alongside PCA. Each run's diagnostic results are a sampled-cell CSV, an RDS of per-cell mixing scores and summary/settings, a summary CSV, and a metrics PNG. The diagnostic iLISI (local inverse Simpson index) and sample-label silhouette measure batch mixing, not preservation of cell biology.
+| Job | Run interval | Checkpoints | Status / log |
+|---|---|---|---|
+| 44194877 | Sep 30 00:06–02:18 | [Labeled](data/qc_labeled_data/job-44194877/labeled_concatenated.rds), [DoubletFinder clean](data/clean_concatenated_data/job-44194877/clean_concatenated_doubletfinder.rds), [Scrublet clean](data/clean_concatenated_data/job-44194877/clean_concatenated_scrublet.rds) | COMPLETED; [log](logs/20260930-0006-qc-pipeline.log) |
+| 44212906 | Sep 30 13:25–13:46 | [LogNormalize](data/norm_feat/job-44212906/lognorm.rds) | COMPLETED; [log](logs/20260930-1325-norm-feat-pipeline.log) |
+| 44176755 | Sep 29 01:43–02:55 | [Legacy SCT](data/norm_feat/job-44176755/sct.rds) | COMPLETED; [log](logs/20260929-0143-norm-feat-pipeline.log) |
 
-| Job (start CEST) | Method / input Seurat RDS | Run-specific parameters and population | Output types and locations | Slurm outcome / evidence |
+Files were moved unchanged into job folders on Oct 1. Attribution uses logs,
+accounting and modification times, not internal job metadata. Flat-path links
+were removed. Earlier overwritten checkpoints, including 44176755's LogNormalize
+output, are unavailable; historical shared-path figures may mix jobs.
+
+## Integration
+
+Job-specific checkpoints are `data/integration/<method>/job-<ID>/lognorm.rds`;
+diagnostics are `results/integration/<method>/job-<ID>/`. All inputs were read from
+the former `data/norm_feat/` flat paths, whose contents changed between runs.
+
+| Job | Run interval | Method / input cells | Dimensions | Outcome / log |
 |---|---|---|---|---|
-| 44184472 (Sep 29 13:58) | Legacy Harmony, LogNormalize route first; intended SCT route second; `data/norm_feat/{lognorm,sct}.rds` | Historical driver: sample correction on PCA 1–30, max 10 Harmony iterations, seed 1234, 20,000 diagnostic cells; log confirms 262,936 cells / 23 samples and RNA assay. Later stages **not reached in log**. | No unique run directory; any surviving legacy shared-path checkpoint or plot cannot be assigned uniquely to this cancelled attempt. | **CANCELLED** 16:48 (batch signal 15). [Log](logs/20260929-1358-integration-pipeline.log), [Slurm message](logs/integration-pipeline-44184472.out). |
-| 44190509 (Sep 29 17:17) | Legacy Harmony; LogNormalize **and** SCT routes, `data/norm_feat/{lognorm,sct}.rds` | PCA/Harmony 1–30, sample batch, max 10 iterations, seed 1234; common 20,000-cell sample, iLISI perplexity 30 and Euclidean sample silhouettes. 262,936 cells / 23 samples per route. | Shared-path Seurat RDS [`data/integration/lognorm.rds`](data/integration/lognorm.rds) and [`sct.rds`](data/integration/sct.rds); [`results/integration/harmony/`](results/integration/harmony/) contains diagnostic RDS/CSV and figures. No run-specific directory. | **COMPLETED** 18:30, 0:0; both routes reached diagnostics. [Log](logs/20260929-1717-integration-pipeline.log); [later committed legacy driver](https://github.com/V2I-INRAE/Revolution_single_cells_analysis/blob/73d8db5/R/integration/main.R). |
-| 44193502 (Sep 29 21:35) | Harmony; `data/norm_feat/lognorm.rds` (262,936 cells, RNA) | PCA/Harmony 1–30, sample batch, max 10 iterations, seed 1234; 50,000 proportional-by-sample diagnostic cells, iLISI perplexity 30, Euclidean sample silhouettes. | Seurat [checkpoint](data/integration/harmony/job-44193502/lognorm.rds); [diagnostics and PNGs](results/integration/harmony/job-44193502/) (including method UMAPs). | **COMPLETED** 22:08, 0:0. [Log](logs/20260929-213551-integration-harmony-44193502.log), [saved settings](results/integration/harmony/job-44193502/diagnostics_lognorm.rds). |
-| 44193503 (Sep 29 21:35) | scVI; `data/norm_feat/lognorm.rds` (262,936 cells, RNA) | 3,000 RNA HVGs selected, original RNA counts for training; 30 latent coordinates, 2 layers, negative-binomial likelihood, seed 1234, automatic epoch limit (`max_epochs=NULL`; log: **30 epochs reached**). PCA/scVI UMAPs use 1–30; 50,000 diagnostic cells, perplexity 30, Euclidean sample silhouettes. | Seurat [checkpoint](data/integration/scvi/job-44193503/lognorm.rds); [diagnostics and PNGs](results/integration/scvi/job-44193503/). No separately saved scVI model/training history. | **COMPLETED** 22:22, 0:0. [Log](logs/20260929-213551-integration-scvi-44193503.log), [diagnostic settings](results/integration/scvi/job-44193503/diagnostics_lognorm.rds), [earlier committed implementation](https://github.com/V2I-INRAE/Revolution_single_cells_analysis/blob/32fc04d/R/integration/scvi.R). |
-| 44215817 (Sep 30 15:47) | scVI; `data/norm_feat/lognorm.rds` (now **262,303** cells, 23 samples, RNA) | Same 30-latent scVI specification and 30 observed training epochs as 44193503; PCA/scVI diagnostics 1–30, 50,000 cells, perplexity 30. This input population differs from the Sep 29 runs; the exact historical input file contents are not archived here. | Seurat [checkpoint](data/integration/scvi/job-44215817/lognorm.rds); [diagnostics/metrics](results/integration/scvi/job-44215817/). | **COMPLETED** 16:36, 0:0. [Log](logs/20260930-154712-integration-scvi-44215817.log), [saved settings](results/integration/scvi/job-44215817/diagnostics_lognorm.rds). |
-| 44215822 (Sep 30 15:47) | Harmony; `data/norm_feat/lognorm.rds` (262,303 cells, 23 samples, RNA) | PCA/Harmony 1–30, sample batch, max 10 iterations, seed 1234; 50,000 sampled cells, iLISI perplexity 30 and Euclidean sample silhouettes. | Seurat [checkpoint](data/integration/harmony/job-44215822/lognorm.rds); [diagnostics/metrics](results/integration/harmony/job-44215822/). Feeds **all** PCA and Harmony clustering jobs below. | **COMPLETED** 16:18, 0:0. [Log](logs/20260930-154738-integration-harmony-44215822.log), [saved settings](results/integration/harmony/job-44215822/diagnostics_lognorm.rds). |
-| 44227281 (Sep 30 22:37) | scVI; `data/norm_feat/lognorm.rds` (262,303 cells, 23 samples, RNA) | 3,000 existing RNA HVGs, original RNA counts, sample batches; **20** latent coordinates, 2 layers, negative-binomial likelihood, seed 1234, `max_epochs=NULL` (log: **30 epochs reached**). PCA UMAP/diagnostics 1–30; scVI UMAP/diagnostics 1–20; 50,000 sampled cells, perplexity 30. | Seurat [checkpoint](data/integration/scvi/job-44227281/lognorm.rds); [diagnostics/metrics](results/integration/scvi/job-44227281/). Feeds only the third scVI clustering run below. | **COMPLETED** 23:20, 0:0. [Log](logs/20260930-223724-integration-scvi-44227281.log), [saved settings](results/integration/scvi/job-44227281/diagnostics_lognorm.rds). |
+| 44184472 | Sep 29 13:58–16:48 | Legacy Harmony; 262,936 | PCA/Harmony 30 | CANCELLED; no uniquely attributable output; [log](logs/20260929-1358-integration-pipeline.log) |
+| 44190509 | Sep 29 17:17–18:30 | Legacy Harmony; LogNormalize + SCT, 262,936 each | PCA/Harmony 30 | COMPLETED; shared [LogNormalize](data/integration/lognorm.rds)/[SCT](data/integration/sct.rds) outputs; [log](logs/20260929-1717-integration-pipeline.log) |
+| 44193502 | Sep 29 21:35–22:08 | [Harmony](data/integration/harmony/job-44193502/lognorm.rds); 262,936 | PCA/Harmony 30 | COMPLETED; [log](logs/20260929-213551-integration-harmony-44193502.log) |
+| 44193503 | Sep 29 21:35–22:22 | [scVI](data/integration/scvi/job-44193503/lognorm.rds); 262,936 | PCA/scVI 30 | COMPLETED; [log](logs/20260929-213551-integration-scvi-44193503.log) |
+| 44215817 | Sep 30 15:47–16:36 | [scVI](data/integration/scvi/job-44215817/lognorm.rds); 262,303 | PCA/scVI 30 | COMPLETED; [log](logs/20260930-154712-integration-scvi-44215817.log) |
+| 44215822 | Sep 30 15:47–16:18 | [Harmony](data/integration/harmony/job-44215822/lognorm.rds); 262,303 | PCA/Harmony 30 | COMPLETED; [log](logs/20260930-154738-integration-harmony-44215822.log) |
+| 44227281 | Sep 30 22:37–23:20 | [scVI](data/integration/scvi/job-44227281/lognorm.rds); 262,303 | PCA 30 / scVI 20 | COMPLETED; [log](logs/20260930-223724-integration-scvi-44227281.log) |
 
-The linked legacy driver was **committed after** the 44190509 run, so it corroborates, but does not prove, the exact source at submission. It shows both normalization routes, `does_harmony=TRUE`, `does_cca=FALSE`, and 20,000 diagnostic cells; there is **no completed CCA job** in this inventory. The 30-latent scVI implementation predates 44193503 but is not a claimed per-job source commit: individual Slurm jobs did not store a Git revision. The current 20-latent implementation is in [`R/integration/params.R`](R/integration/params.R) and [`R/integration/scvi.R`](R/integration/scvi.R). For Sep 29 runs the diagnostic RDS records 30 analysis dimensions, and for 44227281 it records separate 30-PC and 20-scVI dimensions. The 30-/20-latent distinction is also corroborated by the scVI clustering input validations below. The archived scVI checkpoint contains more complete model settings in `misc$scvi`, but was not deserialized for this ledger because these multi-GB objects exceed the login runner's practical memory limit; model settings beyond the saved diagnostics are supported by the referenced implementation and logs rather than independently reread from those checkpoints.
+All runs used 23 samples and seed 1234. Harmony: sample correction, maximum 10
+iterations. scVI: 3,000 selected RNA genes, original counts, two layers,
+negative-binomial likelihood; logs show 30 epochs. Diagnostic sampling was
+20,000 cells for legacy runs, 50,000 thereafter; LISI perplexity 30.
+No completed CCA run is recorded.
 
-### Integration plotting (separate jobs)
+### Integration plots
 
-Each job reads **two existing Seurat RDS checkpoints**, verifies common cells/baseline, and emits a source manifest CSV plus grouped/faceted UMAP PNG/SVG figures; it does not refit integration. See [`scripts/sbatch_integration_plots.sh`](scripts/sbatch_integration_plots.sh) and [`R/integration/plot_main.R`](R/integration/plot_main.R). The recorded comparison manifests give the actual two checkpoint paths.
+Outputs: `results/integration/comparison/scvi-job-<S>_harmony-job-<H>/`.
+Each directory contains `comparison_sources.csv` and PNG/SVG figures.
 
-| Job (start CEST) | Inputs / output | Outcome and attribution |
-|---|---|---|
-| 44215826 (Sep 30 16:36) | scVI **44215817** + Harmony **44215822** → [comparison directory](results/integration/comparison/scvi-job-44215817_harmony-job-44215822/) ([source CSV](results/integration/comparison/scvi-job-44215817_harmony-job-44215822/comparison_sources.csv)). | **COMPLETED** 16:45, 0:0; [log](logs/20260930-163630-integration-plots-44215826.log). Later job 44220807 reused this same destination, so its **current figures cannot all be attributed to this first job**. |
-| 44220807 (Sep 30 18:34) | Same two checkpoints and **same output directory** as 44215826. | **COMPLETED** 18:53, 0:0; [log](logs/20260930-183438-integration-plots-44220807.log). Rerendered figures may have replaced earlier files; no immutable per-plot-job snapshot. |
-| 44227466 (Sep 30 23:20) | scVI **44227281** + Harmony **44215822** → [comparison directory](results/integration/comparison/scvi-job-44227281_harmony-job-44215822/) ([source CSV](results/integration/comparison/scvi-job-44227281_harmony-job-44215822/comparison_sources.csv)). | **COMPLETED** 23:46, 0:0; [log](logs/20260930-232055-integration-plots-44227466.log). |
+| Plot job | Run interval | Inputs: scVI / Harmony | Outcome / log |
+|---|---|---|---|
+| 44215826 | Sep 30 16:36–16:45 | 44215817 / 44215822 | COMPLETED; output directory reused by 44220807; [log](logs/20260930-163630-integration-plots-44215826.log) |
+| 44220807 | Sep 30 18:34–18:53 | 44215817 / 44215822 | COMPLETED; same output directory; [log](logs/20260930-183438-integration-plots-44220807.log) |
+| 44227466 | Sep 30 23:20–23:46 | 44227281 / 44215822 | COMPLETED; [log](logs/20260930-232055-integration-plots-44227466.log) |
 
-## 2. Clustering
+## Clustering
 
-**Input/output types.** Each method consumes an existing *integration-stage Seurat RDS* (`lognorm.rds`), without re-normalizing or re-integrating. “Unintegrated” uses **the preserved PCA** in the Harmony checkpoint, not its corrected Harmony reduction. Harmony uses `harmony`; scVI uses `integrated_scvi`. Each clustering job writes a full Seurat [checkpoint](data/clustering/) with graphs, UMAP and resolution assignments; its run-specific [`results/clustering/`](results/clustering/) directory contains five CSVs (`cluster_assignments`, `diagnostic_cells`, `silhouettes`, `cluster_sizes`, `sample_composition`), `summary.csv`, and `analysis.rds` with settings, provenance, all-cell assignments and diagnostics. The **`analysis.rds` is written last**. Its saved `provenance$input_file` and `provenance$integration$run_id` establish the upstream job; all nine bundles have the same saved baseline fingerprint prefix `71b1a8e00b7d`. A fingerprint match is not a claim that integrations themselves are interchangeable.
+All nine jobs completed with 262,303 cells. U = unintegrated PCA, H = Harmony,
+S = scVI. U/H inputs came from Harmony **44215822**; S inputs from scVI
+**44215817** (A/B) or **44227281** (C).
 
-The tables use these **saved parameter profiles**, not the current configuration applied to older runs:
+Checkpoints: `data/clustering/<method>/job-<ID>/lognorm.rds`.
+Results: `results/clustering/<method>/job-<ID>/`, including CSVs and `analysis.rds`
+with settings and upstream provenance.
 
-| Profile | Graph / clustering parameters | Diagnostics / UMAP |
-|---|---|---|
-| **A** (first run) | Components 1–30 for PCA/Harmony/scVI; `k.param=20`; resolutions **0.4, 0.6, 0.8, 1.0**; Annoy Euclidean, 50 trees, SNN pruning 1/15, Louvain (`graph_settings$algorithm="Louvain"`), 10 starts/10 iterations, seed 1234. | 50,000 sample-proportional diagnostic cells, Euclidean silhouettes. Saved PCA/method UMAPs on the chosen 30 dimensions; the graph is recomputed, while an existing matching UMAP is retained. |
-| **B** (second run) | Components 1–30 for all three; `k.param=60`; resolutions **0.1, 0.2, 0.3, 0.4**; otherwise Annoy Euclidean/50 trees, pruning 1/15, Louvain algorithm **1**, 10 starts/10 iterations, seed 1234. | Same 50,000-cell sampled Euclidean diagnostic; method-specific 30-dimensional UMAP. |
-| **C** (third run) | PCA/Harmony components **1–30** and scVI complete latent **1–20** (`scvi_dim`); `k.param=100`; resolutions **0.05, 0.1, 0.15, 0.2, 0.25, 0.3**; otherwise same graph algorithm/seed/10 starts/10 iterations. | Same 50,000-cell diagnostic and method-specific UMAP; scVI uses 1–20 in graph, UMAP and silhouette, **not** the PCA/Harmony 1–30 setting. |
+| Profile | Dimensions: PCA / Harmony / scVI | Neighbors | Resolutions |
+|---|---|---|---|
+| A | 30 / 30 / 30 | 20 | 0.4, 0.6, 0.8, 1.0 |
+| B | 30 / 30 / 30 | 60 | 0.1, 0.2, 0.3, 0.4 |
+| C | 30 / 30 / 20 | 100 | 0.05, 0.1, 0.15, 0.2, 0.25, 0.3 |
 
-Every job below processed **262,303 cells**, returned all listed resolution assignments, and finished `COMPLETED` with Slurm exit `0:0`. Cluster counts are in resolution order from the profile table, **not** chosen optimal cluster numbers. `U` = unintegrated PCA, `H` = Harmony, `S` = scVI.
+Common settings: Annoy Euclidean, 50 trees, SNN pruning 1/15, Louvain,
+10 starts and 10 iterations, seed 1234, 50,000 diagnostic cells. Counts below follow
+each profile's resolution order; they are not selected optimal cluster numbers.
 
-| Job (start CEST) | Method / profile | Input Seurat RDS from integration job | Output Seurat RDS + analysis bundle (and CSVs) | Clusters by resolution / evidence |
+| Job / checkpoint | Start | Method / profile | Cluster counts | Log |
 |---|---|---|---|---|
-| 44221464 (Sep 30 19:27) | U / A | [Harmony 44215822](data/integration/harmony/job-44215822/lognorm.rds), **PCA** | [Checkpoint](data/clustering/unintegrated/job-44221464/lognorm.rds), [bundle](results/clustering/unintegrated/job-44221464/analysis.rds) | 34/40/43/51; [log](logs/20260930-192711-clustering-unintegrated-44221464.log) |
-| 44221465 (Sep 30 19:27) | H / A | [Harmony 44215822](data/integration/harmony/job-44215822/lognorm.rds) | [Checkpoint](data/clustering/harmony/job-44221465/lognorm.rds), [bundle](results/clustering/harmony/job-44221465/analysis.rds) | 33/37/44/52; [log](logs/20260930-192741-clustering-harmony-44221465.log) |
-| 44221467 (Sep 30 19:27) | S / A | [scVI 44215817](data/integration/scvi/job-44215817/lognorm.rds), 30 latent | [Checkpoint](data/clustering/scvi/job-44221467/lognorm.rds), [bundle](results/clustering/scvi/job-44221467/analysis.rds) | 38/49/55/60; [log](logs/20260930-192742-clustering-scvi-44221467.log) |
-| 44222697 (Sep 30 21:16) | H / B | [Harmony 44215822](data/integration/harmony/job-44215822/lognorm.rds) | [Checkpoint](data/clustering/harmony/job-44222697/lognorm.rds), [bundle](results/clustering/harmony/job-44222697/analysis.rds) | 19/24/28/30; [log](logs/20260930-211633-clustering-harmony-44222697.log) |
-| 44222698 (Sep 30 21:16) | U / B | [Harmony 44215822](data/integration/harmony/job-44215822/lognorm.rds), **PCA** | [Checkpoint](data/clustering/unintegrated/job-44222698/lognorm.rds), [bundle](results/clustering/unintegrated/job-44222698/analysis.rds) | 19/24/29/32; [log](logs/20260930-211635-clustering-unintegrated-44222698.log) |
-| 44222701 (Sep 30 21:16) | S / B | [scVI 44215817](data/integration/scvi/job-44215817/lognorm.rds), 30 latent | [Checkpoint](data/clustering/scvi/job-44222701/lognorm.rds), [bundle](results/clustering/scvi/job-44222701/analysis.rds) | 26/33/34/37; [log](logs/20260930-211654-clustering-scvi-44222701.log) |
-| 44228330 (Sep 30 23:50) | S / C | [scVI 44227281](data/integration/scvi/job-44227281/lognorm.rds), **20 latent** | [Checkpoint](data/clustering/scvi/job-44228330/lognorm.rds), [bundle](results/clustering/scvi/job-44228330/analysis.rds) | 17/23/27/30/31/31; [log](logs/20260930-235041-clustering-scvi-44228330.log) |
-| 44228331 (Sep 30 23:50) | U / C | [Harmony 44215822](data/integration/harmony/job-44215822/lognorm.rds), **PCA** | [Checkpoint](data/clustering/unintegrated/job-44228331/lognorm.rds), [bundle](results/clustering/unintegrated/job-44228331/analysis.rds) | 15/19/21/24/25/25; [log](logs/20260930-235042-clustering-unintegrated-44228331.log) |
-| 44228335 (Sep 30 23:50) | H / C | [Harmony 44215822](data/integration/harmony/job-44215822/lognorm.rds) | [Checkpoint](data/clustering/harmony/job-44228335/lognorm.rds), [bundle](results/clustering/harmony/job-44228335/analysis.rds) | 15/18/20/22/22/24; [log](logs/20260930-235047-clustering-harmony-44228335.log) |
+| [44221464](data/clustering/unintegrated/job-44221464/lognorm.rds) | Sep 30 19:27 | U / A | 34/40/43/51 | [log](logs/20260930-192711-clustering-unintegrated-44221464.log) |
+| [44221465](data/clustering/harmony/job-44221465/lognorm.rds) | Sep 30 19:27 | H / A | 33/37/44/52 | [log](logs/20260930-192741-clustering-harmony-44221465.log) |
+| [44221467](data/clustering/scvi/job-44221467/lognorm.rds) | Sep 30 19:27 | S / A | 38/49/55/60 | [log](logs/20260930-192742-clustering-scvi-44221467.log) |
+| [44222697](data/clustering/harmony/job-44222697/lognorm.rds) | Sep 30 21:16 | H / B | 19/24/28/30 | [log](logs/20260930-211633-clustering-harmony-44222697.log) |
+| [44222698](data/clustering/unintegrated/job-44222698/lognorm.rds) | Sep 30 21:16 | U / B | 19/24/29/32 | [log](logs/20260930-211635-clustering-unintegrated-44222698.log) |
+| [44222701](data/clustering/scvi/job-44222701/lognorm.rds) | Sep 30 21:16 | S / B | 26/33/34/37 | [log](logs/20260930-211654-clustering-scvi-44222701.log) |
+| [44228330](data/clustering/scvi/job-44228330/lognorm.rds) | Sep 30 23:50 | S / C | 17/23/27/30/31/31 | [log](logs/20260930-235041-clustering-scvi-44228330.log) |
+| [44228331](data/clustering/unintegrated/job-44228331/lognorm.rds) | Sep 30 23:50 | U / C | 15/19/21/24/25/25 | [log](logs/20260930-235042-clustering-unintegrated-44228331.log) |
+| [44228335](data/clustering/harmony/job-44228335/lognorm.rds) | Sep 30 23:50 | H / C | 15/18/20/22/22/24 | [log](logs/20260930-235047-clustering-harmony-44228335.log) |
 
-The six CSVs and analysis bundles exist for all nine method jobs. Method UMAP-resolution and clustree **figures for A are absent** because plotting failed later; the corresponding figures for B and C were produced by their *separate plotting jobs*, not by the clustering jobs. Saved profile A has a shorter settings schema, and its string `Louvain` graph setting is not falsely represented as a recorded numeric algorithm ID. The B/C bundles explicitly save ID 1. For C, the U/H full checkpoints are multi-GB and were not independently deserialized on this ~8-GiB login runner; their bundles/CSVs and checkpoint file presence were checked by the owner threads, with gzip integrity verified. The C scVI checkpoint was independently read in a higher-memory verification job; do not interpret this difference as evidence of a failed U/H Slurm run.
+### Clustering plots
 
-### Clustering diagnostic plotting (separate jobs)
+Outputs: `results/clustering/comparison/unintegrated-job-<U>_harmony-job-<H>_scvi-job-<S>/`.
+Successful jobs also save method UMAP/clustree figures in each method's results folder.
 
-Each plotting job reads **three `analysis.rds` bundles**, compares partitions (adjusted Rand index and cell-count overlap), writes comparison CSVs and PNG/SVG figures, then reads the Seurat checkpoints one by one for per-method UMAP-resolution panels and clustrees. It does not recompute clusters. Its source CSV records the exact bundle paths; see [`R/clustering/plot_main.R`](R/clustering/plot_main.R).
+| Plot job | Run interval | Input jobs: U / H / S | Outcome / log |
+|---|---|---|---|
+| 44221470 | Sep 30 19:54–19:56 | 44221464 / 44221465 / 44221467 | FAILED, 1:0: >45-colour guard; partial comparisons, no method UMAP/clustree figures; [log](logs/20260930-195423-clustering-plots-44221470.log) |
+| 44222706 | Sep 30 21:57–22:04 | 44222698 / 44222697 / 44222701 | COMPLETED; [log](logs/20260930-215708-clustering-plots-44222706.log) |
+| 44228340 | Oct 1 01:09–01:17 | 44228331 / 44228335 / 44228330 | COMPLETED; [log](logs/20261001-010945-clustering-plots-44228340.log) |
 
-| Job (start CEST) | Input bundles (U / H / S) and output | Outcome |
-|---|---|---|
-| 44221470 (Sep 30 19:54) | **44221464 / 44221465 / 44221467** → [comparison](results/clustering/comparison/unintegrated-job-44221464_harmony-job-44221465_scvi-job-44221467/) ([sources](results/clustering/comparison/unintegrated-job-44221464_harmony-job-44221465_scvi-job-44221467/comparison_sources.csv)) | **FAILED**, exit 1:0, 19:56. All three dependencies succeeded; plot stopped at the intentional **>45 colours** guard (up to 60 clusters), not an out-of-memory or dependency failure. Comparison CSVs and three figure pairs survive, but **no per-method UMAP/clustree figures**. [Log](logs/20260930-195423-clustering-plots-44221470.log). Treat directory as **partial**. |
-| 44222706 (Sep 30 21:57) | **44222698 / 44222697 / 44222701** → [comparison](results/clustering/comparison/unintegrated-job-44222698_harmony-job-44222697_scvi-job-44222701/) ([sources](results/clustering/comparison/unintegrated-job-44222698_harmony-job-44222697_scvi-job-44222701/comparison_sources.csv)) | **COMPLETED** 22:04, 0:0. Comparison CSV/PNG/SVG and [U](results/clustering/unintegrated/job-44222698/), [H](results/clustering/harmony/job-44222697/), [S](results/clustering/scvi/job-44222701/) per-method PNG/SVG present. [Log](logs/20260930-215708-clustering-plots-44222706.log). |
-| 44228340 (Oct 1 01:09) | **44228331 / 44228335 / 44228330** → [comparison](results/clustering/comparison/unintegrated-job-44228331_harmony-job-44228335_scvi-job-44228330/) ([sources](results/clustering/comparison/unintegrated-job-44228331_harmony-job-44228335_scvi-job-44228330/comparison_sources.csv)) | **COMPLETED** 01:17, 0:0. Comparison CSV/PNG/SVG and [U](results/clustering/unintegrated/job-44228331/), [H](results/clustering/harmony/job-44228335/), [S](results/clustering/scvi/job-44228330/) per-method PNG/SVG present. [Log](logs/20261001-010945-clustering-plots-44228340.log). |
+## Limits
 
-**Limits and reproducibility:** The inventory covers job IDs found in this checkout's integration/clustering run logs and job-specific output directories, reconciled with Slurm accounting on the audit date; it is not a claim to list jobs run elsewhere or deleted logs. The legacy first job used shared output paths; those surviving files were later overwritten, so its partial products cannot be reconstructed. Integration jobs do not capture a source commit or immutable hash of `data/norm_feat/lognorm.rds`; source and input **content** at submission time cannot be fully recovered from job IDs alone. Read the linked saved bundles/manifests before comparing runs, especially across 262,936 versus 262,303 cells. No clustering result is an experimentally validated cell identity or a selected optimal resolution.
+- Completed jobs exited 0:0. File presence alone does not prove a complete run.
+- Older jobs did not capture immutable input hashes or per-job source revisions;
+  current settings must not be applied retroactively.
+- Most multi-GB checkpoints were not deserialized for this audit; evidence came
+  from accounting, logs, saved diagnostics/bundles and file checks.
+- Sample-mixing metrics and exploratory clusters do not establish cell identities
+  or biological preservation.
