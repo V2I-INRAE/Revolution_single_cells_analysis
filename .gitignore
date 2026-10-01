@@ -67,6 +67,7 @@ results/*
 !results/qc
 !results/norm_feat
 !results/integration
+!results/clustering
 
 # env
 renv/

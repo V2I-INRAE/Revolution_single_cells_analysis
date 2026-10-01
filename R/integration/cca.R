@@ -11,7 +11,7 @@ run_cca_integration <- function(seurat_obj, dims = 1:30, seed = 1234) {
     "LogNormalize"
   }
   set.seed(seed)
-  # Sample groups come from the existing normalized layers or SCT models.
+
   IntegrateLayers(
     object = seurat_obj,
     method = CCAIntegration,

@@ -12,7 +12,7 @@ read_integration_comparison <- function(scvi_file, harmony_file) {
   stopifnot("Expected a LogNormalize scVI checkpoint" =
     identical(obj@misc$integration$method, "scvi") &&
       identical(obj@misc$integration$route, "lognorm"))
-  # Plotting needs metadata and saved embeddings, not dense normalized/scaled data.
+
   obj <- DietSeurat(obj, assays = "RNA", layers = "counts",
     dimreducs = c("pca", "umap", "umap_scvi"), graphs = NULL)
   harmony <- readRDS(harmony_file)
@@ -110,6 +110,6 @@ setup_integration <- function(seurat_obj, dims = 1:30) {
     "Integration input: ", ncol(seurat_obj), " cells, ",
     length(samples), " samples, assay ", DefaultAssay(seurat_obj)
   )
-  # Keep sample layers/models, normalized values, selected features and PCA.
+
   seurat_obj
 }

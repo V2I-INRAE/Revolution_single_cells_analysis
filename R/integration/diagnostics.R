@@ -26,7 +26,7 @@ sample_diagnostic_cells <- function(metadata, n_cells = 20000, seed = 1234) {
 }
 
 compute_integration_metrics <- function(
-  seurat_obj, cells, dims = 1:30, perplexity = 30,
+  seurat_obj, cells, dims = 1:30, scvi_dims = dims, perplexity = 30,
   reductions = c("pca", "harmony", "integrated_cca")
 ) {
   stopifnot(!anyDuplicated(cells), all(cells %in% colnames(seurat_obj)))
@@ -41,7 +41,8 @@ compute_integration_metrics <- function(
   )
   scores <- lapply(reductions, function(reduction) {
     message("Diagnostics: ", reduction, " on ", length(cells), " cells")
-    embedding <- Embeddings(seurat_obj, reduction)[cells, dims, drop = FALSE]
+    reduction_dims <- if (reduction == "integrated_scvi") scvi_dims else dims
+    embedding <- Embeddings(seurat_obj, reduction)[cells, reduction_dims, drop = FALSE]
     stopifnot(
       identical(rownames(embedding), rownames(metadata)),
       all(is.finite(embedding))
@@ -74,7 +75,8 @@ compute_integration_metrics <- function(
   list(
     scores = do.call(rbind, scores), summary = summary,
     settings = list(
-      dims = dims, perplexity = perplexity, reductions = reductions,
+      dims = dims, scvi_dims = scvi_dims, perplexity = perplexity,
+      reductions = reductions,
       batch_col = "sample", distance = "euclidean",
       population = "shared proportionally stratified subset"
     )

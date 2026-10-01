@@ -5,7 +5,6 @@ suppressPackageStartupMessages({
   library(rlang)
 })
 
-# plot_grouping() is shared with the existing PCA plots in norm_feat/plots.R.
 plot_integration_umaps <- function(
   seurat_obj,
   group_by = c("sample", "pressure", "time", "pressure_time"),
@@ -27,8 +26,6 @@ plot_integration_umaps <- function(
       ncol(coordinates) == 2L, all(is.finite(coordinates)))
   }
   if (group_by == "sample") {
-    # Maximin CIELAB selection from the scientific-visualization palette,
-    # excluding very pale colors (L* >= 80). Fixed mapping across all methods.
     palette <- c(
       "#3A5BA0", "#F5A623", "#1ABC9C", "#90141A", "#EBA5AB", "#64B024",
       "#2E5111", "#8EC9EB", "#5C6C6B", "#D35400", "#8C6D31", "#9B59B6",
@@ -64,7 +61,6 @@ plot_integration_umaps <- function(
       return(do.call(scplotter::CellDimPlot, args) + labs(colour = "Sample") +
         guides(colour = guide_legend(ncol = 6, override.aes = list(size = 2.5, alpha = 1))))
     }
-    # Raster sizes are rounded by plotthis: 3/1500 is 20% larger than 2/1200.
     args$raster_dpi <- c(1500, 1500)
     args$pt_size <- 3
     args$pt_alpha <- 1
@@ -74,8 +70,6 @@ plot_integration_umaps <- function(
     args$highlight_stroke <- 1
     args$highlight_alpha <- 1
     if (group_by == "pressure") {
-      # Native faceting cannot hide Control's facet while retaining its cells.
-      # Two native highlight calls keep every cell as context in both columns.
       args$pt_alpha <- 0.5
       pressure_panels <- lapply(c("Positive", "Negative"), function(category) {
         args$highlight <- sprintf('integration_group == "%s"', category)

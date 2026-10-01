@@ -4,6 +4,7 @@ if (length(args) != 1L || !tolower(args[[1]]) %in% c("harmony", "cca", "scvi")) 
 }
 method <- tolower(args[[1]])
 
+source("R/integration/params.R")
 source("R/integration/io.R")
 source("R/integration/harmony.R")
 source("R/integration/cca.R")
@@ -23,6 +24,7 @@ data_dir <- file.path("data", "integration", method, run_id)
 output_dir <- file.path("results", "integration", method, run_id)
 routes <- "lognorm"
 dims <- 1:30
+scvi_dims <- if (method == "scvi") seq_len(scvi_params$n_latent) else dims
 seed <- 1234
 n_diagnostic_cells <- 50000
 perplexity <- 30
@@ -33,7 +35,6 @@ reductions <- c(umap = "pca", switch(method,
   scvi = c(umap_scvi = "integrated_scvi")
 ))
 
-# Reserve both run directories without reusing or overwriting an earlier run.
 for (directory in c(data_dir, output_dir)) {
   dir.create(dirname(directory), showWarnings = FALSE, recursive = TRUE)
   if (!dir.create(directory, showWarnings = FALSE)) {
@@ -43,7 +44,6 @@ for (directory in c(data_dir, output_dir)) {
 message("Integration: ", method, "; route: lognorm; run: ", run_id,
   "\nData: ", data_dir, "\nResults: ", output_dir)
 
-# Downstream integration uses only LogNormalize; existing SCT files are retained.
 for (route in routes) {
   input_file <- file.path(input_dir, paste0(route, ".rds"))
   obj <- read_integration_input(input_file, dims = dims)
@@ -64,10 +64,11 @@ for (route in routes) {
     obj <- run_cca_integration(obj, dims = dims, seed = seed)
   }
   if (method == "scvi") {
-    obj <- run_scvi_integration(obj, dims = dims, seed = seed)
+    obj <- run_scvi_integration(obj, params = scvi_params)
   }
   obj <- run_integration_umaps(
-    obj, dims = dims, seed = seed, reductions = reductions
+    obj, dims = dims, scvi_dims = scvi_dims, seed = seed,
+    reductions = reductions
   )
 
   obj@misc$integration <- list(
@@ -79,13 +80,13 @@ for (route in routes) {
     purpose = "sensitivity analysis against unintegrated PCA",
     session_info = sessionInfo()
   )
-  # Keep the integrated checkpoint even if a subsequent diagnostic fails.
+
   saveRDS(obj, file.path(data_dir, paste0(route, ".rds")))
 
-  # Cross-method UMAP figures are generated separately once both checkpoints exist.
   diagnostics <- compute_integration_metrics(
     obj,
-    cells = rownames(diagnostic_cells), dims = dims, perplexity = perplexity,
+    cells = rownames(diagnostic_cells), dims = dims,
+    scvi_dims = scvi_dims, perplexity = perplexity,
     reductions = unname(reductions)
   )
   saveRDS(
