@@ -2,7 +2,7 @@ suppressPackageStartupMessages({
   library(Seurat)
 })
 
-run_cca_integration <- function(seurat_obj, dims = 1:30, seed = 1234) {
+run_cca_integration <- function(seurat_obj, dims, seed = 1234) {
   normalization <- if (inherits(
     seurat_obj[[DefaultAssay(seurat_obj)]], "SCTAssay"
   )) {
