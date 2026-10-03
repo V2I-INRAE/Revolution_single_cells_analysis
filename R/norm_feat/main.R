@@ -75,12 +75,3 @@ plot_pca_elbow(
 plot_pca_loadings(
   obj_log, output_dir = output_dir, filename = "pca_loadings_lognorm.png"
 )
-for (group_by in c("sample", "pressure", "time", "pressure_time")) {
-  plot_pca_grouping(
-    obj_log,
-    group_by = group_by,
-    output_dir = output_dir,
-    seed = norm_feat_params$pca$seed,
-    filename = paste0("pca_", group_by, "_lognorm.png")
-  )
-}

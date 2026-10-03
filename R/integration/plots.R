@@ -5,6 +5,80 @@ suppressPackageStartupMessages({
   library(rlang)
 })
 
+plot_grouping <- function(
+  metadata,
+  group_by = c("sample", "pressure", "time", "pressure_time")
+) {
+  group_by <- match.arg(group_by)
+  required <- switch(
+    group_by,
+    sample = "sample",
+    pressure = "pressure",
+    time = "time_point",
+    pressure_time = c("pressure", "time_point")
+  )
+  missing_columns <- setdiff(required, colnames(metadata))
+  if (length(missing_columns) > 0L) {
+    stop(
+      "Missing plotting metadata: ",
+      paste(missing_columns, collapse = ", ")
+    )
+  }
+
+  pressure <- as.character(metadata$pressure)
+  time <- as.character(metadata$time_point)
+  if (group_by != "sample") {
+    unknown_pressure <- setdiff(
+      unique(pressure),
+      c("None", "C", "positive", "negative")
+    )
+    if (length(unknown_pressure) > 0L || anyNA(pressure)) {
+      stop("Unexpected or missing pressure values in PCA metadata.")
+    }
+    pressure[pressure == "None"] <- "C"
+  }
+  if (group_by %in% c("time", "pressure_time")) {
+    unknown_time <- setdiff(unique(time), c("T0H", "T4H", "T8H", "T10H"))
+    if (length(unknown_time) > 0L || anyNA(time)) {
+      stop("Unexpected or missing time values in PCA metadata.")
+    }
+    time[time == "T8H"] <- "T10H"
+  }
+
+  if (group_by == "sample") {
+    values <- as.character(metadata$sample)
+    if (anyNA(values) || any(values == "")) {
+      stop("Missing sample values in PCA metadata.")
+    }
+    values <- factor(values, levels = unique(values))
+    legend_title <- "Sample"
+  } else if (group_by == "pressure") {
+    values <- factor(pressure, levels = c("C", "positive", "negative"))
+    legend_title <- "Pressure"
+  } else if (group_by == "time") {
+    values <- factor(time, levels = c("T0H", "T4H", "T10H"))
+    legend_title <- "Time"
+  } else {
+    if (any(time != "T0H" & pressure == "C")) {
+      stop("Control pressure is only expected at T0H.")
+    }
+    values <- ifelse(time == "T0H", "C", paste(pressure, time, sep = "_"))
+    values <- factor(
+      values,
+      levels = c(
+        "C", "positive_T4H", "negative_T4H",
+        "positive_T10H", "negative_T10H"
+      )
+    )
+    legend_title <- "Pressure and time"
+  }
+  if (anyNA(values)) {
+    stop("PCA grouping produced missing labels.")
+  }
+
+  list(values = values, title = legend_title)
+}
+
 plot_integration_umaps <- function(
   seurat_obj,
   group_by = c("sample", "pressure", "time", "pressure_time"),
@@ -18,7 +92,8 @@ plot_integration_umaps <- function(
   grouping <- plot_grouping(seurat_obj[[]], group_by)
   plot_obj <- seurat_obj
   plot_obj$integration_group <- grouping$values
-  reductions <- c(Unintegrated = "umap", scVI = "umap_scvi", Harmony = "umap_harmony")
+  reductions <- c(Unintegrated = "umap", scVI = "umap_scvi",
+    Harmony = "umap_harmony", CCA = "umap_cca")
   stopifnot(all(reductions %in% Reductions(seurat_obj)))
   for (reduction in reductions) {
     coordinates <- Embeddings(seurat_obj, reduction)
@@ -101,13 +176,13 @@ plot_integration_umaps <- function(
     }
     return(invisible(panels))
   }
-  p <- patchwork::wrap_plots(panels, ncol = if (group_by == "sample") 3 else 1) +
+  p <- patchwork::wrap_plots(panels, ncol = if (group_by == "sample") 4 else 1) +
     patchwork::plot_layout(guides = "collect")
   p <- p & theme(legend.position = if (group_by == "sample") "bottom" else "none")
   if (!is.null(output_dir)) {
     dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
     if (is.null(filename)) filename <- paste0("umap_", group_by, "_lognorm")
-    width <- switch(group_by, sample = 21, pressure = 10, time = 15, pressure_time = 25)
+    width <- switch(group_by, sample = 28, pressure = 10, time = 15, pressure_time = 25)
     height <- if (group_by == "sample") 9 else 15
     for (extension in c("png", "svg")) {
       ggsave(file.path(output_dir, paste0(tools::file_path_sans_ext(filename), ".", extension)), p,

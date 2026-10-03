@@ -77,16 +77,18 @@ records historical jobs, inputs, outputs and outcomes.
 - **QC:** DoubletFinder and Scrublet are labeled before filtering and produce
   separate clean branches. Scrublet uses scores >0.15 for final calls; its printed
   automatic threshold is not the applied cutoff. QC before/after plots compare
-  all input cells with QC-only retained cells. Ribosomal percentage is descriptive,
-  not a filtering criterion. Settings: `R/qc/params.R`.
+  all input cells with QC-only retained cells. Cells with ribosomal counts ≤2.5%
+  are excluded. Settings: `R/qc/params.R`.
 - **Normalization:** LogNormalize, per-layer VST selection, 3,000 consensus
   variable genes and 50-PC PCA. SCT checkpoints are historical only.
   Settings: `R/norm_feat/params.R`.
-- **Integration:** corrects sample batches, not pressure/time. PCA/Harmony use
-  dimensions 1–30; scVI uses original RNA counts for 3,000 selected genes and
+- **Integration:** corrects sample batches, not pressure/time. Unintegrated UMAP
+  and Harmony/CCA use dimensions 1–20; scVI uses original RNA counts for 3,000 selected genes and
   20 latent dimensions. Settings: `R/integration/params.R`.
 - **Clustering:** unintegrated uses preserved PCA; other routes use Harmony or
-  scVI. Settings: `R/clustering/params.R`. Mixing metrics do not establish
+  scVI, selecting dimensions 1–20. Use newly generated 20-component integration
+  checkpoints; the example job IDs above refer to historical runs.
+  Settings: `R/clustering/params.R`. Mixing metrics do not establish
   biological preservation, and clusters are not validated cell identities.
 
 Figures are PNG/SVG; saved objects retain run metadata. Historical shared-path

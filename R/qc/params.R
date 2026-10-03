@@ -4,7 +4,7 @@ qc_params <- list(
   metrics = list(
     mitochondrial_genes = c(
       "ATP6", "ATP8", "COX1", "COX2", "COX3", "CYTB",
-      "ND1", "ND2", "ND3", "ND4", "ND5", "ND6"
+      "ND1", "ND2", "ND3", "ND4", "ND4L", "ND5", "ND6"
     ),
     mitochondrial_pattern = "^MT-",
     ribosomal_pattern = "^RP[LS]",
@@ -12,12 +12,12 @@ qc_params <- list(
   ),
   filtering = list(
     min_features = 200,
-    max_features_cap = 5000,
+    max_features_cap = 4500,
     feature_mad_multiplier = 4,
     min_log10_genes_per_umi = 0.8,
     max_mito_percent_cap = 20,
     mito_mad_multiplier = 4,
-    min_cells_per_feature = 3
+    min_cells_per_feature = 10
   ),
   doublets = list(
     bd_multiplet_table = data.frame(

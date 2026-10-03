@@ -3,11 +3,10 @@
 norm_feat_params <- list(
   normalization = list(
     n_variable_features = 3000,
-    vars_to_regress = NULL,
+    vars_to_regress = c("percent.mt", "nFeature_RNA"),
     lognorm_method = "LogNormalize",
     lognorm_scale_factor = 10000,
-    hvg_selection_method = "vst",
-    sct_feature_buffer = 100
+    hvg_selection_method = "vst"
   ),
   pca = list(
     n_pcs = 50,

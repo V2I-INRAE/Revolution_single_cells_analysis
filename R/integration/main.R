@@ -25,7 +25,7 @@ run_id <- if (nzchar(job_id)) {
 data_dir <- file.path("data", "integration", method, run_id)
 output_dir <- file.path("results", "integration", method, run_id)
 routes <- "lognorm"
-dims <- 1:30
+dims <- integration_params$dims
 scvi_dims <- if (method == "scvi") seq_len(scvi_params$n_latent) else dims
 seed <- 1234
 n_diagnostic_cells <- 50000
@@ -75,7 +75,8 @@ for (route in routes) {
   obj@misc$integration <- list(
     input_file = input_file, route = route, batch_col = "sample",
     method = method, run_id = run_id, reductions = reductions,
-    dims = dims, seed = seed, diagnostic_cells = rownames(diagnostic_cells),
+    dims = dims, scvi_dims = if (method == "scvi") scvi_dims else NULL,
+    seed = seed, diagnostic_cells = rownames(diagnostic_cells),
     diagnostic_sampling = "proportional by sample, largest remainder",
     perplexity = perplexity,
     purpose = "sensitivity analysis against unintegrated PCA",

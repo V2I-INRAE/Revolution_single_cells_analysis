@@ -26,7 +26,7 @@ sample_diagnostic_cells <- function(metadata, n_cells = 20000, seed = 1234) {
 }
 
 compute_integration_metrics <- function(
-  seurat_obj, cells, dims = 1:30, scvi_dims = dims, perplexity = 30,
+  seurat_obj, cells, dims, scvi_dims, perplexity = 30,
   reductions = c("pca", "harmony", "integrated_cca")
 ) {
   stopifnot(!anyDuplicated(cells), all(cells %in% colnames(seurat_obj)))

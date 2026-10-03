@@ -73,12 +73,9 @@ scale_data <- function(
     message("  Variables to regress: ", paste(vars_to_regress, collapse = ", "))
     missing_vars <- setdiff(vars_to_regress, colnames(seurat_obj@meta.data))
     if (length(missing_vars) > 0) {
-      warning(
+      stop(
         "Variables not found in metadata: ",
         paste(missing_vars, collapse = ", ")
-      )
-      vars_to_regress <- intersect(
-        vars_to_regress, colnames(seurat_obj@meta.data)
       )
     }
   }

@@ -2,7 +2,7 @@ suppressPackageStartupMessages({
   library(Seurat)
 })
 
-run_harmony_integration <- function(seurat_obj, dims = 1:30, seed = 1234) {
+run_harmony_integration <- function(seurat_obj, dims, seed = 1234) {
   set.seed(seed)
   # Direct Harmony honors dims.use; Seurat's layer wrapper uses all input PCs.
   harmony::RunHarmony(

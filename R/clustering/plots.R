@@ -18,10 +18,11 @@ save_clustering_plot <- function(plot, stem, output_dir, width, height) {
   }
 }
 
-plot_cluster_resolutions <- function(obj, output_dir) {
+plot_cluster_resolutions <- function(obj, output_dir, plot_resolutions) {
   config <- obj@misc$clustering
-  panels <- lapply(seq_len(nrow(config$partitions)), function(i) {
-    column <- config$partitions$column[i]
+  partitions <- config$partitions[config$partitions$resolution %in% plot_resolutions, ]
+  panels <- lapply(seq_len(nrow(partitions)), function(i) {
+    column <- partitions$column[i]
     labels <- levels(obj[[]][, column])
     stopifnot("More clusters than palette colours; choose a palette policy before plotting" =
       length(labels) <= length(clustering_colours))
@@ -33,7 +34,7 @@ plot_cluster_resolutions <- function(obj, output_dir) {
       raster = TRUE, raster_dpi = c(1200, 1200),
       seed = config$settings$seed, order = "random", show_stat = FALSE,
       legend.position = "none", theme = "theme_blank",
-      title = paste(config$method, "— resolution", config$partitions$resolution[i]),
+      title = paste(config$method, "— resolution", partitions$resolution[i]),
       xlab = "UMAP 1", ylab = "UMAP 2")
   })
   umap <- patchwork::wrap_plots(panels, ncol = 2) +
@@ -43,25 +44,33 @@ plot_cluster_resolutions <- function(obj, output_dir) {
     width = 14, height = 6 * ceiling(length(panels) / 2))
 
   # scplotter's tree palette encodes resolution, not cluster identity.
-  tree <- scplotter::ClustreePlot(obj, prefix = paste0(config$method, "_snn_res."),
-    palcolor = clustering_colours[seq_len(nrow(config$partitions))],
+  tree_obj <- obj
+  for (column in setdiff(config$partitions$column, partitions$column)) {
+    tree_obj[[column]] <- NULL
+  }
+  tree <- scplotter::ClustreePlot(tree_obj, prefix = paste0(config$method, "_snn_res."),
+    palcolor = clustering_colours[seq_len(nrow(partitions))],
     edge_palette = "viridis", seed = config$settings$seed,
     title = paste(config$method, "— cluster transitions")) +
     labs(caption = "Node colour: resolution; labels: cluster IDs. Transitions are not a resampling stability test.")
-  max_clusters <- max(vapply(config$partitions$column,
+  max_clusters <- max(vapply(partitions$column,
     function(column) length(unique(obj[[]][, column])), integer(1)))
   save_clustering_plot(tree, "clustree", output_dir,
     width = max(12, max_clusters * 0.45), height = 9)
   invisible(list(umap = umap, tree = tree))
 }
 
-plot_clustering_comparison <- function(runs, agreement, output_dir) {
+plot_clustering_comparison <- function(runs, agreement, output_dir, plot_resolutions) {
   summary <- do.call(rbind, lapply(runs, function(run) {
     data.frame(method = run$method, run$diagnostics$summary)
   }))
   scores <- do.call(rbind, lapply(runs, function(run) {
     data.frame(method = run$method, run$diagnostics$silhouettes)
   }))
+  summary <- summary[summary$resolution %in% plot_resolutions, ]
+  scores <- scores[scores$resolution %in% plot_resolutions, ]
+  agreement <- agreement[agreement$resolution_a %in% plot_resolutions &
+    agreement$resolution_b %in% plot_resolutions, ]
   colours <- c(unintegrated = "#3A5BA0", harmony = "#D4753C", scvi = "#5A8F5A")
   metrics <- c(mean_silhouette = "Mean silhouette (cell-weighted)",
     mean_cluster_silhouette = "Mean of cluster silhouette means",

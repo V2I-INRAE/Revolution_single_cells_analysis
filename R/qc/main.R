@@ -14,17 +14,21 @@ source("R/qc/scrublet.R")
 source("R/qc/plots.R")
 
 job_id <- Sys.getenv("SLURM_JOB_ID")
+
 run_id <- if (nzchar(job_id)) paste0("job-", job_id) else
   paste(format(Sys.time(), "%Y%m%d-%H%M%S"), Sys.getpid(), sep = "-")
-labeled_dir <- file.path("data", "qc_labeled_data", run_id)
+
+  labeled_dir <- file.path("data", "qc_labeled_data", run_id)
 clean_dir <- file.path("data", "clean_concatenated_data", run_id)
 output_dir <- file.path("results", "qc", run_id)
+
 for (directory in c(labeled_dir, clean_dir, output_dir)) {
   dir.create(dirname(directory), recursive = TRUE, showWarnings = FALSE)
   if (!dir.create(directory, showWarnings = FALSE)) {
     stop("Cannot create new run directory: ", directory)
   }
 }
+
 message("QC run: ", run_id, "\nLabeled data: ", labeled_dir,
   "\nClean data: ", clean_dir, "\nResults: ", output_dir)
 
@@ -69,7 +73,7 @@ gc()
 labeled@misc$qc$run_id <- run_id
 write_qc_object(labeled, file.path(labeled_dir, "labeled_concatenated.rds"))
 
-# These five figures compare all input cells with QC-only retained cells.
+# --- These five figures compare all input cells with QC-only retained cells.
 plot_qc_comparison(labeled, plot_dir = output_dir)
 plot_qc_umaps(labeled, plot_dir = output_dir)
 

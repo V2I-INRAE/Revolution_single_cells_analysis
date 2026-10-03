@@ -8,7 +8,7 @@ clustering_params <- list(
   n_trees = 50,
   prune_snn = 1 / 15,
   algorithm = 1, #c'est louvain
-  resolutions = c(0.05, 0.1, 0.15, 0.2, 0.25, 0.3),
+  resolutions = c(0.4, 0.6, 0.8, 1),
   n_start = 10,
   n_iter = 10,
   n_diagnostic_cells = 50000, # c'est pour subset les cellules pour diagnostic de cluster

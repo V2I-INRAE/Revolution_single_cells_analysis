@@ -15,9 +15,9 @@ inspect_seurat_qc <- function(seurat_obj) {
   )
   ribo_threshold <- qc_params$metrics$min_ribo_percent
   seurat_obj$ribo_status <- ifelse(
-    seurat_obj$percent.ribo < ribo_threshold,
-    sprintf("< %.1f%%", ribo_threshold),
-    sprintf(">= %.1f%%", ribo_threshold)
+    seurat_obj$percent.ribo <= ribo_threshold,
+    sprintf("<= %.1f%%", ribo_threshold),
+    sprintf("> %.1f%%", ribo_threshold)
   )
   seurat_obj$log10GenesPerUMI <- (
     log10(seurat_obj$nFeature_RNA) / log10(seurat_obj$nCount_RNA)
@@ -72,6 +72,9 @@ label_qc_outliers <- function(seurat_obj) {
       seurat_obj$flag_low_complexity
   )
 
+  # Estimate the sample's cutoff on cells passing feature-count and complexity QC.
+  # The cutoff is min(20%, median + 4 * MAD) with the current parameters.
+  # Apply it to every cell; cells exactly at the cutoff pass this criterion.
   mt_percent <- seurat_obj$percent.mt[!initial_outlier]
   mt_max <- mad_bounds(
     mt_percent,
@@ -79,12 +82,17 @@ label_qc_outliers <- function(seurat_obj) {
     n_mad = params$mito_mad_multiplier
   )["upper"]
   seurat_obj$flag_high_mt <- seurat_obj$percent.mt > mt_max
+  seurat_obj$flag_low_ribo <- seurat_obj$percent.ribo <= qc_params$metrics$min_ribo_percent
 
   flag_cols <- c(
     "flag_low_features", "flag_high_features",
-    "flag_low_complexity", "flag_high_mt"
+    "flag_low_complexity", "flag_high_mt", "flag_low_ribo"
   )
-  seurat_obj$qc_outlier <- rowSums(seurat_obj[[]][, flag_cols]) > 0
+  seurat_obj$qc_outlier <- (
+    seurat_obj$flag_low_features | seurat_obj$flag_high_features |
+      seurat_obj$flag_low_complexity | seurat_obj$flag_high_mt |
+      seurat_obj$flag_low_ribo
+  )
 
   cat("\nFlagged cells:\n")
   for (col in c(flag_cols, "qc_outlier")) {
@@ -114,30 +122,47 @@ label_retained_cells <- function(seurat_obj) {
   return(seurat_obj)
 }
 
-# Filter the checkpoint layer by layer: a pooled gene filter changes the method.
 filter_labeled_cells <- function(seurat_obj, doublet_method) {
   doublet_method <- match.arg(doublet_method, c("DoubletFinder", "Scrublet"))
-  keep_col <- paste0("keep_", tolower(doublet_method))
-  metadata <- seurat_obj[[]]
+
+  clean <- subset(seurat_obj, subset = !qc_outlier)
+
+  if (doublet_method == "DoubletFinder") {
+    clean <- subset(clean, subset = doublet_class == "Singlet")
+  } else {
+    clean <- subset(clean, subset = !predicted_doublets)
+  }
+
+
   min_cells <- seurat_obj@misc$qc$params$filtering$min_cells_per_feature
   samples <- seurat_obj@misc$qc$sample_order
-  objects <- setNames(lapply(samples, function(sample) {
-    cells <- rownames(metadata)[metadata$sample == sample & metadata[[keep_col]]]
-    stopifnot("No retained cells in sample" = length(cells) > 0)
-    counts <- LayerData(seurat_obj, assay = "RNA", layer = paste0("counts.", sample))
-    stopifnot(all(cells %in% colnames(counts)))
-    counts <- counts[, cells, drop = FALSE]
-    counts <- counts[Matrix::rowSums(counts > 0) >= min_cells, , drop = FALSE]
-    obj <- CreateSeuratObject(counts, project = sample)
-    # Preserve input QC measurements, including after the gene filter.
-    meta <- metadata[cells, setdiff(colnames(metadata), c("qc_umap_1", "qc_umap_2")), drop = FALSE]
+  metadata <- seurat_obj[[]]
+  metadata$qc_umap_1 <- NULL
+  metadata$qc_umap_2 <- NULL
+  objects <- list()
+
+  for (sample in samples) {
+    counts <- LayerData(clean, assay = "RNA", layer = paste0("counts.", sample))
+    obj <- CreateSeuratObject(counts, project = sample, min.cells = min_cells)
+    meta <- metadata[colnames(obj), , drop = FALSE]
     obj <- AddMetaData(obj, meta)
-    obj$keep_cell <- meta[[keep_col]]
+    obj$keep_cell <- TRUE
     obj$doublet_filter_method <- doublet_method
-    message(sample, " / ", doublet_method, ": ", ncol(obj), " cells; ", nrow(obj), " genes")
-    obj
-  }), samples)
+
+    message(
+      sample,
+      " / ",
+      doublet_method,
+      ": ",
+      ncol(obj),
+      " cells; ",
+      nrow(obj),
+      " genes"
+    )
+    objects[[sample]] <- obj
+  }
   clean <- merge(objects[[1]], y = objects[-1], merge.data = FALSE)
   clean@misc$qc <- seurat_obj@misc$qc
+
   return(clean)
 }

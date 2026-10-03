@@ -3,7 +3,7 @@ suppressPackageStartupMessages({
 })
 
 run_integration_umaps <- function(
-  seurat_obj, dims = 1:30, scvi_dims = dims, seed = 1234,
+  seurat_obj, dims, scvi_dims, seed = 1234,
   reductions = c(
     umap = "pca", umap_harmony = "harmony",
     umap_cca = "integrated_cca"
