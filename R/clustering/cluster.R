@@ -8,6 +8,7 @@ cluster_reduction <- function(obj, method, settings) {
   reduction <- switch(method,
     unintegrated = "pca",
     harmony = "harmony",
+    cca = "integrated_cca",
     scvi = "integrated_scvi"
   )
   graphs <- paste0(method, c("_nn", "_snn"))
@@ -45,6 +46,7 @@ clustering_umap <- function(obj) {
   name <- switch(config$method,
     unintegrated = "umap",
     harmony = "umap_harmony",
+    cca = "umap_cca",
     scvi = "umap_scvi"
   )
   if (!name %in% Reductions(obj)) {
@@ -73,5 +75,15 @@ clustering_umap <- function(obj) {
   )
   obj@misc$clustering$umap <- name
   obj@misc$clustering$umap_settings <- commands[[1]]@params
+  obj
+}
+
+clustering_tsne <- function(obj) {
+  config <- obj@misc$clustering
+  name <- if (config$method == "unintegrated") "tsne" else paste0("tsne_", config$method)
+  obj <- run_saved_tsne(obj, reduction = config$reduction,
+    dims = clustering_dims(config$settings, config$method), name = name,
+    seed = config$settings$seed)
+  obj@misc$clustering$tsne <- name
   obj
 }

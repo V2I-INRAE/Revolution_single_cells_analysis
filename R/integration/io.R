@@ -7,7 +7,8 @@ read_integration_input <- function(input_file, dims) {
   setup_integration(obj, dims = dims)
 }
 
-read_integration_comparison <- function(scvi_file, harmony_file, cca_file) {
+read_integration_comparison <- function(scvi_file, harmony_file, cca_file,
+  embeddings = c("umap", "tsne")) {
   obj <- readRDS(scvi_file)
   stopifnot("Expected a LogNormalize scVI checkpoint" =
     identical(obj@misc$integration$method, "scvi") &&
@@ -15,7 +16,7 @@ read_integration_comparison <- function(scvi_file, harmony_file, cca_file) {
       identical(obj@misc$integration$run_id, basename(dirname(scvi_file))))
 
   obj <- DietSeurat(obj, assays = "RNA", layers = "counts",
-    dimreducs = c("pca", "umap", "umap_scvi"), graphs = NULL)
+    dimreducs = c("pca", embeddings, paste0(embeddings, "_scvi")), graphs = NULL)
   cells <- colnames(obj)
   source_files <- c(scvi = scvi_file, harmony = harmony_file, cca = cca_file)
   stopifnot("Expected corrected LogNormalize input provenance" =
@@ -41,7 +42,7 @@ read_integration_comparison <- function(scvi_file, harmony_file, cca_file) {
         identical(as.character(obj[[]][cells, field]),
           as.character(other[[]][cells, field])))
     }
-    for (reduction in c("pca", "umap")) {
+    for (reduction in c("pca", embeddings)) {
       stopifnot("Integration checkpoints have different baseline coordinates" =
         identical(Embeddings(obj, reduction)[cells, , drop = FALSE],
           Embeddings(other, reduction)[cells, , drop = FALSE]))
@@ -49,7 +50,10 @@ read_integration_comparison <- function(scvi_file, harmony_file, cca_file) {
     stopifnot("Integration checkpoints have different PCA features or loadings" =
       identical(VariableFeatures(obj), VariableFeatures(other)) &&
         identical(Loadings(obj, "pca"), Loadings(other, "pca")))
-    obj[[paste0("umap_", method)]] <- other[[paste0("umap_", method)]]
+    for (embedding in embeddings) {
+      name <- paste0(embedding, "_", method)
+      obj[[name]] <- other[[name]]
+    }
     rm(other)
     gc()
   }

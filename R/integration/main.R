@@ -82,6 +82,7 @@ for (route in routes) {
     purpose = "sensitivity analysis against unintegrated PCA",
     session_info = sessionInfo()
   )
+  obj <- run_integration_tsnes(obj, obj@misc$integration)
 
   saveRDS(obj, file.path(data_dir, paste0(route, ".rds")))
 

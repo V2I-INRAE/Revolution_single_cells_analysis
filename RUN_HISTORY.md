@@ -99,6 +99,26 @@ Each directory contains `comparison_sources.csv` and PNG/SVG figures.
 | 44227466 | Sep 30 23:20–23:46 | 44227281 / 44215822 | COMPLETED; [log](logs/20260930-232055-integration-plots-44227466.log) |
 | 44282037 | Oct 1 23:08–23:30 | **44281712 / 44281709** | COMPLETED 0:0; [source manifest](results/integration/comparison/scvi-job-44281712_harmony-job-44281709/comparison_sources.csv) records both Seurat checkpoint paths, [comparison output](results/integration/comparison/scvi-job-44281712_harmony-job-44281709/) contains seven nonempty PNG/SVG pairs (sample/pressure/time/pressure-time and three sample facets); [log](logs/20261001-230833-integration-plots-44282037.log) |
 
+### Integration t-SNE augmentation and replotting: Oct 3
+
+Submitted Oct 3 at 20:47–20:49 CEST. These jobs fit only t-SNE from the
+completed integration representations; they do not rerun integration,
+normalization, clustering or diagnostics. Each augmented copy retains the
+original run-directory basename under `data/integration-tsne/<method>/`.
+t-SNE uses components 1–20, seed 1234 and perplexity 30; saved UMAPs are retained.
+
+| Job | Task / source integration | State checked at Oct 3 20:49 CEST | Log |
+|---|---|---|---|
+| 44310707 | Add baseline and scVI t-SNE from 44281712 | RUNNING | [log](logs/20261003-204712-add-tsne-44310707.log) |
+| 44310708 | Add baseline and Harmony t-SNE from 44281709 | RUNNING | [log](logs/20261003-204712-add-tsne-44310708.log) |
+| 44310709 | Add baseline and CCA t-SNE from 44282203 | RUNNING | [log](logs/20261003-204712-add-tsne-44310709.log) |
+| 44310723 | Plot both UMAP and t-SNE for all three augmented checkpoints | PENDING; `afterok:44310707:44310708:44310709` | [Slurm output](logs/integration-plots-44310723.out) |
+
+The plot job writes a new [comparison directory](results/integration/comparison/umap-tsne-scvi-job-44281712_harmony-job-44281709_cca-job-44282203/).
+It is expected to produce 16 PNG/SVG pairs and `comparison_sources.csv`.
+Submission and running states are not completion evidence; results remain
+pending until job exit codes, logs and outputs are checked.
+
 ## Clustering
 
 The **earlier nine** jobs (profiles A–C) completed with 262,303 cells. U =

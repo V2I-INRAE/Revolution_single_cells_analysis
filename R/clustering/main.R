@@ -1,13 +1,14 @@
 args <- commandArgs(trailingOnly = TRUE)
 if (length(args) != 2L) {
-  stop("Usage: Rscript R/clustering/main.R <unintegrated|harmony|scvi> <input.rds>")
+  stop("Usage: Rscript R/clustering/main.R <unintegrated|harmony|cca|scvi> <input.rds>")
 }
 
-method <- match.arg(tolower(args[1]), c("unintegrated", "harmony", "scvi"))
+method <- match.arg(tolower(args[1]), c("unintegrated", "harmony", "cca", "scvi"))
 
 source("R/clustering/params.R")
 source("R/clustering/io.R")
 source("R/clustering/cluster.R")
+source("R/integration/reduce.R")
 source("R/clustering/diagnostics.R")
 
 future::plan("sequential")
@@ -34,6 +35,7 @@ diagnostic_cells <- sample_clustering_cells(obj[[]], settings$n_diagnostic_cells
 
 obj <- cluster_reduction(obj, method, settings)
 obj <- clustering_umap(obj)
+obj <- clustering_tsne(obj)
 obj@misc$clustering$provenance <- provenance
 obj@misc$clustering$run_id <- run_id
 

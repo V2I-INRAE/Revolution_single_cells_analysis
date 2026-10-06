@@ -47,11 +47,18 @@ sbatch scripts/sbatch_clustering.sh unintegrated data/integration/harmony/job-44
 sbatch scripts/sbatch_clustering.sh harmony data/integration/harmony/job-44215822/lognorm.rds
 sbatch scripts/sbatch_clustering.sh scvi data/integration/scvi/job-44227281/lognorm.rds
 
-# Compare saved scVI and Harmony UMAPs without refitting
-sbatch scripts/sbatch_integration_plots.sh 44227281 44215822
+# Compare saved scVI, Harmony and CCA embeddings without refitting
+# First add t-SNE to older checkpoints; new integration runs save both embeddings.
+sbatch scripts/sbatch_integration_plots.sh \
+  data/integration-tsne/scvi/job-44281712/lognorm.rds \
+  data/integration-tsne/harmony/job-44281709/lognorm.rds \
+  data/integration-tsne/cca/job-44282203/lognorm.rds \
+  results/integration/comparison/my-comparison
 ```
 
 For dependent submissions, use Slurm `--dependency=afterok:<job_id>[:<job_id>...]`.
+See [integration plotting instructions](R/integration/README.md) for adding t-SNE
+to completed runs and selecting `--embedding=umap|tsne|both` (default: both).
 See [clustering instructions](R/clustering/README.md) for clustering plots.
 
 ## Outputs and tracking
@@ -85,8 +92,8 @@ records historical jobs, inputs, outputs and outcomes.
 - **Integration:** corrects sample batches, not pressure/time. Unintegrated UMAP
   and Harmony/CCA use dimensions 1–20; scVI uses original RNA counts for 3,000 selected genes and
   20 latent dimensions. Settings: `R/integration/params.R`.
-- **Clustering:** unintegrated uses preserved PCA; other routes use Harmony or
-  scVI, selecting dimensions 1–20. Use newly generated 20-component integration
+- **Clustering:** unintegrated uses preserved PCA; other routes use Harmony,
+  CCA or scVI, selecting dimensions 1–20. Use newly generated 20-component integration
   checkpoints; the example job IDs above refer to historical runs.
   Settings: `R/clustering/params.R`. Mixing metrics do not establish
   biological preservation, and clusters are not validated cell identities.

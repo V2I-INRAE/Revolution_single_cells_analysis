@@ -3,7 +3,8 @@ suppressPackageStartupMessages(library(Seurat))
 read_clustering_input <- function(input_file, method, dims) {
   obj <- readRDS(input_file)
   reduction <- switch(method,
-    unintegrated = "pca", harmony = "harmony", scvi = "integrated_scvi")
+    unintegrated = "pca", harmony = "harmony", cca = "integrated_cca",
+    scvi = "integrated_scvi")
   cells <- colnames(obj)
   metadata <- obj[[]]
   stopifnot(

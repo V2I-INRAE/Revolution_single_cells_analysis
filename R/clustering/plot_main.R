@@ -1,4 +1,4 @@
-# Explicit completed runs only; no normalization, clustering or UMAP fitting.
+# Explicit completed runs only; no normalization, clustering or embedding fitting.
 args <- commandArgs(trailingOnly = TRUE)
 plot_resolutions <- NULL
 if (length(args) > 0L && startsWith(tail(args, 1L), "--plot-resolutions=")) {

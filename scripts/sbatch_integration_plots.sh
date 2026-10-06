@@ -6,24 +6,26 @@
 #SBATCH -t 04:00:00
 #SBATCH -o logs/integration-plots-%j.out
 
-set -e
-if [[ $# -ne 3 || ! "$1" =~ ^[0-9]+$ || ! "$2" =~ ^[0-9]+$ || ! "$3" =~ ^[0-9]+$ ]]; then
-  echo "Usage: sbatch scripts/sbatch_integration_plots.sh <scvi_job> <harmony_job> <cca_job>" >&2
+set -euo pipefail
+if [[ $# -lt 4 || $# -gt 5 ]]; then
+  echo "Usage: sbatch scripts/sbatch_integration_plots.sh <scvi.rds> <harmony.rds> <cca.rds> <new_output_dir> [--embedding=umap|tsne|both]" >&2
   exit 1
 fi
-scvi_job="$1"
-harmony_job="$2"
-cca_job="$3"
+if [[ $# -eq 5 ]]; then
+  case "$5" in
+    --embedding=umap|--embedding=tsne|--embedding=both) ;;
+    *) echo "Unknown embedding option: $5" >&2; exit 1 ;;
+  esac
+fi
 
 cd "${SLURM_SUBMIT_DIR:-/work/project/revo-pig-sc/analysis}"
+set -o noclobber
 exec > "logs/$(date +%Y%m%d-%H%M%S)-integration-plots-${SLURM_JOB_ID:-$$}.log" 2>&1
+set +o noclobber
 
 module purge
 module load compilers/gcc/12.2.0
 module load statistics/R/4.6.1
+export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1
 
-Rscript R/integration/plot_main.R \
-  "data/integration/scvi/job-${scvi_job}/lognorm.rds" \
-  "data/integration/harmony/job-${harmony_job}/lognorm.rds" \
-  "data/integration/cca/job-${cca_job}/lognorm.rds" \
-  "results/integration/comparison/scvi-job-${scvi_job}_harmony-job-${harmony_job}_cca-job-${cca_job}"
+Rscript R/integration/plot_main.R "$@"

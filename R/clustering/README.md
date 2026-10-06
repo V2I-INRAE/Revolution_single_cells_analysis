@@ -1,16 +1,17 @@
 # Clustering comparison
 
 Run from the analysis root. Each job reads an explicit checkpoint and clusters
-all cells using one representation: `pca` (unintegrated), `harmony`, or
+all cells using one representation: `pca` (unintegrated), `harmony`, `integrated_cca`, or
 `integrated_scvi`. It does not renormalize or rerun integration.
 Neighbor graphs, silhouette diagnostics and UMAPs use components 1–20:
-PCA/Harmony components for those routes and all 20 latent components for scVI.
+PCA/Harmony/CCA components for those routes and all 20 latent components for scVI.
 Settings are in `R/clustering/params.R`.
 
 ```bash
 sbatch scripts/sbatch_clustering.sh unintegrated data/integration/harmony/job-44215822/lognorm.rds
 sbatch scripts/sbatch_clustering.sh harmony data/integration/harmony/job-44215822/lognorm.rds
 sbatch scripts/sbatch_clustering.sh scvi data/integration/scvi/job-44227281/lognorm.rds
+sbatch scripts/sbatch_clustering.sh cca data/integration/cca/job-<integration_job_id>/lognorm.rds
 ```
 
 These are historical examples, not automatic latest-file selection. Replace
@@ -65,3 +66,10 @@ The optional last argument limits **figures only** to saved resolutions; omittin
 it plots all resolutions. `plotted_resolutions.csv` records the figure scope.
 Comparison CSVs and the source analysis bundles retain all resolutions, including
 1.0, even when its UMAP panel, clustree row and comparison figure points are omitted.
+
+New runs also save t-SNE using the same representation/components, seed 1234 and
+perplexity 30. Resolution plots are exported for both embeddings with separate
+`umap_` and `tsne_` prefixes; clustree and diagnostics are generated only once.
+For older completed runs, first [add t-SNE to new checkpoint copies](../integration/README.md#add-t-sne-to-completed-runs)
+without rerunning integration or clustering, then supply the copied `analysis.rds`
+bundles to the plotting command above. Plotting does not fit missing embeddings.

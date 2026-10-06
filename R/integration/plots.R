@@ -85,15 +85,18 @@ plot_integration_umaps <- function(
   output_dir = NULL,
   seed = 1234,
   filename = NULL,
-  facet_samples = FALSE
+  facet_samples = FALSE,
+  embedding = c("umap", "tsne")
 ) {
   group_by <- match.arg(group_by)
+  embedding <- match.arg(embedding)
+  axis_label <- if (embedding == "umap") "UMAP" else "t-SNE"
   stopifnot("Sample faceting requires group_by = 'sample'" = !facet_samples || group_by == "sample")
   grouping <- plot_grouping(seurat_obj[[]], group_by)
   plot_obj <- seurat_obj
   plot_obj$integration_group <- grouping$values
-  reductions <- c(Unintegrated = "umap", scVI = "umap_scvi",
-    Harmony = "umap_harmony", CCA = "umap_cca")
+  reductions <- setNames(paste0(embedding, c("", "_scvi", "_harmony", "_cca")),
+    c("Unintegrated", "scVI", "Harmony", "CCA"))
   stopifnot(all(reductions %in% Reductions(seurat_obj)))
   for (reduction in reductions) {
     coordinates <- Embeddings(seurat_obj, reduction)
@@ -128,7 +131,7 @@ plot_integration_umaps <- function(
       group_by = "integration_group", palcolor = colours,
       theme = "theme_blank", theme_args = list(base_size = 13),
       title = method, seed = seed, show_stat = FALSE, label = FALSE,
-      xlab = "UMAP 1", ylab = "UMAP 2",
+      xlab = paste(axis_label, 1), ylab = paste(axis_label, 2),
       raster = TRUE, raster_dpi = c(1200, 1200), pt_size = 2, pt_alpha = 0.5,
       bg_color = "#707070", order = "random", legend.position = "none")
     if (group_by == "sample" && !facet_samples) {
@@ -165,7 +168,7 @@ plot_integration_umaps <- function(
     names(panels) <- names(reductions)
     if (!is.null(output_dir)) {
       dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
-      if (is.null(filename)) filename <- "umap_sample_facets"
+      if (is.null(filename)) filename <- paste0(embedding, "_sample_facets")
       for (method in names(panels)) {
         stem <- paste0(tools::file_path_sans_ext(filename), "_", tolower(method), "_lognorm")
         for (extension in c("png", "svg")) {
@@ -181,7 +184,7 @@ plot_integration_umaps <- function(
   p <- p & theme(legend.position = if (group_by == "sample") "bottom" else "none")
   if (!is.null(output_dir)) {
     dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
-    if (is.null(filename)) filename <- paste0("umap_", group_by, "_lognorm")
+    if (is.null(filename)) filename <- paste0(embedding, "_", group_by, "_lognorm")
     width <- switch(group_by, sample = 28, pressure = 10, time = 15, pressure_time = 25)
     height <- if (group_by == "sample") 9 else 15
     for (extension in c("png", "svg")) {
