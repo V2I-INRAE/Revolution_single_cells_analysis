@@ -1,0 +1,5 @@
+# Install into the existing .venv-scvi without changing its pinned dependencies:
+# uv pip install --python .venv-scvi/bin/python --torch-backend=cpu \
+#   --constraint requirements-scvi.txt --requirement requirements-cellbender.txt
+# The resolved combined environment is recorded under results/cellbender-preparation/_environment/.
+cellbender==0.4.0

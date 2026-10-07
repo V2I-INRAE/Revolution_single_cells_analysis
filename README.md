@@ -60,6 +60,8 @@ For dependent submissions, use Slurm `--dependency=afterok:<job_id>[:<job_id>...
 See [integration plotting instructions](R/integration/README.md) for adding t-SNE
 to completed runs and selecting `--embedding=umap|tsne|both` (default: both).
 See [clustering instructions](R/clustering/README.md) for clustering plots.
+See [CCA marker instructions](R/find_markers/README.md) for all-cell marker
+discovery and separate bar-plot, dot-plot and heatmap jobs.
 
 ## Outputs and tracking
 

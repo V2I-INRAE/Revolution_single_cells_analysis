@@ -1,0 +1,27 @@
+diff --git a/cellbender/remove_background/report.py b/cellbender/remove_background/report.py
+--- a/cellbender/remove_background/report.py
++++ b/cellbender/remove_background/report.py
+@@ -1152,9 +1152,9 @@
+     sizeorder = np.argsort(adata.obs["cell_size"].iloc[cells])
+     s = plt.scatter(
+         x=adata.obsm["X_pca"][:, 0][cells][sizeorder],
+         y=adata.obsm["X_pca"][:, 1][cells][sizeorder],
+-        c=np.log10(adata.obs["cell_size"].iloc[cells][sizeorder]),
++        c=np.log10(adata.obs["cell_size"].iloc[cells].iloc[sizeorder]),
+         s=2,
+         cmap="brg",
+         alpha=0.5,
+     )
+diff --git a/cellbender/remove_background/report.ipynb b/cellbender/remove_background/report.ipynb
+--- a/cellbender/remove_background/report.ipynb
++++ b/cellbender/remove_background/report.ipynb
+@@ -46,8 +46,9 @@
+    "execution_count": null,
+    "metadata": {},
+    "outputs": [],
+    "source": [
++    "%matplotlib inline\n",
+     "from cellbender.remove_background.report import generate_summary_plots"
+    ]
+   },
+   {

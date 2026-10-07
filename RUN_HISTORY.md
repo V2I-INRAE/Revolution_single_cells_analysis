@@ -197,9 +197,187 @@ the saved clustering objects and comparison **CSV tables retain all four
 resolutions**, including 1.0. The saved `plotted_resolutions.csv` identifies
 the visual subset. The 1.0 partition was not removed from the analysis.
 
+## CCA marker discovery: Oct 6
+
+Input: [CCA clustering 44310241](results/clustering/cca/job-44310241/analysis.rds),
+whose checkpoint contains 226,738 cells and 20,916 RNA features. Its seven
+resolutions are 0.1/0.2/0.3/0.4/0.6/0.8/1.0 (16/21/25/25/29/33/36 clusters).
+The source clustering job completed 0:0. Preflight job **44394946** independently
+read the full checkpoint, confirmed 23 sample-specific LogNormalize data layers,
+and completed a 50-gene, all-cell API test (0:0, 5m10s, peak RSS about 41 GiB).
+That restricted-feature test is software validation, not the marker analysis.
+
+| Job | Task | State checked Oct 6 |
+|---|---|---|
+| 44395117 | Real-data validation and figure checks | COMPLETED 0:0; 13m09s, peak RSS about 41 GiB |
+| 44395220 | All-cell marker discovery, all seven resolutions | CANCELLED at user's request; [log](logs/20261006-154439-find-markers-44395220.log) |
+| 44395226 | Bar plots, dot plots and all-cell heatmaps | CANCELLED at user's request |
+| 44396189 | Production plot check | CANCELLED at user's request |
+
+Validation checked normalized values against original counts, preserved values
+across layer joining, all-cell counts, direct `FindMarkers` agreement, independently
+calculated fold changes, Bonferroni adjustment, ranking, empty-marker clusters,
+failed-test propagation, CSV/RDS round trips and source-file preservation.
+All three figure types were rendered and inspected using the restricted-feature
+software-test results. These figures are not the production marker results.
+
+Production output: `results/find_markers/cca/job-44395220/res_*`.
+Discovery uses RNA log-normalized data, Wilcoxon/Presto, positive markers,
+`min.pct=0.25`, `logfc.threshold=0.25`, no detection-difference filter or cell cap,
+and retains returned results before selecting Bonferroni-adjusted p-values <0.05.
+Top markers are ranked by decreasing log2FC. No normalization, integration,
+clustering, cell subsampling or annotation is rerun. The separate plotting job
+uses saved marker tables and the original checkpoint; fresh unregressed scaling
+is confined to the displayed genes. Both production jobs request 128 GB and
+run through the [marker batch scripts](R/find_markers/README.md).
+
+The production run was stopped for code review; partial outputs are not a
+completed analysis. The subsequent code simplification removes marker RDS
+bundles and retains per-resolution CSVs. Earlier validation applies to the
+earlier implementation, not the revised code. No new analysis or plotting run
+is authorized pending review.
+
+## SoupX pilot: Oct 7
+
+REVO30-P4 uses its original unfiltered/filtered RSEC MEX archives and metrics
+under `data/raw_data/REVO30-P4/`. The pilot keeps all 13,422 Rhapsody calls;
+no existing QC-cleaned checkpoint or CellBender-corrected counts are inputs.
+The full raw gene universe is retained after checking that omitted filtered
+rows are zero in called cells. Background starts at `0 < molecules < 100`,
+conditional on a >1,000-molecule called-cell-rank proxy, at least 2,000
+non-called background barcodes, and no called barcodes in that range.
+
+Approved preliminary clustering: per-sample LogNormalize, 2,000 VST variable
+genes, 30 computed PCs, PCs 1–20 for k=20 neighbors, Louvain resolution 0.6,
+seed 1234, no integration or regression. SoupX 1.6.2 uses automatic estimation
+without forced acceptance, subtraction, and seeded integer rounding. Existing
+pipeline checkpoints remain unchanged. Numerical success is not QC acceptance.
+
+| Job | Task | Last verified state |
+|---|---|---|
+| 44404957 | First pilot attempt | FAILED 1:0, 28s; input reader closed an already-closed gzip connection, before clustering/correction |
+| 44404963 | Pilot after compressed-input connection fix | COMPLETED 0:0; 1m35s, peak RSS 5,432,652 KiB; numerically validated, pending biological QC |
+
+The reader failure was reproduced and fixed by explicitly opening the gzip
+connection before `Matrix::readMM`. ZIP/gzip reader, asymmetric alignment,
+zero-padding rejection, integer/no-added-count validation, background-boundary
+and actual metrics parsing tests pass in `scripts/soupx/test_io.R`. The launcher
+passes Bash syntax and ShellCheck. Jobs request 4 CPUs, 16 GiB and 4 hours.
+
+Scripts: `scripts/soupx/`; launcher: `scripts/sbatch_soupx.sh`.
+Processed data: `data/soupx/REVO30-P4/job-44404963/`.
+Diagnostics: `results/soupx/job-44404963/REVO30-P4/`.
+Log: `logs/soupx-44404963.log`. The failed attempt is retained separately.
+Review the pilot's fit and gene/count tables before other sample submissions;
+no accepted CellBender comparator has been selected.
+
+The background gate passed: 1,294 molecules at rank 13,422, with 134,703
+non-called barcodes in range and no called barcodes in range. Preliminary
+clustering yielded 21 groups. The fit used 100 marker genes and 697 independent
+estimates; rho was 0.031 with half-maximum interval 0.015–0.064. The native
+estimation PNG was inspected and showed a readable, unimodal posterior.
+Counts changed from 84,811,621 to 82,183,607 molecules (3.10% removed), retaining
+28,246 features and all 13,422 cells. Saved count matrices were reopened and
+validated. Independently read cell/cluster CSV totals agree with those values.
+The sole analysis warning is SoupX's deprecated Matrix `giveCsparse` argument;
+no package patch was applied. At this stage marker preservation and an accepted
+matched CellBender comparison remained open; see the subsequent review below.
+
+### SoupX biological QC and user-selected CellBender comparison
+
+The user selected `results/cellbender/REVO30-P4/job-44400520` for the first
+comparison. It is numerically validated but remains unaccepted because of
+convergence warnings and unresolved additional-cell calls. Its QC status is
+unchanged; the comparison is exploratory, not accepted-comparator validation.
+
+| Review job | Result |
+|---|---|
+| 44405241 | FAILED 1:0; plot ordering arguments were expression strings, not label vectors; removed unnecessary ordering overrides |
+| 44405362 | FAILED 1:0; Seurat's H5 reader interpreted CellBender latent groups as matrices; switched to official CellBender `load_data` |
+| 44405494 | FAILED 1:0; `normalizePath` resolved the venv Python symlink to the base interpreter; preserved the absolute venv path instead and verified the import |
+| 44405863 | COMPLETED 0:0; 1m30s, peak RSS 5,578,044 KiB; tables independently checked and all three marker figures inspected |
+
+Scripts: `scripts/soupx/review_soupx.R`, `scripts/sbatch_soupx_review.sh`.
+Completed review: `results/soupx/job-44405863/REVO30-P4/`.
+Failed review folders/logs are retained but are not completed outputs.
+
+All 28,246 features and 13,422 original called cells match. Raw totals are
+84,811,621 molecules; SoupX retains 82,183,607 (3.09865% removed), and
+CellBender FPR 0.01 retains 81,406,722 (4.01466% removed). Corrected per-cell
+totals correlate at r = 0.9998357856871326, whereas removed per-cell totals
+correlate at r = −0.5740135066340926. High corrected-total agreement therefore
+does not establish equivalent corrections. Cell/gene totals match the original
+SoupX table and CellBender validation; 9,426 additional CB calls are excluded.
+
+Pilot marker QC passed with limitations. Across 26 provisional markers,
+SoupX retains 98.55–100% of positive-reference molecules per gene (99.80%
+weighted) and removes 35.40% of negative-reference molecules in aggregate.
+CellBender retains 99.61–100% (99.77% weighted) and removes 40.01% in negative
+references. More removal is not evidence of better correction. Four markers
+(C1QA, CSF3R, DCN, SFTPC) overlap rho-estimation markers; the other 22 give
+similar SoupX results: 99.81% positive retention and 35.26% negative removal.
+Post-hoc group definitions and six unresolved clusters limit interpretation.
+BD human-PBMC-trained predictions are not pig-lung ground truth.
+
+Raw, SoupX and exploratory CellBender dot plots show all 21 fixed clusters
+and 26 genes on a common expression scale, without clipping. Strong marker
+patterns remain. Quantitative marker counts and detection changes were checked
+independently from CSVs; figures alone do not establish preservation.
+`qc_review.json` now records the completed, qualified pilot review. Original
+execution `run.json` is retained unchanged as the numerical-run record.
+No raw or corrected matrices, CellBender files or downstream checkpoints were
+modified. No other samples were submitted. Changes remain local/uncommitted.
+
+### Comparison rerun with completed CellBender job 44403564
+
+The user requested comparison with the latest completed lower-learning-rate
+CellBender run (5e-05, 150 epochs). Slurm and numerical validation passed;
+its existing reviewed convergence diagnostics passed without report warnings.
+Cell-call/biological acceptance remains pending and its QC files were not changed.
+
+The primary comparison retains the same 13,422 Rhapsody cells, 28,246 genes,
+fixed raw clusters and post-hoc marker panels. No cell-quality filtering or
+doublet removal was added. The full H5 contains all original barcodes; one
+original cell, 55584626, is no longer called by CellBender and has zero corrected
+molecules (raw 3,797; SoupX 3,721). It is retained and explicitly flagged rather
+than silently dropped. The 5,419 additional CellBender calls are excluded.
+
+| Review job | Result |
+|---|---|
+| 44408133 | FAILED 1:0 at rendering; passing only dot_size_name triggered partial list matching to dot_size upstream, treating the label as a function |
+| 44408206 | COMPLETED 0:0; 1m27s, peak RSS 5,723,448 KiB; explicit package-default dot-size function avoids partial matching and preserves detection fractions |
+
+Completed output: `results/soupx/job-44408206/REVO30-P4/`.
+The failed folder/log is retained but is not a completed review. All three
+figures were inspected, with the corrected `Fraction expressing` legend (0–1).
+The pre-existing rotated `Features` annotation remains; no labels are clipped.
+
+On all original cells, raw totals remain 84,811,621 molecules, SoupX retains
+82,183,607 (3.09865% removed), and new CellBender retains 81,056,997 (4.42702%
+removed). Corrected-total correlation is 0.999791369724995 and removed-total
+correlation is −0.564400184270654. On the 13,421 jointly called cells, CellBender
+removal is 4.42274%, corrected-total correlation 0.9998011364546961 and
+removed-total correlation −0.5742833937479039: the qualitative conclusion is
+unchanged. The new run fixes the previous convergence concern, but high
+corrected-total agreement still does not establish equivalent corrections.
+
+Across the 26 provisional markers, weighted positive-reference retention is
+99.80% for SoupX and 99.72% for new CellBender; negative-reference removal is
+35.40% and 40.71%, respectively. Excluding four fitting markers gives 99.81%
+and 99.70% positive retention. More removal is not evidence of better correction;
+marker references remain post-hoc and six clusters unresolved.
+
+Independent checks confirmed cell/feature IDs, cell-call flags, unchanged
+Raw/SoupX counts/clusters/marker statistics, gene/cell totals, marker retention,
+detection changes, both correlations, and source script/H5 hashes. The jointly
+called totals agree with CellBender's own validation. Source SoupX QC metadata
+links this review while preserving the previous comparison. No count matrices,
+CellBender files or downstream checkpoints changed; no other samples submitted.
+Scripts and documentation changes remain local/uncommitted.
+
 ## Limits
 
-- Unless marked failed/cancelled, listed production jobs exited 0:0. File
+- Only jobs explicitly marked completed have verified exit status. File
   presence alone does not prove a complete run.
 - Older jobs did not capture immutable input hashes or per-job source revisions;
   current settings must not be applied retroactively.
