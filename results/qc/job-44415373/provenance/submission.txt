@@ -1,0 +1,29 @@
+JobId=44415373 JobName=qc-with-soupx
+   UserId=fbraza(18174) GroupId=UR0892(10730) MCS_label=N/A
+   Priority=10003 Nice=0 Account=fbraza QOS=inraeregion
+   JobState=RUNNING Reason=None Dependency=(null)
+   Requeue=1 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=00:01:53 TimeLimit=05:00:00 TimeMin=N/A
+   SubmitTime=2026-10-07T18:05:49 EligibleTime=2026-10-07T18:05:49
+   AccrueTime=2026-10-07T18:05:49
+   StartTime=2026-10-07T18:06:16 EndTime=2026-10-07T23:06:16 Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-07T18:06:16 Scheduler=Backfill
+   Partition=workq AllocNode:Sid=n031:3604106
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=n003
+   BatchHost=n003
+   NumNodes=1 NumCPUs=6 NumTasks=1 CPUs/Task=6 ReqB:S:C:T=0:0:*:*
+   ReqTRES=cpu=6,mem=128G,node=1,billing=6
+   AllocTRES=cpu=6,mem=128G,node=1,billing=6
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=6 MinMemoryNode=128G MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null)
+   Command=/work/project/revo-pig-sc/analysis/scripts/sbatch_qc_with_soupx.sh
+   SubmitLine=sbatch --parsable scripts/sbatch_qc_with_soupx.sh
+   WorkDir=/work/project/revo-pig-sc/analysis
+   StdErr=
+   StdIn=/dev/null
+   StdOut=/work/project/revo-pig-sc/analysis/logs/qc-with-soupx-44415373.out
+   TresPerTask=cpu=6
+

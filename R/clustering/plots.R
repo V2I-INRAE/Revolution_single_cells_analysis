@@ -12,10 +12,8 @@ clustering_colours <- c(
 )
 
 save_clustering_plot <- function(plot, stem, output_dir, width, height) {
-  for (extension in c("png", "svg")) {
-    ggsave(file.path(output_dir, paste0(stem, ".", extension)), plot,
-      width = width, height = height, dpi = 300, bg = "white")
-  }
+  ggsave(file.path(output_dir, paste0(stem, ".png")), plot,
+    width = width, height = height, dpi = 300, bg = "white")
 }
 
 plot_cluster_resolutions <- function(obj, output_dir, plot_resolutions) {

@@ -23,8 +23,7 @@ pkgs <- list(
     patchwork = "patchwork",
     dplyr = "dplyr",
     harmony = "harmony",
-    ashr = "ashr",
-    svglite = "svglite"
+    ashr = "ashr"
   ),
   bioc = c(
     glmGamPoi = "glmGamPoi",

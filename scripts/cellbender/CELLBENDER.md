@@ -68,7 +68,8 @@ sbatch scripts/sbatch_cellbender.sh REVO30-P4
 ```
 
 The launcher requests 8 CPUs, 64 GB and 24 hours on `workq`; BLAS/OpenMP and
-PyTorch threads are capped at the allocation. No CUDA is used. Every sample/run
+PyTorch threads are capped at the allocation. Defaults are 150 epochs and
+learning rate 0.00005, matching the converged comparison pilot. No CUDA is used. Every sample/run
 has its own working and checkpoint directory. Inputs are extracted into
 `data/cellbender/<sample>/<run_id>/<sample>_unfiltered_MEX/`; outputs go into
 `results/cellbender/<sample>/<run_id>/`. `run.json` records parameters, versions,
@@ -77,12 +78,14 @@ command, elapsed time, and status. Existing run directories are rejected.
 Inspect pilot QC and `sacct -j <job> --format=JobID,State,Elapsed,AllocCPUS,MaxRSS`
 before submitting other samples. A reviewed array TSV has one `sample` column
 with a header; each sample's reviewed parameters come from its preparation JSON.
-Exclude the successful pilot.
-After pilot QC acceptance, the approved starting concurrency is eight jobs;
-consider twelve only after reviewing resources across samples:
+Exclude the completed REVO30-P4 comparison pilot. The user approved running the
+remaining 22 samples with at most 11 concurrent jobs and hourly monitoring.
+The comparison pilot passed convergence and numerical checks; additional cell
+calls and cell-type-specific preservation still require review. This approval
+authorizes generating candidate outputs, not automatic downstream QC acceptance.
 
 ```bash
-sbatch --array=0-21%8 scripts/sbatch_cellbender.sh \
+sbatch --array=0-21%11 scripts/sbatch_cellbender.sh \
   results/cellbender-preparation/reviewed-array.tsv
 ```
 

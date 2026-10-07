@@ -1,4 +1,4 @@
-# Run the QC cleaning pipeline over the control samples
+# Run the QC cleaning pipeline over the SoupX-corrected samples
 
 suppressPackageStartupMessages({
   library(Seurat)
@@ -17,7 +17,7 @@ job_id <- Sys.getenv("SLURM_JOB_ID")
 run_id <- if (nzchar(job_id)) paste0("job-", job_id) else
   paste(format(Sys.time(), "%Y%m%d-%H%M%S"), Sys.getpid(), sep = "-")
 
-  labeled_dir <- file.path("data", "qc_labeled_data", run_id)
+labeled_dir <- file.path("data", "qc_labeled_data", run_id)
 clean_dir <- file.path("data", "clean_concatenated_data", run_id)
 output_dir <- file.path("results", "qc", run_id)
 
@@ -38,27 +38,24 @@ samples <- c(
   "REVO30-N10", "REVO30-P10", "REVO30-P4", "REVO31-C", "REVO31-N4",
   "REVO31-N8", "REVO31-P10", "REVO31-P4"
 )
+soupx_run_id <- "job-44409807"
 
 # Keep all input cells until the labeled checkpoint and plots are saved.
 labeled_objs <- list()
-
 for (sample in samples) {
-  mex_dir <- read_filtered_matrix("data/raw_data", sample)
-  obj <- build_seurat_obj(mex_dir, sample)
+  obj <- build_soupx_seurat_obj("data/soupx", sample, soupx_run_id)
   obj <- inspect_seurat_qc(obj)
-
   obj <- label_qc_outliers(obj)
 
-  # --- Prepare the temporary reduction and diagnostic UMAP coordinates
+  # Temporary normalized PCA/UMAP is only for diagnostic coordinates.
   reduced_obj <- preprocess_qc_umap(obj)
   coordinates <- compute_diagnostic_umap(reduced_obj)
   obj <- AddMetaData(obj, coordinates[colnames(obj), , drop = FALSE])
 
-  # --- Label with Scrublet on all input cells; no removal here.
+  # Scrublet receives the original integer counts and all input cells.
   obj <- detect_scrublet_doublets(obj)
   labeled_objs[[sample]] <- label_retained_cells(obj)
   rm(obj, reduced_obj, coordinates)
-  unlink(mex_dir, recursive = TRUE)
   gc()
 }
 
@@ -68,7 +65,7 @@ gc()
 labeled@misc$qc$run_id <- run_id
 write_qc_object(labeled, file.path(labeled_dir, "labeled_concatenated.rds"))
 
-# --- These five figures compare all input cells with QC-only retained cells.
+# These five figures compare all input cells with QC-only retained cells.
 plot_qc_comparison(labeled, plot_dir = output_dir)
 plot_qc_umaps(labeled, plot_dir = output_dir)
 

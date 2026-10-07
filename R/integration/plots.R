@@ -171,10 +171,8 @@ plot_integration_umaps <- function(
       if (is.null(filename)) filename <- paste0(embedding, "_sample_facets")
       for (method in names(panels)) {
         stem <- paste0(tools::file_path_sans_ext(filename), "_", tolower(method), "_lognorm")
-        for (extension in c("png", "svg")) {
-          ggsave(file.path(output_dir, paste0(stem, ".", extension)), panels[[method]],
-            width = 25, height = 5 * ceiling(length(categories) / 5), dpi = 300, bg = "white")
-        }
+        ggsave(file.path(output_dir, paste0(stem, ".png")), panels[[method]],
+          width = 25, height = 5 * ceiling(length(categories) / 5), dpi = 300, bg = "white")
       }
     }
     return(invisible(panels))
@@ -187,10 +185,8 @@ plot_integration_umaps <- function(
     if (is.null(filename)) filename <- paste0(embedding, "_", group_by, "_lognorm")
     width <- switch(group_by, sample = 28, pressure = 10, time = 15, pressure_time = 25)
     height <- if (group_by == "sample") 9 else 15
-    for (extension in c("png", "svg")) {
-      ggsave(file.path(output_dir, paste0(tools::file_path_sans_ext(filename), ".", extension)), p,
-        width = width, height = height, dpi = 300, bg = "white")
-    }
+    ggsave(file.path(output_dir, paste0(tools::file_path_sans_ext(filename), ".png")), p,
+      width = width, height = height, dpi = 300, bg = "white")
   }
   invisible(p)
 }

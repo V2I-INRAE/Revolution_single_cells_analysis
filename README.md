@@ -31,8 +31,11 @@ These examples use existing checkpoints. For a new analysis, substitute the
 upstream job IDs you intend to use; no stage automatically selects the latest run.
 
 ```bash
-# QC: labels all input cells and saves both clean doublet-filtering branches
+# Raw-MEX QC: main.R, sequential, Scrublet only
 sbatch scripts/sbatch_qc.sh
+
+# SoupX QC: main_soupx.R, sequential, Scrublet only
+sbatch scripts/sbatch_qc_with_soupx.sh
 
 # Normalize the selected Scrublet-clean checkpoint
 sbatch scripts/sbatch_norm_feat.sh \
@@ -66,13 +69,20 @@ discovery and separate bar-plot, dot-plot and heatmap jobs.
 ## Outputs and tracking
 
 `<run_id>` is `job-<SLURM_JOB_ID>`, or a timestamp plus PID outside Slurm.
+`R/qc/main.R` reads raw filtered MEX matrices; `R/qc/main_soupx.R` loads
+SoupX-corrected input from the pinned run `job-44409807` into Seurat objects.
+Their respective launchers are `scripts/sbatch_qc.sh` and
+`scripts/sbatch_qc_with_soupx.sh`. Both process the 23 samples sequentially,
+then concatenate, plot and save the Scrublet-clean checkpoint in the same job.
+Neither launches normalization or integration. No job/run-ID columns are added
+to cell metadata. `scripts/sbatch_soupx.sh` remains the ambient-correction launcher.
 Existing run directories are rejected, including on requeue. Flat RDS paths and
 compatibility links have been removed.
 
 | Stage | Checkpoints | Results |
 |---|---|---|
 | QC labeled | `data/qc_labeled_data/<run_id>/labeled_concatenated.rds` | `results/qc/<run_id>/` |
-| QC clean | `data/clean_concatenated_data/<run_id>/clean_concatenated_{doubletfinder,scrublet}.rds` | Same QC directory |
+| QC clean | `data/clean_concatenated_data/<run_id>/clean_concatenated_scrublet.rds` | Same QC directory |
 | Normalization | `data/norm_feat/<run_id>/lognorm.rds` | `results/norm_feat/lognorm/<run_id>/` |
 | Integration | `data/integration/<method>/<run_id>/lognorm.rds` | `results/integration/<method>/<run_id>/` |
 | Clustering | `data/clustering/<method>/<run_id>/lognorm.rds` | `results/clustering/<method>/<run_id>/` |
@@ -83,11 +93,15 @@ records historical jobs, inputs, outputs and outcomes.
 
 ## Methods
 
-- **QC:** DoubletFinder and Scrublet are labeled before filtering and produce
-  separate clean branches. Scrublet uses scores >0.15 for final calls; its printed
+- **QC:** Scrublet is the sole doublet detector, run independently per sample
+  on all input integer counts before any cell removal. A temporary normalized
+  PCA/UMAP is used only for diagnostic figures; it does not alter saved counts.
+  Scrublet uses scores >0.15 for final calls; its printed
   automatic threshold is not the applied cutoff. QC before/after plots compare
-  all input cells with QC-only retained cells. Cells with ribosomal counts ≤2.5%
-  are excluded. Settings: `R/qc/params.R`.
+  all input cells with QC-only retained cells. Ribosomal percentages strictly
+  above each sample's median + 3 × R's default scaled MAD are excluded; all
+  input cells, including 0%, contribute to that threshold. There is no lower
+  ribosomal cutoff, floor, cap or log transformation. Settings: `R/qc/params.R`.
 - **Normalization:** LogNormalize, per-layer VST selection, 3,000 consensus
   variable genes and 50-PC PCA. SCT checkpoints are historical only.
   Settings: `R/norm_feat/params.R`.
@@ -100,7 +114,7 @@ records historical jobs, inputs, outputs and outcomes.
   Settings: `R/clustering/params.R`. Mixing metrics do not establish
   biological preservation, and clusters are not validated cell identities.
 
-Figures are PNG/SVG; saved objects retain run metadata. Historical shared-path
+Figures are PNG; saved objects retain run metadata. Historical shared-path
 figures remain in place and may contain products from multiple jobs.
 
 ## Download raw reads

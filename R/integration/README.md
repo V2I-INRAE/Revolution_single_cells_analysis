@@ -72,7 +72,7 @@ three embedding jobs with `--dependency=afterok:<scvi_tsne_job>:<harmony_tsne_jo
 
 Integration plots retain all existing grouping/faceting options, with `umap_`
 or `tsne_` filename prefixes and matching axis labels. Clustering saves
-`umap_resolutions` and `tsne_resolutions` (PNG/SVG), plus one clustree.
+`umap_resolutions` and `tsne_resolutions` (PNG), plus one clustree.
 The resolution filter remains figures-only. Clustering embedding figures are
 written beside each supplied analysis bundle, as in the existing workflow.
 

@@ -47,11 +47,12 @@ plot_soupx_markers <- function(matrices, clusters, sample_id, output,
       upper_cutoff = upper, name = "Mean log1p normalized expression",
       # Explicit default avoids partial matching dot_size to dot_size_name upstream.
       dot_size = function(x) sum(x > 0, na.rm = TRUE) / length(x),
-      dot_size_name = "Fraction expressing", rows_name = "",
+      dot_size_name = "Fraction expressing", rows_name = "Features",
       title = paste(sample_id, labels[index], "— fixed pre-correction clusters"),
       row_names_side = "left")
     ggplot2::ggsave(file.path(output, paste0("markers_", method, ".png")),
-      plot, width = 13, height = 11, dpi = 300, bg = "white")
+      plot, width = max(13, 5 + 0.4 * nlevels(obj$preliminary_cluster)),
+      height = 11, dpi = 300, bg = "white")
   }
   list(genes = genes, missing_genes = missing, cluster_levels = levels(obj$preliminary_cluster),
     paths = file.path(output, paste0("markers_", names(matrices), ".png")),

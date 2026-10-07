@@ -4,6 +4,10 @@ Audited through **2026-10-02 22:53 CEST**. Times are CEST; dates are in 2026.
 Status comes from Slurm accounting; settings and inputs from job logs, saved
 diagnostics and clustering `analysis.rds` bundles. This is an inventory, not a
 recommendation of methods or resolutions.
+
+SVG copies of plot outputs were removed on Oct 7. Historical references below
+to PNG/SVG pairs describe the original outputs; PNG copies remain.
+
 Submission commands: [README](README.md).
 
 ## QC and normalization: surviving files
@@ -35,6 +39,20 @@ mitochondrial reference cells selected on feature-count and complexity criteria;
 ND4L is included once among 13 mitochondrial genes. Both clean cell sets were
 checked against the labeled flags. The BD multiplet-rate lookup clamped values
 outside its 0–4% table range; this is a modeling limitation, not a failed job.
+
+### QC parameter record by run
+
+These are execution-specific settings; they must not be inferred from the
+current QC source files. A ribosomal rule changed between runs.
+
+| QC job | Input / doublet route | Cell and mitochondrial QC | Ribosomal treatment | Evidence / limitation |
+|---|---|---|---|---|
+| 44194877 | Historical raw filtered MEX; DoubletFinder and Scrublet branches | `nFeature_RNA > 200`; the log records per-sample feature ceilings capped at 5,000; `log10GenesPerUMI > 0.8`; per-sample mitochondrial upper ceilings were applied | The log labels cells below versus at/above 2.5%, but its `qc_outlier` summary has no ribosomal flag. A 2.5% ribosomal filter is therefore not confirmed for this run. | [log](logs/20260930-0006-qc-pipeline.log); the exact historical MAD multipliers are not recoverable from retained run metadata. |
+| 44276132 | 23 raw filtered MEX archives; DoubletFinder and Scrublet branches | `nFeature_RNA > 200` and `<= min(4500, median + 4×MAD)`; `log10GenesPerUMI > 0.8`; `percent.mt <= min(20, median + 4×MAD)` after feature/complexity reference-cell selection; genes in at least 10 retained cells per sample | Cells with `percent.ribo <= 2.5` were flagged and excluded. | [log](logs/20261001-172502-qc-pipeline-44276132.log); saved provenance. |
+| 44415111 | 23 SoupX-corrected count matrices from `job-44409807`; Scrublet only | `nFeature_RNA > 200` and `<= min(4500, median + 4×MAD)`; `log10GenesPerUMI > 0.8`; `percent.mt <= min(20, median + 4×MAD)`; genes in at least 10 retained cells per sample | Cells strictly above each sample's `median(percent.ribo) + 3×MAD` were flagged; all input cells, including zeros, contributed. No lower cutoff or cap was used. The logged upper ceilings range from 18.36% to 26.80%. | [log](logs/20261007-171743-qc-with-soupx-44415111.log). |
+
+For 44276132 and 44415111, Scrublet used original counts on all input cells,
+with the retained-cell call threshold fixed at score >0.15 and seed 1234.
 
 Both normalization jobs took **the Scrublet clean Seurat RDS from 44276132** as
 input, not the DoubletFinder branch. They used LogNormalize (scale factor
@@ -374,6 +392,204 @@ called totals agree with CellBender's own validation. Source SoupX QC metadata
 links this review while preserving the previous comparison. No count matrices,
 CellBender files or downstream checkpoints changed; no other samples submitted.
 Scripts and documentation changes remain local/uncommitted.
+
+### All-sample automatic baselines, parallel array
+
+The user authorized SoupX for all 23 samples and parallel processing. All
+unfiltered/filtered RSEC archives and mRNA cell-count metrics were checked for
+presence; counts range from 10,417 to 17,082 original calls. The fixed manifest
+is `scripts/soupx/samples.txt`. Methods and background gates match the pilot;
+no manual rho, sensitivity runs, cell filtering, doublet calls, MT-prefix
+renaming or downstream checkpoint changes are included.
+
+The launcher now supports array dispatch. Each task requests 4 CPUs, 16 GiB,
+4 hours; at most four run concurrently. Array jobs share a run ID while sample
+directories remain separate. Task IDs, manifest and script hashes are recorded.
+Shared `scripts/soupx/plots.R` produces Raw/SoupX marker plots and per-cluster
+marker count/detection/log-expression tables for each successful baseline.
+It reuses the pilot's 26 candidate genes, not its cell-type/cluster assignments.
+Missing genes are recorded and no automatic biological acceptance is performed.
+
+| Job | Last verified result |
+|---|---|
+| 44409538 | Plotting preflight FAILED 1:0: Assay5 constructor is exported by SeuratObject, not Seurat; corrected namespace |
+| 44409543 | Plotting preflight COMPLETED 0:0, 50s; exported marker counts matched independent original cluster totals |
+| 44409555 | Initial 23-task array stopped: first four tasks FAILED 1:0 at plotting because an empty annotation label created a zero-length variable name; remaining tasks cancelled, outputs retained |
+| 44409564 | Dependent verification cancelled with the stopped initial array |
+| 44409746 | Exact final plotting helper preflight COMPLETED 0:0, 53s; both rendered figures inspected after restoring the working nonempty Features label |
+| 44409807 | Replacement array `--array=1-23%4`: all 23 tasks COMPLETED 0:0; all samples numerically validated |
+| 44409813 | Independent saved-count and marker arithmetic verification COMPLETED 0:0, 3m15s; all 23 samples passed |
+| 44410208 | Plot-only array: all 23 tasks COMPLETED 0:0; widened plots, with identical numerical marker summaries |
+
+Current data: `data/soupx/<sample>/job-44409807/`.
+Current diagnostics: `results/soupx/job-44409807/<sample>/`.
+Logs: `logs/soupx-44409807_<task>.log`; verification log:
+`logs/soupx-verify-44409813.log`; rerender logs:
+`logs/soupx-plots-44410208_<task>.log`. Independent verification reopened every
+saved matrix and checked integer/nonnegative/no-added counts, marker sums,
+detection fractions and cell-wise log1p normalization against exported tables.
+The temporary verification/rerender scripts were removed after execution.
+
+All 299,393 original called cells were retained across 23 libraries. Automatic
+rho estimates range from 2.3% to 4.8%; all default background gates passed,
+with called-cell-rank/background-upper-bound margins of 11.05–23.11.
+Each sample has all 26 candidate markers and its own 21–27 preliminary clusters.
+REVO30-P4 corrected counts are byte-identical to pilot job-44404963
+(MD5 `fe426d2c611f7500c18ac993daa98699`), reproducing that run rather than tuning
+toward a different reference removal percentage.
+
+All 23 native contamination diagnostic plots were inspected in labeled review
+contact sheets: no major secondary peaks, boundary maxima or curves tracking
+the broad prior were apparent; minor shoulders/right tails do not constitute
+biological acceptance, and the half-maximum spans are not confidence intervals.
+Final Raw/SoupX marker pairs were inspected for representative 21-, 23- and
+27-cluster samples. Wider export dimensions separate large horizontally
+adjacent dots without changing expression/detection data or comparison scales.
+Each `plot_rerender.json` records the new helper hash and unchanged marker
+summary; original execution `run.json` hashes remain unchanged.
+
+Every sample remains `validated_pending_qc`: numerical completion is not
+biological acceptance. Sample-specific marker preservation review, downstream
+cell QC and the proposed sensitivity analyses remain pending. No CellBender
+files, raw data or downstream checkpoints were modified. The requested
+ten-minute progress schedule was cleared after all relevant jobs finished.
+Plot-helper and run-history edits remain local/uncommitted.
+
+### SoupX input route for the existing QC pipeline
+
+At the user's request, ten superseded `data/soupx` run folders were removed:
+eight `job-44409555` folders and the REVO30-P4 pilot folders `job-44404957`
+and `job-44404963`. Only `job-44409807` remains for all 23 samples; historical
+`results/soupx` diagnostics were retained. The latest corrected RDS files were
+not changed.
+
+`R/qc/io.R` now loads corrected SoupX counts through `build_soupx_seurat_obj`,
+sharing the original mitochondrial/barcode renaming and sample/pig/pressure/time
+metadata construction with the raw-MEX loader. No job/run-ID cell metadata is
+added. `R/qc/main_soupx.R` selects `job-44409807` and otherwise preserves
+`main.R`'s QC, doublet, merging, plotting and checkpoint workflow.
+
+After removing the initially added run-ID column, verification job 44411222
+COMPLETED 0:0 in 3m37s. All 23 full-sample objects retained exact corrected
+counts, cell IDs, mitochondrial names/percentages and expected metadata.
+A 69-cell subset merge spanning every sample preserved layers and metadata;
+the original raw-MEX loader regression, missing-input rejection, unchanged
+source hashes and entry-point equivalence checks passed. Oracle source review
+found no defects. No downstream QC was launched; `scripts/sbatch_qc.sh` still
+targets the unchanged raw-data entry point. Changes remain local/uncommitted.
+
+### Upper-only ribosomal QC: final multiplier 3 MAD
+
+The user replaced the lower 2.5% exclusion with an upper-only per-sample rule,
+initially 4 MAD and then 3 MAD. The final threshold is median + 3 × R's default
+scaled MAD, computed from all input ribosomal percentages including 0%, without
+log transformation, floor or cap. Only values strictly above are flagged;
+equality and low percentages pass this criterion. Feature, complexity and
+mitochondrial rules are unchanged. Cutoffs are stored as `ribo_max` per sample;
+plots show per-sample upper segments and high-ribosomal UMAP labels.
+
+Verification 44414023 COMPLETED 0:0 in 3m37s. All 23 SoupX samples passed
+independent cutoff/flag calculations and non-ribosomal QC regression checks.
+Thresholds span 18.35848–26.80025%; 1,401 of 299,393 cells (0.46795%) are flagged
+by the ribosomal criterion, versus 222 (0.07415%) at 4 MAD in verification
+44413950. These are criterion flags, not necessarily additional QC exclusions.
+Software fixtures covered zeros, scaled MAD, strict equality and absence of
+caps/floors. Initial test 44413862 failed solely on comparing Seurat's named
+logical vector with an unnamed expected vector; diagnostic 44413925 confirmed
+matching values, and the expectation was corrected without changing the method.
+
+Both filtering branches passed exact retained-cell/count checks on REVO26-C and
+REVO27-N4. Historical doublet labels and saved UMAP coordinates were reused only
+for software/plot tests; no inference or embedding was rerun. Final before/after
+and UMAP artifacts in `.amp/in/artifacts/qc-ribo-mad3/` were inspected, and plotted
+threshold segments were numerically verified. Temporary verification code and
+intermediate 4-MAD figures were removed. No full QC pipeline, checkpoint writes
+or source-data modifications were performed. Changes remain local/uncommitted.
+
+### Sequential QC on SoupX input, Scrublet only
+
+Final requested layout keeps both existing input routes: `R/qc/main.R` reads
+raw filtered MEX matrices and is launched by `scripts/sbatch_qc.sh`;
+`R/qc/main_soupx.R` loads the corrected SoupX run `job-44409807` into Seurat
+objects and is launched by `scripts/sbatch_qc_with_soupx.sh`. Both entry points
+process samples sequentially and use Scrublet only. The proposed parallel array,
+separate collector and their launchers were withdrawn. `main.R` was briefly
+removed in error, then restored with the requested Scrublet-only changes.
+`scripts/sbatch_soupx.sh` remains the unchanged ambient-correction launcher.
+
+DoubletFinder calls, its unused clustering/sweep workflow, clean branch and
+diagnostic panel are removed from QC; the BD interpolation helper now lives in
+`scrublet.R`. The existing BD table, including 20,000 cells at 4.7%, is retained.
+Scrublet uses original input counts/all cells and its existing score >0.15 call;
+temporary normalized PCA/UMAP supplies diagnostic coordinates only. The accepted
+3-MAD upper-only ribosomal rule and other QC settings remain unchanged.
+
+Pilot array 44414192 completed two samples. Collector 44414252 and dependent
+check 44414254 were cancelled when parallelization was withdrawn. Cancellation
+interrupted the test clean-RDS write; check 44414264 failed to read that incomplete
+file. Those disposable pilot outputs were removed, not accepted as valid QC.
+
+Replacement sequential verification 44414269 COMPLETED 0:0 in 4m39s, peak RSS
+about 8.2 GiB. It executed the actual `main_soupx.R` with only the sample list
+restricted to REVO26-C/REVO30-P4. Independent rereading confirmed exact input
+counts, mitochondrial/QC percentages, metadata/cell IDs, Scrublet calls,
+3-MAD flags, retained-cell sets and per-sample >=10-cell gene filtering, including
+genes detected in exactly 9 versus 10 retained cells. No DoubletFinder namespace
+was loaded. All 16 PNG/SVG files were produced; the Scrublet UMAP was inspected.
+REVO26-C retained 10,294/11,604 cells (88.71079%); REVO30-P4 retained
+11,945/13,422 (88.99568%). Review plots and the numerical check table are in
+`.amp/in/artifacts/qc-scrublet-test/`; disposable test RDS files were removed.
+
+Full sequential QC job **44415111** was submitted with
+`sbatch scripts/sbatch_qc_with_soupx.sh` (6 CPUs, 128 GiB, 5-hour limit) and
+COMPLETED 0:0, Oct 7 17:17:43–17:59:14 CEST. Read-only output-check job
+**44415118** FAILED 1:0 at the comparison of saved parameters with the mutable
+current `params.R`, after the intentional feature/mitochondrial MAD change.
+That check did not demonstrate a saved-data defect or complete the remaining
+validation. Preserved outputs are
+`data/qc_labeled_data/job-44415111/labeled_concatenated.rds`,
+`data/clean_concatenated_data/job-44415111/clean_concatenated_scrublet.rds`
+and `results/qc/job-44415111/`. Logs are
+`logs/*-qc-with-soupx-44415111.log` and
+`logs/qc-soupx-output-check-44415118.log`. Biological acceptance remains open.
+No raw/SoupX source
+counts or unrelated CellBender jobs were changed. Code changes remain local,
+uncommitted and unpushed; no downstream normalization/integration was launched.
+
+### SoupX QC rerun with feature/mitochondrial/ribosomal multipliers all 3
+
+QC job **44415373** was submitted Oct 7 at 18:05:49 CEST through the existing
+`scripts/sbatch_qc_with_soupx.sh` and started at 18:06:16. At 18:08 it is RUNNING;
+completion and biological acceptance are not yet established. It processes all
+23 `data/soupx/<sample>/job-44409807/corrected_counts.rds` inputs sequentially,
+with Scrublet only (6 CPUs, 128 GiB, 5-hour limit). No ambient correction or
+downstream normalization/integration is rerun.
+
+Captured settings: `nFeature_RNA > 200` and
+`<= min(4500, median + 3×MAD)` per sample; complexity >0.8;
+mitochondrial percentage `<= min(20, median + 3×MAD)` using the sample's
+feature/complexity-passing reference cells; ribosomal percentage
+`<= median + 3×MAD` from all sample input cells, including zeros, without
+cap/floor/lower cutoff. MAD is R's default scaled MAD (constant 1.4826).
+Genes require detection in at least 10 retained cells per sample.
+Scrublet receives all input integer counts, uses the current interpolated BD
+multiplet-rate table, min_counts=3 and 30 PCs, and applies scores >0.15;
+its Python random_state is **0**, not the diagnostic seed. Temporary diagnostic
+LogNormalize/PCA/UMAP uses 2,000 variable features, PCs 1–20 and seed **1234**;
+saved checkpoints contain counts, not those temporary normalized assays.
+
+The pre-submission parameter RDS/text, QC source snapshots/SHA256 hashes and
+23 input-count SHA256 hashes are retained in
+`results/qc/job-44415373/provenance/`. Independent validation job **44415439**
+is pending with `afterok:44415373`; it checks against captured parameters,
+not live `params.R`, and expects **eight PNGs**, not the old 16 PNG/SVG files.
+Checks include exact counts, IDs/metadata, independently calculated QC flags
+and thresholds, Scrublet calls/retention and sample-specific gene filtering,
+including the 9/10-cell boundary. Logs:
+`logs/*-qc-with-soupx-44415373.log`, `logs/qc-soupx-verify-44415439.log`.
+Ten-minute monitoring is active. Final figure inspection, validation outcome
+and `.INFO` files in the three run directories remain pending completion.
+Old run 44415111 and unrelated/CellBender edits/jobs remain untouched.
 
 ## Limits
 

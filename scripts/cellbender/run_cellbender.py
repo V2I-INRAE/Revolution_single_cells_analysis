@@ -18,7 +18,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("sample")
     parser.add_argument("--epochs", type=int, default=150)
-    parser.add_argument("--learning-rate", type=float, default=1e-4)
+    parser.add_argument("--learning-rate", type=float, default=5e-5)
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[2]
     preparation_path = root / "results/cellbender-preparation" / args.sample / "preparation.json"

@@ -28,5 +28,8 @@ module load statistics/R/4.6.1
 
 source .venv-scrublet/bin/activate || exit 1
 export RETICULATE_PYTHON="$VIRTUAL_ENV/bin/python"
+export OMP_NUM_THREADS="$SLURM_CPUS_PER_TASK"
+export OPENBLAS_NUM_THREADS="$SLURM_CPUS_PER_TASK"
+export MKL_NUM_THREADS="$SLURM_CPUS_PER_TASK"
 
 Rscript R/qc/main.R

@@ -7,11 +7,9 @@ suppressPackageStartupMessages({
 save_norm_figure <- function(plot, output_dir, filename, width, height) {
   if (is.null(output_dir)) return(invisible(NULL))
   dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
-  for (extension in c("png", "svg")) {
-    path <- file.path(output_dir, paste0(tools::file_path_sans_ext(filename), ".", extension))
-    ggsave(path, plot = plot, width = width, height = height, dpi = 300, bg = "white")
-    message("  Saved: ", path)
-  }
+  path <- file.path(output_dir, paste0(tools::file_path_sans_ext(filename), ".png"))
+  ggsave(path, plot = plot, width = width, height = height, dpi = 300, bg = "white")
+  message("  Saved: ", path)
 }
 
 plot_pca_elbow <- function(
