@@ -4,37 +4,44 @@ suppressPackageStartupMessages({
   library(Seurat)
 })
 
-read_filtered_matrix <- function(folder_raw, sample_id) {
-  # --- get path to the zipped filtered matrix
-  mex_zip <- file.path(
-    folder_raw,
-    sample_id,
-    paste0(sample_id, "_RSEC_MolsPerCell_MEX.zip")
+qc_input_path <- function(sample_id, input_source) {
+  folder <- file.path("data", "raw_data", input_source, sample_id)
+  switch(input_source,
+    rhapsody = file.path(folder, paste0(sample_id, "_RSEC_MolsPerCell_MEX.zip")),
+    soupx = file.path(folder, "job-44409807", "corrected_counts.rds"),
+    cellbender = file.path(folder, paste0(sample_id, "_cellbender_FPR_0.01_filtered.h5")),
+    stop("Unknown QC input source: ", input_source)
   )
-  stopifnot("MEX zip not found" = file.exists(mex_zip))
-
-  # --- unzip the matrix to barcodes, features and matrix count
-  mex_dir <- file.path(tempdir(), paste0(sample_id, "_filtered_MEX"))
-  utils::unzip(mex_zip, exdir = mex_dir)
-  stopifnot(all(file.exists(file.path(
-    mex_dir,
-    c("matrix.mtx.gz", "barcodes.tsv.gz", "features.tsv.gz")
-  ))))
-
-  return(mex_dir)
 }
 
-build_seurat_obj <- function(unzipped_mex_dir, sample_id) {
-  counts <- Seurat::Read10X(data.dir = unzipped_mex_dir)
-  return(build_seurat_obj_from_counts(counts, sample_id))
-}
-
-build_soupx_seurat_obj <- function(folder_soupx, sample_id, run_id) {
-  counts_path <- file.path(folder_soupx, sample_id, run_id, "corrected_counts.rds")
-  stopifnot("SoupX counts RDS not found" = file.exists(counts_path))
-  counts <- readRDS(counts_path)
-  seurat_obj <- build_seurat_obj_from_counts(counts, sample_id)
-  return(seurat_obj)
+read_qc_counts <- function(sample_id, input_source) {
+  path <- qc_input_path(sample_id, input_source)
+  if (!file.exists(path)) stop("QC input not found: ", path)
+  switch(input_source,
+    rhapsody = {
+      mex_dir <- tempfile(paste0(sample_id, "_filtered_MEX_"))
+      on.exit(unlink(mex_dir, recursive = TRUE))
+      utils::unzip(path, exdir = mex_dir)
+      Seurat::Read10X(data.dir = mex_dir)
+    },
+    soupx = readRDS(path),
+    cellbender = {
+      # Read only expression counts: Read10X_h5 also tries to read latent groups.
+      h5 <- hdf5r::H5File$new(path, mode = "r")
+      on.exit(h5$close_all())
+      matrix <- h5[["matrix"]]
+      Matrix::sparseMatrix(
+        i = matrix[["indices"]][] + 1L,
+        p = matrix[["indptr"]][],
+        x = as.numeric(matrix[["data"]][]),
+        dims = matrix[["shape"]][],
+        dimnames = list(
+          make.unique(matrix[["features/name"]][]),
+          matrix[["barcodes"]][]
+        )
+      )
+    }
+  )
 }
 
 build_seurat_obj_from_counts <- function(counts, sample_id) {
