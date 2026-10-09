@@ -67,9 +67,5 @@ it plots all resolutions. `plotted_resolutions.csv` records the figure scope.
 Comparison CSVs and the source analysis bundles retain all resolutions, including
 1.0, even when its UMAP panel, clustree row and comparison figure points are omitted.
 
-New runs also save t-SNE using the same representation/components, seed 1234 and
-perplexity 30. Resolution plots are exported for both embeddings with separate
-`umap_` and `tsne_` prefixes; clustree and diagnostics are generated only once.
-For older completed runs, first [add t-SNE to new checkpoint copies](../integration/README.md#add-t-sne-to-completed-runs)
-without rerunning integration or clustering, then supply the copied `analysis.rds`
-bundles to the plotting command above. Plotting does not fit missing embeddings.
+Resolution plots are exported from the saved UMAP; clustree and diagnostics are
+generated only once. Plotting does not fit missing embeddings.
