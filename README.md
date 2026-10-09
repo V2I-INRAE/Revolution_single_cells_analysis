@@ -31,17 +31,21 @@ These examples use existing checkpoints. For a new analysis, substitute the
 upstream job IDs you intend to use; no stage automatically selects the latest run.
 
 ```bash
-# Raw-MEX QC: main.R, sequential, Scrublet only
+# QC: one entry point, sequential, Scrublet only; Rhapsody is the default
 sbatch scripts/sbatch_qc.sh
 
-# SoupX QC: main_soupx.R, sequential, Scrublet only
-sbatch scripts/sbatch_qc_with_soupx.sh
+# Select corrected counts instead
+sbatch scripts/sbatch_qc.sh soupx
+sbatch scripts/sbatch_qc.sh cellbender
 
 # Normalize the selected Scrublet-clean checkpoint
 sbatch scripts/sbatch_norm_feat.sh \
   data/clean_concatenated_data/job-44194877/clean_concatenated_scrublet.rds
 
-# Integration: choose harmony, scvi or cca
+# Integration: CCA is the working route
+sbatch scripts/sbatch_integration_cca.sh data/norm_feat/job-44216449/lognorm.rds
+
+# Optional reviewer/sensitivity runs: Harmony and scVI remain available
 sbatch scripts/sbatch_integration.sh harmony data/norm_feat/job-44212906/lognorm.rds
 sbatch scripts/sbatch_integration.sh scvi data/norm_feat/job-44212906/lognorm.rds
 
@@ -49,19 +53,16 @@ sbatch scripts/sbatch_integration.sh scvi data/norm_feat/job-44212906/lognorm.rd
 sbatch scripts/sbatch_clustering.sh unintegrated data/integration/harmony/job-44215822/lognorm.rds
 sbatch scripts/sbatch_clustering.sh harmony data/integration/harmony/job-44215822/lognorm.rds
 sbatch scripts/sbatch_clustering.sh scvi data/integration/scvi/job-44227281/lognorm.rds
-
-# Compare saved scVI, Harmony and CCA embeddings without refitting
-# First add t-SNE to older checkpoints; new integration runs save both embeddings.
-sbatch scripts/sbatch_integration_plots.sh \
-  data/integration-tsne/scvi/job-44281712/lognorm.rds \
-  data/integration-tsne/harmony/job-44281709/lognorm.rds \
-  data/integration-tsne/cca/job-44282203/lognorm.rds \
-  results/integration/comparison/my-comparison
 ```
 
 For dependent submissions, use Slurm `--dependency=afterok:<job_id>[:<job_id>...]`.
-See [integration plotting instructions](R/integration/README.md) for adding t-SNE
-to completed runs and selecting `--embedding=umap|tsne|both` (default: both).
+Integration jobs also write six UMAP PNGs into their method/job results folder,
+using the same in-memory object after saving the final RDS. Figure generation
+lives in `R/integration/plots.R`; no separate plotting job is needed. Figures
+show unintegrated PCA beside the selected method, grouped by sample, pressure,
+time and pressure–time, plus sample facets. Diagnostic sampling/mixing metrics
+are not run automatically. Concise `.INFO` records track saving and plotting;
+a plotting failure is reported without losing the saved integration object.
 See [clustering instructions](R/clustering/README.md) for clustering plots.
 See [CCA marker instructions](R/find_markers/README.md) for all-cell marker
 discovery and separate bar-plot, dot-plot and heatmap jobs.
@@ -69,13 +70,22 @@ discovery and separate bar-plot, dot-plot and heatmap jobs.
 ## Outputs and tracking
 
 `<run_id>` is `job-<SLURM_JOB_ID>`, or a timestamp plus PID outside Slurm.
-`R/qc/main.R` reads raw filtered MEX matrices; `R/qc/main_soupx.R` loads
-SoupX-corrected input from the pinned run `job-44409807` into Seurat objects.
-Their respective launchers are `scripts/sbatch_qc.sh` and
-`scripts/sbatch_qc_with_soupx.sh`. Both process the 23 samples sequentially,
-then concatenate, plot and save the Scrublet-clean checkpoint in the same job.
-Neither launches normalization or integration. No job/run-ID columns are added
-to cell metadata. `scripts/sbatch_soupx.sh` remains the ambient-correction launcher.
+`R/qc/main.R [rhapsody|soupx|cellbender]` and `scripts/sbatch_qc.sh` use one QC
+workflow, defaulting to Rhapsody. Input loading in `R/qc/io.R` selects:
+
+- **Rhapsody:** filtered MEX ZIPs under `data/raw_data/rhapsody/<sample>/`.
+- **SoupX:** sparse corrected count matrices at
+  `data/raw_data/soupx/<sample>/job-44409807/corrected_counts.rds`.
+- **CellBender:** `<sample>_cellbender_FPR_0.01_filtered.h5` under
+  `data/raw_data/cellbender/<sample>/`. Only the H5 expression matrix is read,
+  not CellBender's latent groups. Source runs and unresolved convergence/cell-call
+  warnings are recorded in `data/raw_data/cellbender/.INFO`.
+
+Each run uses one source for all 23 samples, then concatenates, plots and saves
+the Scrublet-clean checkpoint in the same job. Input source and paths are saved
+in the objects' QC metadata and `results/qc/<run_id>/.INFO`; no source or run-ID
+columns are added to cell metadata. No normalization or integration job is launched.
+`scripts/sbatch_soupx.sh` remains the ambient-correction launcher.
 Existing run directories are rejected, including on requeue. Flat RDS paths and
 compatibility links have been removed.
 
@@ -105,8 +115,9 @@ records historical jobs, inputs, outputs and outcomes.
 - **Normalization:** LogNormalize, per-layer VST selection, 3,000 consensus
   variable genes and 50-PC PCA. SCT checkpoints are historical only.
   Settings: `R/norm_feat/params.R`.
-- **Integration:** corrects sample batches, not pressure/time. Unintegrated UMAP
-  and Harmony/CCA use dimensions 1–20; scVI uses original RNA counts for 3,000 selected genes and
+- **Integration:** corrects sample batches, not pressure/time. CCA is the
+  working route; Harmony and scVI remain available for reviewer/sensitivity
+  runs. Unintegrated UMAP and Harmony/CCA use dimensions 1–20; scVI uses original RNA counts for 3,000 selected genes and
   20 latent dimensions. Settings: `R/integration/params.R`.
 - **Clustering:** unintegrated uses preserved PCA; other routes use Harmony,
   CCA or scVI, selecting dimensions 1–20. Use newly generated 20-component integration

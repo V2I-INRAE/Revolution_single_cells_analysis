@@ -6,6 +6,7 @@
 #SBATCH -t 05:00:00
 #SBATCH -o logs/qc-pipeline-%j.out
 
+# Usage: sbatch scripts/sbatch_qc.sh [rhapsody|soupx|cellbender]
 # Run the QC pipeline (R/qc/main.R) as a batch job. All output goes to
 # logs/<YYYYMMDD>-<HHMMSS>-qc-pipeline-<jobid>.log.
 # Slurm-level messages (before the redirect) go to
@@ -32,4 +33,4 @@ export OMP_NUM_THREADS="$SLURM_CPUS_PER_TASK"
 export OPENBLAS_NUM_THREADS="$SLURM_CPUS_PER_TASK"
 export MKL_NUM_THREADS="$SLURM_CPUS_PER_TASK"
 
-Rscript R/qc/main.R
+Rscript R/qc/main.R "$@"

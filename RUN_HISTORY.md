@@ -85,6 +85,7 @@ between runs; the new runs pass the explicit `job-44281196` path.
 | 44281709 | Oct 1 22:05–22:32 | [Harmony](data/integration/harmony/job-44281709/lognorm.rds); **226,738** | PCA/Harmony **20** | COMPLETED 0:0; [diagnostics](results/integration/harmony/job-44281709/diagnostics_lognorm.rds), [log](logs/20261001-220536-integration-harmony-44281709.log) |
 | 44281712 | Oct 1 22:05–23:06 | [scVI](data/integration/scvi/job-44281712/lognorm.rds); **226,738** | PCA/scVI **20** | COMPLETED 0:0; [diagnostics](results/integration/scvi/job-44281712/diagnostics_lognorm.rds), [log](logs/20261001-220558-integration-scvi-44281712.log) |
 | 44282203 | Oct 1 23:47–Oct 2 22:51 (23:03:57) | CCA on **226,738** cells from [norm_feat 44281196](data/norm_feat/job-44281196/lognorm.rds); [checkpoint](data/integration/cca/job-44282203/lognorm.rds) | PCA/CCA **20** | COMPLETED 0:0; 8 CPUs, 512 GB, **72-hour** limit; [diagnostic RDS](results/integration/cca/job-44282203/diagnostics_lognorm.rds), [summary CSV](results/integration/cca/job-44282203/diagnostics_lognorm.csv), [metrics PNG](results/integration/cca/job-44282203/integration_metrics_lognorm.png), [log](logs/20261001-234739-integration-cca-44282203.log) |
+| 44417308 | Oct 7 21:29–21:31 (00:01:57) | CCA on **247,672** cells from [norm_feat 44416449](data/norm_feat/job-44416449/lognorm.rds) | PCA/CCA **20** | CANCELLED by user (scancel) before integration computed; no checkpoint; run directories (incl. diagnostic_cells.csv) removed at user request same day; [log](logs/20261007-212915-integration-cca-44417308.log) |
 
 All runs used 23 samples and seed 1234. Harmony: sample correction, maximum 10
 iterations. scVI: 3,000 selected RNA genes, **original RNA counts** (not
@@ -117,25 +118,22 @@ Each directory contains `comparison_sources.csv` and PNG/SVG figures.
 | 44227466 | Sep 30 23:20–23:46 | 44227281 / 44215822 | COMPLETED; [log](logs/20260930-232055-integration-plots-44227466.log) |
 | 44282037 | Oct 1 23:08–23:30 | **44281712 / 44281709** | COMPLETED 0:0; [source manifest](results/integration/comparison/scvi-job-44281712_harmony-job-44281709/comparison_sources.csv) records both Seurat checkpoint paths, [comparison output](results/integration/comparison/scvi-job-44281712_harmony-job-44281709/) contains seven nonempty PNG/SVG pairs (sample/pressure/time/pressure-time and three sample facets); [log](logs/20261001-230833-integration-plots-44282037.log) |
 
-### Integration t-SNE augmentation and replotting: Oct 3
+### Retired integration embedding augmentation and replotting: Oct 3
 
-Submitted Oct 3 at 20:47–20:49 CEST. These jobs fit only t-SNE from the
-completed integration representations; they do not rerun integration,
-normalization, clustering or diagnostics. Each augmented copy retains the
-original run-directory basename under `data/integration-tsne/<method>/`.
-t-SNE uses components 1–20, seed 1234 and perplexity 30; saved UMAPs are retained.
+The temporary augmented copies and their comparison directory were removed when
+the analysis was made UMAP-only. The job records and logs are retained below as
+historical provenance; they are not active workflow instructions.
 
 | Job | Task / source integration | State checked at Oct 3 20:49 CEST | Log |
 |---|---|---|---|
-| 44310707 | Add baseline and scVI t-SNE from 44281712 | RUNNING | [log](logs/20261003-204712-add-tsne-44310707.log) |
-| 44310708 | Add baseline and Harmony t-SNE from 44281709 | RUNNING | [log](logs/20261003-204712-add-tsne-44310708.log) |
-| 44310709 | Add baseline and CCA t-SNE from 44282203 | RUNNING | [log](logs/20261003-204712-add-tsne-44310709.log) |
-| 44310723 | Plot both UMAP and t-SNE for all three augmented checkpoints | PENDING; `afterok:44310707:44310708:44310709` | [Slurm output](logs/integration-plots-44310723.out) |
+| 44310707 | Retired augmented scVI checkpoint from 44281712 | RUNNING | [log](logs/20261003-204712-add-tsne-44310707.log) |
+| 44310708 | Retired augmented Harmony checkpoint from 44281709 | RUNNING | [log](logs/20261003-204712-add-tsne-44310708.log) |
+| 44310709 | Retired augmented CCA checkpoint from 44282203 | RUNNING | [log](logs/20261003-204712-add-tsne-44310709.log) |
+| 44310723 | Retired comparison of the augmented checkpoints | PENDING; `afterok:44310707:44310708:44310709` | [Slurm output](logs/integration-plots-44310723.out) |
 
-The plot job writes a new [comparison directory](results/integration/comparison/umap-tsne-scvi-job-44281712_harmony-job-44281709_cca-job-44282203/).
-It is expected to produce 16 PNG/SVG pairs and `comparison_sources.csv`.
-Submission and running states are not completion evidence; results remain
-pending until job exit codes, logs and outputs are checked.
+The associated augmented comparison directory was removed. Submission and
+running states are not completion evidence; results remain pending until job
+exit codes, logs and outputs are checked.
 
 ## Clustering
 
@@ -559,11 +557,13 @@ uncommitted and unpushed; no downstream normalization/integration was launched.
 ### SoupX QC rerun with feature/mitochondrial/ribosomal multipliers all 3
 
 QC job **44415373** was submitted Oct 7 at 18:05:49 CEST through the existing
-`scripts/sbatch_qc_with_soupx.sh` and started at 18:06:16. At 18:08 it is RUNNING;
-completion and biological acceptance are not yet established. It processes all
+`scripts/sbatch_qc_with_soupx.sh` and COMPLETED 0:0, 18:06:16–18:47:12
+(40m56s, peak batch RSS 36,131,152 KiB). It processed all
 23 `data/soupx/<sample>/job-44409807/corrected_counts.rds` inputs sequentially,
 with Scrublet only (6 CPUs, 128 GiB, 5-hour limit). No ambient correction or
-downstream normalization/integration is rerun.
+downstream normalization/integration was rerun. Independent validation job
+**44415439** COMPLETED 0:0, 18:47:19–18:51:08 (3m49s, peak batch RSS
+20,575,340 KiB); computational checks passed, not biological acceptance.
 
 Captured settings: `nFeature_RNA > 200` and
 `<= min(4500, median + 3×MAD)` per sample; complexity >0.8;
@@ -578,18 +578,515 @@ its Python random_state is **0**, not the diagnostic seed. Temporary diagnostic
 LogNormalize/PCA/UMAP uses 2,000 variable features, PCs 1–20 and seed **1234**;
 saved checkpoints contain counts, not those temporary normalized assays.
 
-The pre-submission parameter RDS/text, QC source snapshots/SHA256 hashes and
-23 input-count SHA256 hashes are retained in
-`results/qc/job-44415373/provenance/`. Independent validation job **44415439**
-is pending with `afterok:44415373`; it checks against captured parameters,
-not live `params.R`, and expects **eight PNGs**, not the old 16 PNG/SVG files.
-Checks include exact counts, IDs/metadata, independently calculated QC flags
-and thresholds, Scrublet calls/retention and sample-specific gene filtering,
-including the 9/10-cell boundary. Logs:
-`logs/*-qc-with-soupx-44415373.log`, `logs/qc-soupx-verify-44415439.log`.
-Ten-minute monitoring is active. Final figure inspection, validation outcome
-and `.INFO` files in the three run directories remain pending completion.
-Old run 44415111 and unrelated/CellBender edits/jobs remain untouched.
+Validation compared the saved execution parameters with the pre-submission
+settings, not live `params.R`, and decoded **eight PNGs**,
+not the old 16 PNG/SVG files. All 23 exact saved input count matrices,
+IDs/metadata, independently calculated QC metrics/flags/thresholds, Scrublet-only
+calls/retention and sample-specific gene filtering passed, including the
+9/10-cell boundary. All input SHA256 hashes and captured QC source hashes
+matched at completion review. Logs:
+`logs/20261007-180617-qc-with-soupx-44415373.log`,
+`logs/qc-soupx-verify-44415439.log`. Actual parameters and sample thresholds
+remain embedded in checkpoint `misc$qc` and documented in `.INFO`.
+
+The [labeled checkpoint](data/qc_labeled_data/job-44415373/labeled_concatenated.rds)
+retains all **299,393** input cells. **252,687** pass QC; Scrublet calls 6,115
+doublets among all input cells and removes 5,015 additional QC-passing cells.
+The [clean checkpoint](data/clean_concatenated_data/job-44415373/clean_concatenated_scrublet.rds)
+retains **247,672 cells (82.724713%)** across all 23 samples. Per-sample retention
+is 76.337665–85.953120%; sample layers retain 17,578–18,860 genes.
+The original validation log records every sample's counts and thresholds.
+Feature ceilings range from
+3588.8547 to 4500; mitochondrial ceilings 12.348004–18.918261%; ribosomal ceilings
+18.358476–26.800253%. The ribosomal criterion flags 1,401 cells, not necessarily
+1,401 unique QC exclusions.
+
+All eight final diagnostic PNGs were inspected after 19:23 CEST on Oct 7:
+all sample labels/panels and legends are readable, without clipping or missing
+panels. Before/after plots show QC-only retention, not doublet removal; sample
+UMAPs are independent, not a joint embedding or biological annotation. Dense
+point overplotting obscures violin interiors, and shared axes leave empty space
+in after panels; figures were not changed. The log contains the existing
+R-native UWOT default-method notice, import-replacement warning and plotting
+scale-replacement messages, with no execution error or out-of-range BD clamp.
+
+Accurate `.INFO` files now accompany the labeled-data, clean-data and results
+directories. At the user's request, the extra provenance folder, duplicate
+logs/source snapshots and validation CSV/RDS were removed; the results folder
+contains only the eight diagnostic PNGs and `.INFO`. Original logs and data
+checkpoints are unchanged. Future runs start `.INFO` with their inputs/settings
+and update it with the final status/checks, without extra provenance folders.
+Ten-minute monitoring ended after verified completion; the parent
+thread was notified. Old run 44415111 and unrelated/CellBender edits/jobs remain
+untouched. No QC code was changed for this run; records and outputs remain local,
+uncommitted and unpushed. Biological acceptance/annotation remains open.
+
+### LogNormalize on SoupX/QC 44415373
+
+Job **44416449** was submitted through the unchanged
+`scripts/sbatch_norm_feat.sh` with
+`data/clean_concatenated_data/job-44415373/clean_concatenated_scrublet.rds`.
+It ran Oct 7, **19:48:39–20:27:41 CEST** (39m02s, peak RSS about 44.6 GiB) and
+**COMPLETED 0:0**. Preflight independently reopened the counts-only input:
+**247,672 cells**, **21,084** RNA features, all **23** samples and separate
+count layers, aligned cell metadata and finite regression covariates.
+
+Configured method: LogNormalize (10,000), per-layer VST/consensus 3,000 HVGs,
+ScaleData regression of `percent.mt` and `nFeature_RNA`, 50-PC PCA, seed 1234.
+Resources: 6 CPUs, 256 GiB, 5-hour limit; Seurat 5.5.1/SeuratObject 5.4.0.
+Checkpoint: `data/norm_feat/job-44416449/lognorm.rds` (7.6 GB);
+diagnostics: `results/norm_feat/lognorm/job-44416449/` (30 PNGs).
+Log: `logs/20261007-194839-norm-feat-pipeline-44416449.log`; `.INFO` files
+record inputs/settings and verification.
+
+Independent verification passed: cell/gene IDs, metadata and `misc$qc`
+unchanged; all 23 counts layers exactly identical to the input; 23 per-sample
+`data.*` layers plus one joined `scale.data` (3,000 × 247,672, Seurat's
+standard regression output); saved settings match the configured run;
+LogNormalize values reproduced with 0 difference on 3 samples × 400 cells; an
+independent `lm` reproduction of regression/standardization/±10 clipping
+matched stored scaled values to ~1e-15, with covariate correlations ≈0
+(mean 0.002); 3,000 HVGs per sample and 3,000 consensus (each selected in ≥8
+samples, 1,064 in all 23); PCA loadings use all 3,000 HVGs and 50 finite PCs
+align with cells (PC1–30 explain 91.7%). All 30 diagnostic PNGs were
+inspected; only cosmetic notes (label/leader overlaps on dense VST plots;
+the blue-dot `VizDimLoadings` style matches prior verified run 44281196).
+The joined `scale.data` means/sds deviate slightly from 0/1 solely because of
+the regression and Seurat's default ±10 clipping (980,637 entries at +10).
+
+Computational verification only; biological acceptance remains open. No
+method/code changes, integration, clustering, commits or pushes; unrelated
+jobs are untouched.
+
+### Integration plotting: single-checkpoint UMAPs (CCA working route)
+
+Per user decision, CCA is the working integration route; cross-method
+comparison figures are withdrawn. `plot_integration_umaps()` now plots the
+checkpoint's declared method (`misc$integration$method`) beside its
+unintegrated PCA UMAP and stops, naming the reduction, if the method UMAP is
+missing; layouts/dimensions scale to two panels. `R/integration/plot_main.R`
+takes `<integration_checkpoint.rds> <new_output_dir>`, validates the
+integration metadata, renders the existing groupings (sample, pressure, time,
+pressure_time plus per-method sample facets; 6 PNGs) and writes a concise
+`.INFO` per the run-record rule. `scripts/sbatch_integration_plots.sh` uses
+the same two arguments. `read_integration_comparison()` (including its stale
+job-44281196 pin) is removed from `R/integration/io.R`; `comparison_sources.csv`
+is no longer written. `main.R` per-method runs, `cca.R`/`harmony.R`/`scvi.R`,
+`plot_integration_metrics()` (per-run iLISI/silhouette violin) and
+`R/clustering` comparisons are unchanged; Harmony/scVI stay runnable for
+reviewers. README documents CCA-first usage.
+
+Plot-only verification on historical `data/integration/cca/job-44282203/lognorm.rds`
+(no integration computed): job 44417083 COMPLETED 0:0 in ~9 min, producing all
+six expected PNGs (2-panel Unintegrated|CCA sample figure; pressure, time,
+pressure_time; unintegrated and CCA sample facets) plus `.INFO`. Job 44417228
+COMPLETED 0:0: existing output directory rejected before reading the 7 GB
+checkpoint, and a checkpoint stripped of `umap_cca` fails with the named
+reduction. Figures inspected: sample figure shows exactly two panels with the
+23-sample legend; faceted CCA shows 23 labeled panels. Review copies:
+`.amp/in/artifacts/integration-plot-cleanup/figures/`. A test expectation was
+corrected after the first negative run (the check greps for the named
+reduction; the production error message was improved accordingly). Temporary
+test scripts were removed. No integration job was launched; changes remain
+local/uncommitted.
+
+### Fresh Harmony on SoupX/LogNormalize 44416449
+
+Job **44435612** was submitted Oct 8 through the unchanged
+`scripts/sbatch_integration.sh harmony data/norm_feat/job-44416449/lognorm.rds`
+and **COMPLETED 0:0**, **18:47:51–19:23:20 CEST** on n038 (35m29s;
+peak batch RSS 47,537,944 KiB). Existing read-only validation 44436241 passed.
+Input was previously verified as **247,672 cells**, 21,084 RNA features and
+23 samples. Final RDS is 7.6 GB; diagnostic CSV/RDS/PNG files exist.
+
+Current execution settings: direct Harmony sample correction on PCA axes 1–20,
+maximum 10 iterations, no projected loadings, seed 1234; PCA/Harmony UMAPs;
+50,000 proportionally stratified diagnostic cells, iLISI perplexity 30 and
+Euclidean sample-label silhouettes. Resources: 8 CPUs, 128 GiB, 24-hour limit.
+Fresh directories: `data/integration/harmony/job-44435612/` and
+`results/integration/harmony/job-44435612/`; both started concise `.INFO`
+records using the `# Local provenance` template. Original log:
+`logs/20261008-184751-integration-harmony-44435612.log`.
+
+Previous Harmony **44435481** was explicitly user-cancelled and its run folders
+removed before this submission. CCA **44417322** remained running and untouched.
+Monitoring was changed from two hours to five minutes at the user's request;
+terminal settings/data/
+embedding/diagnostic checks and figure inspection will be recorded here.
+No method/code changes, provenance folders, snapshots, duplicate logs, extra
+validation bundles, commits or pushes were made for this submission.
+
+Harmony 2.0.5 reached **10/10 iterations without its explicit convergence
+message**: the outer convergence criterion did not pass. Both UMAP fits
+finished. The user approved retaining this baseline to completion, then a
+fresh **30-iteration maximum** run from the same normalization checkpoint.
+Only `max_iter` in `R/integration/harmony.R` was changed (10 → 30) afterward;
+the running baseline had already loaded and executed the 10-iteration call.
+Other settings, convergence tolerance, CCA and unrelated work are unchanged.
+R parsing and direct call-argument checks passed; rerun submission is pending
+in this initial approval record; subsequent submission/cancellation is below.
+No commits or pushes.
+
+The user subsequently requested skipping integration diagnostics in future
+runs while retaining their code. `R/integration/main.R` no longer sources
+diagnostic/plot code, selects diagnostic cells, computes/exports mixing metrics,
+or records unused diagnostic settings. Integration, both UMAP embeddings and
+the single final Seurat RDS are retained. `diagnostics.R` and metric plotting
+in `plots.R` remain available separately. This shared-driver change applies to
+future Harmony/CCA/scVI runs; running baseline 44435612 and CCA 44417322 already
+loaded their previous driver and remain untouched. Mocked driver tests passed
+for all three routes, checking method/UMAP calls, actual RDS save/read, retained
+provenance and absence of diagnostic calls/outputs; real-data validation of
+the forthcoming run was pending at that check.
+
+### Cancelled 30-iteration Harmony rerun 44436227
+
+Fresh job **44436227** used the same input and launcher; started Oct 8 at
+**19:24:54 CEST** on n006 (8 CPUs, 128 GiB, 24-hour limit). Only the approved
+iteration ceiling (30) and omitted diagnostic orchestration differed from the
+baseline. Input checks passed (247,672 cells / 23 samples), then the job was
+**CANCELLED at the user's request at 19:26:42 CEST**, during Harmony 1/30
+(1m48s; batch exit 0:15). Parent issued `scancel`. No final RDS or UMAP
+embedding was saved; no completed convergence or output validation is available.
+
+Both `job-44436227` run folders initially received final `# Local provenance`
+`.INFO` records, then were removed at the user's explicit request on Oct 8:
+`data/integration/harmony/job-44436227/` and
+`results/integration/harmony/job-44436227/`. Original logs were retained. Log:
+`logs/20261008-192454-integration-harmony-44436227.log`. Monitoring schedule
+was cleared; **do not resubmit or start plotting jobs**. Completed baseline
+44435612 and running CCA 44417322 remain untouched. No commits or pushes.
+
+Baseline's produced metric PNG was inspected: both panels/axes/categories
+are readable and unclipped; mixing distributions overlap and do not establish
+biological preservation. The baseline driver saved both UMAP embeddings but
+does not render UMAP figures; `R/integration/plot_main.R` is the separate
+plotting entry point and was not launched here. Read-only baseline validation
+job **44436241** was submitted before the stop request, with temporary code
+under `.amp/in/` and original log `logs/harmony-verify-44436241.log`. It had
+already **COMPLETED 0:0 at 19:30:33 CEST** when the user asked to cancel it,
+so no active validation job remained to cancel. Its log reports exact preserved
+IDs/metadata/RNA assay/PCA/upstream provenance, aligned finite embeddings and
+saved settings, diagnostic score/summary agreement. No analysis objects or
+bundles were written; temporary verification code was removed. Baseline files
+were not edited. Harmony's iteration ceiling/objective history are not embedded
+in misc$integration; the original execution log and .INFO record the ceiling.
+
+**User direction:** stop submitting resource-consuming extra validation/check
+jobs for successful runs unless an actual failure requires investigation or
+the user explicitly requests them. Main thread informed; no replacement,
+further checks or plotting jobs launched here. Monitoring remains cleared.
+
+### UMAP plotting within each integration job
+
+At the user's request, future integration runs now call
+`plot_integration_figures()` from `R/integration/plots.R` after saving their
+final RDS and before releasing the in-memory object. The plotting function
+owns grouping/faceting, filenames and the six-PNG output check; `main.R`
+only calls it and records saving/plotting status in concise `.INFO` files.
+Plotting failures propagate while retaining the saved object. Existing plot
+styles and unintegrated-plus-selected-method panels are unchanged; diagnostic
+sampling/mixing metrics remain disabled.
+
+Removed the obsolete `R/integration/plot_main.R`, its dedicated batch launcher
+and `R/integration/README.md`; root README describes the combined workflow.
+Local syntax and mocked control-flow checks passed for Harmony/CCA/scVI and
+the plotting-failure path; no actual figures were rendered in these checks.
+No cluster jobs, existing output changes, commits or pushes. Running CCA and
+the completed baseline retain their already-loaded code and existing files.
+
+### Requested Harmony series: 10, 30 and 50 iterations
+
+The user explicitly requested removal of both `job-44435612` folders from
+`data/integration/harmony/` and `results/integration/harmony/`; removed Oct 8,
+with original logs retained. Historical completion/validation above describes
+that removed baseline, not an available checkpoint.
+
+The new requested series runs sequentially on the same
+`data/norm_feat/job-44416449/lognorm.rds`, using the existing Harmony launcher
+and unchanged sample correction, axes 1–20, seed 1234 and convergence tolerance.
+`R/integration/params.R` now owns `harmony_params$max_iter`; the wrapper uses
+that setting. Actual loaded parameters and log-derived convergence are saved
+in `.INFO` and `misc$integration`. Convergence at the final allowed iteration
+is distinguished from exhaustion without convergence. Local control-flow
+checks passed; no separate validation/check/plot jobs.
+
+| Iteration ceiling | Job | Status / original log |
+|---|---|---|
+| 10 | 44436475 | CANCELLED Oct 8 20:06:32 CEST after 13m37s; did not converge within 10 iterations; interrupted Harmony UMAP before final saving; `logs/20261008-195255-integration-harmony-44436475.log` |
+| 10 (fresh restart) | 44437024 | COMPLETED 0:0; Oct 8 20:12:57–20:47:30 CEST, 34m33s; did not converge within 10 iterations; final RDS and six PNGs saved; `logs/20261008-201257-integration-harmony-44437024.log` |
+| 30 | 44437561 | COMPLETED 0:0; Oct 8 20:50:59–21:23:59 CEST, 33m00s; converged after 11 iterations; final RDS and six PNGs saved; `logs/20261008-205059-integration-harmony-44437561.log` |
+| 50 | Not submitted | Skipped at Faouzi's request after convergence at 11 iterations in the 30-ceiling run |
+
+Faouzi explicitly approved resuming the Harmony-only series with fresh job
+44437024 after the stop. After its successful completion, only
+`harmony_params$max_iter` changed from 10 to 30 for job 44437561, using the
+same launcher/input. No additional code/method changes or validation jobs.
+
+All six 10-iteration PNGs were inspected (sample facets downscaled): no blank
+labeled panels or visible clipping. Dense points, similar colors and low-contrast
+facets limit assessment. The sample UMAP has localized color enrichment despite
+broad overlap; neither numerical convergence nor correction quality follows
+from this appearance. Both `.INFO` records include terminal status and limits.
+No object reopening or independent checks of saved settings, cells/features,
+metadata/count layers or embedding finiteness/alignment, per the resource constraint.
+
+The 30-ceiling run completed successfully, with convergence after 11 iterations
+confirmed in its log and both `.INFO` records. All six PNGs inspected (facets
+downscaled): populated labeled panels without visible clipping; localized sample
+color enrichment remains despite broad overlap. Dense points/similar colors and
+low-contrast facets limit interpretation; numerical convergence is not evidence
+of uniformly good mixing or correction quality. Both `.INFO` records finalized
+with accounting and the same independent-object-check limitations above.
+
+Each job renders the six existing UMAP PNGs in the same process after saving
+the final object; diagnostics remain off. Five-minute monitoring ended after
+the 30-ceiling run; no 50-iteration job submitted. Params remain at 30.
+Convergence and actual outcomes are recorded per job. This resumed series
+must not touch jobs owned by other threads, even if a request names them;
+refer such requests to the owning thread. No commits or pushes.
+
+## CCA job 44417322: mistaken cancellation, Oct 8
+
+- Input: `data/norm_feat/job-44416449/lognorm.rds` (247,672 cells,
+  23 samples); CCA, axes 1–20, seed 1234; original diagnostic-enabled driver.
+- Terminal status: **CANCELLED**, Oct 7 21:37:44–Oct 8 20:05:53 CEST
+  (22h28m09s). `sacct` records CANCELLED by 18174; batch exit 0:15.
+- Cause: [Harmony thread](https://ampcode.com/threads/T-01a11c69-3a3d-7238-baf1-c845dda65c5e)
+  mistakenly issued `scancel 44417322`, despite the leave-CCA-untouched
+  constraint. Faouzi clarified that Harmony was intended and CCA must not
+  be stopped. This was **not an explicit user request to cancel CCA**.
+  The inaccurate data `.INFO` attribution has been corrected; both run
+  `.INFO` records now reflect the terminal status and actual cause.
+- Last log evidence: CCA anchor finding, ending with 8,696 anchors and
+  `Running CCA`. No final checkpoint, UMAPs, diagnostics or metrics PNG
+  saved. Data directory contains `.INFO`; results contain `.INFO` and
+  `diagnostic_cells.csv` only. Existing folders, partial outputs and logs
+  are preserved. Earlier references to CCA remaining running/untouched
+  above describe the state before this cancellation.
+- Original log: `logs/20261007-213744-integration-cca-44417322.log`.
+- Old CCA monitoring cleared. No recovery or check jobs launched. Restart
+  was withheld until Faouzi gave fresh explicit approval; see new run below.
+  Changes remain local/uncommitted; unrelated edits and jobs were not changed.
+
+## CCA job 44436792: approved restart, Oct 8
+
+- Faouzi explicitly requested a rerun after correction of the cancellation
+  records. Submitted the unchanged launcher with input
+  `data/norm_feat/job-44416449/lognorm.rds` (247,672 cells, 23 samples).
+- RUNNING on n027; Slurm start Oct 8 20:09:26 CEST; driver `.INFO` start
+  20:09:40 CEST. CCA, axes 1–20, seed 1234; 8 CPUs, 512 GiB, 72-hour limit.
+- Current local driver writes its own `.INFO`, integrates and saves PCA/CCA
+  UMAPs and renders six UMAP PNGs. Diagnostic sampling/mixing metrics are
+  disabled; no integration code or parameters changed for this submission.
+- Checkpoint pending: `data/integration/cca/job-44436792/lognorm.rds`;
+  results: `results/integration/cca/job-44436792/`.
+- Original log: `logs/20261008-200926-integration-cca-44436792.log`.
+- Two-hour monitoring resumed for this job; cancelled job 44417322's folders,
+  partial outputs and logs preserved. No separate recovery/check/plot jobs.
+
+## QC sensitivity comparison 44437522: Oct 8
+
+- User-approved comparison of mitochondrial cap 15%, ribosomal +2 MAD, and both,
+  against SoupX QC 44415373 (299,393 input cells, 247,672 baseline clean cells).
+- Reused the original labeled checkpoint's QC metrics, saved execution settings,
+  Scrublet calls and sample UMAP coordinates. No ambient correction, doublet
+  detection, embedding, normalization or integration rerun; no clean RDS replacement.
+- Job **44437522 COMPLETED 0:0**, 20:40:58–20:46:35 CEST (5m37s).
+  Independent metadata/table check and UMAP legend refinement **44437549
+  COMPLETED 0:0**, 20:48:29–20:49:46 (1m17s).
+
+| Scenario | Retained cells | Input retained | Additional baseline-clean exclusions |
+|---|---:|---:|---:|
+| Baseline | 247,672 | 82.72% | 0 |
+| Mitochondrial cap 15% only | 245,599 | 82.03% | 2,073 |
+| Ribosomal +2 MAD only | 239,426 | 79.97% | 8,246 |
+| Both | 237,410 | 79.30% | 10,262 |
+
+- Overlap: 57 cells. All 23 samples remain. Both changes remove 8.94% of
+  baseline-clean REVO29-N4 cells, the largest sample-relative reduction.
+- [Outputs](results/qc/sensitivity-job-44437522/): concise `.INFO`,
+  `per_sample_retention.csv`, and six inspected PNGs per alternative (five native
+  before/after QC plots and one newly-excluded-cell UMAP). Baseline plots unchanged.
+- Baseline reproduced exactly; all 92 sample/scenario rows independently checked;
+  cell sets nested, combined set equals intersection, source checkpoint hashes,
+  Scrublet calls and UMAP coordinates unchanged. All 18 final PNGs decoded and
+  inspected; unused UMAP legend categories removed without changing counts.
+- Original logs: `logs/qc-sensitivity-44437522.log` and
+  `logs/qc-sensitivity-plotcheck-44437549.log`. No provenance folders, copied logs
+  or extra validation bundles. Temporary run code removed after completion.
+- Computational sensitivity analysis, not proof of biological improvement.
+  Baseline 44415373, live QC parameters and unrelated/CellBender work unchanged.
+
+## Independent-threshold QC sensitivity 44437686: Oct 8
+
+- Faouzi approved estimating each QC threshold separately on all input cells
+  within each sample, then combining flags before removal. The only historical
+  dependency was mitochondrial MAD estimation on gene/complexity-passing cells.
+- Target corrected by Faouzi to SoupX QC **44415373**, not CellBender 44436358.
+  Saved metrics/settings, Scrublet calls and independent sample UMAPs reused.
+- Job **44437686 COMPLETED 0:0**, 21:13:36–21:18:00 CEST (4m24s).
+
+| Scenario | Retained cells | Input retained |
+|---|---:|---:|
+| Historical baseline | 247,672 | 82.72% |
+| All-input design, unchanged baseline settings | 247,282 | 82.59% |
+| Previous combined sensitivity (mito15/ribo2) | 237,410 | 79.30% |
+| All-input design, new combined settings | 230,817 | 77.10% |
+
+- New combined: genes >=300 and <=min(4000, median+3 MAD), mitochondrial
+  <=min(15%, median+3 MAD), ribosomal <=median+2 MAD; complexity >0.8.
+- Design alone: 413 newly excluded and 23 newly retained, net loss 390
+  (0.16% of baseline). Mitochondrial ceilings decreased in 19 samples and
+  increased in four; retention sets are therefore not necessarily nested.
+- New combined versus previous combined: 6,610 newly excluded, 17 newly
+  retained, net loss 6,593 (2.78%). All 23 samples remain. Largest relative
+  net loss versus previous combined: REVO29-N4, 738/8,068 cells (9.15%).
+- Historical flags/thresholds/retention and previous combined per-sample results
+  reproduced. Sparse counts agree with saved gene/UMI metrics; IDs aligned;
+  alternate MAD derivations and gene-threshold independence checks passed.
+  All 92 exported rows reloaded and gain/loss identities independently checked;
+  source checksum, Scrublet calls and UMAP coordinates unchanged.
+- [Outputs](results/qc/sensitivity-job-44437686/): concise `.INFO`,
+  `per_sample_retention.csv`, and six inspected PNGs per new scenario. All 12
+  PNGs decoded; labels/legends complete with no clipping. Native violin plots
+  retain dense point overplotting. Original log: `logs/qc-independent-44437686.log`.
+- No replacement clean RDS, live QC code changes, ambient correction or
+  downstream reruns. No provenance folders, copied logs or validation bundles;
+  own temporary scripts removed. Existing runs and CellBender preserved.
+- Computational sensitivity only; retention changes do not establish biological
+  quality. Findings reported to Faouzi and the parent thread; monitoring cleared.
+
+## Production SoupX QC 44438067: new combined limits, Oct 8
+
+- Faouzi authorized adopting the new combined limits, independent all-input
+  labeling, and a full QC run through `sbatch scripts/sbatch_qc.sh soupx`.
+- Code: `R/qc/filter.R` now estimates mitochondrial MAD on all input cells per
+  sample, independently of gene/complexity flags; gene minimum is inclusive.
+  `R/qc/params.R`: genes >=300, ceiling min(4000, median+3 MAD), mitochondrial
+  <=min(15%, median+3 MAD), ribosomal <=median+2 MAD; complexity >0.8 unchanged.
+- All input cells receive QC and Scrublet labels before any removal. Clean cells
+  have no positive QC flag and no Scrublet doublet call. Sequential 23-sample loop;
+  same SoupX producer 44409807, now under `data/raw_data/soupx/`.
+- Production **44438067 COMPLETED 0:0**, Oct 8 23:06:54-23:43:36 CEST on n006
+  (36m42s); 6 CPUs, 128 GiB, 5-hour limit; peak batch RSS 35,221,796K.
+  No normalization/integration or ambient correction rerun by this QC thread.
+- Labeled: `data/qc_labeled_data/job-44438067/labeled_concatenated.rds`;
+  clean: `data/clean_concatenated_data/job-44438067/clean_concatenated_scrublet.rds`;
+  figures: `results/qc/job-44438067/` (eight PNGs decoded and visually inspected).
+- `.INFO` initialized in all three directories with actual inputs/settings/seeds.
+  Finalized with outcome and validation; no provenance folders or copied logs.
+  Saved objects capture actual settings, threshold reference and inclusive minimum.
+  Original log: `logs/20261008-230655-qc-pipeline-44438067.log`.
+- Preflight **44438064 COMPLETED 0:0**: actual REVO29-N4 thresholds/union flags,
+  gene equality boundaries, independence from gene/complexity criteria, unchanged
+  Scrublet scores and sensitivity agreement passed. Earlier preflight 44438061
+  failed on named-versus-unnamed vector comparison; score values proved identical
+  after correcting the test. Logs: `logs/qc-preflight-44438061.log` and
+  `logs/qc-preflight-44438064.log`; production code was not altered for this test fix.
+- Validation **44438256 COMPLETED 0:0**, Oct 9 00:00:19-00:03:59 CEST (3m40s).
+  Log: `logs/qc-combined-verify-44438256.log`. Passed saved settings, independently
+  derived per-sample thresholds, source/clean counts aligned by gene/cell IDs,
+  metadata, union flags, Scrublet-only labels and sample-specific gene 9/10 boundary.
+- Verified **299,393 input -> 235,569 QC-passing -> 230,817 Scrublet-clean (77.10%)**;
+  all 23 samples retained; exact per-sample agreement with sensitivity 44437686.
+  Scrublet calls 6,115 doublets overall, excluding 4,752 additional QC-passing cells.
+- Earlier validator 44438069 failed on assuming historical scores must be identical.
+  Diagnostic 44438245 isolated REVO30-P10: existing BD table additions at 18,000
+  and 19,000 change its expected rate from 0.040191333333333336 to
+  0.040163999999999998. Maximum score difference 0.00017719301723395642;
+  no doublet call changed. Scrublet prior-odds mapping explains every score change
+  (maximum residual 3.7747582837255322e-15); other 22 samples' scores identical.
+- Validator 44438254 then failed on assuming source/merged gene order identical;
+  aligning by IDs resolved it. These were test assumptions, not demonstrated data
+  defects; production data/code were not altered to make validation pass.
+  Original logs: `logs/qc-combined-verify-44438069.log`,
+  `logs/qc-score-check-44438245.log`, `logs/qc-combined-verify-44438254.log`.
+- Parent and normalization owner receive verified completion and exact clean
+  checkpoint; downstream LogNormalize belongs to the normalization thread.
+  Verification scratch removed and ten-minute monitoring cleared at completion.
+  Existing runs, unrelated edits/jobs and CellBender preserved.
+- Changes remain local/uncommitted; no commits or pushes.
+
+## LogNormalize on verified QC 44438067: Oct 9
+
+- Normalization **44438396** submitted through unchanged
+  `scripts/sbatch_norm_feat.sh`, **COMPLETED 0:0**;
+  **00:09:20–00:44:19 CEST** (34m59s), peak RSS 43150692 KiB.
+- Input: `data/clean_concatenated_data/job-44438067/clean_concatenated_scrublet.rds`,
+  explicitly released after QC validator 44438256 passed. Independent focused
+  preflight: **230,817 cells**, **20,775 features**, 23 counts-only sample layers,
+  aligned IDs/metadata and finite regression covariates.
+- Unchanged LogNormalize 10,000, 3,000 per-layer VST/consensus HVGs,
+  ScaleData regression of percent.mt/nFeature_RNA, 50-PC PCA, seed 1234.
+  Seurat 5.5.1/SeuratObject 5.4.0; 6 CPUs, 256 GiB, 5-hour limit.
+- Outputs: `data/norm_feat/job-44438396/lognorm.rds` and
+  `results/norm_feat/lognorm/job-44438396/`; both finalized with `.INFO`.
+  Original log: `logs/20261009-000920-norm-feat-pipeline-44438396.log`.
+- Independent saved-object verification passed: exact cell/gene IDs, all
+  metadata/misc$qc and all 23 original count matrices unchanged; corresponding
+  finite per-sample data layers and joined 3000 × 230817 scale.data aligned.
+  Saved settings match execution; 3000 HVGs/sample and consensus, all 3000
+  used in 50 finite aligned PCs. PC1–30 explain 91.52816% among computed PCs.
+- Independent normalized values on 40 cells/sample (920 total) match exactly;
+  three-gene lm regression/scaling/upper-cap reproduction matches to 4.44e-16,
+  including SFTPC's 1116 capped cells. No PCA features omitted.
+- All 30 PNGs decoded and inspected (23 VST via temporary sheets, other seven
+  individually): no empty/missing panels, minor VST label/leader crowding and
+  REVO31-C rightmost tick truncation. Existing blue loading-point style retained.
+- Verification scratch removed; computational checks do not establish biological
+  acceptance. Faouzi requested two main-thread handoffs for new Harmony and CCA
+  using this same verified checkpoint; integration is owned by their threads.
+- Both separate handoff messages were sent to the main thread after verification;
+  ten-minute normalization monitoring cleared. Integration launches remain with
+  the main/Harmony/CCA threads, not this normalization owner.
+- No normalization source/method changes, commits or pushes; old runs and
+  unrelated jobs/edits remain untouched.
+
+## Harmony on new normalization 44438396: Oct 9
+
+- Faouzi authorized this new Harmony run through the normalization/main-thread
+  handoff. Submitted **44438700** Oct 9 00:52:53 CEST; **COMPLETED 0:0**,
+  00:53:19–01:24:54 CEST on n002 (31m35s); peak RSS 33816596 KiB.
+  Log: `logs/20261009-005319-integration-harmony-44438700.log`.
+- Exact new input: `/work/project/revo-pig-sc/analysis/data/norm_feat/job-44438396/lognorm.rds`,
+  derived from QC 44438067; normalization owner verified 230,817 cells,
+  20,775 RNA genes, 23 samples, 3,000 consensus HVGs and 50 PCs.
+  This is not the older normalization 44416449.
+- Unchanged launcher/settings: sample correction, axes 1–20, max_iter 30,
+  seed 1234, project.dim FALSE, default convergence tolerance; 8 CPUs,
+  128 GiB, 24-hour limit. No source or method changes for this submission.
+- Driver created fresh `data/integration/harmony/job-44438700/` and
+  `results/integration/harmony/job-44438700/` with concise `.INFO` at 00:53:31 CEST;
+  both confirm the new input and 30-iteration ceiling.
+  Final `lognorm.rds` and six modular UMAP PNGs saved in the same job.
+- Explicit convergence after **10 iterations**, confirmed in log and both `.INFO`;
+  UMAP read 230,817 cells. All six figures inspected (sample facets downscaled):
+  populated labeled panels without visible clipping. Localized sample color
+  enrichment remains despite broad overlap; dense points/similar colors and
+  low-contrast facets limit interpretation. Convergence is not proof of good correction.
+- Both `.INFO` finalized; five-minute monitoring ended. Diagnostics/metrics off;
+  no extra check jobs or object reopening. Saved settings, cells/features/metadata,
+  count layers and embedding finiteness/alignment were not independently revalidated.
+  No unrelated jobs/edits touched, no commits or pushes.
+
+## CCA job 44438698: new normalization input, Oct 9
+
+- Authorized new run after norm_feat 44438396 verification; input:
+  `/work/project/revo-pig-sc/analysis/data/norm_feat/job-44438396/lognorm.rds`,
+  derived from QC 44438067 (230,817 cells, 20,775 RNA genes, 23 samples,
+  3,000 consensus HVGs, 50 PCs). Not the older norm_feat 44416449 input.
+- Submitted with existing dedicated CCA launcher; RUNNING on n019, Slurm
+  start Oct 9 00:52:49 CEST; driver `.INFO` start 00:53:14 CEST.
+- CCA axes 1–20, seed 1234; 8 CPUs, 512 GiB, 72-hour limit. Unmodified local
+  driver writes concise `.INFO` and renders six modular UMAP PNGs in the same
+  job; diagnostic sampling and mixing metrics remain disabled.
+- Checkpoint pending: `data/integration/cca/job-44438698/lognorm.rds`;
+  results: `results/integration/cca/job-44438698/`.
+- Original log: `logs/20261009-005249-integration-cca-44438698.log`.
+- Existing CCA 44436792 remains RUNNING and untouched. Three-hour monitoring
+  covers both runs; no additional validation jobs or changes to Harmony,
+  integration methods, parameters or unrelated work. No commits/pushes.
 
 ## Limits
 
