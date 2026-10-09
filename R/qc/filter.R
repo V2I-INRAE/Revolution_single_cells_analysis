@@ -51,25 +51,17 @@ label_qc_outliers <- function(seurat_obj) {
   )["upper"]
 
   seurat_obj$flag_low_features <- (
-    seurat_obj$nFeature_RNA <= params$min_features
+    seurat_obj$nFeature_RNA < params$min_features
   )
   seurat_obj$flag_high_features <- seurat_obj$nFeature_RNA > feature_max
   seurat_obj$flag_low_complexity <- (
     seurat_obj$log10GenesPerUMI <= params$min_log10_genes_per_umi
   )
 
-  initial_outlier <- (
-    seurat_obj$flag_low_features |
-      seurat_obj$flag_high_features |
-      seurat_obj$flag_low_complexity
-  )
-
-  # Estimate the sample's cutoff on cells passing feature-count and complexity QC.
-  # The cutoff is min(20%, median + 4 * MAD) with the current parameters.
+  # Estimate each cutoff independently on all input cells in the sample.
   # Apply it to every cell; cells exactly at the cutoff pass this criterion.
-  mt_percent <- seurat_obj$percent.mt[!initial_outlier]
   mt_max <- mad_bounds(
-    mt_percent,
+    seurat_obj$percent.mt,
     upper_cap = params$max_mito_percent_cap,
     n_mad = params$mito_mad_multiplier
   )["upper"]

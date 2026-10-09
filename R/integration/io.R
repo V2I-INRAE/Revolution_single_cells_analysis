@@ -7,64 +7,6 @@ read_integration_input <- function(input_file, dims) {
   setup_integration(obj, dims = dims)
 }
 
-read_integration_comparison <- function(scvi_file, harmony_file, cca_file,
-  embeddings = c("umap", "tsne")) {
-  obj <- readRDS(scvi_file)
-  stopifnot("Expected a LogNormalize scVI checkpoint" =
-    identical(obj@misc$integration$method, "scvi") &&
-      identical(obj@misc$integration$route, "lognorm") &&
-      identical(obj@misc$integration$run_id, basename(dirname(scvi_file))))
-
-  obj <- DietSeurat(obj, assays = "RNA", layers = "counts",
-    dimreducs = c("pca", embeddings, paste0(embeddings, "_scvi")), graphs = NULL)
-  cells <- colnames(obj)
-  source_files <- c(scvi = scvi_file, harmony = harmony_file, cca = cca_file)
-  stopifnot("Expected corrected LogNormalize input provenance" =
-    identical(obj@misc$integration$input_file,
-      normalizePath("data/norm_feat/job-44281196/lognorm.rds", mustWork = TRUE)))
-  for (method in c("harmony", "cca")) {
-    other <- readRDS(source_files[[method]])
-    stopifnot("Expected a LogNormalize integration checkpoint" =
-      identical(other@misc$integration$method, method) &&
-        identical(other@misc$integration$route, "lognorm") &&
-        identical(other@misc$integration$run_id,
-          basename(dirname(source_files[[method]]))) &&
-        identical(other@misc$integration$input_file,
-          obj@misc$integration$input_file))
-    stopifnot("Integration checkpoints must contain the same unique cells" =
-      !anyDuplicated(cells) && !anyDuplicated(colnames(other)) &&
-        setequal(cells, colnames(other)))
-    for (field in c("sample", "pressure", "time_point")) {
-      stopifnot("Integration checkpoints require complete grouping metadata" =
-        field %in% colnames(obj[[]]) && field %in% colnames(other[[]]) &&
-          !anyNA(obj[[field]]) && !anyNA(other[[field]]))
-      stopifnot("Integration checkpoint metadata disagree" =
-        identical(as.character(obj[[]][cells, field]),
-          as.character(other[[]][cells, field])))
-    }
-    for (reduction in c("pca", embeddings)) {
-      stopifnot("Integration checkpoints have different baseline coordinates" =
-        identical(Embeddings(obj, reduction)[cells, , drop = FALSE],
-          Embeddings(other, reduction)[cells, , drop = FALSE]))
-    }
-    stopifnot("Integration checkpoints have different PCA features or loadings" =
-      identical(VariableFeatures(obj), VariableFeatures(other)) &&
-        identical(Loadings(obj, "pca"), Loadings(other, "pca")))
-    for (embedding in embeddings) {
-      name <- paste0(embedding, "_", method)
-      obj[[name]] <- other[[name]]
-    }
-    rm(other)
-    gc()
-  }
-  obj@misc$integration_comparison <- data.frame(
-    method = c("scVI", "Harmony", "CCA"),
-    input_file = normalizePath(source_files, mustWork = TRUE),
-    run_id = basename(dirname(source_files))
-  )
-  obj
-}
-
 setup_integration <- function(seurat_obj, dims) {
   metadata <- seurat_obj[[]]
   assay <- seurat_obj[[DefaultAssay(seurat_obj)]]
