@@ -32,23 +32,11 @@ inspect_seurat_qc <- function(seurat_obj) {
   return(seurat_obj)
 }
 
-mad_bounds <- function(x, n_mad, lower_floor = -Inf, upper_cap = Inf) {
-  med <- median(x)
-  mad_x <- mad(x)
-  c(
-    lower = max(lower_floor, med - n_mad * mad_x),
-    upper = min(upper_cap, med + n_mad * mad_x)
-  )
-}
-
 label_qc_outliers <- function(seurat_obj) {
   params <- qc_params$filtering
 
-  feature_max <- mad_bounds(
-    seurat_obj$nFeature_RNA,
-    upper_cap = params$max_features_cap,
-    n_mad = params$feature_mad_multiplier
-  )["upper"]
+  # Fixed limits shared by every sample; cells at either upper limit pass.
+  feature_max <- params$max_features
 
   seurat_obj$flag_low_features <- (
     seurat_obj$nFeature_RNA < params$min_features
@@ -58,32 +46,16 @@ label_qc_outliers <- function(seurat_obj) {
     seurat_obj$log10GenesPerUMI <= params$min_log10_genes_per_umi
   )
 
-  # Estimate each cutoff independently on all input cells in the sample.
-  # Apply it to every cell; cells exactly at the cutoff pass this criterion.
-  mt_max <- mad_bounds(
-    seurat_obj$percent.mt,
-    upper_cap = params$max_mito_percent_cap,
-    n_mad = params$mito_mad_multiplier
-  )["upper"]
+  mt_max <- params$max_mito_percent
   seurat_obj$flag_high_mt <- seurat_obj$percent.mt > mt_max
-
-  # All input cells, including 0%; no lower cutoff, floor, cap or transformation.
-  ribo_max <- mad_bounds(
-    seurat_obj$percent.ribo,
-    n_mad = params$ribo_mad_multiplier
-  )["upper"]
-  seurat_obj$flag_high_ribo <- seurat_obj$percent.ribo > ribo_max
-  seurat_obj$ribo_status <- ifelse(seurat_obj$flag_high_ribo,
-    "High ribosomal", "Within ribosomal threshold")
 
   flag_cols <- c(
     "flag_low_features", "flag_high_features",
-    "flag_low_complexity", "flag_high_mt", "flag_high_ribo"
+    "flag_low_complexity", "flag_high_mt"
   )
   seurat_obj$qc_outlier <- (
     seurat_obj$flag_low_features | seurat_obj$flag_high_features |
-      seurat_obj$flag_low_complexity | seurat_obj$flag_high_mt |
-      seurat_obj$flag_high_ribo
+      seurat_obj$flag_low_complexity | seurat_obj$flag_high_mt
   )
 
   cat("\nFlagged cells:\n")
@@ -96,11 +68,9 @@ label_qc_outliers <- function(seurat_obj) {
   }
   cat(sprintf("  nFeature_RNA ceiling %.2f\n", feature_max))
   cat(sprintf("  mitochondrial ceiling %.2f%%\n", mt_max))
-  cat(sprintf("  ribosomal ceiling %.2f%%\n", ribo_max))
 
   seurat_obj@misc$qc <- list(
-    feature_max = unname(feature_max), mt_max = unname(mt_max),
-    ribo_max = unname(ribo_max)
+    feature_max = feature_max, mt_max = mt_max
   )
   return(seurat_obj)
 }

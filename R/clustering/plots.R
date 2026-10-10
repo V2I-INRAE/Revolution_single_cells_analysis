@@ -16,26 +16,51 @@ save_clustering_plot <- function(plot, stem, output_dir, width, height) {
     width = width, height = height, dpi = 300, bg = "white")
 }
 
+plot_cluster_umap_panel <- function(obj, reduction, column, title, seed) {
+  labels <- levels(obj[[]][, column])
+  stopifnot("More clusters than palette colours; choose a palette policy before plotting" =
+    length(labels) <= length(clustering_colours))
+  scplotter::CellDimPlot(obj, reduction = reduction, group_by = column,
+    palcolor = setNames(clustering_colours[seq_along(labels)], labels),
+    label = TRUE, label_insitu = TRUE, label_repel = TRUE,
+    label_size = 3, label_fg = "black", label_bg = "white",
+    label_repulsion = 0.2, label_pt_size = 0, pt_size = 3, pt_alpha = 1,
+    raster = TRUE, raster_dpi = c(1200, 1200),
+    seed = seed, order = "random", show_stat = FALSE,
+    legend.position = "none", theme = "theme_blank",
+    title = title, xlab = "UMAP 1", ylab = "UMAP 2")
+}
+
+plot_cluster_umap_comparisons <- function(obj, reductions, output_dir) {
+  config <- obj@misc$clustering
+  for (i in seq_len(nrow(config$partitions))) {
+    partition <- config$partitions[i, ]
+    panels <- lapply(seq_along(reductions), function(j) {
+      plot_cluster_umap_panel(obj, reductions[[j]], partition$column,
+        names(reductions)[j], config$settings$seed)
+    })
+    plot <- patchwork::wrap_plots(panels, ncol = 2) +
+      patchwork::plot_annotation(
+        title = paste("CCA — fixed Leiden clusters, resolution", partition$resolution),
+        caption = paste(
+          "Same cells and cluster assignments; only UMAP coordinates change. Colours match within this resolution only.",
+          "Axes scale independently; apparent distances and separation are not evidence of biological improvement.",
+          sep = "\n"))
+    save_clustering_plot(plot, paste0("umap_clusters_res_", partition$resolution),
+      output_dir, width = 14, height = 7)
+    rm(panels, plot)
+  }
+  invisible(NULL)
+}
+
 plot_cluster_resolutions <- function(obj, output_dir, plot_resolutions) {
   config <- obj@misc$clustering
   partitions <- config$partitions[config$partitions$resolution %in% plot_resolutions, ]
   stopifnot("Saved UMAP is required for plotting" =
     !is.null(config$umap) && config$umap %in% Seurat::Reductions(obj))
   panels <- lapply(seq_len(nrow(partitions)), function(i) {
-    column <- partitions$column[i]
-    labels <- levels(obj[[]][, column])
-    stopifnot("More clusters than palette colours; choose a palette policy before plotting" =
-      length(labels) <= length(clustering_colours))
-    scplotter::CellDimPlot(obj, reduction = config$umap, group_by = column,
-      palcolor = setNames(clustering_colours[seq_along(labels)], labels),
-      label = TRUE, label_insitu = TRUE, label_repel = TRUE,
-      label_size = 3, label_fg = "black", label_bg = "white",
-      label_repulsion = 0.2, label_pt_size = 0, pt_size = 3, pt_alpha = 1,
-      raster = TRUE, raster_dpi = c(1200, 1200),
-      seed = config$settings$seed, order = "random", show_stat = FALSE,
-      legend.position = "none", theme = "theme_blank",
-      title = paste(config$method, "— resolution", partitions$resolution[i]),
-      xlab = "UMAP 1", ylab = "UMAP 2")
+    plot_cluster_umap_panel(obj, config$umap, partitions$column[i],
+      paste(config$method, "— resolution", partitions$resolution[i]), config$settings$seed)
   })
   umap <- patchwork::wrap_plots(panels, ncol = 2) +
     patchwork::plot_annotation(caption =
@@ -58,52 +83,4 @@ plot_cluster_resolutions <- function(obj, output_dir, plot_resolutions) {
   save_clustering_plot(tree, "clustree", output_dir,
     width = max(12, max_clusters * 0.45), height = 9)
   invisible(list(umap = umap, tree = tree))
-}
-
-plot_clustering_comparison <- function(runs, agreement, output_dir, plot_resolutions) {
-  summary <- do.call(rbind, lapply(runs, function(run) {
-    data.frame(method = run$method, run$diagnostics$summary)
-  }))
-  scores <- do.call(rbind, lapply(runs, function(run) {
-    data.frame(method = run$method, run$diagnostics$silhouettes)
-  }))
-  summary <- summary[summary$resolution %in% plot_resolutions, ]
-  scores <- scores[scores$resolution %in% plot_resolutions, ]
-  agreement <- agreement[agreement$resolution_a %in% plot_resolutions &
-    agreement$resolution_b %in% plot_resolutions, ]
-  colours <- c(unintegrated = "#3A5BA0", harmony = "#D4753C",
-    cca = "#9B59B6", scvi = "#5A8F5A")
-  metrics <- c(mean_silhouette = "Mean silhouette (cell-weighted)",
-    mean_cluster_silhouette = "Mean of cluster silhouette means",
-    n_clusters = "Number of clusters", min_cluster_size = "Smallest cluster (cells)",
-    n_small_clusters = "Clusters with fewer than 10 cells",
-    absent_clusters = "Clusters absent from diagnostic subset")
-  panels <- lapply(names(metrics), function(metric) {
-    plotthis::LinePlot(summary, x = "resolution", y = metric, group_by = "method",
-      palcolor = colours, pt_size = 2, aspect.ratio = NULL,
-      xlab = "Resolution", ylab = metrics[[metric]], title = metrics[[metric]])
-  })
-  overview <- patchwork::wrap_plots(panels, ncol = 2, guides = "collect") +
-    patchwork::plot_annotation(caption =
-      "Descriptive comparisons only. Different embedding geometries preclude selecting the best method by silhouette alone.")
-  save_clustering_plot(overview, "metrics_by_resolution", output_dir, 14, 14)
-
-  distribution <- plotthis::BoxPlot(scores, x = "resolution", y = "silhouette",
-    group_by = "method", palcolor = colours, add_point = FALSE,
-    add_errorbar = FALSE, comparisons = NULL, outlier.shape = NA,
-    xlab = "Resolution", ylab = "Silhouette (shared diagnostic subset)",
-    title = "Silhouette distributions", x_text_angle = 0)
-  save_clustering_plot(distribution, "silhouette_distributions", output_dir, 12, 6)
-
-  agreement$comparison <- paste(agreement$method_a, "vs", agreement$method_b)
-  agreement$kind <- ifelse(agreement$method_a == agreement$method_b,
-    "Adjacent resolutions (x = lower resolution)", "Methods at matching resolution")
-  ari <- plotthis::LinePlot(agreement, x = "resolution_a", y = "adjusted_rand",
-    group_by = "comparison", facet_by = "kind", facet_ncol = 1,
-    palcolor = clustering_colours[seq_along(unique(agreement$comparison))],
-    aspect.ratio = NULL, line_width = 0,
-    xlab = "Resolution", ylab = "Adjusted Rand index", title = "Partition agreement") +
-    coord_cartesian(ylim = c(-1, 1))
-  save_clustering_plot(ari, "partition_agreement", output_dir, 12, 9)
-  invisible(overview)
 }

@@ -86,15 +86,15 @@ plot_integration_umaps <- function(
   seed = 1234,
   filename = NULL,
   facet_samples = FALSE,
-  method_reduction = NULL
+  method_reduction = NULL,
+  reductions = NULL
 ) {
   group_by <- match.arg(group_by)
   stopifnot("Sample faceting requires group_by = 'sample'" = !facet_samples || group_by == "sample")
   grouping <- plot_grouping(seurat_obj[[]], group_by)
   plot_obj <- seurat_obj
   plot_obj$integration_group <- grouping$values
-  # Plot the checkpoint's own method beside its unintegrated baseline; never
-  # merge methods for comparison figures.
+  # By default, plot the checkpoint's own method beside its unintegrated baseline.
   method <- seurat_obj@misc$integration$method
   stopifnot(
     "Expected an integration checkpoint with a declared method" =
@@ -102,10 +102,12 @@ plot_integration_umaps <- function(
   )
   method_label <- switch(method, scvi = "scVI", harmony = "Harmony", cca = "CCA")
   if (is.null(method_reduction)) method_reduction <- paste0("umap_", method)
-  reductions <- setNames(
-    c("umap", method_reduction),
-    c("Unintegrated", method_label)
-  )
+  if (is.null(reductions)) {
+    reductions <- setNames(
+      c("umap", method_reduction),
+      c("Unintegrated", method_label)
+    )
+  }
   if (!all(reductions %in% Reductions(seurat_obj))) {
     stop("Checkpoint is missing its saved UMAP reductions: ",
       paste(setdiff(reductions, Reductions(seurat_obj)), collapse = ", "))

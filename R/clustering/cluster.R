@@ -1,20 +1,15 @@
 suppressPackageStartupMessages(library(Seurat))
 
-clustering_dims <- function(settings, method) {
-  if (method == "scvi") settings$scvi_dim else settings$dims
-}
-
 cluster_reduction <- function(obj, method, settings) {
   reduction <- switch(method,
     unintegrated = "pca",
     harmony = "harmony",
-    cca = "integrated_cca",
-    scvi = "integrated_scvi"
+    cca = "integrated_cca"
   )
   graphs <- paste0(method, c("_nn", "_snn"))
   set.seed(settings$seed)
   obj <- FindNeighbors(obj,
-    reduction = reduction, dims = clustering_dims(settings, method),
+    reduction = reduction, dims = settings$dims,
     k.param = settings$k_param, prune.SNN = settings$prune_snn,
     nn.method = settings$nn_method, annoy.metric = settings$distance,
     n.trees = settings$n_trees,
@@ -23,7 +18,9 @@ cluster_reduction <- function(obj, method, settings) {
   obj <- FindClusters(obj,
     graph.name = graphs[2],
     resolution = settings$resolutions, algorithm = settings$algorithm,
-    random.seed = settings$seed, n.start = settings$n_start, n.iter = settings$n_iter
+    leiden_method = settings$leiden_method,
+    leiden_objective_function = settings$leiden_objective_function,
+    random.seed = settings$seed, n.iter = settings$n_iter
   )
   partitions <- data.frame(
     resolution = settings$resolutions,
@@ -33,8 +30,10 @@ cluster_reduction <- function(obj, method, settings) {
     method = method, reduction = reduction,
     settings = settings, partitions = partitions,
     algorithm = settings$algorithm, graph = graphs[2], nn_method = settings$nn_method,
+    leiden_method = settings$leiden_method,
+    leiden_objective_function = settings$leiden_objective_function,
     distance = settings$distance, n_trees = settings$n_trees,
-    n_start = settings$n_start, n_iter = settings$n_iter,
+    n_iter = settings$n_iter,
     note = "All resolutions retained; active identity is the last, not a selected optimum"
   )
   obj
@@ -42,12 +41,11 @@ cluster_reduction <- function(obj, method, settings) {
 
 clustering_umap <- function(obj) {
   config <- obj@misc$clustering
-  dims <- clustering_dims(config$settings, config$method)
+  dims <- config$settings$dims
   name <- switch(config$method,
     unintegrated = "umap",
     harmony = "umap_harmony",
-    cca = "umap_cca",
-    scvi = "umap_scvi"
+    cca = "umap_cca"
   )
   if (!name %in% Reductions(obj)) {
     obj <- RunUMAP(obj,

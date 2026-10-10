@@ -7,8 +7,8 @@
 #SBATCH -o logs/clustering-plots-%j.out
 
 set -euo pipefail
-if [[ $# -lt 2 ]]; then
-  echo "Usage: sbatch scripts/sbatch_clustering_plots.sh <new_output_dir> <analysis.rds> [<analysis.rds> ...]" >&2
+if [[ $# -lt 1 || $# -gt 2 ]]; then
+  echo "Usage: sbatch scripts/sbatch_clustering_plots.sh <lognorm.rds> [--plot-resolutions=0.1,0.2,0.3,0.4]" >&2
   exit 1
 fi
 cd "${SLURM_SUBMIT_DIR:-/work/project/revo-pig-sc/analysis}"

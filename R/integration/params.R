@@ -1,25 +1,15 @@
 # Shared PCA/Harmony/CCA dimensions for integration, UMAPs and diagnostics.
 integration_params <- list(
-  dims = 1:20
+  dims = 1:30
 )
 
 harmony_params <- list(
   max_iter = 30L
 )
 
-# UMAP-only exploration on an existing Harmony checkpoint.
-umap_exploration_params <- list(
-  reduction = "harmony",
-  dims = 1:20,
-  umap.method = "uwot",
-  metric = "cosine",
-  n.neighbors = 30L,
-  n.epochs = 200L,
-  min.dist = 0.5,
-  spread = 1,
-  repulsion.strength = 1,
-  seed.use = 1234L
-)
+# UMAP-only exploration on an existing integration checkpoint.
+umap_exploration_reductions <- c(harmony = "harmony", cca = "integrated_cca")
+source("R/utils/umap_explore.R", local = TRUE)
 
 # scVI trains its own latent representation from RNA counts, not PCA.
 scvi_params <- list(

@@ -11,12 +11,9 @@ qc_params <- list(
   ),
   filtering = list(
     min_features = 300,
-    max_features_cap = 4000,
-    feature_mad_multiplier = 3,
+    max_features = 4000,
     min_log10_genes_per_umi = 0.8,
-    max_mito_percent_cap = 15,
-    mito_mad_multiplier = 3,
-    ribo_mad_multiplier = 2,
+    max_mito_percent = 10,
     min_cells_per_feature = 10
   ),
   doublets = list(

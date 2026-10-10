@@ -28,11 +28,6 @@ plot_qc_comparison <- function(seurat_obj, plot_dir = "results/qc") {
   metrics <- c("nFeature_RNA", "nCount_RNA", "percent.mt", "log10GenesPerUMI", "percent.ribo")
   retained <- AddMetaData(retained, metadata[retained_cells, metrics, drop = FALSE])
 
-  ribo_thresholds <- data.frame(
-    x = seq_along(samples),
-    upper = vapply(seurat_obj@misc$qc$samples[samples], function(x) x$ribo_max, numeric(1))
-  )
-
   colours <- setNames(c(
     "#3A5BA0", "#D4753C", "#5A8F5A", "#C44E52", "#7B5EA7",
     "#E8A838", "#46878F", "#B07AA1", "#2E86C1", "#8C6D31",
@@ -47,7 +42,7 @@ plot_qc_comparison <- function(seurat_obj, plot_dir = "results/qc") {
       metric = "nFeature_RNA",
       label = "Genes detected per cell",
       low = params$min_features,
-      high = params$max_features_cap
+      high = params$max_features
     ),
     umi = list(
       fun = QC_Plots_UMIs,
@@ -58,7 +53,7 @@ plot_qc_comparison <- function(seurat_obj, plot_dir = "results/qc") {
       fun = QC_Plots_Mito,
       metric = "percent.mt",
       label = "Mitochondrial counts (%)",
-      high = params$max_mito_percent_cap,
+      high = params$max_mito_percent,
       extra = list(mito_name = "percent.mt")
     ),
     complexity = list(
@@ -79,7 +74,6 @@ plot_qc_comparison <- function(seurat_obj, plot_dir = "results/qc") {
   for (name in names(specs)) {
     spec <- specs[[name]]
     limits <- range(c(metadata[[spec$metric]], spec$low, spec$high))
-    if (name == "ribosomal") limits <- range(c(limits, ribo_thresholds$upper))
     if (name != "complexity") limits[1] <- 0
     panels <- lapply(list(seurat_obj, retained), function(obj) {
       set.seed(1234)
@@ -91,11 +85,6 @@ plot_qc_comparison <- function(seurat_obj, plot_dir = "results/qc") {
         raster.dpi = 300, add.noise = FALSE, layer = "counts"
       ), spec$extra))
       sizes <- table(factor(obj$sample, levels = samples))
-      if (name == "ribosomal") {
-        p <- p + geom_segment(data = ribo_thresholds,
-          aes(x = x - 0.35, xend = x + 0.35, y = upper, yend = upper),
-          inherit.aes = FALSE, linetype = "dashed", linewidth = 0.5)
-      }
       p + scale_x_discrete(
         limits = samples,
         drop = FALSE,
@@ -117,12 +106,11 @@ plot_qc_comparison <- function(seurat_obj, plot_dir = "results/qc") {
     caption <- ("Original per-cell QC measurements; UMI counts do not directly control filtering.")
     if (name %in% c("genes", "mitochondrial")) {
       caption <- paste0(caption,
-        "\nDashed upper line: global cap; actual upper thresholds can be lower and differ by sample.")
+        "\nDashed upper line: fixed threshold shared by all samples. Cells strictly above are excluded.")
     }
     if (name == "ribosomal") {
-      caption <- paste0(caption, sprintf(
-        "\nDashed segments: per-sample median + %.0f MAD upper thresholds, using all input cells including 0%%. Cells strictly above are excluded.",
-        params$ribo_mad_multiplier))
+      caption <- paste0(caption,
+        "\nRibosomal percentage is diagnostic only; no ribosomal filtering is applied.")
     }
     figure <- wrap_plots(panels, ncol = 1) + plot_annotation(caption = caption)
     save_qc_figure(figure, paste0("qc_before_after_", name), plot_dir, 16, 10)
@@ -139,8 +127,6 @@ plot_qc_umaps <- function(seurat_obj, plot_dir = "results/qc") {
     "sample",
     "predicted_doublets",
     "qc_outlier",
-    "percent.ribo",
-    "flag_high_ribo",
     "qc_umap_1",
     "qc_umap_2"
   )
@@ -158,12 +144,6 @@ plot_qc_umaps <- function(seurat_obj, plot_dir = "results/qc") {
     scrublet = list(
       title = "Scrublet", negative = "Singlet",
       positive = "Doublet", flag = metadata$predicted_doublets, colour = "#C44E52"
-    ),
-    ribosomal = list(
-      title = "Ribosomal percentage (QC filter)",
-      negative = "Within ribosomal threshold",
-      positive = "High ribosomal",
-      flag = metadata$flag_high_ribo, colour = "#3A5BA0"
     ),
     outliers = list(
       title = "QC outliers", negative = "QC pass",
@@ -185,10 +165,6 @@ plot_qc_umaps <- function(seurat_obj, plot_dir = "results/qc") {
       flag <- spec$flag[match(colnames(obj), rownames(metadata))]
       subtitle <- sprintf("%s: %s / %s cells (%.1f%%)", spec$positive,
         sum(flag), length(flag), 100 * mean(flag))
-      if (name == "ribosomal") {
-        subtitle <- paste0(subtitle, sprintf("\nUpper cutoff: %.2f%%",
-          seurat_obj@misc$qc$samples[[sample]]$ribo_max))
-      }
       obj$qc_plot_class <- factor(ifelse(flag, spec$positive, spec$negative),
         levels = c(spec$negative, spec$positive))
       colours <- setNames(c("#A0A0A0", spec$colour), levels(obj$qc_plot_class))

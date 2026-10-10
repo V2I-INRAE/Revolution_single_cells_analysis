@@ -56,7 +56,7 @@ info_lines <- c(
   if (input_source == "soupx") "- Ambient correction producer: 44409807; corrected counts reused, not rerun.",
   "\n## Settings",
   "- QC and Scrublet on all input counts; filter only after labeled checkpoint and plots.",
-  "- Each MAD threshold uses all input cells per sample independently; raw metric scales; MAD constant 1.4826.",
+  "- Fixed QC thresholds shared by all samples; no MAD filtering. Ribosomal percentage is diagnostic only, with no filtering.",
   "- Genes >=min_features; upper thresholds inclusive; complexity >min_log10_genes_per_umi. Any QC flag or Scrublet doublet excludes.",
   "- Temporary LogNormalize/PCA/UMAP for diagnostics; saved counts unchanged.",
   paste0("- Filtering: ", paste(names(qc_params$filtering),
@@ -113,7 +113,7 @@ gc()
 labeled@misc$qc$run_id <- run_id
 labeled@misc$qc$input_source <- input_source
 labeled@misc$qc$input_paths <- input_paths
-labeled@misc$qc$threshold_reference <- "all_input_cells_per_sample"
+labeled@misc$qc$threshold_reference <- "fixed_shared_across_samples"
 labeled@misc$qc$feature_min_inclusive <- TRUE
 write_qc_object(labeled, file.path(labeled_dir, "labeled_concatenated.rds"))
 

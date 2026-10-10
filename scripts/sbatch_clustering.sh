@@ -8,12 +8,12 @@
 
 set -euo pipefail
 if [[ $# -ne 2 ]]; then
-  echo "Usage: sbatch scripts/sbatch_clustering.sh <unintegrated|harmony|cca|scvi> <input.rds>" >&2
+  echo "Usage: sbatch scripts/sbatch_clustering.sh <unintegrated|harmony|cca> <input.rds>" >&2
   exit 1
 fi
 method="${1,,}"
 case "$method" in
-  unintegrated|harmony|cca|scvi) ;;
+  unintegrated|harmony|cca) ;;
   *) echo "Unknown clustering method: $1" >&2; exit 1 ;;
 esac
 cd "${SLURM_SUBMIT_DIR:-/work/project/revo-pig-sc/analysis}"

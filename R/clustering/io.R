@@ -3,8 +3,7 @@ suppressPackageStartupMessages(library(Seurat))
 read_clustering_input <- function(input_file, method, dims) {
   obj <- readRDS(input_file)
   reduction <- switch(method,
-    unintegrated = "pca", harmony = "harmony", cca = "integrated_cca",
-    scvi = "integrated_scvi")
+    unintegrated = "pca", harmony = "harmony", cca = "integrated_cca")
   cells <- colnames(obj)
   metadata <- obj[[]]
   stopifnot(
@@ -18,9 +17,7 @@ read_clustering_input <- function(input_file, method, dims) {
   embedding <- Embeddings(obj, reduction)
   stopifnot("Selected components must exist, be finite and align with cells" =
     max(dims) <= ncol(embedding) && identical(rownames(embedding), cells) &&
-      all(is.finite(embedding[, dims, drop = FALSE])),
-    "scVI clustering must use its complete latent representation" =
-      method != "scvi" || identical(dims, seq_len(ncol(embedding))))
+      all(is.finite(embedding[, dims, drop = FALSE])))
   obj
 }
 
@@ -37,42 +34,10 @@ clustering_provenance <- function(obj, input_file) {
     integration = obj@misc$integration)
 }
 
-save_clustering_results <- function(obj, diagnostics, provenance, data_dir, output_dir) {
-  checkpoint <- file.path(data_dir, "lognorm.rds")
-  saveRDS(obj, checkpoint)
-  run <- list(
-    method = obj@misc$clustering$method,
-    settings = obj@misc$clustering$settings,
-    graph_settings = obj@misc$clustering[c("algorithm", "nn_method", "distance",
-      "n_trees", "n_start", "n_iter")],
-    partitions = obj@misc$clustering$partitions,
-    assignments = obj[[]][, obj@misc$clustering$partitions$column, drop = FALSE],
-    provenance = provenance, diagnostics = diagnostics,
-    checkpoint = normalizePath(checkpoint), session_info = sessionInfo()
-  )
-  write.csv(data.frame(cell = rownames(run$assignments), run$assignments),
+save_clustering_results <- function(obj, data_dir, output_dir) {
+  obj@misc$clustering$session_info <- sessionInfo()
+  assignments <- obj[[]][, obj@misc$clustering$partitions$column, drop = FALSE]
+  write.csv(data.frame(cell = rownames(assignments), assignments),
     file.path(output_dir, "cluster_assignments.csv"), row.names = FALSE)
-  for (name in names(diagnostics)) {
-    write.csv(diagnostics[[name]], file.path(output_dir, paste0(name, ".csv")),
-      row.names = FALSE)
-  }
-  # Written last: plotting/comparison consumes only completed run bundles.
-  saveRDS(run, file.path(output_dir, "analysis.rds"))
-}
-
-read_clustering_comparison <- function(run_files) {
-  runs <- lapply(run_files, readRDS)
-  methods <- vapply(runs, `[[`, character(1), "method")
-  stopifnot("Select one completed run per method" = !anyDuplicated(methods))
-  names(runs) <- methods
-  reference <- runs[[1]]
-  for (run in runs) {
-    stopifnot("Runs have incompatible cells, baseline data or analysis settings" =
-      identical(run$provenance$baseline_hash, reference$provenance$baseline_hash) &&
-      identical(run$settings, reference$settings) &&
-      identical(run$graph_settings, reference$graph_settings) &&
-      setequal(rownames(run$assignments), rownames(reference$assignments)) &&
-      identical(run$diagnostics$diagnostic_cells, reference$diagnostics$diagnostic_cells))
-  }
-  runs
+  saveRDS(obj, file.path(data_dir, "lognorm.rds"))
 }

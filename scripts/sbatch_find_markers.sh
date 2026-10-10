@@ -8,7 +8,7 @@
 
 set -euo pipefail
 if [[ $# -ne 2 ]]; then
-  echo "Usage: sbatch scripts/sbatch_find_markers.sh <clustering/analysis.rds> <0.1,0.2,...>" >&2
+  echo "Usage: sbatch scripts/sbatch_find_markers.sh <clustering/lognorm.rds> <0.1,0.2,...>" >&2
   exit 1
 fi
 cd "${SLURM_SUBMIT_DIR:-/work/project/revo-pig-sc/analysis}"

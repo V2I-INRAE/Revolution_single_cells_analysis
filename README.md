@@ -52,7 +52,7 @@ sbatch scripts/sbatch_integration.sh scvi data/norm_feat/job-44212906/lognorm.rd
 # Cluster a selected representation
 sbatch scripts/sbatch_clustering.sh unintegrated data/integration/harmony/job-44215822/lognorm.rds
 sbatch scripts/sbatch_clustering.sh harmony data/integration/harmony/job-44215822/lognorm.rds
-sbatch scripts/sbatch_clustering.sh scvi data/integration/scvi/job-44227281/lognorm.rds
+sbatch scripts/sbatch_clustering.sh cca data/integration/cca/job-<integration_job_id>/lognorm.rds
 ```
 
 For dependent submissions, use Slurm `--dependency=afterok:<job_id>[:<job_id>...]`.
@@ -108,10 +108,11 @@ records historical jobs, inputs, outputs and outcomes.
   PCA/UMAP is used only for diagnostic figures; it does not alter saved counts.
   Scrublet uses scores >0.15 for final calls; its printed
   automatic threshold is not the applied cutoff. QC before/after plots compare
-  all input cells with QC-only retained cells. Ribosomal percentages strictly
-  above each sample's median + 3 × R's default scaled MAD are excluded; all
-  input cells, including 0%, contribute to that threshold. There is no lower
-  ribosomal cutoff, floor, cap or log transformation. Settings: `R/qc/params.R`.
+  all input cells with QC-only retained cells. Fixed QC thresholds are shared
+  by all samples: 300–4,000 detected genes (inclusive), mitochondrial counts
+  ≤10%, and log10(genes) / log10(UMIs) >0.8. No MAD filtering is used.
+  Ribosomal percentage is calculated and plotted for diagnostics only; it does
+  not control cell retention. Settings: `R/qc/params.R`.
 - **Normalization:** LogNormalize, per-layer VST selection, 3,000 consensus
   variable genes and 50-PC PCA. SCT checkpoints are historical only.
   Settings: `R/norm_feat/params.R`.
@@ -119,11 +120,12 @@ records historical jobs, inputs, outputs and outcomes.
   working route; Harmony and scVI remain available for reviewer/sensitivity
   runs. Unintegrated UMAP and Harmony/CCA use dimensions 1–20; scVI uses original RNA counts for 3,000 selected genes and
   20 latent dimensions. Settings: `R/integration/params.R`.
-- **Clustering:** unintegrated uses preserved PCA; other routes use Harmony,
-  CCA or scVI, selecting dimensions 1–20. Use newly generated 20-component integration
-  checkpoints; the example job IDs above refer to historical runs.
-  Settings: `R/clustering/params.R`. Mixing metrics do not establish
-  biological preservation, and clusters are not validated cell identities.
+- **Clustering:** Leiden (`algorithm = 4`, `leidenbase` backend, modularity
+  objective) on preserved PCA (unintegrated), Harmony or CCA, using dimensions
+  1–20. Use newly generated 20-component integration checkpoints; the example job
+  IDs above refer to historical runs. Resolution UMAPs and clustree plots are
+  retained; numerical clustering diagnostics are no longer generated.
+  Settings: `R/clustering/params.R`. Clusters are not validated cell identities.
 
 Figures are PNG; saved objects retain run metadata. Historical shared-path
 figures remain in place and may contain products from multiple jobs.

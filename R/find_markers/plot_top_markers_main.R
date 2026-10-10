@@ -1,6 +1,6 @@
 args <- commandArgs(trailingOnly = TRUE)
 if (length(args) != 3L) {
-  stop("Usage: Rscript R/find_markers/plot_main.R <clustering/analysis.rds> <marker-results-directory> <resolutions: 0.1,0.2,...>")
+  stop("Usage: Rscript R/find_markers/plot_top_markers_main.R <clustering/lognorm.rds> <marker-results-directory> <resolutions: 0.1,0.2,...>")
 }
 source("R/find_markers/io.R")
 source("R/find_markers/plots.R")

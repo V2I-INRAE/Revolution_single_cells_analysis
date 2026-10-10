@@ -1,16 +1,15 @@
-# Clustering comparison
+# Clustering
 
 Run from the analysis root. Each job reads an explicit checkpoint and clusters
-all cells using one representation: `pca` (unintegrated), `harmony`, `integrated_cca`, or
-`integrated_scvi`. It does not renormalize or rerun integration.
-Neighbor graphs, silhouette diagnostics and UMAPs use components 1–20:
-PCA/Harmony/CCA components for those routes and all 20 latent components for scVI.
-Settings are in `R/clustering/params.R`.
+all cells using one representation: `pca` (unintegrated), `harmony`, or
+`integrated_cca`. It does not renormalize or rerun integration.
+Neighbor graphs and UMAPs use components 1–20. Clustering uses Leiden
+(`algorithm = 4`) with the R `leidenbase` backend and modularity objective;
+`leidenbase` is recorded in `renv.lock`. Settings are in `R/clustering/params.R`.
 
 ```bash
 sbatch scripts/sbatch_clustering.sh unintegrated data/integration/harmony/job-44215822/lognorm.rds
 sbatch scripts/sbatch_clustering.sh harmony data/integration/harmony/job-44215822/lognorm.rds
-sbatch scripts/sbatch_clustering.sh scvi data/integration/scvi/job-44227281/lognorm.rds
 sbatch scripts/sbatch_clustering.sh cca data/integration/cca/job-<integration_job_id>/lognorm.rds
 ```
 
@@ -26,46 +25,71 @@ Outputs are isolated by method and run ID (`job-<SLURM_JOB_ID>` or timestamp/PID
 
 - `data/clustering/<method>/<run_id>/lognorm.rds`: full object, original assays,
   saved embeddings, method-specific NN/SNN graphs and all resolution columns.
-- `results/clustering/<method>/<run_id>/`: assignments, diagnostic cell IDs,
-  per-cell silhouettes, cluster sizes, sample composition and summaries as CSV;
-  `analysis.rds` also holds settings, source provenance and session information.
+  `obj@misc$clustering` retains settings, partitions, provenance and session information.
+- `results/clustering/<method>/<run_id>/cluster_assignments.csv`: assignments
+  exported for tabular use. No separate analysis bundle is written.
 
-Existing run directories are rejected. `analysis.rds` is written last and is the
-input to the plotting stage. A failed run may leave a directory but no completed
-bundle. The last resolution becomes Seurat's active identity; it is **not** a
-selected optimal clustering. Use the explicit resolution metadata columns.
+Existing run directories are rejected. Use the full `lognorm.rds` directly for
+clustering plots and marker analysis. Wait for successful job completion before
+loading it: a failed or running job can leave a partially written checkpoint.
+The last resolution becomes Seurat's active identity; it is **not** a selected
+optimal clustering. Use the explicit resolution metadata columns.
 
-Silhouettes use exactly 50,000 cells, selected proportionally by sample with
-canonical barcode ordering and a fixed seed. Smaller inputs stop rather than
-silently changing that number. One Euclidean distance vector is reused across
-resolutions. This vector alone is about 10 GB, with additional copies during
-silhouette calculation. The job requests 128 GB; inspect measured memory before
-changing that request. Jobs run resolutions sequentially.
-
-Singleton diagnostic clusters retain the standard silhouette value zero.
-Absent clusters have no score; invalid partitions (one cluster or one cluster
-per sampled cell) have NA scores and an explicit status. The summaries include
-cell-weighted and cluster-weighted means, and report absent/singleton clusters.
-Clusters below 10 full-data cells are flagged, never removed.
+Jobs run resolutions sequentially. The job still requests 128 GB; inspect
+measured memory before changing that request.
 
 ## Plot completed runs without recomputing
 
 ```bash
 sbatch scripts/sbatch_clustering_plots.sh \
-  results/clustering/comparison/my-comparison \
-  results/clustering/unintegrated/job-<id>/analysis.rds \
-  results/clustering/harmony/job-<id>/analysis.rds \
-  results/clustering/scvi/job-<id>/analysis.rds \
-  --plot-resolutions=0.4,0.6,0.8
+  data/clustering/cca/job-<id>/lognorm.rds \
+  --plot-resolutions=0.1,0.2,0.3,0.4
 ```
 
-Replace `<id>` with each clustering job ID. The comparison output directory must
-be new. One or two completed methods can also be plotted. Baseline PCA/HVG and
-metadata fingerprints, cell sets, settings and diagnostic IDs must match.
+Replace `<id>` with the clustering job ID; use the corresponding `harmony` or
+`unintegrated` path for those methods. Each plotting job reads one full checkpoint.
+No comparison directory or cross-run comparison files are created.
 The optional last argument limits **figures only** to saved resolutions; omitting
-it plots all resolutions. `plotted_resolutions.csv` records the figure scope.
-Comparison CSVs and the source analysis bundles retain all resolutions, including
-1.0, even when its UMAP panel, clustree row and comparison figure points are omitted.
+it plots all resolutions. The input path, selected resolutions and output directory
+are recorded in the job log. The source object retains all saved resolutions,
+even when their UMAP panels and clustree rows are omitted.
 
-Resolution plots are exported from the saved UMAP; clustree and diagnostics are
-generated only once. Plotting does not fit missing embeddings.
+`umap_resolutions.png` and `clustree.png` are written to
+`results/clustering/<method>/<run_id>/`, using the method and run ID stored in each
+object, overwriting those figures if they already exist. Resolution plots use the
+saved UMAP; plotting does not fit missing embeddings. Clustree shows transitions
+between resolutions, not resampling stability.
+
+## Explore CCA UMAP parameters with fixed clusters
+
+```bash
+# Pilot the last configuration, inspect it, then run the remaining fourteen.
+sbatch --array=14 scripts/sbatch_clustering_umap_explore.sh \
+  data/clustering/cca/job-44452483/lognorm.rds
+sbatch --array=0-13%2 scripts/sbatch_clustering_umap_explore.sh \
+  data/clustering/cca/job-44452483/lognorm.rds
+```
+
+Submit the remaining array only after the pilot succeeds, its four PNGs are
+inspected, and its memory use fits the allocation (2 CPUs/48 GB per task).
+An explicit test name can replace array selection; without either, the default
+is `min.dist_0.5`. Defaults, ordered tests and the direct `RunUMAP` helper are
+shared with integration exploration in `R/utils/umap_explore.R`.
+
+This CCA-only entry point requires saved resolutions 0.1/0.2/0.3/0.4 and a baseline
+matching the exploration reference settings. It recomputes only UMAP on the saved
+CCA coordinates, never integration, neighbour graphs or Leiden. Each variant saves
+four baseline-left/test-right PNGs under
+`results/clustering/cca/<run_id>/umap_explore/<test_name>/`, alongside `.INFO`.
+Existing variant directories are rejected; neither the source object nor the
+ordinary clustering plots are overwritten. No object or tested coordinates are
+saved, so later reuse of a tested embedding requires recomputation.
+
+The baseline settings come from the checkpoint. Automatic baseline epochs are
+recorded as automatic; consult the original producer log for the effective count.
+For integration 44282203, `logs/20261001-234739-integration-cca-44282203.log` records
+200 epochs, matching the explicit 200 used for exploration. Each task checks
+finite/aligned coordinates and hashes the original CCA coordinates, baseline UMAP
+and fixed label columns before and after fitting/rendering. Clustree is not repeated
+because the assignments do not change. UMAP neighbour count is separate from the
+clustering graph's `k`; visual separation does not establish biological improvement.
