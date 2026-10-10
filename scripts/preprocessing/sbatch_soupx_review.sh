@@ -12,4 +12,4 @@ module load statistics/R/4.6.1
 export OMP_NUM_THREADS="$SLURM_CPUS_PER_TASK"
 export OPENBLAS_NUM_THREADS="$SLURM_CPUS_PER_TASK"
 export MKL_NUM_THREADS="$SLURM_CPUS_PER_TASK"
-Rscript scripts/soupx/review_soupx.R "$@"
+Rscript scripts/preprocessing/soupx/review_soupx.R "$@"

@@ -1,8 +1,8 @@
 args <- commandArgs(trailingOnly = TRUE)
-if (length(args) != 1L) stop("Usage: Rscript scripts/soupx/run_soupx.R <sample>")
+if (length(args) != 1L) stop("Usage: Rscript scripts/preprocessing/soupx/run_soupx.R <sample>")
 sample_id <- args[1]
-source("scripts/soupx/io.R")
-source("scripts/soupx/plots.R")
+source("scripts/preprocessing/soupx/io.R")
+source("scripts/preprocessing/soupx/plots.R")
 suppressPackageStartupMessages({
   library(Matrix)
   library(Seurat)
@@ -43,8 +43,8 @@ provenance <- list(sample = sample_id, run_id = run_id, status = "running",
   versions = setNames(lapply(c("Seurat", "SoupX", "Matrix", "jsonlite", "scplotter"),
     function(package) as.character(packageVersion(package))),
     c("Seurat", "SoupX", "Matrix", "jsonlite", "scplotter")), rng_kind = RNGkind(),
-  scripts_md5 = as.list(tools::md5sum(c("scripts/soupx/io.R",
-    "scripts/soupx/plots.R", "scripts/soupx/run_soupx.R", "scripts/sbatch_soupx.sh"))))
+  scripts_md5 = as.list(tools::md5sum(c("scripts/preprocessing/soupx/io.R",
+    "scripts/preprocessing/soupx/plots.R", "scripts/preprocessing/soupx/run_soupx.R", "scripts/preprocessing/sbatch_soupx.sh"))))
 write_provenance <- function() {
   jsonlite::write_json(provenance, file.path(results_dir, "run.json"),
     pretty = TRUE, auto_unbox = TRUE, null = "null")

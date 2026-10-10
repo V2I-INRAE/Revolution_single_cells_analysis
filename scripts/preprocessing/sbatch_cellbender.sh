@@ -16,10 +16,10 @@ export PYTHONUNBUFFERED=1
 export PATH="$PWD/.venv-scvi/bin:$PATH"
 # Use this for one sample, or an approved reviewed TSV with --array=0-21%11.
 if [[ -n "${SLURM_ARRAY_TASK_ID:-}" ]]; then
-  [[ $# -eq 1 ]] || { echo "Array usage: sbatch --array=...%11 scripts/sbatch_cellbender.sh <reviewed.tsv>" >&2; exit 1; }
+  [[ $# -eq 1 ]] || { echo "Array usage: sbatch --array=...%11 scripts/preprocessing/sbatch_cellbender.sh <reviewed.tsv>" >&2; exit 1; }
   read -r sample < <(sed -n "$((SLURM_ARRAY_TASK_ID + 2))p" "$1")
   [[ -n "$sample" ]] || exit 1
-  .venv-scvi/bin/python scripts/cellbender/run_cellbender.py "$sample"
+  .venv-scvi/bin/python scripts/preprocessing/cellbender/run_cellbender.py "$sample"
 else
-  .venv-scvi/bin/python scripts/cellbender/run_cellbender.py "$@"
+  .venv-scvi/bin/python scripts/preprocessing/cellbender/run_cellbender.py "$@"
 fi

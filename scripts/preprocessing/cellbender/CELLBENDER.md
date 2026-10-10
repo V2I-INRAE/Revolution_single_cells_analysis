@@ -4,7 +4,7 @@ Run from `/work/project/revo-pig-sc/analysis`. Originals in `data/raw_data` are
 read-only. Only unfiltered MEX archives are correction inputs. Filtered archives
 are used for comparison of barcode calls.
 
-Python scripts, this guide and the report patch live in `scripts/cellbender/`.
+Python scripts, this guide and the report patch live in `scripts/preprocessing/cellbender/`.
 Slurm launchers remain directly under `scripts/`.
 
 ## Environment
@@ -32,7 +32,7 @@ use the environment:
 
 ```bash
 git apply --directory=.venv-scvi/lib/python3.12/site-packages \
-  scripts/cellbender/cellbender-pandas3.patch
+  scripts/preprocessing/cellbender/cellbender-pandas3.patch
 ```
 
 This does not change training, cell probabilities, or corrected counts. New runs
@@ -41,7 +41,7 @@ record pandas version and both report-source SHA-256 hashes in `run.json`.
 ## Preparation and parameter review
 
 ```bash
-sbatch scripts/sbatch_cellbender_preparation.sh
+sbatch scripts/preprocessing/sbatch_cellbender_preparation.sh
 ```
 
 `prepare_cellbender.py` writes `preparation.json`, `barcode_counts.tsv.gz`, and
@@ -61,10 +61,10 @@ to 303 molecules, with 13,422 BD putative cells.
 ## Pilot and bounded parallel jobs
 
 ```bash
-.venv-scvi/bin/python scripts/cellbender/prepare_cellbender.py --samples REVO30-P4 \
+.venv-scvi/bin/python scripts/preprocessing/cellbender/prepare_cellbender.py --samples REVO30-P4 \
   --review-total-droplets 25000 \
   --review-note 'Reference curve reviewed: 303 molecules at rank 25000'
-sbatch scripts/sbatch_cellbender.sh REVO30-P4
+sbatch scripts/preprocessing/sbatch_cellbender.sh REVO30-P4
 ```
 
 The launcher requests 8 CPUs, 64 GB and 24 hours on `workq`; BLAS/OpenMP and
@@ -85,7 +85,7 @@ calls and cell-type-specific preservation still require review. This approval
 authorizes generating candidate outputs, not automatic downstream QC acceptance.
 
 ```bash
-sbatch --array=0-21%11 scripts/sbatch_cellbender.sh \
+sbatch --array=0-21%11 scripts/preprocessing/sbatch_cellbender.sh \
   results/cellbender-preparation/reviewed-array.tsv
 ```
 
@@ -94,7 +94,7 @@ Its ELBO diagnostic recommends a half-learning-rate comparison. Keep it distinct
 from the comparison run, with all other parameters unchanged:
 
 ```bash
-sbatch scripts/sbatch_cellbender.sh REVO30-P4 --learning-rate 0.00005
+sbatch scripts/preprocessing/sbatch_cellbender.sh REVO30-P4 --learning-rate 0.00005
 ```
 
 ## Validation and acceptance
@@ -117,7 +117,7 @@ After applying the report fix, regenerate an existing successful CellBender run'
 reports without retraining, then rerun validation inside Slurm:
 
 ```bash
-.venv-scvi/bin/python scripts/cellbender/validate_cellbender.py \
+.venv-scvi/bin/python scripts/preprocessing/cellbender/validate_cellbender.py \
   results/cellbender/REVO30-P4/job-44400520 --regenerate-reports
 ```
 
@@ -139,7 +139,7 @@ changes. The default learning-rate schedule requires retraining, not extending a
 finished 150-epoch checkpoint, to increase epochs.
 
 ```bash
-.venv-scvi/bin/python scripts/cellbender/summarize_cellbender.py
+.venv-scvi/bin/python scripts/preprocessing/cellbender/summarize_cellbender.py
 ```
 
 This writes `results/cellbender/summary.{tsv,json}` and includes every attempt,

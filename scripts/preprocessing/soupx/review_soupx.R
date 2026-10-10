@@ -1,8 +1,8 @@
 args <- commandArgs(trailingOnly = TRUE)
 if (!length(args) || length(args) > 2L) stop(
-  "Usage: Rscript scripts/soupx/review_soupx.R <soupx_data_dir> [validated_cellbender_run_dir]")
-source("scripts/soupx/io.R")
-source("scripts/soupx/plots.R")
+  "Usage: Rscript scripts/preprocessing/soupx/review_soupx.R <soupx_data_dir> [validated_cellbender_run_dir]")
+source("scripts/preprocessing/soupx/io.R")
+source("scripts/preprocessing/soupx/plots.R")
 suppressPackageStartupMessages({
   library(Matrix)
   library(Seurat)
@@ -178,7 +178,7 @@ jsonlite::write_json(list(status = "computed_pending_visual_review",
   marker_plots = plot_metadata,
   versions = list(Seurat = as.character(packageVersion("Seurat")),
     scplotter = as.character(packageVersion("scplotter"))),
-  plot_script_md5 = unname(tools::md5sum("scripts/soupx/plots.R")),
-  script_md5 = unname(tools::md5sum("scripts/soupx/review_soupx.R"))),
+  plot_script_md5 = unname(tools::md5sum("scripts/preprocessing/soupx/plots.R")),
+  script_md5 = unname(tools::md5sum("scripts/preprocessing/soupx/review_soupx.R"))),
   file.path(output, "review.json"), pretty = TRUE, auto_unbox = TRUE, null = "null")
 message("Review tables and figures saved to ", output)

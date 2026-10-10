@@ -3,11 +3,11 @@
 Run from `/work/project/revo-pig-sc/analysis`:
 
 ```bash
-sbatch scripts/sbatch_soupx.sh REVO30-P4
+sbatch scripts/preprocessing/sbatch_soupx.sh REVO30-P4
 
 # All 23 samples, at most four running together:
 sbatch --array=1-23%4 --output=logs/soupx-%A_%a.log \
-  scripts/sbatch_soupx.sh scripts/soupx/samples.txt
+  scripts/preprocessing/sbatch_soupx.sh scripts/preprocessing/soupx/samples.txt
 ```
 
 Each task requests 4 CPUs, 16 GiB and 4 hours. It uses the project's existing
@@ -91,14 +91,14 @@ Original raw archives and existing downstream checkpoints remain untouched.
 ## Pilot biological review and matched comparison
 
 ```bash
-sbatch scripts/sbatch_soupx_review.sh data/soupx/REVO30-P4/job-44404963
+sbatch scripts/preprocessing/sbatch_soupx_review.sh data/soupx/REVO30-P4/job-44404963
 
 # User-selected, numerically validated comparator; its QC status is preserved:
-sbatch scripts/sbatch_soupx_review.sh data/soupx/REVO30-P4/job-44404963 \
+sbatch scripts/preprocessing/sbatch_soupx_review.sh data/soupx/REVO30-P4/job-44404963 \
   results/cellbender/REVO30-P4/job-44400520
 
 # Completed lower-learning-rate comparator:
-sbatch scripts/sbatch_soupx_review.sh data/soupx/REVO30-P4/job-44404963 \
+sbatch scripts/preprocessing/sbatch_soupx_review.sh data/soupx/REVO30-P4/job-44404963 \
   results/cellbender/REVO30-P4/job-44403564
 ```
 

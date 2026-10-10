@@ -7,7 +7,7 @@
 #SBATCH --output=logs/soupx-%j.log
 set -euo pipefail
 cd "${SLURM_SUBMIT_DIR:-/work/project/revo-pig-sc/analysis}"
-[[ $# -eq 1 ]] || { echo "Usage: sbatch scripts/sbatch_soupx.sh <sample>; with --array: <sample-list>" >&2; exit 1; }
+[[ $# -eq 1 ]] || { echo "Usage: sbatch scripts/preprocessing/sbatch_soupx.sh <sample>; with --array: <sample-list>" >&2; exit 1; }
 if [[ -n ${SLURM_ARRAY_TASK_ID:-} ]]; then
   [[ -f $1 ]] || { echo "Sample list not found: $1" >&2; exit 1; }
   sample=$(sed -n "${SLURM_ARRAY_TASK_ID}p" "$1")
@@ -23,4 +23,4 @@ module load statistics/R/4.6.1
 export OMP_NUM_THREADS="$SLURM_CPUS_PER_TASK"
 export OPENBLAS_NUM_THREADS="$SLURM_CPUS_PER_TASK"
 export MKL_NUM_THREADS="$SLURM_CPUS_PER_TASK"
-Rscript scripts/soupx/run_soupx.R "$sample"
+Rscript scripts/preprocessing/soupx/run_soupx.R "$sample"

@@ -1,5 +1,5 @@
 # Small artificial software fixtures only; these are not biological analysis data.
-source("scripts/soupx/io.R")
+source("scripts/preprocessing/soupx/io.R")
 suppressPackageStartupMessages(library(Matrix))
 expect_error <- function(expression) {
   stopifnot(inherits(tryCatch(force(expression), error = identity), "error"))

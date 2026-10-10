@@ -74,7 +74,7 @@ def main():
     config_path.write_text(json.dumps(config, indent=2) + "\n")
     if result.returncode:
         raise SystemExit(result.returncode)
-    subprocess.run([sys.executable, str(root / "scripts/cellbender/validate_cellbender.py"), str(output)],
+    subprocess.run([sys.executable, str(root / "scripts/preprocessing/cellbender/validate_cellbender.py"), str(output)],
                    env=environment, check=True)
 
 

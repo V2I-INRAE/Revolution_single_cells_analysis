@@ -8,4 +8,4 @@
 set -euo pipefail
 cd "${SLURM_SUBMIT_DIR:-/work/project/revo-pig-sc/analysis}"
 export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1
-.venv-scvi/bin/python scripts/cellbender/prepare_cellbender.py "$@"
+.venv-scvi/bin/python scripts/preprocessing/cellbender/prepare_cellbender.py "$@"
