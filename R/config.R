@@ -26,13 +26,18 @@ config <- list(
       mitochondrial_pattern = "^MT-",
       ribosomal_pattern = "^RP[LS]"
     ),
-    # Fixed limits shared by all samples; upper thresholds inclusive,
-    # complexity strict. Ribosomal percentage is diagnostic only.
+    # Adaptive QC thresholds: per-sample median + k * MAD (R's mad, constant
+    # 1.4826), capped by fixed ceilings; cells AT a limit pass, strictly above
+    # is excluded. Ribosomal content keeps a fixed floor: cells strictly above
+    # it are retained. Complexity keeps its fixed strict minimum.
     filtering = list(
-      min_features = 300,
-      max_features = 4000,
+      min_features = 200,
+      max_features_cap = 5000,
+      feature_mads = 3,
+      max_mito_cap = 20,
+      mito_mads = 3,
+      min_ribo_percent = 2,
       min_log10_genes_per_umi = 0.8,
-      max_mito_percent = 10,
       min_cells_per_feature = 10
     ),
     doublets = list(

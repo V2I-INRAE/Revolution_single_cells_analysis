@@ -96,7 +96,7 @@ qc <- run_stage("QC", local({
   labeled@misc$qc$run_id <- run_id
   labeled@misc$qc$input_source <- config$run$input_source
   labeled@misc$qc$input_paths <- input_paths
-  labeled@misc$qc$threshold_reference <- "fixed_shared_across_samples"
+  labeled@misc$qc$threshold_reference <- "per_sample_median_mad_capped"
   labeled@misc$qc$feature_min_inclusive <- TRUE
 
   # Before/after figures compare all input cells with QC-passing cells

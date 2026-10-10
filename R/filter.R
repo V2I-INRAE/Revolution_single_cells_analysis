@@ -34,23 +34,36 @@ inspect_seurat_qc <- function(seurat_obj, qc_config) {
 }
 
 label_qc_outliers <- function(seurat_obj, filtering_config) {
-  # Fixed limits shared by every sample; cells at either upper limit pass.
-  feature_max <- filtering_config$max_features
+  # Adaptive limits computed per sample: median + k * MAD, capped by the
+  # fixed ceilings; cells at either limit pass.
+  feature_max <- min(
+    filtering_config$max_features_cap,
+    median(seurat_obj$nFeature_RNA) +
+      filtering_config$feature_mads * mad(seurat_obj$nFeature_RNA)
+  )
+  mt_max <- min(
+    filtering_config$max_mito_cap,
+    median(seurat_obj$percent.mt) +
+      filtering_config$mito_mads * mad(seurat_obj$percent.mt)
+  )
+  ribo_min <- filtering_config$min_ribo_percent
 
   seurat_obj$flag_low_features <- seurat_obj$nFeature_RNA < filtering_config$min_features
   seurat_obj$flag_high_features <- seurat_obj$nFeature_RNA > feature_max
   seurat_obj$flag_low_complexity <- (
     seurat_obj$log10GenesPerUMI <= filtering_config$min_log10_genes_per_umi
   )
-  seurat_obj$flag_high_mt <- seurat_obj$percent.mt > filtering_config$max_mito_percent
+  seurat_obj$flag_high_mt <- seurat_obj$percent.mt > mt_max
+  seurat_obj$flag_low_ribo <- seurat_obj$percent.ribo <= ribo_min
 
   flag_cols <- c(
     "flag_low_features", "flag_high_features",
-    "flag_low_complexity", "flag_high_mt"
+    "flag_low_complexity", "flag_high_mt", "flag_low_ribo"
   )
   seurat_obj$qc_outlier <- (
     seurat_obj$flag_low_features | seurat_obj$flag_high_features |
-      seurat_obj$flag_low_complexity | seurat_obj$flag_high_mt
+      seurat_obj$flag_low_complexity | seurat_obj$flag_high_mt |
+      seurat_obj$flag_low_ribo
   )
 
   cat("\nFlagged cells:\n")
@@ -58,12 +71,18 @@ label_qc_outliers <- function(seurat_obj, filtering_config) {
     flag <- seurat_obj[[col]][[1]]
     cat(sprintf("  %-22s %6d (%5.1f%%)\n", col, sum(flag), 100 * mean(flag)))
   }
-  cat(sprintf("  nFeature_RNA ceiling %.2f\n", feature_max))
-  cat(sprintf("  mitochondrial ceiling %.2f%%\n", filtering_config$max_mito_percent))
+  cat(sprintf(
+    "  nFeature_RNA ceiling %.2f (median + %g MAD, cap %g)\n",
+    feature_max, filtering_config$feature_mads, filtering_config$max_features_cap
+  ))
+  cat(sprintf(
+    "  mitochondrial ceiling %.2f%% (median + %g MAD, cap %g%%)\n",
+    mt_max, filtering_config$mito_mads, filtering_config$max_mito_cap
+  ))
+  cat(sprintf("  ribosomal floor %.2f%% (cells above retained)\n", ribo_min))
 
   seurat_obj@misc$qc <- list(
-    feature_max = feature_max,
-    mt_max = filtering_config$max_mito_percent
+    feature_max = feature_max, mt_max = mt_max, ribo_min = ribo_min
   )
   return(seurat_obj)
 }

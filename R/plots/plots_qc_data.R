@@ -38,8 +38,8 @@ plot_qc_comparison <- function(seurat_obj, plot_dir) {
       fun = QC_Plots_Genes,
       metric = "nFeature_RNA",
       label = "Genes detected per cell",
-      low = params$min_features,
-      high = params$max_features
+      low = params$min_features
+      # no `high`: the upper limit is adaptive per sample (median + k MAD, capped)
     ),
     umi = list(
       fun = QC_Plots_UMIs,
@@ -50,7 +50,7 @@ plot_qc_comparison <- function(seurat_obj, plot_dir) {
       fun = QC_Plots_Mito,
       metric = "percent.mt",
       label = "Mitochondrial counts (%)",
-      high = params$max_mito_percent,
+      # no `high`: adaptive per sample (median + k MAD, capped)
       extra = list(mito_name = "percent.mt")
     ),
     complexity = list(
@@ -63,6 +63,7 @@ plot_qc_comparison <- function(seurat_obj, plot_dir) {
       fun = QC_Plots_Feature,
       metric = "percent.ribo",
       label = "Ribosomal counts (%)",
+      low = params$min_ribo_percent,
       extra = list(feature = "percent.ribo")
     )
   )
@@ -101,12 +102,13 @@ plot_qc_comparison <- function(seurat_obj, plot_dir) {
     panels[[2]] <- panels[[2]] + labs(title = "After: QC-passing cells (no doublet removal)")
     caption <- ("Original per-cell QC measurements; UMI counts do not directly control filtering.")
     if (name %in% c("genes", "mitochondrial")) {
+      k <- if (name == "genes") params$feature_mads else params$mito_mads
       caption <- paste0(caption,
-        "\nDashed upper line: fixed threshold shared by all samples. Cells strictly above are excluded.")
+        sprintf("\nUpper limit is adaptive per sample (median + %g MAD, capped); no single line shown. Realized thresholds are printed in the run log and stored in the saved object.", k))
     }
     if (name == "ribosomal") {
       caption <- paste0(caption,
-        "\nRibosomal percentage is diagnostic only; no ribosomal filtering is applied.")
+        sprintf("\nDashed lower line: fixed floor at %g%%. Cells at or below it are excluded.", params$min_ribo_percent))
     }
     figure <- wrap_plots(panels, ncol = 1) + plot_annotation(caption = caption)
     save_figure(figure, plot_dir, paste0("qc_before_after_", name), 16, 10)
