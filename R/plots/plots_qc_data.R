@@ -22,7 +22,7 @@ plot_qc_comparison <- function(seurat_obj, plot_dir) {
   retained_cells <- rownames(metadata)[metadata$keep_qc]
   retained <- subset(seurat_obj, cells = retained_cells)
   # Plot input metrics, never values recomputed by a subsetting operation.
-  metrics <- c("nFeature_RNA", "nCount_RNA", "percent.mt", "log10GenesPerUMI", "percent.ribo")
+  metrics <- c("nFeature_RNA", "nCount_RNA", "percent.mt", "log10GenesPerUMI", "percent.ribo", "percent.hb")
   retained <- AddMetaData(retained, metadata[retained_cells, metrics, drop = FALSE])
 
   colours <- setNames(c(
@@ -65,6 +65,13 @@ plot_qc_comparison <- function(seurat_obj, plot_dir) {
       label = "Ribosomal counts (%)",
       low = params$min_ribo_percent,
       extra = list(feature = "percent.ribo")
+    ),
+    hemoglobin = list(
+      fun = QC_Plots_Feature,
+      metric = "percent.hb",
+      label = "Hemoglobin counts (%)",
+      high = params$max_hb_percent,
+      extra = list(feature = "percent.hb")
     )
   )
 
@@ -109,6 +116,10 @@ plot_qc_comparison <- function(seurat_obj, plot_dir) {
     if (name == "ribosomal") {
       caption <- paste0(caption,
         sprintf("\nDashed lower line: fixed floor at %g%%. Cells at or below it are excluded.", params$min_ribo_percent))
+    }
+    if (name == "hemoglobin") {
+      caption <- paste0(caption,
+        sprintf("\nDashed upper line: fixed ceiling at %g%%. Cells at or above it are excluded.", params$max_hb_percent))
     }
     figure <- wrap_plots(panels, ncol = 1) + plot_annotation(caption = caption)
     save_figure(figure, plot_dir, paste0("qc_before_after_", name), 16, 10)

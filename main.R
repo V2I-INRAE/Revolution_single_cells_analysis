@@ -107,6 +107,7 @@ qc <- run_stage("QC", local({
   n_input <- ncol(labeled)
   n_qc_pass <- sum(labeled$keep_qc)
   clean <- filter_labeled_cells(labeled, config$qc)
+  clean <- remove_listed_genes(clean, config$qc)
   validate_clean_object(clean)
   rm(labeled)
   gc()
@@ -117,8 +118,9 @@ qc <- run_stage("QC", local({
       paste0(n_input, " input cells; ", n_qc_pass, " QC-passing; ",
         ncol(clean), " Scrublet-clean (", sprintf("%.2f%%", 100 * ncol(clean) / n_input), ")"),
       paste0(nrow(clean), " genes after the per-feature minimum; ",
+        length(clean@misc$qc$removed_genes), " listed genes removed; ",
         length(config$run$samples), " samples"),
-      "7 QC figures saved (5 before/after comparisons, 2 per-sample UMAP sets)"
+      "8 QC figures saved (6 before/after comparisons, 2 per-sample UMAP sets)"
     )
   )
 }))

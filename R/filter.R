@@ -14,6 +14,28 @@ inspect_seurat_qc <- function(seurat_obj, qc_config) {
     seurat_obj,
     pattern = metrics$ribosomal_pattern
   )
+  # percent.hb from the explicit hemoglobin gene list, never a ^HB pattern
+  # (HBEGF, HBP1 and HBS1L match but are not globins). Unlike the
+  # mitochondrial list, which io.R stopifnots because it rewrites those
+  # rownames, partially absent genes are dropped with a note: percent.hb
+  # stays a valid fraction of the remaining globins, and the pilot
+  # pre-rebuild matrices contain all five, so a drop would flag a changed
+  # input source. Total absence still fails: an empty selection would return
+  # zeros for every cell and silently disable the hemoglobin filter.
+  hb_genes <- intersect(metrics$hemoglobin_genes, rownames(seurat_obj))
+  if (length(hb_genes) == 0L) {
+    stop("None of the configured hemoglobin genes are in the matrix: ",
+      paste(metrics$hemoglobin_genes, collapse = ", "))
+  }
+  missing_hb <- setdiff(metrics$hemoglobin_genes, hb_genes)
+  if (length(missing_hb) > 0L) {
+    message("Hemoglobin genes not in the matrix, excluded from percent.hb: ",
+      paste(missing_hb, collapse = ", "))
+  }
+  seurat_obj[["percent.hb"]] <- PercentageFeatureSet(
+    seurat_obj,
+    features = hb_genes
+  )
   seurat_obj$log10GenesPerUMI <- (
     log10(seurat_obj$nFeature_RNA) / log10(seurat_obj$nCount_RNA)
   )
@@ -24,6 +46,7 @@ inspect_seurat_qc <- function(seurat_obj, qc_config) {
     nFeature_RNA = qs(seurat_obj$nFeature_RNA),
     percent.mt = qs(seurat_obj$percent.mt),
     percent.ribo = qs(seurat_obj$percent.ribo),
+    percent.hb = qs(seurat_obj$percent.hb),
     log10GenesPerUMI = qs(seurat_obj$log10GenesPerUMI)
   )
   colnames(summary_tbl) <- c("min", "q25", "median", "q75", "max")
@@ -55,15 +78,21 @@ label_qc_outliers <- function(seurat_obj, filtering_config) {
   )
   seurat_obj$flag_high_mt <- seurat_obj$percent.mt > mt_max
   seurat_obj$flag_low_ribo <- seurat_obj$percent.ribo <= ribo_min
+  # Deliberate difference from every other ceiling: hemoglobin contamination is
+  # excluded at or above the fixed threshold (>=), per the run decision from
+  # the pilot; all other limits exclude only strictly-above cells.
+  seurat_obj$flag_high_hb <- (
+    seurat_obj$percent.hb >= filtering_config$max_hb_percent
+  )
 
   flag_cols <- c(
     "flag_low_features", "flag_high_features",
-    "flag_low_complexity", "flag_high_mt", "flag_low_ribo"
+    "flag_low_complexity", "flag_high_mt", "flag_high_hb", "flag_low_ribo"
   )
   seurat_obj$qc_outlier <- (
     seurat_obj$flag_low_features | seurat_obj$flag_high_features |
       seurat_obj$flag_low_complexity | seurat_obj$flag_high_mt |
-      seurat_obj$flag_low_ribo
+      seurat_obj$flag_high_hb | seurat_obj$flag_low_ribo
   )
 
   cat("\nFlagged cells:\n")
@@ -78,6 +107,10 @@ label_qc_outliers <- function(seurat_obj, filtering_config) {
   cat(sprintf(
     "  mitochondrial ceiling %.2f%% (median + %g MAD, cap %g%%)\n",
     mt_max, filtering_config$mito_mads, filtering_config$max_mito_cap
+  ))
+  cat(sprintf(
+    "  hemoglobin ceiling %.2f%% (cells at or above excluded)\n",
+    filtering_config$max_hb_percent
   ))
   cat(sprintf("  ribosomal floor %.2f%% (cells above retained)\n", ribo_min))
 
@@ -120,6 +153,31 @@ filter_labeled_cells <- function(seurat_obj, qc_config) {
   clean@misc$qc <- seurat_obj@misc$qc
 
   return(clean)
+}
+
+# Drop the configured feature names (config$qc$remove_genes) from the matrix.
+# Exact membership (%in%), deliberately not grepl: grepl vectorizes over x,
+# the strings being tested, not over pattern, so a multi-element pattern is
+# recycled element-wise and silently mismatches; the regex alternative,
+# paste(patterns, collapse = "|"), would still risk substring hits (e.g.
+# MT-ND4 would also catch MT-ND4L). Every entry is a full feature name, so
+# %in% is simpler and exact. Listed names absent from the matrix are
+# tolerated and logged: a future input source may lack one. The removed set
+# is stored in misc$qc so the run record can state the removal.
+remove_listed_genes <- function(seurat_obj, qc_config) {
+  remove_genes <- qc_config$remove_genes
+  hits <- rownames(seurat_obj) %in% remove_genes
+  removed <- rownames(seurat_obj)[hits]
+  seurat_obj <- seurat_obj[!hits, ]
+  seurat_obj@misc$qc$removed_genes <- removed
+  message("Removed ", length(removed), " listed gene(s): ",
+    paste(removed, collapse = ", "))
+  missing <- setdiff(remove_genes, removed)
+  if (length(missing) > 0L) {
+    message("Listed gene(s) not found in the matrix, nothing to remove: ",
+      paste(missing, collapse = ", "))
+  }
+  return(seurat_obj)
 }
 
 # Minimal handoff contract between QC and normalization: unique aligned cell

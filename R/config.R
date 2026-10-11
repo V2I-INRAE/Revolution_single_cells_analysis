@@ -24,21 +24,39 @@ config <- list(
         "ND1", "ND2", "ND3", "ND4", "ND4L", "ND5", "ND6"
       ),
       mitochondrial_pattern = "^MT-",
-      ribosomal_pattern = "^RP[LS]"
+      ribosomal_pattern = "^RP[LS]",
+      # Hemoglobin genes by explicit list: a ^HB pattern would also match
+      # HBEGF, HBP1 and HBS1L, which are not globins.
+      hemoglobin_genes = c("HBB", "HBE1", "HBM", "HBQ1", "HBZ")
     ),
     # Adaptive QC thresholds: per-sample median + k * MAD (R's mad, constant
     # 1.4826), capped by fixed ceilings; cells AT a limit pass, strictly above
     # is excluded. Ribosomal content keeps a fixed floor: cells strictly above
-    # it are retained. Complexity keeps its fixed strict minimum.
+    # it are retained. Complexity keeps its fixed strict minimum. Hemoglobin
+    # keeps a fixed ceiling: cells AT or above it are excluded (deliberately
+    # inclusive, unlike every other ceiling).
     filtering = list(
       min_features = 200,
-      max_features_cap = 5000,
+      max_features_cap = 4000,
       feature_mads = 3,
       max_mito_cap = 20,
       mito_mads = 3,
-      min_ribo_percent = 2,
+      max_hb_percent = 1,
+      min_ribo_percent = 1,
       min_log10_genes_per_umi = 0.8,
       min_cells_per_feature = 10
+    ),
+    # Feature names dropped from the matrix after cell filtering, exactly as
+    # they appear in the rownames at that point (the mitochondrial genes are
+    # MT- prefixed by the on-load rename). From the top-20 genes by per-cell
+    # percentage of counts in the 5-sample QC pilot: the mitochondrial and
+    # ribosomal entries of that top 20, plus two Ensembl IDs kept as bare
+    # feature names. Matched exactly by membership, see remove_listed_genes().
+    remove_genes = c(
+      "MT-ATP6", "MT-COX1", "MT-COX2", "MT-COX3", "MT-CYTB",
+      "MT-ND1", "MT-ND2", "MT-ND4",
+      "RPL37", "RPS12", "RPS24", "RPS8",
+      "ENSSSCG00000052671", "ENSSSCG00000048856"
     ),
     doublets = list(
       # BD Rhapsody Instrument User Guide, Doc ID 214062 Rev. 3.0, pp. 80-81:
@@ -89,7 +107,7 @@ config <- list(
 
   clustering = list(
     seed = 1234,
-    k_param = 100,
+    k_param = 75,
     nn_method = "annoy",
     distance = "euclidean",
     n_trees = 50,
@@ -97,7 +115,7 @@ config <- list(
     algorithm = 4, # Leiden
     leiden_method = "leidenbase",
     leiden_objective_function = "modularity",
-    resolutions = c(0.1, 0.2, 0.3, 0.4),
+    resolutions = c(0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
     n_iter = 10
   )
 )
@@ -125,8 +143,8 @@ validate_config <- function(config) {
         !anyDuplicated(config$clustering$resolutions),
     "vars_to_regress must exist in QC metadata" =
       all(config$norm$vars_to_regress %in%
-        c("percent.mt", "percent.ribo", "nFeature_RNA", "nCount_RNA",
-          "log10GenesPerUMI"))
+        c("percent.mt", "percent.ribo", "percent.hb", "nFeature_RNA",
+          "nCount_RNA", "log10GenesPerUMI"))
   )
   invisible(TRUE)
 }
