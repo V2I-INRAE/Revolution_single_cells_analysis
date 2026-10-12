@@ -73,13 +73,15 @@ run_pca_analysis <- function(seurat_obj, n_pcs) {
 # Unintegrated PCA UMAP beside the integrated-method UMAP, both on the shared
 # dims. `reductions` maps UMAP name to source reduction, e.g.
 # c(umap = "pca", umap_harmony = "harmony").
-run_integration_umaps <- function(seurat_obj, dims, seed, reductions) {
+run_integration_umaps <- function(seurat_obj, dims, seed, reductions, umap_params) {
   for (name in names(reductions)) {
     seurat_obj <- RunUMAP(
       seurat_obj,
       reduction = reductions[[name]],
       dims = dims,
       reduction.name = name,
+      min.dist = umap_params$min.dist,
+      n.neighbors = umap_params$n.neighbors,
       seed.use = seed,
       verbose = TRUE
     )

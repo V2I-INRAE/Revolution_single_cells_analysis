@@ -14,44 +14,29 @@ inspect_seurat_qc <- function(seurat_obj, qc_config) {
     seurat_obj,
     pattern = metrics$ribosomal_pattern
   )
-  # percent.hb from the explicit hemoglobin gene list, never a ^HB pattern
-  # (HBEGF, HBP1 and HBS1L match but are not globins). Unlike the
-  # mitochondrial list, which io.R stopifnots because it rewrites those
-  # rownames, partially absent genes are dropped with a note: percent.hb
-  # stays a valid fraction of the remaining globins, and the pilot
-  # pre-rebuild matrices contain all five, so a drop would flag a changed
-  # input source. Total absence still fails: an empty selection would return
-  # zeros for every cell and silently disable the hemoglobin filter.
+
+  # --- On check les cellules vec de tres hqut taux de genes d'hemoglobines
+  # On a pas tout les gene names ici pour le cochon
   hb_genes <- intersect(metrics$hemoglobin_genes, rownames(seurat_obj))
   if (length(hb_genes) == 0L) {
     stop("None of the configured hemoglobin genes are in the matrix: ",
       paste(metrics$hemoglobin_genes, collapse = ", "))
   }
+
   missing_hb <- setdiff(metrics$hemoglobin_genes, hb_genes)
   if (length(missing_hb) > 0L) {
     message("Hemoglobin genes not in the matrix, excluded from percent.hb: ",
       paste(missing_hb, collapse = ", "))
   }
+
   seurat_obj[["percent.hb"]] <- PercentageFeatureSet(
     seurat_obj,
     features = hb_genes
   )
+
   seurat_obj$log10GenesPerUMI <- (
     log10(seurat_obj$nFeature_RNA) / log10(seurat_obj$nCount_RNA)
   )
-
-  qs <- function(x) round(quantile(x, c(0, 0.25, 0.5, 0.75, 1)), 2)
-  summary_tbl <- rbind(
-    nCount_RNA = qs(seurat_obj$nCount_RNA),
-    nFeature_RNA = qs(seurat_obj$nFeature_RNA),
-    percent.mt = qs(seurat_obj$percent.mt),
-    percent.ribo = qs(seurat_obj$percent.ribo),
-    percent.hb = qs(seurat_obj$percent.hb),
-    log10GenesPerUMI = qs(seurat_obj$log10GenesPerUMI)
-  )
-  colnames(summary_tbl) <- c("min", "q25", "median", "q75", "max")
-  cat("\nQC metric summary:\n")
-  print(summary_tbl)
 
   return(seurat_obj)
 }

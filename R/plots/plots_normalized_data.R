@@ -1,11 +1,69 @@
-# Normalization diagnostics: per-sample HVG scatter, HVG overlap heatmap,
-# PCA elbow and PC loadings.
+# Normalization diagnostics: cell-cycle tail removal, per-sample HVG scatter,
+# HVG overlap heatmap, PCA elbow and PC loadings.
 
 suppressPackageStartupMessages({
   library(Seurat)
   library(ggplot2)
   library(ggprism)
 })
+
+# Cell-cycle scores before tail removal, one panel per score: per-sample
+# violins (retained grey, removed tail red) with the per-sample cutoff as a
+# black diamond. Removed counts per sample sit in the y-axis labels. Called on
+# the labeled object BEFORE remove_cc_tail_cells(); scores and cutoffs are not
+# recomputed afterwards.
+plot_cc_tail_removal <- function(seurat_obj, plot_dir, stem = "cc_tail_removal",
+  width = 14, height = 9) {
+  message("Plotting cell-cycle tail scores before removal")
+  cutoffs <- seurat_obj@misc$cell_cycle$cutoffs
+  if (is.null(cutoffs)) {
+    stop("Cell-cycle cutoffs are missing from misc$cell_cycle.")
+  }
+  meta <- seurat_obj[[]]
+  meta$sample <- factor(meta$sample, levels = unique(as.character(meta$sample)))
+  cutoffs$sample <- factor(cutoffs$sample, levels = levels(meta$sample))
+  if (anyNA(cutoffs$sample)) {
+    stop("Cell-cycle cutoffs do not cover every sample.")
+  }
+  meta$cc_status <- factor(
+    ifelse(meta$cc_tail, "removed tail", "retained"),
+    levels = c("retained", "removed tail")
+  )
+  removed_counts <- table(sample = meta$sample, cc_status = meta$cc_status)[, "removed tail"]
+
+  score_panel <- function(score_col, cutoff_col, title) {
+    y_labels <- paste0(levels(meta$sample), " (", removed_counts, ")")
+    ggplot(meta, aes(x = .data[[score_col]], y = sample, fill = cc_status)) +
+      geom_violin(scale = "width", trim = TRUE, position = position_dodge(width = 0.8),
+        color = "grey25", linewidth = 0.15, alpha = 0.9) +
+      geom_point(data = cutoffs, aes(x = .data[[cutoff_col]], y = sample),
+        inherit.aes = FALSE, shape = 18, size = 2.4, color = "black") +
+      scale_fill_manual(
+        values = c(retained = "grey75", `removed tail` = "#90141A"),
+        name = NULL
+      ) +
+      scale_y_discrete(labels = y_labels) +
+      labs(title = title, x = "Score", y = NULL,
+        subtitle = "Black diamond: per-sample cutoff") +
+      theme_classic(base_size = 11) +
+      theme(
+        legend.position = "bottom",
+        axis.text.y = element_text(size = 8)
+      )
+  }
+
+  combined <- patchwork::wrap_plots(list(
+    score_panel("S.Score", "cut_S", "S score"),
+    score_panel("G2M.Score", "cut_G2M", "G2M score")
+  ), ncol = 2) +
+    patchwork::plot_annotation(
+      title = "Cell-cycle scores before tail removal",
+      caption = paste("All cells before removal; removed counts per sample in parentheses.",
+        "Scores and cutoffs are unchanged by the removal; retained cells sit at or below their cutoffs.")
+    )
+  save_figure(combined, plot_dir, stem, width, height)
+  invisible(combined)
+}
 
 plot_pca_elbow <- function(seurat_obj, plot_dir, stem = "pca_elbow",
   ndims = 50, width = 8, height = 6) {

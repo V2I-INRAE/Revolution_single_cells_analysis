@@ -194,10 +194,14 @@ fail_run_record <- function(record, stage, error) {
 
 format_value <- function(value) {
   if (is.data.frame(value)) {
-    paste(paste(value[[1]], value[[2]], sep = ":"), collapse = ", ")
+    paste(apply(value, 1, paste, collapse = ":"), collapse = ", ")
   } else if (is.list(value)) {
     paste(names(value), vapply(value, format_value, character(1)),
       sep = "=", collapse = "; "
+    )
+  } else if (!is.null(names(value)) && any(nzchar(names(value)))) {
+    paste(names(value), vapply(value, format_value, character(1)),
+      sep = "=", collapse = ", "
     )
   } else if (length(value) == 1L) {
     as.character(value)
@@ -210,7 +214,7 @@ format_config <- function(config) {
   sections <- c(
     # dims is a bare vector, unlike the other (named-list) sections.
     list(shared = list(dims = config$dims)),
-    config[c("run", "qc", "norm", "integration", "clustering")]
+    config[c("run", "qc", "norm", "cell_cycle", "integration", "clustering")]
   )
   lines <- unlist(lapply(names(sections), function(name) {
     c(paste0("### ", name),

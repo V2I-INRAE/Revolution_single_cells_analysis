@@ -13,6 +13,7 @@ source("R/filter.R")
 source("R/scrublet.R")
 source("R/reduce.R")
 source("R/lognorm.R")
+source("R/cell_cycle.R")
 source("R/integrate.R")
 source("R/cluster.R")
 source("R/utils/save_plots.R")
@@ -131,6 +132,9 @@ write_info(record, layout$info_paths)
 norm <- run_stage("normalization", local({
   set.seed(config$run$seed)
   obj <- run_lognormalize(qc$obj, config$norm)
+  obj <- score_cell_cycle(obj, config$cell_cycle)
+  plot_cc_tail_removal(obj, layout$plot_dirs[["norm_plots"]])
+  obj <- remove_cc_tail_cells(obj)
   obj <- find_hvgs(obj, config$norm)
   obj <- scale_data(obj, config$norm)
   obj <- run_pca_analysis(obj, config$norm$n_pcs)
@@ -143,7 +147,7 @@ norm <- run_stage("normalization", local({
   plot_pca_elbow(obj, layout$plot_dirs[["norm_plots"]])
   plot_pca_loadings(obj, layout$plot_dirs[["norm_plots"]])
 
-  n_figures <- length(config$run$samples) + 7L
+  n_figures <- length(config$run$samples) + 8L
   list(
     obj = obj,
     lines = c(
@@ -151,7 +155,11 @@ norm <- run_stage("normalization", local({
         length(VariableFeatures(obj)), " consensus HVGs; ",
         config$norm$n_pcs, " PCs"),
       paste0("regressed: ", paste(config$norm$vars_to_regress, collapse = ", ")),
-      paste0(n_figures, " normalization figures saved (per-sample HVGs, overlap, elbow, PC1-5 loadings)")
+      paste0("cell-cycle: ", obj@misc$cell_cycle$removal$removed,
+        " tail cells removed (",
+        sprintf("%.2f%%", obj@misc$cell_cycle$removal$pct_removed), "); ",
+        ncol(obj), " cells retained; cutoffs in misc$cell_cycle"),
+      paste0(n_figures, " normalization figures saved (per-sample HVGs, cell-cycle removal, overlap, elbow, PC1-5 loadings)")
     )
   )
 }))
@@ -165,7 +173,7 @@ int <- run_stage("integration", local({
   obj <- integrate_object(norm$obj, config$integration, config$dims, config$run$seed)
   obj <- run_integration_umaps(
     obj, config$dims, config$run$seed,
-    integration_reductions(config$integration$method)
+    integration_reductions(config$integration$method), config$integration$umap
   )
   figures <- plot_integration_figures(
     obj, layout$plot_dirs[["integration_plots"]], seed = config$run$seed
@@ -175,6 +183,9 @@ int <- run_stage("integration", local({
     paste0("method: ", config$integration$method,
       "; dims ", min(config$dims), "-", max(config$dims),
       "; batch variable: sample"),
+    paste0("PCA and ", config$integration$method, " UMAPs: min.dist ",
+      config$integration$umap$min.dist, "; n.neighbors ",
+      config$integration$umap$n.neighbors, "; seed ", config$run$seed),
     if (!is.null(obj@misc$integration$harmony_convergence)) {
       obj@misc$integration$harmony_convergence
     },
