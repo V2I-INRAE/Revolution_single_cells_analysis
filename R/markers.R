@@ -1,0 +1,200 @@
+marker_feature_panels <- list(
+  Macrophages = c(
+    "C1QA",
+    "C1QB",
+    "C1QC",
+    "CD68",
+    "CD163",
+    "MRC1",
+    "MS4A7",
+    "FCN2",
+    "S100A12",
+    "CIDEC",
+    "MSR1",
+    "STAB1"
+  ),
+  cDC = c(
+    "FLT3",
+    "BATF3",
+    "FCER1A",
+    "XCR1",
+    "CLEC10A",
+    "CD1D",
+    "CADM1",
+    "CD300C"
+  ),
+  pDC = c(
+    "SPIB",
+    "TCF4",
+    "IRF8",
+    "IRF7",
+    "SMIM5",
+    "LAMP3",
+    "CLEC12A",
+    "PLD4",
+    "TLR3"
+  ),
+  Monocytes = c(
+    "IL1R2",
+    "CD14",
+    "VCAN",
+    "CD300C",
+    "CSF1R",
+    "PLBD1",
+    "AREG",
+    "F13A1"
+  ),
+  T_cells = c(
+    "CD3D",
+    "CD3E",
+    "CD4",
+    "CD8A",
+    "CD5",
+    "IL7R",
+    "TCF7",
+    "LEF1",
+    "CCR7",
+    "GZMK",
+    "GZMH",
+    "GZMB"
+  ),
+  NK_cells = c(
+    "NCR1",
+    "KLRB1",
+    "GNLY",
+    "NKG7",
+    "PRF1",
+    "GZMA",
+    "XCL1",
+    "EOMES"
+  ),
+  B_cells = c(
+    "MS4A1",
+    "CD19",
+    "CD79A",
+    "CD79B",
+    "PAX5",
+    "BANK1",
+    "CXCR5",
+    "CLEC17A",
+    "ITGAD",
+    "TNFRSF13C"
+  ),
+  ASC = c(
+    "JCHAIN",
+    "MZB1",
+    "TNFRSF17",
+    "DERL3",
+    "SDC1",
+    "IGHM",
+    "IRF4",
+    "XBP1",
+    "PRDM1"
+  ),
+  Neutrophils = c(
+    "CSF3R",
+    "CXCL8",
+    "TREM1",
+    "G0S2",
+    "RETN",
+    "GPR84",
+    "SELL",
+    "ALOX5AP"
+  ),
+  Endothelial = c(
+    "PECAM1",
+    "VWF",
+    "CLDN5",
+    "ACKR1",
+    "SOX17",
+    "AQP1",
+    "EDNRB",
+    "ESAM",
+    "SEMA3G"
+  ),
+  Lymphatic_EC = c(
+    "CCL21",
+    "MMRN1",
+    "FLT4",
+    "PROX1",
+    "LYVE1",
+    "PDPN",
+    "RELN",
+    "TBX1"
+  ),
+  Fibroblasts = c(
+    "PI16",
+    "DPT",
+    "LUM",
+    "CHRDL1",
+    "FBLN1",
+    "COL1A1",
+    "COL1A2",
+    "DCN",
+    "TCF21",
+    "AGTR1"
+  ),
+  Smooth_muscle = c(
+    "MYH11",
+    "ACTG2",
+    "CNN1",
+    "ACTA2",
+    "TAGLN",
+    "MYL9",
+    "LMOD1",
+    "GREM1",
+    "WIF1"
+  ),
+  AT2 = c(
+    "SFTPC",
+    "SFTPB",
+    "SFTPD",
+    "ABCA3",
+    "LAMP3",
+    "NAPSA",
+    "SLC34A2",
+    "AGER",
+    "RTKN2"
+  ),
+  Secretory_epithelium = c(
+    "SCGB1A1",
+    "SCGB3A1",
+    "TFF3",
+    "BPIFB1",
+    "WFDC2",
+    "PIGR",
+    "KRT7",
+    "KRT19",
+    "EPCAM"
+  ),
+  Ciliated = c(
+    "FOXJ1",
+    "RSPH4A",
+    "RSPH9",
+    "CAPS",
+    "DNAH5",
+    "TEKT2",
+    "SNTN",
+    "CIMIP1"
+  ),
+  Tuft = c(
+    "POU2F3",
+    "POU2AF2",
+    "AVIL",
+    "RGS21",
+    "GNG13",
+    "CHAT",
+    "IL17RB",
+    "KIT"
+  ),
+  Cycling = c(
+    "PCLAF",
+    "KIF11",
+    "NCAPG",
+    "KIFC1",
+    "TOP2A",
+    "STMN1",
+    "TYMS",
+    "PCNA"
+  )
+)
