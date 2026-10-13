@@ -1,0 +1,193 @@
+Marker panel documentation — job-44493014, resolution 0.7
+===========================================================
+
+Provenance and scope of the feature panels defined in R/clusters/markers.R
+(marker_feature_panels + marker_feature_renames), rendered by
+R/clusters/find_markers.R as features_<Panel>.png via plot_marker_features().
+That function skips genes that are not in the object with a warning, so
+probes absent from the object are safe to list.
+
+Built 2026-10-12 from the job-44493014 res-0.7 identity proposal
+(.amp/in/artifacts/cluster_identity_proposal_res0.7_job44493014.csv;
+oracle-reviewed), then edited by the project owner the same day: panels
+trimmed (Eosinophils panel removed — restored 2026-10-12 on owner request;
+cDC2 inspection block and ILC2/γδ/absent probes commented out or dropped;
+SELE entry removed from venous EC) and ID-only entries switched to
+gene-name strings. One panel per identified population; cluster 22
+(IFN-stimulated mixed myeloid/T) is deliberately excluded. Cycling_state
+is kept as a process panel: the cell-cycle tail was removed before
+clustering, so no cycling cluster exists at res 0.7.
+
+These panels are visualization aids, not cluster annotations.
+
+Cluster coverage (harmony_snn_res.0.7, job-44493014) — current file state
+-------------------------------------------------------------------------
+  Monocytes_inflammatory    -> cluster 9  (IL1B-high CD14+ FCN1+)
+  Macrophages_AM_like       -> cluster 3  (FCN2+ CLEC12B+ S100-high; alveolar-like provisional)
+  Macrophages_C1Q_high      -> cluster 13 (C1Q-high CCL8/CCL14+; interstitial-like provisional)
+  cDC1                      -> cluster 18 (XCR1+; shared MS4A2 expression)
+  pDC                       -> cluster 14 (possible tDC contribution remains unresolved)
+  Neutrophils               -> cluster 6
+  Eosinophils               -> cluster 15 (EPX+ CCR3+; moderate confidence)
+  T_CD4_naive_CM            -> cluster 4
+  T_CD8_cytotoxic           -> cluster 1  (alpha/beta vs gamma/delta unresolved)
+  T_gd_like                 -> cluster 5  (GATA3+ SOX13+; receptor subtype unresolved)
+  NK_like                   -> cluster 2  (T-lineage contribution unresolved)
+  B_cells                   -> cluster 7
+  ASC                       -> cluster 8  (IgM plasma)
+  Endothelial_arterial      -> cluster 20
+  Endothelial_venous        -> cluster 11 (capillary-overlap genes at the end)
+  Lymphatic_EC              -> cluster 12
+  Fibroblasts               -> cluster 10 (PI16+ adventitial-like)
+  Smooth_muscle             -> cluster 19
+  Secretory_epithelium      -> cluster 16 (club-like with surfactant program)
+  Ciliated                  -> cluster 17
+  Tuft                      -> cluster 23 (POU2F3+ chemosensory)
+  AT2                       -> cluster 21
+  AT1                       -> cluster 24
+  Cycling_state             -> no cluster (probe panel)
+
+  (Historical panel restoration for cluster 15 on owner request 2026-10-12: Eosinophils,
+  moderate confidence — EPX, CCR3, ALOX5 significant in the res-0.7 tables
+  (EPX log2FC 10.2); CLNK/ADGRG3/IL5RA/SIGLEC5/IL2RA completed that panel.
+  PRG2, CLC and SIGLEC8 were skipped because they are not in the object.
+  In run 44518609 the restored panel still carried SIGLEC5 as its
+  raw Ensembl ID string (ENSSSCG00000003236); renames run before plotting,
+  so the lookup missed it and the first figure rendered without SIGLEC5.
+  The panel was corrected to the gene-name string with the ID in the comment, and
+  features_Eosinophils.png was regenerated in place from the same object
+  state. Cluster 22 remains panel-less by decision.)
+
+Feature naming (R/clusters/markers.R and the marker stage)
+--------------------------------------------------------
+- marker_feature_renames in R/clusters/markers.R translates 19 ID-only
+  features to gene names on the loaded object, applied in R/clusters/
+  find_markers.R BEFORE FindAllMarkers (same collision-checked mechanism
+  the pipeline used to make MKI67 a symbol). The marker tables and the
+  feature panels therefore share gene names; the Ensembl ID stays in the
+  panel comment as provenance.
+- Verified against the raw BD feature list: none of the 19 target symbols
+  already exists as a feature, so renames cannot collide; IDs absent from
+  the object (e.g. MAL) are reported as no-ops.
+- Review flags come from results/misc/Ensembl_ID/gene-mapping
+  (symbol_review_required). Only CD1.1 (ENSSSCG00000025644) and IGLL1
+  (ENSSSCG00000010077) are review-flagged, so only they carry the literal
+  "(review)" suffix in feature names. CD163L1 and FCRL5 are NOT review-
+  flagged (earlier notes here and in the SCRATCHPAD map that marked them
+  for review were wrong and have been corrected).
+- MKI67 is the renamed object feature from the pipeline's cell-cycle step
+  (ENSSSCG00000026302 -> MKI67); the symbol is the correct feature name.
+- MARCO was inspected in the original panels: present in the object but
+  not returned after marker prefiltering at res 0.7. Removed from the
+  current macrophage panels after the all-cluster review below.
+
+Marker-to-publication provenance for every panel entry is recorded in
+results/literature_review/SCRATCHPAD.md, section
+"Marker -> publication map (job-44493014, res 0.7)".
+
+Current panel review, 2026-10-13
+---------------------------------
+Owner requested stronger distinguishing markers, CD3D/CD3E retained in T
+panels, CD8/IL7R where supported, and no CD4 in T panels. All 370 original
+entries reviewed against job-44493014 RNA data, all 24 clusters, with an
+oracle follow-up on the measured matrix. This is qualitative panel pruning,
+not a new significance or expression threshold: 246 entries remain in the
+same 23 identity panels plus the unchanged Cycling_state process panel.
+All 233 remaining unique genes are present in the object (including mapped
+features). No cells, assay features, cluster labels or rename mappings changed.
+
+Evidence: .amp/in/marker-panel-review/gene_cluster_metrics.csv and .INFO;
+original job log logs/marker-panel-review-44529285.log. Metrics record
+n_available separately from n_cells: sample-layer-absent features are not
+biological zeros. Detection and mean expression use available cells only.
+MPO is unavailable in most samples; its removal is not a claim of absent
+neutrophil expression. The five globally absent names below are absent as
+object features, not a claim about pig biology.
+
+Existing significant one-versus-rest results (FDR < 0.05) were checked.
+Three retained target-panel entries are not in that filtered table:
+GZMH in T_CD8_cytotoxic, CD3E in NK_like, CA4 in Endothelial_venous.
+They are measured program/comparison signals, not newly significant markers.
+GZMH/CA4 target detection is below the existing min.pct=0.25 prefilter;
+CD3E is retained to show the unresolved NK/T contribution, not hide it.
+
+Removed entries and reasons (no data features were removed):
+  Monocytes_inflammatory: CD14/CSF1R/F13A1/MAFB/SIRPA shared myeloid
+    context; EREG higher in AT1; C5AR1 higher in neutrophils;
+    S100A8/S100A9/S100A12 shared with or stronger in cluster 3.
+  Macrophages_AM_like: S100A8/S100A9 shared myeloid expression;
+    CD163/MRC1/CD68/C1QA shared with cluster 13; MARCO weak in target;
+    ARG1/CCR1 shared state signals rather than distinguishing anchors.
+  Macrophages_C1Q_high: CD68/CD163/MRC1 shared macrophage context;
+    MARCO weak in target; TREM2 sparse; DNASE1L3 stronger in cDC1;
+    PLA2G2D sparse and shared, not a strong anchor for this panel.
+  cDC1: BATF3/CADM1/IRF8/ID2/WDFY4/RAB7B/ANPEP/NOTCH4 stronger
+    elsewhere; HLA-DRA shared antigen-presenting-cell context.
+  pDC: IRF7 shared inflammatory expression; LAMP3 stronger in AT2;
+    CD93 stronger in endothelium; IRF4/FLT3 shared comparison signals.
+  Neutrophils: ALOX5AP/LCN2/S100A8 stronger elsewhere; CXCL2 shared
+    inflammatory signal; MPO poorly available and sparse; ELANE/PRTN3
+    globally absent as object features.
+  Eosinophils: IL5RA sparse; SIGLEC5 stronger in neutrophils/mixed;
+    IL2RA shared activation; PRG2/CLC/SIGLEC8 globally absent as features.
+  T_CD4_naive_CM: CD4 owner exclusion (stronger in pDC); CCR7/SELL/CD27/CD6
+    shared or stronger elsewhere, not useful subset-specific anchors.
+  T_CD8_cytotoxic: CD8B stronger in pDC; CXCR6/CCR5/GZMK/CRTAM/CD2/CD5/CD6
+    shared lymphoid context; ZNF683 sparse and NK-higher; CD69/CD52 broad.
+  T_gd_like: IL18R1/KCTD12/CD27 shared programs; CD2/CD5/CD6 weak or
+    non-distinguishing; CD4 owner exclusion; CD8A/CD8B weak in target;
+    IL1RL1/PTGDR2 weak alternative-program probes.
+  NK_like: KLRF1 sparse; FCGR3A stronger in myeloid cells; CD2 shared;
+    CD5 low, previously a negative comparison rather than positive anchor.
+  B_cells: BLK stronger in cluster 5; TCF3/CD37/EBF1 broadly shared.
+  ASC: DERL3/IGLL1 (review) shared with pDC; SDC1 stronger in epithelium.
+  Endothelial_arterial: VWF/ESAM shared endothelial context; BMX tuft-higher.
+  Endothelial_venous: CLDN5/ESAM/PTPRB/KDR/FMO1/AQP1 shared endothelial
+    expression; EGFL7 weak; SELE arterial-higher; CXCL9/CXCL10 shared
+    inflammatory state; EDNRB/PRX not convincing venous anchors.
+  Fibroblasts: SDC2/CD9 stronger elsewhere; COL15A1 weak and non-distinguishing.
+  Smooth_muscle: PDGFRB fibroblast-higher; RGS5 sparse in target.
+  Secretory_epithelium: EPCAM/MUC1 shared epithelial context;
+    SCNN1B weak/shared with AT1; CBR2/SULT1E1 shared with ciliated cells;
+    SFTPB/SFTPD/NAPSA/AQP5 stronger in the alveolar panels.
+  Tuft: GNAT3 weak in target and stronger in pDC.
+  AT2: AQP5/S100A2 stronger in AT1/secretory cells.
+  AT1: WT1 not detected in available target cells.
+  Lymphatic_EC/Ciliated/Cycling_state: all original entries retained.
+
+Retained overlap must remain visible and qualified:
+- CD3D/CD3E retained in all T panels AND NK_like; cluster 2 remains NK-like
+  with unresolved T-lineage contribution, not a newly established pure NK label.
+- Cytotoxic genes distinguish the shared cytotoxic program, not T from NK.
+  CD8A retained for cluster 1, IL7R for cluster 4. CD4/CD8B retained only
+  in pDC because their measured target expression supports that panel.
+- TCF7 shared by clusters 4/5; CD247 is T-lineage context. SPIB has tuft
+  overlap; RUNX2 is shared with other immune populations. No single-gene
+  exclusivity claim is made.
+- MS4A2 is an observed cDC1-associated signal shared with eosinophils,
+  not a mast-cell identity claim. ALOX5 has tuft overlap; KIT has eosinophil
+  overlap. They are interpreted only with each panel's other markers.
+- PECAM1/VWF provide endothelial context, not arterial/venous separation.
+  CA4 remains a positive capillary-overlap observation in cluster 11,
+  not a venous identity anchor. The venous/capillary qualification remains.
+- HOPX retained: 96.9% detection and mean normalized expression 40.40
+  in cluster 24 versus next-highest mean 6.34; broad detection elsewhere
+  does not erase this strong expression contrast. PDPN is also expressed
+  in lymphatic cells/fibroblasts. UPK3B is measured associated expression,
+  not proof of mesothelial identity. LAMP3 has pDC overlap in the AT2 panel.
+- Shared stromal/secretory programs are not evidence of a transition.
+  tDC contribution in cluster 14 and macrophage AM/IM labels remain qualified.
+
+Display: plot_marker_features() now uses viridis (purple-low, yellow-high),
+bg_cutoff=-Inf, lower_cutoff=0, upper_quantile=1, RNA LogNormalize data
+on umap_harmony. No masking or upper quantile cap. EPX is positive in
+less than 1% of all cells, so the default all-cell 99th percentile would
+be zero after unmasking. Full maxima can leave typical sparse expression
+faint; changing the palette does not diagnose or correct clustering.
+The plotting join retains the existing workflow's structural-zero fill
+for unavailable sample features; purple does not prove observed absence.
+
+This file and R/clusters/markers.R describe the NEXT rendering. Existing
+production PNGs still come from marker run 44518609 (Eosinophils refreshed
+by 44523143); they have not been regenerated with the pruned viridis panels.
+The three-gene viridis preview is separate under .amp/in/artifacts/marker-panel-review/.
