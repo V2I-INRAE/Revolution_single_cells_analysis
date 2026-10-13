@@ -19,4 +19,4 @@ module purge
 module load compilers/gcc/12.2.0
 module load statistics/R/4.6.1
 export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1
-Rscript R/utils/find_markers.R "$1" "$2"
+Rscript R/clusters/find_markers.R "$1" "$2"

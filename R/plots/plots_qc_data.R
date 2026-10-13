@@ -150,8 +150,8 @@ plot_qc_umaps <- function(seurat_obj, plot_dir) {
   )
 
   specs <- list(
-    scrublet = list(
-      title = "Scrublet", negative = "Singlet",
+    scdblfinder = list(
+      title = "scDblFinder", negative = "Singlet",
       positive = "Doublet", flag = metadata$predicted_doublets, colour = "#C44E52"
     ),
     outliers = list(

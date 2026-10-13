@@ -27,13 +27,12 @@ module purge
 module load compilers/gcc/12.2.0
 module load statistics/R/4.6.1
 
-# Scrublet (Python) runs in the QC stage and needs the allocated cores.
-source .venv-scrublet/bin/activate || exit 1
-export RETICULATE_PYTHON="$VIRTUAL_ENV/bin/python"
-# Thread policy: OMP uses the allocated cores for Scrublet; the R math
-# libraries are pinned to one thread for numerically stable, reproducible
-# results.
-export OMP_NUM_THREADS="$SLURM_CPUS_PER_TASK"
+# Doublet detection is scDblFinder (Bioconductor, R-native): the QC stage no
+# longer needs a Python environment or reticulate.
+# Thread policy: everything is pinned to one thread. scDblFinder's xgboost
+# step respects OMP, so one thread keeps the run deterministic and
+# reproducible.
+export OMP_NUM_THREADS=1
 export OPENBLAS_NUM_THREADS=1
 export MKL_NUM_THREADS=1
 

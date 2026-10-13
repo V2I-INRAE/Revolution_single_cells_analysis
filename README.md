@@ -1,19 +1,19 @@
 # REVOLUTION
 
 Single-cell RNA-seq analysis of paired lung lobes (BD Rhapsody, 23 pig samples).
-One pipeline run goes from raw counts to a clustered Seurat object: QC,
-normalization, integration and clustering in a single session, configured by
-`R/config.R` and tracked in per-run `.INFO` records.
+One pipeline run goes from raw counts to a clustered Seurat object: QC (including
+scDblFinder doublet detection), normalization, integration and clustering in a
+single session, configured by `R/config.R` and tracked in per-run `.INFO`
+records.
 
 ## Setup
 
 ```bash
 renv::restore()
-
-# Python environments (Scrublet only; scVI optional)
-uv venv --python 3.11.16 .venv-scrublet
-uv pip sync --python .venv-scrublet/bin/python requirements-scrublet.txt
 ```
+
+Dependencies, including scDblFinder (Bioconductor) for doublet detection, are
+locked in `renv.lock`; the pipeline needs no Python environment.
 
 ## Usage
 

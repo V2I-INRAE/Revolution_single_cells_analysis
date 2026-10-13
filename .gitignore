@@ -64,6 +64,7 @@ logs/
 # analysis outputs (Seurat RDS and derived files)
 output/
 results/*
+!results/job*
 
 # env
 renv/

@@ -10,7 +10,7 @@ suppressPackageStartupMessages({
 source("R/config.R")
 source("R/io.R")
 source("R/filter.R")
-source("R/scrublet.R")
+source("R/scdblfinder.R")
 source("R/reduce.R")
 source("R/lognorm.R")
 source("R/cell_cycle.R")
@@ -85,7 +85,14 @@ qc <- run_stage("QC", local({
     coordinates <- compute_diagnostic_umap(reduced_obj, config$qc$doublets)
     obj <- AddMetaData(obj, coordinates[colnames(obj), , drop = FALSE])
 
-    obj <- detect_scrublet_doublets(obj, config$qc$doublets)
+    doublets <- config$qc$doublets$scdblfinder
+    obj <- detect_scdblfinder_doublets(
+      obj,
+      dbr = resolve_scdblfinder_dbr(ncol(obj), config$qc$doublets),
+      dbr_sd = doublets$dbr_sd,
+      clusters = doublets$clusters,
+      seed = doublets$seed
+    )
     labeled_objs[[sample]] <- label_retained_cells(obj)
     rm(obj, reduced_obj, coordinates)
     gc()
@@ -117,7 +124,7 @@ qc <- run_stage("QC", local({
     obj = clean,
     lines = c(
       paste0(n_input, " input cells; ", n_qc_pass, " QC-passing; ",
-        ncol(clean), " Scrublet-clean (", sprintf("%.2f%%", 100 * ncol(clean) / n_input), ")"),
+        ncol(clean), " scDblFinder-clean (", sprintf("%.2f%%", 100 * ncol(clean) / n_input), ")"),
       paste0(nrow(clean), " genes after the per-feature minimum; ",
         length(clean@misc$qc$removed_genes), " listed genes removed; ",
         length(config$run$samples), " samples"),

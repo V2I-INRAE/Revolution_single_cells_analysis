@@ -30,6 +30,7 @@ pkgs <- list(
     SingleR = "SingleR",
     celldex = "celldex",
     SingleCellExperiment = "SingleCellExperiment",
+    scDblFinder = "scDblFinder",
     muscat = "muscat",
     DESeq2 = "DESeq2",
     ComplexHeatmap = "ComplexHeatmap"

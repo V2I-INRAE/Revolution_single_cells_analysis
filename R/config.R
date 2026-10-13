@@ -3,7 +3,7 @@
 # scripts/sbatch_pipeline.sh, and the resolved values are recorded in .INFO.
 
 # Feature panels for the marker stage live in their own file.
-source("R/markers.R")
+source("R/clusters/markers.R")
 
 config <- list(
   run = list(
@@ -81,14 +81,22 @@ config <- list(
       n_variable_features = 2000,
       pcs = 1:20,
       seed = 1234,
-      # Scrublet calls on all input cells, before any filtering.
-      # seed 0 is recorded for provenance only: the pinned scrubletR wrapper
-      # fixes the Python random_state to 0 and exposes no seed argument.
-      scrublet = list(
-        min_counts = 3L,
-        n_prin_comps = 30L,
-        threshold = 0.15,
-        seed = 0L
+      # Doublet detection with scDblFinder on each sample's counts, all cells,
+      # before any filtering. Parameter values below are PROPOSED and await
+      # owner approval; alternatives are listed in the run record:
+      # - dbr: "bd_table" derives the per-sample rate from the BD table above
+      #   (the derivation used in the Scrublet era); numeric = fixed fraction;
+      #   NULL = the package's 10X rate prior.
+      # - dbr_sd = 1 removes the rate-deviation penalty in thresholding.
+      # - clusters = FALSE classifies without internal clustering (this stage
+      #   has no cluster structure yet); TRUE would cluster internally.
+      # Scores are scDblFinder's, not Scrublet's: calls come from
+      # scDblFinder.class, never the old Scrublet score threshold.
+      scdblfinder = list(
+        dbr = "bd_table",
+        dbr_sd = 1,
+        clusters = FALSE,
+        seed = 1234L
       )
     )
   ),
@@ -169,7 +177,7 @@ config <- list(
     n_iter = 10
   ),
 
-  # Marker discovery and plotting share R/utils/find_markers.R. The input
+  # Marker discovery and plotting share R/clusters/find_markers.R. The input
   # object and resolution arrive as launcher arguments; results go to
   # results/<job>/clusters_plots/markers/<resolution>/.
   markers = list(
@@ -180,9 +188,12 @@ config <- list(
     min_pct = 0.25,
     logfc_threshold = 0.25,
     adjusted_p_cutoff = 0.05,
-    # Panels defined in R/markers.R (sourced above); visualization panels,
-    # not cluster annotations.
-    feature_panels = marker_feature_panels
+    # Panels and ID-only feature translations defined in R/clusters/markers.R
+    # (sourced above); visualization panels, not cluster annotations.
+    feature_panels = marker_feature_panels,
+    # Applied to the loaded object BEFORE FindAllMarkers so tables and
+    # figures share gene names; collision-checked via rename_cc_features().
+    feature_renames = marker_feature_renames
   )
 )
 
@@ -233,7 +244,31 @@ validate_config <- function(config) {
         config$cell_cycle$tail_cutoffs$cut_G2M) > 0),
     "cell_cycle$rename_map must have unique sources and targets" =
       !anyDuplicated(c(names(config$cell_cycle$rename_map),
-        unname(config$cell_cycle$rename_map)))
+        unname(config$cell_cycle$rename_map))),
+    "qc$doublets$scdblfinder$dbr must be \"bd_table\", NULL, or one fraction in [0, 1]" =
+      identical(config$qc$doublets$scdblfinder$dbr, "bd_table") ||
+        is.null(config$qc$doublets$scdblfinder$dbr) ||
+        (is.numeric(config$qc$doublets$scdblfinder$dbr) &&
+          length(config$qc$doublets$scdblfinder$dbr) == 1L &&
+          is.finite(config$qc$doublets$scdblfinder$dbr) &&
+          config$qc$doublets$scdblfinder$dbr >= 0 &&
+          config$qc$doublets$scdblfinder$dbr <= 1),
+    "qc$doublets$scdblfinder$dbr_sd must be NULL or one absolute rate tolerance in [0, 1]" =
+      is.null(config$qc$doublets$scdblfinder$dbr_sd) ||
+        (is.numeric(config$qc$doublets$scdblfinder$dbr_sd) &&
+          length(config$qc$doublets$scdblfinder$dbr_sd) == 1L &&
+          is.finite(config$qc$doublets$scdblfinder$dbr_sd) &&
+          config$qc$doublets$scdblfinder$dbr_sd >= 0 &&
+          config$qc$doublets$scdblfinder$dbr_sd <= 1),
+    "qc$doublets$scdblfinder$clusters must be TRUE or FALSE" =
+      isTRUE(config$qc$doublets$scdblfinder$clusters) ||
+        isFALSE(config$qc$doublets$scdblfinder$clusters),
+    "qc$doublets$scdblfinder$seed must be one nonnegative integer" =
+      is.numeric(config$qc$doublets$scdblfinder$seed) &&
+        length(config$qc$doublets$scdblfinder$seed) == 1L &&
+        is.finite(config$qc$doublets$scdblfinder$seed) &&
+        config$qc$doublets$scdblfinder$seed >= 0 &&
+        config$qc$doublets$scdblfinder$seed %% 1 == 0
   )
   invisible(TRUE)
 }

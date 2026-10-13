@@ -107,14 +107,14 @@ label_qc_outliers <- function(seurat_obj, filtering_config) {
 
 label_retained_cells <- function(seurat_obj) {
   seurat_obj$keep_qc <- !seurat_obj$qc_outlier
-  seurat_obj$keep_scrublet <- seurat_obj$keep_qc & !seurat_obj$predicted_doublets
+  seurat_obj$keep_doublet_clean <- seurat_obj$keep_qc & !seurat_obj$predicted_doublets
   return(seurat_obj)
 }
 
-# Subset to Scrublet-clean cells and reapply the per-feature minimum, keeping
+# Subset to doublet-clean cells and reapply the per-feature minimum, keeping
 # per-sample count layers and the original (unrecomputed) metadata values.
 filter_labeled_cells <- function(seurat_obj, qc_config) {
-  clean <- subset(seurat_obj, subset = keep_scrublet)
+  clean <- subset(seurat_obj, subset = keep_doublet_clean)
 
   min_cells <- qc_config$filtering$min_cells_per_feature
   samples <- seurat_obj@misc$qc$sample_order
@@ -129,9 +129,9 @@ filter_labeled_cells <- function(seurat_obj, qc_config) {
     meta <- metadata[colnames(obj), , drop = FALSE]
     obj <- AddMetaData(obj, meta)
     obj$keep_cell <- TRUE
-    obj$doublet_filter_method <- "Scrublet"
+    obj$doublet_filter_method <- "scDblFinder"
 
-    message(sample, " / Scrublet: ", ncol(obj), " cells; ", nrow(obj), " genes")
+    message(sample, " / doublet-clean: ", ncol(obj), " cells; ", nrow(obj), " genes")
     objects[[sample]] <- obj
   }
   clean <- merge(objects[[1]], y = objects[-1], merge.data = FALSE)

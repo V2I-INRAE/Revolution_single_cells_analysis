@@ -7,7 +7,7 @@ suppressPackageStartupMessages({
 
 # --- QC diagnostics -----------------------------------------------------------
 
-# Temporary per-sample PCA used only for QC visualization and Scrublet;
+# Temporary per-sample PCA used only for QC visualization and doublet detection;
 # never alters the saved counts.
 preprocess_qc_umap <- function(seurat_obj, params) {
   set.seed(params$seed)
