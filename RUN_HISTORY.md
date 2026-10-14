@@ -1,325 +1,97 @@
 # Pipeline run history
 
-Compact index of recorded runs through **Oct 9, 2026**; times are CEST.
-This index was condensed without refreshing scheduler states or rerunning analyses.
-**Completed ≠ biologically accepted.** Nonterminal states below are last recorded observations.
+Single-entry pipeline: `sbatch scripts/sbatch_pipeline.sh` runs `main.R`
+(QC -> normalization -> integration -> clustering in one session), configured
+entirely by `R/config.R`. Each run produces `data/job-<id>/.INFO` +
+`clustered.rds` and `results/job-<id>/.INFO` + `qc_plots/`, `norm_plots/`,
+`integration_plots/`, `clusters_plots/`.
 
-## Run lineage
+History reset Oct 10, 2026 after the single-entry refactor. The four-stage
+pipeline history (through Oct 10, 2026) is preserved in this file's git
+history; legacy run folders and logs were removed by request.
 
-Selected branches; tables give other parents, comparisons and retries. Arrows mean data input, not chronological succession.
+## Runs
+
+| Job / date | Config / route | Execution | Outcome and checks | Record |
+|---|---|---|---|---|
+| 44542432 / Oct 13 | Clustered_DotPlot recheck; parent 44542397, same job-44493014 res 0.7 input and saved significant markers 44518609 | COMPLETED computationally, 3 min 13 s; preview rejected, renderer reverted by owner | 256550 cells, 24 clusters, 60 genes; expression error 2.8e-14; detection-ranked full marker pool differed from reference candidates; original DotPlot restored, no further tests or production writes | [INFO](.amp/in/clustered-dotplot-test/.INFO) |
+| 44542397 / Oct 13 | Clustered_DotPlot replacement; parent job-44493014 res 0.7 and saved significant markers 44518609, approved detection-ranked top five | FAILED at overlay viewport lookup, 3 min 04 s | Heatmap rendered for 256550 cells, 60 distinct genes and 24 clusters; seekViewport root lookup corrected to upViewport(0); no marker discovery or production writes | [INFO](.amp/in/clustered-dotplot-test/.INFO) |
+| Marker-ranking change / Oct 13 | Owner-approved detection ranking; parent job-44493014 res 0.7 markers 44518609 and top25-plus-lineage CSV; actual arrange call checked on saved tables only | REVERTED by owner after original CSV-only validation | Original avg_log2FC-first arrange restored; detection ranking matched reference order but changed top-five selection over the full significant pool; no further tests or output regeneration | [INFO](.amp/in/marker-ranking.INFO) |
+| 44541122 / Oct 13 | Owner-authorized dependency install; parent scDblFinder adapter investigation and existing R 4.6.1/Bioc 3.23 renv.lock; missing scDblFinder dependencies only | COMPLETED and independently validated, 5 min 17 s | scDblFinder 1.26.7 plus six dependencies installed; clean-R load/API checks pass with pipeline GCC/R modules; exactly seven lockfile additions, all old records/installed versions unchanged; bare-system C++ runtime failure resolved by existing module setup; no detector calls or production switch | [INFO](.amp/in/scdblfinder-install.INFO) |
+| scDblFinder adapter / Oct 13 | Documentation/source investigation and oracle brainstorm/review; parent SoupX job-44409807 REVO26-P10 corrected_counts.rds; separate R/scdblfinder.R, not wired into main.R | DRAFT; bridge checks passed, detector pilot pending | 28032 genes/11899 cells, counts/IDs unchanged through SCE conversion; barcode-matched measured metadata and 128-cell temporary RDS reopen passed; initial dimension-type assertion corrected; dependencies now available from 44541122, rate/capture/clustering choices awaiting owner approval; production remains Scrublet | [INFO](.amp/in/scdblfinder-validation.INFO) |
+| 44540672 / Oct 13 | Per-gene export recheck; parent job-44493014/clustered.rds and failed preview check 44540465; same plotting code, documented large-SVG preview flag | FAILED at optional SVG preview conversion, 4 min 12 s; export checks passed | Ten files passed all-cell RNA/UMAP/settings and filename checks; source unchanged, lists/renames preserved; CairoSVG rendered FCN1; owner takes further visual review, no third job or marker discovery | [INFO](.amp/in/per-gene-feature-test/.INFO) |
+| 44540465 / Oct 13 | Per-gene PNG/SVG export test; parent data/job-44493014/clustered.rds, RNA LogNormalize and umap_harmony res 0.7; four distinct genes in three configured panels | FAILED at SVG preview conversion, 3 min 29 s | Ten exports passed exact all-cell RNA/UMAP/settings checks, missing-gene skip and nested SVG guard; default preview parser rejected 26.65 MB SVG; documented large-file flag prepared; no marker discovery or production output writes | [INFO](.amp/in/per-gene-feature-test/.INFO) |
+| only.pos review / Oct 13 | Methodological discussion; parent job-44493014 tables 44518609 and metrics 44529285; installed Seurat 5.5.1, official docs and oracle | COMPLETED, read-only review | FALSE adds negative-FC rows, not identities; fixed-gene Bonferroni preserves positive statistics; global min.pct excludes useful myeloid contrasts; targeted c3-vs-c9 would be more informative; no code change or DE rerun | [INFO](.amp/in/only-pos-review.INFO) |
+| Cluster 3 panel exception / Oct 13 | Owner-approved FCN1/GPNMB/SIGLEC1 swap; parent marker assessment, job-44493014 res 0.7 tables 44518609 and current ten-marker panels | COMPLETED, R/static validation | Exact ten-gene list; other 23 panels and 39 renames unchanged; 24x10 unique entries with existing adjusted p < 0.05; only two approved ranking exceptions; no object load or plot regeneration | [INFO](results/literature_review/pig_lung_monocyte_derived_macrophage_markers/.INFO) |
+| 44542661 / Oct 13 | Per-subset highlight SVG rerun, light files; raster.dpi 300, pt.size 0.1 per owner | COMPLETED, ~2 min | 8 SVGs 67–138 KB in clusters_plots/subset; LYM + Mixed inspected, fine points + grey confirmed; input unchanged | [INFO](data/job-44493014/annotated_clustered.INFO) |
+| 44541573 / Oct 13 | Per-subset highlight SVG rerun; owner-diagnosed rasterization (raster path ignores pt.size, prior runs byte-identical); raster=FALSE, pt.size 0.2 | SUPERSEDED by 44542661 (26 MB files crash owner laptop) | 8 SVGs ~26 MB in clusters_plots/subset; LYM + Mixed inspected, fine points + grey confirmed; input unchanged | [INFO](data/job-44493014/annotated_clustered.INFO) |
+| 44541263 / Oct 13 | Per-subset highlight SVGs (scCustomize); parent annotated_clustered.rds read-only; R/clusters/identify_coarse_subsets.R via scripts/sbatch_coarse_subsets.sh; pt.size 1, first-N viz_palette colors, grey background | SUPERSEDED by 44541573, byte-identical to 44541130 (pt.size ignored under auto-raster) | 8 SVGs in clusters_plots/subset; LYM + Mixed inspected, small points and grey confirmed; input unchanged | [INFO](data/job-44493014/annotated_clustered.INFO) |
+| 44540211 / Oct 13 | Faceted UMAP res 0.7 by subset (SVG); parent data/job-44493014/annotated_clustered.rds read-only; scplotter group_by = facet_by = subset, highlight size 1.5 stroke 1, others grey | COMPLETED, ~2.5 min | 8 panels with counts in strips, inspected via PNG preview; single-panel SVG retained; input mtime/size unchanged | [INFO](data/job-44493014/annotated_clustered.INFO) |
+| 44534114 / Oct 13 | Broad-subset annotation; parent data/job-44493014/clustered.rds, harmony_snn_res.0.7; owner-approved 8 subsets via R/clusters/annotate.R; new object annotated_clustered.rds, input never written | COMPLETED and validated, 24 min 12 s | 256550 cells; LYM 138659, MNP 45693, GRA 23532, DCs 8412, Endothelial 15389, Epithelial 11315, Stromal 12401, Mixed 1149; reopened output verified, input mtime/size unchanged | [INFO](data/job-44493014/annotated_clustered.INFO) |
+| 44534010 / Oct 13 | Group-composition figures; parent data/job-44493014/clustered.rds, harmony_snn_res.0.7; condition/pressure/time stacked bars; first render 44533898 had clipped captions | COMPLETED and validated, 1 min 55 s | 256550 cells, 24 clusters, 23 samples; three PNGs in clusters_plots/distribution; captions fixed by wrapping; condition figure inspected, all levels and 0-100% bars confirmed; production object untouched | [INFO](results/job-44493014/clusters_plots/distribution/.INFO) |
+| Macrophage marker assessment / Oct 13 | Read-only cluster 3 review; parent job-44493014 res 0.7, marker tables 44518609, metrics 44529285 and existing pig literature digest | COMPLETED, table/abstract assessment | SIGLEC1/GPNMB/FCN1 candidates; CLEC12B differentiation evidence is human, pig protein comparison differs; origin unresolved; no object reload, panel edits or new plots | [INFO](results/literature_review/pig_lung_monocyte_derived_macrophage_markers/.INFO) |
+| LYVE1 exception recheck / Oct 13 | Current panels; parent ten-marker validation 44533273 and unchanged top25-plus-lineage CSV; owner-approved LYVE1-for-SCG3 swap in c12 | COMPLETED, local read-only check | Exactly one approved exception; other 23 panels match rankings, all 24 retain ten unique significant genes; existing same-object metrics confirm native LYVE1; no new object load/render or production write | [INFO](.amp/in/markers-ten-per-cluster/.INFO) |
+| 44533273 / Oct 13 | Ten-marker panel validation; parent data/job-44493014/clustered.rds; markers_top25_plus_lineage_by_pct.csv, first5 pct + five distinct highest-FC; 24 clusters | COMPLETED and validated, 4 min 15 s | 24x10 exact selections, 20 added translations verified, all 232 unique genes present without collisions; RNA values/256550 cell IDs/metadata/UMAP unchanged; three saved ten-gene previews inspected; no production writes | [INFO](.amp/in/markers-ten-per-cluster/.INFO) |
+| 44531969 / Oct 13 | Stroke-free point preview; parent data/job-44493014/clustered.rds; same CD3E/CD19/JCHAIN, pt.size 0.1, stroke.size 0, raster FALSE | COMPLETED and validated, 3 min 59 s | All 256550 cells and exact RNA values retained per panel; point size/stroke and colour checks pass; saved PNG inspected, grey neighbours and sparse expression visible without oversized dots; production outputs untouched | [INFO](.amp/in/sccustomize-feature-check/.INFO) |
+| 44531759 / Oct 13 | Point-size correction preview; parent data/job-44493014/clustered.rds; same CD3E/CD19/JCHAIN as 44531632, pt.size 0.1 instead of auto 1 | COMPLETED, 3 min 32 s; visual review not accepted | Expression/all-cell/size checks pass; inspected image still coarse due to default stroke on ordered raster path; superseded by stroke-free rendering; production outputs untouched | [INFO](.amp/in/sccustomize-feature-check/.INFO) |
+| 44531632 / Oct 13 | scCustomize feature-panel validation; parent data/job-44493014/clustered.rds; CD3E/CD19/JCHAIN, saved umap_harmony, RNA LogNormalize | COMPLETED, 3 min 10 s; default point size rejected by user | All-cell/expression/colour checks pass; oversized coloured dots obscure grey neighbours; superseded by correction 44531969; production outputs untouched | [INFO](.amp/in/sccustomize-feature-check/.INFO) |
+| 44529458 / Oct 13 | Viridis preview validation; parent data/job-44493014/clustered.rds; panel metrics 44529285 | COMPLETED and validated, 2 min 52 s | Each CD3E/EPX/ACKR1 expression layer contains all 256550 cells and matches RNA values; zero purple/max yellow, full ranges, caption/render inspected; 246 entries/233 genes, no missing retained features; EPX faintness recorded; production object/tables/PNGs unchanged | [INFO](.amp/in/marker-panel-review/.INFO) |
+| 44529437 / Oct 13 | Viridis preview recheck; parent data/job-44493014/clustered.rds; follow-up to panel metrics 44529285 | FAILED, 2 min 47 s | Validation double-counted fixed-background and expression raster layers; corrected to inspect expression-mapped layer in 44529458; no metrics overwrite or production-object write-back | [INFO](.amp/in/marker-panel-review/.INFO) |
+| 44529285 / Oct 13 | Marker-panel review and viridis preview; parent data/job-44493014/clustered.rds, harmony_snn_res.0.7; all original panel genes across all clusters | FAILED, 2 min 47 s; metrics validated | 7584 rows reopened for 316 present genes across 24 clusters, availability denominators checked; stopped after render at incorrect first-layer point-count assertion; preview recheck 44529437 | [INFO](.amp/in/marker-panel-review/.INFO) |
+| 44528670 / Oct 13 | Read-only CD3E/lineage diagnostic; parent data/job-44493014/clustered.rds, harmony_snn_res.0.7; mapped gene IDs, layer availability and stored Harmony NN graph | COMPLETED and validated, 2 min 01 s | 256550 cells/23 samples; outside 1/2/4/5/22, CD3E 3.46% and CD3E+CD3D with CD5/6 0.62%; targeted flags in c17, mixed c22 and unresolved NK/T c2; oracle-reviewed scope, graph direction/layers/barcodes/table reopen passed; no reassignment or object write-back | [INFO](.amp/in/cd3e-check/.INFO) |
+| 44528596 / Oct 13 | Read-only CD3E/lineage diagnostic; parent data/job-44493014/clustered.rds, harmony_snn_res.0.7 | FAILED, 1 min 50 s | Stopped at first-layer feature safeguard: per-sample retained feature sets differ; no summary outputs; production object untouched | [log](logs/cd3e-check-44528596.log) |
+| annotate-utility-validation / Oct 13 | R/utils/annotate.R; real REVO26-P10 SoupX counts from 44409807 joined by barcode to job-44493014 cluster assignments; three cells per cluster; owner-approved broad subsets | COMPLETED, local utility check | PASS: 72 cells, all 24 clusters; explicit harmony_snn_res.0.7 and active-identity modes; aligned labels; counts/cluster metadata unchanged; unmapped warning/fallback and missing-column error; temporary RDS reopened identically. Production object untouched | [INFO](.amp/in/annotate-validation.INFO) |
+| 44508048 / Oct 12 | First full production run from the committed refactor at bf78551 (cell-cycle tail removal, shared UMAP settings, adaptive QC, dims 1–30): 23 samples; soupx (corrected counts reused from job-44409807); harmony, dims 1–30, max_iter 10; UMAP min.dist 0.3, n.neighbors 30, seed 1234 applied to both the PCA baseline 'umap' and 'umap_harmony'; adaptive QC (feature cap 5000 = median+4 MAD, mito cap 20% = median+4 MAD, max_hb_percent 0.5, ribo floor 0%, complexity >0.8); S/G2M scored once on the full population (ctrl 43, seed 1234) with per-sample cutoffs; cc_tail cells removed before HVG selection; regression percent.mt, nFeature_RNA + S.Score, G2M.Score; k_param 100; 3,000 consensus HVGs, 50 PCs; Leiden 0.1–0.7 | COMPLETED, 2 h 23 min 31 s | 299,393 input -> 271,228 QC-passing (90.6%) -> 265,763 Scrublet-clean (88.77%); 21,463 genes (14 removed); 3,000 HVGs; 50 PCs; Harmony converged after 6 iterations. Cell-cycle: 9,213 tail cells removed (3.47%), 256,550 retained = clean − removed. Leiden 15/17/19/20/22/24/24 at 0.1–0.7. Both .INFO copies Status: completed; Code line "git bf78551d3edc983c95648ad15d71696de0ca9996; R 4.6.1; Seurat 5.5.1; harmony 2.0.5" matches HEAD. Read-only reopen of clustered.rds: 256,550 cells; cc_tail all FALSE; cc_tail_class all "none"; 23 sample levels; all 7 harmony_snn_res columns with matching level counts; both reductions present ('umap', 'umap_harmony'), each 2D, all-finite, row names identical to the object's cells in order; misc$cell_cycle$removal matches .INFO. Outputs: 8 QC + 31 norm + 6 integration + 3 clusters present. Figures inspected: cc_tail_removal (per-sample removed counts sum to 9,213), QC mitochondrial panel, umap_sample (Unintegrated | Harmony), per-sample facet figures for both reductions (23 facets each), umap_resolutions (7 panels incl. 0.7), clustree (0.1–0.7, node counts matching). clustered.rds 8.97 GB | [INFO](data/job-44508048/.INFO) |
+| 44545284 / Oct 13–14 | Markers rerun, parent job-44493014 (data/job-44493014/clustered.rds, harmony_snn_res.0.7) via R/clusters/find_markers.R on local branch experiment-refactor-pipeline: same discovery settings as 44542580; feature panels saved as PNG + PDF instead of PNG + SVG (R/plots/markers_plots.R one-line change; dotplot stays PNG-only); 262 prior SVGs deleted, 263 PNGs + 8 CSVs + identity md staged outside the dir to clear the recursive guard | COMPLETED, 1 h 24 min 11 s (longer than ~50 min PNG/SVG runs — PDF vector rendering of 256,550 cells per panel) | Renames 39/39; 31,372 significant markers and 256,550 cells over 24 clusters, identical to prior runs; 7 fresh CSVs + dotplot_top5 + 24 identity folders (263 PNG + 262 PDF, zero SVG); extended panels match (monocytes 15, AM-like 13, C1Q-high 18, cDC1 13, pDC 13 PNG+PDF each); spot-checked PDFs valid PDF 1.4 (~13 MB, full vector cell layers). No skip warnings; no errors. markers_top25_plus_lineage_by_pct.csv (not regenerated by the entry point) and cluster_identities_res0.7.md restored from .amp/in/preserve_markers_0.7_prePDF/; staged copies retained as prior-run evidence | [INFO](results/job-44493014/clusters_plots/markers/0.7/.INFO) |
+| 44542861 / Oct 13–14 | First production run from the committed scDblFinder switch at 16f23b2 (scDblFinder replaces Scrublet for doublet detection): 23 samples; soupx (corrected counts reused from job-44409807); scDblFinder per sample on that sample's raw SoupX-corrected counts, all input cells before any filtering, dbr NULL (no externally supplied rate), dbr_sd 1 (rate-deviation penalty disabled), clusters TRUE (package clusters each capture), seed 1234; BD Rhapsody multiplet table removed by owner decision; harmony, dims 1–30, max_iter 10; UMAP min.dist 0.3, n.neighbors 30, seed 1234 for both the PCA baseline 'umap' and 'umap_harmony'; adaptive QC unchanged (feature cap 5000 = median+4 MAD, mito cap 20% = median+4 MAD, max_hb_percent 0.5, ribo floor 0%, complexity >0.8); S/G2M scored once on the full population (ctrl 43, seed 1234) with per-sample cutoffs; cc_tail removed before HVG selection; regression percent.mt, nFeature_RNA + S.Score, G2M.Score; k_param 100; 3,000 consensus HVGs, 50 PCs; Leiden 0.1–0.7 | COMPLETED, 4 h 37 min 38 s (longer than the ~2.5 h Scrublet-era runs: scDblFinder adds about 5 min per sample in QC) | 299,393 input -> 271,228 QC-passing (90.6%, identical to the Scrublet runs) -> 246,494 scDblFinder-clean (82.33%); scDblFinder called 28,288 doublets over all 299,393 input cells (9.45%), 24,734 among QC-passing cells (vs 5,465 removed by Scrublet) plus 3,554 overlapping QC outliers; per-sample calls 8.24–10.47%, thresholds 0.3811–0.4812, dbr NULL; 21,123 genes (14 removed); 3,000 HVGs; 50 PCs. Cell-cycle: 7,867 tail cells removed (3.19%), 238,627 retained = clean − removed. Harmony converged after 6 iterations. Leiden 15/18/20/21/22/23/24 at 0.1–0.7. Both .INFO copies Status: completed; Code line "git 16f23b200d7ea40bf5f5995e240fe5e98a835037; R 4.6.1; Seurat 5.5.1; harmony 2.0.5" matches HEAD; both carry the complete scDblFinder QC block (23 per-sample lines, rate-penalty/clusters/seed line, QC-passing-and-overlap line, versions scDblFinder 1.26.7). Read-only reopen of clustered.rds: 238,627 cells; predicted_doublets all FALSE; doublet_filter_method "scDblFinder"; scDblFinder.score and scDblFinder.class present (all "singlet"); cc_tail all FALSE; cc_tail_class all "none"; 23 sample levels; all 7 harmony_snn_res columns with matching level counts; both reductions present ('umap', 'umap_harmony'), each 2D, all-finite, aligned to the object's cells; misc$cell_cycle$removal 7,867. Outputs: 8 QC + 31 norm + 6 integration + 3 clusters present. Figures inspected: QC doublet panel (title scDblFinder, 23 facets matching the .INFO calls), cc_tail_removal (per-sample removed counts sum to 7,867), umap_resolutions (7 panels incl. 0.7), clustree (0.1–0.7, node counts matching). clustered.rds 8.27 GB | [INFO](data/job-44542861/.INFO) |
+| 44542580 / Oct 13–14 | Markers rerun, parent job-44493014 (data/job-44493014/clustered.rds, harmony_snn_res.0.7) via R/clusters/find_markers.R on local branch experiment-refactor-pipeline: FindAllMarkers wilcox, only.pos, min.pct 0.25, logfc 0.25, padj < 0.05, log2FC-first arrange; 39 feature renames; Seurat DotPlot top-5 + scCustomize per-gene PNG/SVG panels incl. screenshot additions (monocytes +SOD2/CSF1R/C5AR1/TGFB1/CX3CR1; AM-like +PON2/TLR4/CD68; C1Q-high +MAF/CCL2/C5AR1/TLR4/CSF1R/LAP3/MARCO/IDO1; cDC1 +CD86/CCR7/CD1E; pDC +CLEC12A/CCR2/RUNX2); 25 prior PNGs deleted and 8 CSVs + identity md staged outside the dir to clear the recursive guard | COMPLETED, 50 min 26 s | Renames 39/39; 31,372 significant markers and 256,550 cells over 24 clusters, identical to prior runs; 7 fresh CSVs + dotplot_top5 + 24 identity folders (263 PNG + 262 SVG). Absent-from-object probes (MARCO, IDO1, CX3CR1, CD1E) rendered background-only plots, no skip warnings; no errors. markers_top25_plus_lineage_by_pct.csv (not regenerated by the entry point) and cluster_identities_res0.7.md restored from .amp/in/preserve_markers_0.7_preRERUN/; staged copies retained as prior-run evidence | [INFO](results/job-44493014/clusters_plots/markers/0.7/.INFO) |
+| 44518609 / Oct 12 | Markers rerun on data/job-44493014/clustered.rds (harmony_snn_res.0.7) via R/eda/find_markers.R, settings identical to 44511815; Eosinophils panel restored in R/utils/markers.R (owner request, recovered from thread history) for a 24-panel, 25-figure set; prior 24 PNG + 7 CSV deleted by owner request to clear the no-overwrite guard | COMPLETED, 55 min 24 s | Renames 19/19; 31,372 significant markers and 256,550 cells over 24 clusters, identical to 44503257/44511815; cluster 15 eosinophil signature intact (EPX log2FC 10.16, CCR3 7.10, ALOX5 5.46). Found in validation: the restored panel carried SIGLEC5 as its raw Ensembl ID, which the plot lookup missed after renames — panel fixed to the gene-name string and features_Eosinophils.png regenerated in place from the same object state (scratch script recorded in .INFO); tables and other figures unaffected. Warnings only: ELANE/PRTN3 (Neutrophils) and PRG2/CLC/SIGLEC8 (Eosinophils) skipped, not in object | [INFO](results/job-44493014/clusters_plots/markers/0.7/.INFO) |
+| 44511815 / Oct 12 | Markers rerun on data/job-44493014/clustered.rds (harmony_snn_res.0.7) via the refactored entry point R/eda/find_markers.R: same FindAllMarkers settings as 44503257; 19 marker_feature_renames (Ensembl ID -> gene name) applied before FindAllMarkers; owner-edited 23-panel feature set; figures are dotplot top-5 + 23 feature panels (heatmap step dropped in the refactor) | COMPLETED, 54 min 31 s | 31,372 significant markers, identical to 44503257 (renames are cosmetic); 24/24 clusters with markers; cluster_summary totals 256,550 cells (37,307–807) matching the producer clustering. Renames 19/19 in log; tables gene-named where mapped and review flags render as "CD1.1 (review)" / "IGLL1 (review)"; remaining Ensembl-ID rows are object features outside the rename map. Dotplot, Neutrophils and Macrophages_AM_like panels inspected; known warnings only (ELANE, PRTN3 skipped, not in object). Supersedes cancelled 44511602 and failed 44511736 (truncated markers_plots.R, repaired before this run). Outputs later deleted and regenerated by 44518609 with the Eosinophils panel restored | [INFO](results/job-44493014/clusters_plots/markers/0.7/.INFO) |
+| 44503257 / Oct 12 | Markers on data/job-44493014/clustered.rds (harmony_snn_res.0.7): FindAllMarkers wilcox, only.pos, min.pct 0.25, logfc 0.25, padj < 0.05; DotPlot top-5, DoHeatmap top-20 (10 pages), 18 feature panels; outputs in results/job-44493014/clusters_plots/markers/0.7/ | COMPLETED, 1 h 10 min | 31,372 significant of ~34k prefiltered markers; 24/24 clusters with markers (589–2,371); n_cells per cluster matches assignments CSV exactly. All outputs non-empty at completion; dotplot, heatmap page 1 and Macrophages panel inspected. Known warnings only (heatmap genes absent from scale.data; cDC panel skipped CLEC10A). All 29 PNGs and 7 CSV tables removed Oct 12 by user request ahead of a rerun with the rebuilt 24-panel set (identity proposal derived before deletion; current directory contents come from 44518609, via 44511815, with gene-named tables and the Eosinophils panel restored). Downstream identity proposal (lineage scan + pig literature + oracle consult) in .amp/in/artifacts/cluster_identity_proposal_res0.7_job44493014.csv; audit trail in results/literature_review/pig_lung_scrnaseq_cell_identity/search_log.md | [INFO](results/job-44493014/clusters_plots/markers/0.7/.INFO) |
+| 44491731 / Oct 11 | Full production with cell-cycle tail removal: 23 samples; soupx (corrected counts reused from job-44409807); harmony, dims 1–20, max_iter 10; adaptive QC loosened (features cap 5000, feature_mads 4, mito_mads 4, max_hb_percent 0.5, ribo floor 0%, k_param 100); S/G2M scored once on the full population (extended 94/97-gene sets, ctrl 43, seed 1234) with per-sample cutoffs; cc_tail cells removed before regression; regression: percent.mt, nFeature_RNA + S.Score, G2M.Score | COMPLETED, 2 h 08 min | 299,393 input -> 271,228 QC-passing (90.6%) -> 265,763 Scrublet-clean (88.77%); 21,463 genes (14 removed); 3,000 consensus HVGs; 50 PCs. Cell-cycle: 9,213 tail cells removed (3.47%), 256,550 retained. Harmony converged after 6 iterations. Leiden 13/16/17/18/20/20/21 at 0.1–0.7. Read-only reopen: 256,550 cells = clean − removed; cc_tail all FALSE; cc_tail_class all "none"; 23 sample levels; all 7 resolution columns, nlevels match .INFO and assignments CSV; removal in misc$cell_cycle$removal. Figures inspected (cc_tail_removal, mitochondrial QC panel, umap_resolutions, clustree). clustered.rds 8.4 GB | [INFO](data/job-44491731/.INFO) |
+| smear-explore / Oct 12 | UMAP-band investigation on data/job-44493014 (owner-annotated bridge between res-0.1 clusters 1 and 2): fixed polygon selection (856 cl1 + 435 cl2 cells) + cores; metadata screen; sibling-marker signatures; harmony kNN; barcode transfer to job-44491731; all read-only, no pipeline change | COMPLETED, ~2 h | Band is a UMAP layout effect, not cycling cells: smear cl1 cells are low-content (UMI 1,737 vs 3,285; ribo 5.9% vs 11.5%; mito lower) with phase composition ≈ core and cycle-gene panel slightly lower; T-cell identity weak/mushy, no macrophage program (not doublets); in harmony space 96.3% of their kNN are cluster 1 (bridge absent in data space); on PCA-UMAP they sit at a mass edge; in job-44491731 the same barcodes split across 4 sibling clusters. At the orange end the 435 cl2 cells are genuine cycling macrophage-lineage cells (60% S/G2M vs 8% core) | [INFO](../.amp/in/smear-explore/.INFO) |
+| 44493014 / Oct 11–12 | Full production with cell-cycle tail removal: 23 samples; soupx; harmony, dims 1–30, max_iter 10; adaptive QC (features median+4 MAD cap 5000, mito median+4 MAD cap 20%, HB ≥0.5% out, ribo floor 0%, complexity >0.8); k_param 100; 3,000 consensus HVGs, 50 PCs; regression percent.mt, nFeature_RNA + S.Score, G2M.Score; Leiden 0.1–0.7 | COMPLETED, 2 h 22 min 58 s | 299,393 input -> 271,228 QC-passing (90.6%) -> 265,763 Scrublet-clean (88.77%); cell-cycle: 9,213 tail cells removed (3.47%), 256,550 retained; 21,463 genes; 50 PCs. Harmony converged after 6 iterations. Leiden 15/17/19/20/22/24/24 at 0.1–0.7. Read-only reopen: cell count = clean − removed exactly; cc_tail all FALSE, cc_tail_class all "none"; all 23 sample levels; all 7 resolution columns with counts matching .INFO; 47 figures + assignments CSV present; cc_tail_removal, mitochondrial QC, umap_resolutions and clustree inspected (clustree shows one large 0.1 cluster splitting progressively, 0.6→0.7 near one-to-one). clustered.rds 9.0 GB | [INFO](../data/job-44493014/.INFO) |
+| 44482584 / Oct 11 | Markers on data/job-44479828/clustered.rds (harmony_snn_res.0.5): FindAllMarkers wilcox, only.pos, min.pct 0.25, logfc 0.25, padj < 0.05; DotPlot top-5, DoHeatmap top-20 (9 pages), 8 scplotter feature panels | COMPLETED, 27 min 40 s | 24,664 significant of 25,852 prefiltered markers, 22 clusters, 226,282 cells; all 24 outputs non-empty; cluster_summary matches markers_significant per cluster, no cluster with zero markers; DotPlot, heatmap page 1 and Macrophages panel inspected; log warns genes absent from RNA scale.data omitted on all 9 heatmap pages and 3 panel genes skipped (CLECL12A, FCER1, EpCAM) | [log](logs/20261011-195449-find-markers-44482584.log) |
+| 44479828 / Oct 11 | Full production with cell-cycle scoring added: 23 samples; soupx; harmony, dims 1–20, max_iter 10; adaptive QC as above; S/G2M scored with extended 94/97-gene sets (Ensembl-to-human map, ctrl 43, seed 1234), per-sample tail cutoffs to cc_tail/cc_tail_class (labels only, no cells removed); regression: percent.mt, nFeature_RNA + S.Score, G2M.Score | COMPLETED, 2 h 09 min | 299,393 input -> 231,112 QC-passing (77.2%) -> 226,282 Scrublet-clean (75.58%); 20,726 genes; 3,000 consensus HVGs; 50 PCs. Harmony converged after 10 iterations. Cell-cycle: 6,959/226,282 cells (3.08%) labeled above per-sample cutoffs. Leiden 13/16/17/19/22/22/25 at 0.1–0.7. All four stages recorded; clustered.rds (7.6 GB), 47 figures + assignments CSV verified present; final object not yet reopened independently | [INFO](../data/job-44479828/.INFO) |
+| qc-explore / Oct 10 | Staging exploration (no pipeline change): 5 REVO26 samples rebuilt with job-44468374 settings; CellCycleScoring (90 human-symbol genes, ctrl 43, seed 1234); NBIS top-20 percent-of-counts; percent.hb (HBB/HBM/HBQ1) | COMPLETED, ~35 min | Clean object matches reference run exactly (51,026 cells, 77.35%). Cell cycle: non-G1 cells 43–68% per sample; scores stable held-out (r 0.98); figures inspected. Top-20: Ensembl-only ENSSSCG00000048856 (user-identified MALAT1) rank 1 at 1.57%. percent.hb ~0 everywhere; ~13 cells >1%. One percent.hb computation bug found and fixed via matrix cross-check | [INFO](../.amp/in/qc-explore/.INFO) |
+| 44468374 / Oct 10 | Adaptive-QC validation: 5 REVO26 samples; soupx; harmony, dims 1–20, max_iter 10; per-sample median + 3 MAD capped (features 5000, mito 20%), ribo floor 2%, complexity >0.8 | COMPLETED, ~23 min | 65,965 input -> 52,186 QC-passing -> 51,026 clean (77.35%). Exclusion verified by independent reopen: no flagged or doublet cell in the final object; per-sample thresholds recorded; all 28 outputs present; QC panels with new captions inspected. Test artifacts retained | [INFO](../data/job-44468374/.INFO) |
+| 44468410 / Oct 10 | Full production: 23 samples; soupx; harmony, dims 1–20, max_iter 10; adaptive QC as above | COMPLETED, ~1 h 48 min | 299,393 input -> 233,604 QC-passing (78.0%) -> 228,563 Scrublet-clean (76.34%); 20,984 genes. 3,000 consensus HVGs; 50 PCs (PC1–30 = 91.9%). Harmony converged after 8 iterations. Leiden 13/16/16/20 at 0.1–0.4. Independent reopen: exclusion verified (no flagged/doublet cells), per-sample thresholds recorded, all 46 outputs present, counts match .INFO; integration and cluster figures inspected. Final object: 8.0 GB clustered.rds | [INFO](../data/job-44468410/.INFO) |
+| 44467784 / Oct 10 | Smoke test (fixed-threshold QC, superseded): 5 REVO26 samples; soupx; harmony, dims 1–20, max_iter 10 | COMPLETED, ~22 min | 65,965 input -> 51,723 QC-passing -> 50,675 Scrublet-clean (76.82%). Validation (separate jobs): final object reopened independently — IDs, per-sample layers, finite aligned reductions, all resolution columns, CSV agreement; old-vs-new QC flags identical on all input cells of REVO26-C and REVO26-P4; rhapsody and cellbender readers spot-checked; invalid-method and missing-input configs fail before run directories are created. Figures inspected. Run folders and logs deleted by request after validation | none (removed) |
+| 44468216 / Oct 10 | Full 23-sample production attempt (soupx, harmony) | CANCELLED by user ~2 min in, during QC start | No outputs produced; run folders removed | none |
+
+## Annotation review lineage
 
 ```text
-Raw RSEC archives → SoupX 44409807 [299,393 cells; 23 samples]
-├─ QC 44461874 → LogNormalize 44462433 [214,221 cells; fixed-threshold QC branch; verified]
-│  ├─ Harmony 44464751 [completed; converged at iteration 10/30]
-│  │  └─ Leiden clustering 44465100 [COMPLETED; CSV-validated; resolutions 0.1–0.4]
-│  │     └─ Cluster plots 44466714 [COMPLETED; both PNGs inspected]
-│  ├─ Harmony 44465095 [completed; axes 1–30; converged at iteration 7/30]
-│  └─ CCA 44464754 [submitted Oct 9; three-hour monitoring]
-├─ QC 44438067 → LogNormalize 44438396 [230,817 cells; latest-input branch]
-│  ├─ Harmony 44438700 [completed; converged at iteration 10/30]
-│  │  ├─ UMAP exploration 44442925 [14/14 completed; plots only against saved Harmony baseline]
-│  │  └─ Leiden clustering 44452494 [COMPLETED; validated; resolutions 0.1–0.4]
-│  │     └─ Cluster plots 44456242 [COMPLETED; both PNGs inspected]
-│  └─ CCA 44438698 [last recorded RUNNING, Oct 9]
-├─ QC 44415373 → LogNormalize 44416449 [247,672 cells; earlier-input branch]
-│  ├─ Harmony 44437024 [completed; no convergence within 10 iterations]
-│  ├─ Harmony 44437561 [completed; converged at iteration 11/30]
-│  └─ CCA 44436792 [COMPLETED Oct 9; verified checkpoint + 6 PNGs]
-│  QC 44415373 also supplies sensitivity analyses 44437522 and 44437686.
-└─ QC 44415111 [completed; independent output check incomplete]
-
-Raw filtered MEX → QC 44276132 → Scrublet-clean → LogNormalize 44281196
-                                             [226,738 cells; historical branch]
-  ├─ PCA directly → unintegrated clustering D/E
-  ├─ Harmony 44281709 → Harmony clustering D/E
-  │  └─ Leiden clustering 44452500 [COMPLETED; validated; resolutions 0.1–0.4]
-  │     └─ Cluster plots 44456247 [COMPLETED; both PNGs inspected]
-  ├─ scVI 44281712 → scVI clustering D/E
-  └─ CCA 44282203
-     ├─ UMAP exploration 44445961 [COMPLETED 15/15; plots only against saved CCA baseline]
-     └─ Leiden clustering 44452483 [COMPLETED; validated; resolutions 0.1–0.4]
-        ├─ Cluster plots 44456254 [COMPLETED; both PNGs inspected]
-        └─ Cluster-coloured UMAP exploration 44458934_14 + 44459373 [COMPLETED 15/15; 60 PNGs inspected; fixed labels preserved]
-
-CCA clustering 44310241 [integration parent not recorded here]
-  └─ Marker discovery 44395220 [cancelled; partial only]
+job-44409807 SoupX counts
+├── REVO26-P10 scDblFinder adapter bridge validation (no doublet calls; production unchanged)
+│   └── dependency install 44541122 (verified; detector pilot awaits scientific choices)
+└── job-44493014 clustered.rds, harmony_snn_res.0.7
+    ├── markers 44518609, eosinophil figure refresh 44523143
+    │   ├── detection-ranking change (CSV-only validation; reverted by owner, existing outputs unchanged)
+    │   └── Clustered_DotPlot check 44542397 (saved marker statistics; no discovery, output under .amp/in)
+    │       └── root-viewport correction 44542432 (computationally passed; owner rejected preview, renderer reverted)
+    ├── CD3E diagnostic 44528670 (after failed 44528596)
+    ├── panel metrics 44529285 (preview assertion failed)
+    │   └── preview recheck 44529437 (failed), then 44529458
+    ├── only.pos review (44518609 tables + 44529285 metrics; no DE rerun)
+    ├── cluster 3 macrophage assessment (44518609 tables + 44529285 metrics + literature; read-only)
+    │   └── owner-approved FCN1/GPNMB/SIGLEC1 panel exception (R/static recheck)
+    ├── per-gene PNG/SVG export test 44540465 (preview size-limit failure; exports passed)
+    │   └── preview-conversion flag 44540672 (exports passed; optional renderer failed; further visual review by owner)
+    └── scCustomize feature preview 44531632
+        └── point-size correction 44531759 (still coarse)
+            └── stroke-free rendering 44531969 (validated)
+                └── ten-marker panels 44533273 (validated; selection: top25-plus-lineage CSV)
+                    └── owner-approved LYVE1 exception (static recheck)
 ```
-
-## Leiden clustering — Oct 9, 2026
-
-| Job / date | Stage | Parent / input | Execution | Output / checks | Record |
-|---|---|---|---|---|---|
-| 44452483 / Oct 9 | Leiden, CCA | `data/integration/cca/job-44282203/lognorm.rds` | COMPLETED 0:0; 47m08s; 44.91 GiB peak | Validated 226,738 preserved cells; 15/18/18/20 clusters at 0.1/0.2/0.3/0.4; no diagnostics | [Record](results/clustering/cca/job-44452483/.INFO), [validation](logs/validate-cca-44452483-44455323.log) |
-| 44452494 / Oct 9 | Leiden, Harmony | `data/integration/harmony/job-44438700/lognorm.rds` | COMPLETED 0:0; 40m09s; 42.8 GiB peak | Validated 230,817 preserved cells; 13/15/17/20 clusters at 0.1/0.2/0.3/0.4; no diagnostics | [Record](results/clustering/harmony/job-44452494/.INFO), [validation](logs/validate-clustering-44452494-44455209.log) |
-| 44452500 / Oct 9 | Leiden, Harmony | `data/integration/harmony/job-44281709/lognorm.rds` | COMPLETED 0:0; 48m14s; 40.8 GiB peak | Validated 226,738 preserved cells; 12/16/17/18 clusters at 0.1/0.2/0.3/0.4; validator assertion corrected, no clustering retry | [Record](results/clustering/harmony/job-44452500/.INFO), [validation](logs/validate-clustering-44452500-44455415.log) |
-| 44465100 / Oct 9 | Leiden, Harmony | `data/integration/harmony/job-44464751/lognorm.rds` | COMPLETED 0:0; 40m02s; 38.7 GiB peak | CSV check: 214,221 cells, complete labels; 14/16/17/19 clusters at 0.1/0.2/0.3/0.4; no saved-object revalidation; no figures (plotting job separate, not run) | [Record](results/clustering/harmony/job-44465100/.INFO) |
-
-### Cluster plots
-
-| Job / date | Stage | Parent / input | Execution | Output / checks | Record |
-|---|---|---|---|---|---|
-| 44456254 / Oct 9 | CCA cluster UMAP + clustree | `data/clustering/cca/job-44452483/lognorm.rds` | COMPLETED 0:0; 2m19s | Both PNGs inspected, resolutions 0.1–0.4; readable labels; minor clustree node overlaps; no fitting | [Record](results/clustering/cca/job-44452483/.INFO), [log](logs/20261009-180005-clustering-plots-44456254.log) |
-| 44456242 / Oct 9 | Harmony cluster UMAP + clustree | `data/clustering/harmony/job-44452494/lognorm.rds` | COMPLETED 0:0; 2m19s | Both PNGs inspected, resolutions 0.1–0.4; minor small-island label placement limitations; no fitting | [Record](results/clustering/harmony/job-44452494/.INFO), [log](logs/20261009-180005-clustering-plots-44456242.log) |
-| 44456247 / Oct 9 | Harmony cluster UMAP + clustree | `data/clustering/harmony/job-44452500/lognorm.rds` | COMPLETED 0:0; 2m15s | Both PNGs inspected, resolutions 0.1–0.4; readable/unclipped labels and edges; no fitting | [Record](results/clustering/harmony/job-44452500/.INFO), [log](logs/20261009-180005-clustering-plots-44456247.log) |
-| 44466714 / Oct 10 | Harmony cluster UMAP + clustree | `data/clustering/harmony/job-44465100/lognorm.rds` | COMPLETED 0:0; 2m08s; 24.6 GiB peak | Both PNGs inspected, resolutions 0.1–0.4 (14/16/17/19 clusters); readable/unclipped labels, edges and captions; no fitting | [Record](results/clustering/harmony/job-44465100/.INFO), [log](logs/20261010-000119-clustering-plots-44466714.log) |
-
-### Cluster-coloured UMAP exploration
-
-| Job / date | Stage | Parent / input | Execution | Output / checks | Record |
-|---|---|---|---|---|---|
-| 44458934_14 / Oct 9 | CCA UMAP pilot, fixed Leiden labels | `data/clustering/cca/job-44452483/lognorm.rds` | COMPLETED 0:0; 9m57s; 27.01 GiB peak | Test 14; four paired PNGs inspected; preservation checks passed; dense point overlap remains | [Record](results/clustering/cca/job-44452483/umap_explore/min.dist_1_n.neighbors_75_repulsion.strength_2/.INFO), [log](logs/20261009-183244-cluster-umap-explore-44458934_14.log) |
-| 44459373 / Oct 9 | CCA UMAP exploration, remaining 14 configurations | `data/clustering/cca/job-44452483/lognorm.rds` | COMPLETED 14/14, all 0:0; 7m29s–10m39s/task; 21.43–27.02 GiB peak | 56 paired PNGs inspected; all preservation checks passed; dense overlap remains; no biological ranking | [Record](results/clustering/cca/job-44452483/umap_explore/.INFO) |
-
-## Latest-input branch
-
-Parents identify the actual input artifact. “Checks” describes computational evidence only; biological acceptance remains open.
-
-| Job / date | Stage | Parent / input | Execution | Output / checks | Record |
-|---|---|---|---|---|---|
-| 44409807 / Oct 7 | SoupX, 23-task array | Raw unfiltered/filtered RSEC + metrics | All 23 COMPLETED 0:0 | 299,393 cells retained; rho 2.3–4.8%; counts verified; sample-specific biological QC pending | [Record](results/soupx/job-44409807/.INFO), [results](results/soupx/job-44409807/) |
-| 44438067 / Oct 8 | QC, independent all-input thresholds | 44409807: corrected counts | COMPLETED 0:0 | 235,569 QC-passing → **230,817 Scrublet-clean** (77.10%); validator 44438256 passed; 8 PNGs inspected | [Record](data/clean_concatenated_data/job-44438067/.INFO), [results](results/qc/job-44438067/) |
-| 44461874 / Oct 9 | QC, fixed thresholds (no MAD) | 44409807: corrected counts | COMPLETED 0:0 | Genes 300–4,000, mitochondrial ≤10%, complexity >0.8; no ribosomal filter; 218,666 QC-passing → **214,221 Scrublet-clean** (71.55%); 7 PNGs, 3 changed figures inspected | [Record](data/clean_concatenated_data/job-44461874/.INFO), [results](results/qc/job-44461874/) |
-| 44462433 / Oct 9 | LogNormalize + PCA | 44461874: Scrublet-clean | COMPLETED 0:0; 21:46:32–22:19:52 CEST (33m20s) | 214,221 cells, 20,516 genes; counts/metadata preserved; normalization/scaling/PCA verified (3,000 HVGs used in 50 PCs; PC1–30 = 91.57%); 30 PNGs inspected | [Record](data/norm_feat/job-44462433/.INFO), [results](results/norm_feat/lognorm/job-44462433/) |
-| 44464751 / Oct 9 | Harmony, maximum 30 iterations | 44462433: normalized checkpoint | COMPLETED 0:0; 22:34:40–23:03:11 CEST (28m31s) | Fixed-threshold branch: 214,221 cells; converged at 10; RDS + 6 inspected PNGs; **no independent saved-object revalidation** | [Record](data/integration/harmony/job-44464751/.INFO), [results](results/integration/harmony/job-44464751/) |
-| 44465095 / Oct 9 | Harmony, axes 1–30, ceiling 30 | 44462433: normalized checkpoint | COMPLETED 0:0; 23:10:42–23:41:43 CEST (31m01s) | Faouzi-requested 30-PC variant; converged at 7; RDS + 6 inspected PNGs; `dims` remains 1:30 (shared with CCA/scVI); **no independent saved-object revalidation** | [Record](data/integration/harmony/job-44465095/.INFO), [results](results/integration/harmony/job-44465095/) |
-| 44464754 / Oct 9 | CCA, axes 1–20 | 44462433: normalized checkpoint | RUNNING; start 22:35:10 CEST on n020 | Fixed-threshold branch (214,221 cells); same launcher/settings, seed 1234; six same-job UMAP PNGs, diagnostics off; three-hour monitoring | [Record](data/integration/cca/job-44464754/.INFO), [log](logs/20261009-223510-integration-cca-44464754.log) |
-| 44438396 / Oct 9 | LogNormalize + PCA | 44438067: Scrublet-clean | COMPLETED 0:0 | 230,817 cells, 20,775 genes; counts/metadata preserved; normalization/scaling/PCA verified; 30 PNGs inspected | [Record](data/norm_feat/job-44438396/.INFO), [results](results/norm_feat/lognorm/job-44438396/) |
-| 44438700 / Oct 9 | Harmony, maximum 30 iterations | 44438396: normalized checkpoint | COMPLETED 0:0 | Converged at 10; RDS + 6 inspected PNGs; **no independent saved-object revalidation** | [Record](data/integration/harmony/job-44438700/.INFO), [results](results/integration/harmony/job-44438700/) |
-| 44442925 / Oct 9 | UMAP exploration, 14-task array | 44438700: Harmony checkpoint and saved default UMAP | All 14 COMPLETED 0:0; 12:12–13:13 CEST | 14 sample comparisons present; recorded settings/file times checked; no object persistence or plot inspection | [Record](results/integration/harmony/job-44438700/.INFO), [results](results/integration/harmony/job-44438700/) |
-| 44438698 / Oct 9 | CCA, axes 1–20 | 44438396: normalized checkpoint | Last recorded RUNNING, Oct 9 | Final checkpoint pending in recorded state; start 00:52:49, n019 | [Record](data/integration/cca/job-44438698/.INFO), [log](logs/20261009-005249-integration-cca-44438698.log) |
-
-### Checkpoint locations
-
-| Stage | Path convention |
-|---|---|
-| SoupX | `data/raw_data/soupx/<sample>/job-44409807/corrected_counts.rds` (moved from `data/soupx/`) |
-| Labeled QC | `data/qc_labeled_data/job-<ID>/labeled_concatenated.rds` |
-| Clean QC | `data/clean_concatenated_data/job-<ID>/clean_concatenated_scrublet.rds` |
-| Normalization | `data/norm_feat/job-<ID>/lognorm.rds` |
-| Integration | `data/integration/<method>/job-<ID>/lognorm.rds` |
-| Clustering | `data/clustering/<method>/job-<ID>/lognorm.rds`; settings/assignments: `results/clustering/<method>/job-<ID>/analysis.rds` |
-
-### Execution settings that distinguish QC runs
-
-MAD means R's scaled MAD (constant 1.4826); thresholds are per sample. For the fully specified runs below, complexity must exceed 0.8 and genes require detection in ≥10 retained cells/sample.
-
-| QC job | Input / doublet routes | Retained gene-count range | Mitochondrial ceiling / reference cells | Ribosomal rule |
-|---|---|---|---|---|
-| 44194877 | Raw MEX; DoubletFinder + Scrublet | >200; logged upper cap 5,000 | Per-sample ceilings; exact MAD settings not recoverable | 2.5% labels logged, but exclusion not confirmed |
-| 44276132 | Raw MEX; DoubletFinder + Scrublet | >200; ≤min(4500, median + 4 MAD) | min(20%, median + 4 MAD); feature/complexity-passing cells | Retain >2.5% |
-| 44415111 | SoupX 44409807; Scrublet | >200; ≤min(4500, median + 4 MAD) | min(20%, median + 4 MAD); feature/complexity-passing cells | ≤median + 3 MAD, all input cells |
-| 44415373 | SoupX 44409807; Scrublet | >200; ≤min(4500, median + 3 MAD) | min(20%, median + 3 MAD); feature/complexity-passing cells | ≤median + 3 MAD, all input cells |
-| 44438067 | SoupX 44409807; Scrublet | **≥300**; ≤min(4000, median + 3 MAD) | min(15%, median + 3 MAD); **all input cells independently** | ≤median + 2 MAD, all input cells |
-
-- Upper-only ribosomal rules include zeros in estimation and have no floor, cap or log transform; equality passes.
-- SoupX QC uses corrected input counts, not uncorrected raw counts. Scrublet calls scores >0.15 on all input cells before removal.
-- For 44415373, Scrublet `random_state=0`, min_counts=3, 30 PCs; diagnostic PCA/UMAP seed=1234. Earlier history reported seed 1234 for 44276132/44415111 without distinguishing these roles; do not extrapolate it.
-- Normalization 44281196/44416449/44438396/44462433: LogNormalize 10,000; 3,000 VST/consensus variable genes; regression of `percent.mt` + `nFeature_RNA`; 50 PCs; seed 1234.
-- Recent integrations: axes 1–20, seed 1234; Harmony corrects sample, `project.dim=FALSE`. New driver saves RDS then six UMAP PNGs in the same job; mixing diagnostics disabled. Plot failure can leave a valid saved checkpoint but a failed job.
-
-## Earlier SoupX branch and integration retries
-
-| Job / date | Stage / difference | Parent / input | Execution | Output / checks | Record |
-|---|---|---|---|---|---|
-| 44415111 / Oct 7 | QC, feature/mitochondrial 4 MAD | 44409807: corrected counts | COMPLETED 0:0 | Labeled/clean RDS retained; validator 44415118 failed on mutable-parameter comparison; remaining checks incomplete | [Log](logs/20261007-171743-qc-with-soupx-44415111.log) |
-| 44415373 / Oct 7 | QC, all three multipliers 3 MAD | 44409807: corrected counts | COMPLETED 0:0 | 299,393 input → 252,687 QC-passing → **247,672 clean**; validation 44415439 passed; 8 PNGs inspected | [Record](data/clean_concatenated_data/job-44415373/.INFO) |
-| 44416449 / Oct 7 | LogNormalize + PCA | 44415373: Scrublet-clean | COMPLETED 0:0 | 247,672 cells, 21,084 genes; saved counts/metadata, normalization/scaling/PCA verified; 30 PNGs inspected | [Record](data/norm_feat/job-44416449/.INFO) |
-| 44417308 / Oct 7 | CCA first attempt | 44416449 | CANCELLED by user | Before integration; no checkpoint; run directories deleted | [Log](logs/20261007-212915-integration-cca-44417308.log) |
-| 44417322 / Oct 7–8 | CCA, diagnostic-enabled driver | 44416449 | CANCELLED, batch 0:15 | **Mistaken cancellation by Harmony thread, not user authorization**; no checkpoint; `.INFO`/diagnostic-cell list retained | [Record](data/integration/cca/job-44417322/.INFO), [log](logs/20261007-213744-integration-cca-44417322.log) |
-| 44436792 / Oct 8–9 | CCA, approved restart | 44416449 | COMPLETED 0:0; 26h14m45s; ~48.9 GiB peak | 8.1 GB [checkpoint](data/integration/cca/job-44436792/lognorm.rds) + 6 inspected UMAP PNGs; independent reopen: IDs/metadata identical, `integrated_cca` dims 1–20 finite (3,000x20 loadings), both UMAPs 2-D aligned, misc cca/seed 1234 | [Record](data/integration/cca/job-44436792/.INFO), [log](logs/20261008-200926-integration-cca-44436792.log) |
-| 44435481 / Oct 8 | Previous Harmony attempt | Not recorded here | CANCELLED by user | Run directories deleted | Historical cancellation record; no exact log path recorded |
-| 44435612 / Oct 8 | Harmony, maximum 10; diagnostics on | 44416449 | COMPLETED 0:0 | No explicit convergence; validator 44436241 passed; **data/results later deleted by request**, logs retained | [Log](logs/20261008-184751-integration-harmony-44435612.log) |
-| 44436227 / Oct 8 | Harmony, maximum 30; diagnostics off | 44416449 | CANCELLED by user | Stopped at iteration 1; no RDS/UMAP; run directories deleted | [Log](logs/20261008-192454-integration-harmony-44436227.log) |
-| 44436475 / Oct 8 | Harmony, maximum 10 | 44416449 | CANCELLED | No convergence in 10; stopped during UMAP before saving | [Log](logs/20261008-195255-integration-harmony-44436475.log) |
-| 44437024 / Oct 8 | Harmony, maximum 10; fresh restart | 44416449 | COMPLETED 0:0 | No convergence in 10; RDS + 6 inspected PNGs; no independent object checks | [Record](data/integration/harmony/job-44437024/.INFO) |
-| 44437561 / Oct 8 | Harmony, maximum 30 | 44416449 | COMPLETED 0:0 | Converged at 11; RDS + 6 inspected PNGs; no independent object checks | [Record](data/integration/harmony/job-44437561/.INFO) |
-| — / Oct 8 | Planned Harmony, maximum 50 | Intended 44416449 | **NOT SUBMITTED** | Skipped by user after 30-ceiling run converged | No run |
-
-## QC sensitivity analyses
-
-Both analyses reuse **44415373 labeled metrics, Scrublet calls and sample UMAPs**; neither creates a replacement clean RDS. CellBender 44436358 was explicitly excluded as the target.
-
-| Job / date | Comparison | Execution / checks | Outputs |
-|---|---|---|---|
-| 44437522 / Oct 8 | Mitochondrial 15% cap, ribosomal +2 MAD, or both | COMPLETED 0:0; baseline reproduced; 92 sample/scenario rows checked; 18 PNGs inspected | [Record and tables](results/qc/sensitivity-job-44437522/), [log](logs/qc-sensitivity-44437522.log) |
-| 44437686 / Oct 8 | Independent all-input thresholds; old vs new limits | COMPLETED 0:0; baseline/previous sensitivity reproduced; 92 rows checked; 12 PNGs inspected | [Record and tables](results/qc/sensitivity-job-44437686/), [log](logs/qc-independent-44437686.log) |
-
-| Scenario | Analysis | Clean cells | Input retained |
-|---|---|---:|---:|
-| Historical baseline | 44415373 | 247,672 | 82.72% |
-| Mitochondrial cap 15% only | 44437522 | 245,599 | 82.03% |
-| Ribosomal +2 MAD only | 44437522 | 239,426 | 79.97% |
-| Both, historical threshold reference | 44437522 | 237,410 | 79.30% |
-| Independent all-input estimation, old limits | 44437686 | 247,282 | 82.59% |
-| Independent all-input estimation, new combined limits | 44437686; adopted in 44438067 | **230,817** | **77.10%** |
-
-All 23 samples remain. All-input estimation alone loses 413 and gains 23 cells; retained sets are **not necessarily nested**. Retention changes do not establish biological improvement.
-
-## SoupX pilot and comparisons
-
-Pilot input: REVO30-P4 raw RSEC archives, 13,422 original calls, 28,246 genes. Background: 0 < molecules <100, rank proxy >1,000, ≥2,000 non-called background barcodes, no called cells in range. Preliminary clustering: LogNormalize, 2,000 variable genes, PCs 1–20, k=20, Louvain 0.6, seed 1234. SoupX 1.6.2: automatic rho, subtraction, seeded integer rounding.
-
-| Job / date | Purpose / parents | Execution / outcome | Availability / record |
-|---|---|---|---|
-| 44404957 / Oct 7 | First raw-input pilot | FAILED 1:0; gzip connection handling | Data folder later deleted; historical diagnostics retained |
-| 44404963 / Oct 7 | Corrected pilot reader; raw input | COMPLETED 0:0; rho 0.031; 3.10% molecules removed; qualified marker review later passed | Data later deleted; [diagnostics](results/soupx/job-44404963/REVO30-P4/), [log](logs/soupx-44404963.log) |
-| 44405863 / Oct 7 | Raw + SoupX 44404963 + CellBender 44400520 | COMPLETED 0:0; matched-cell comparison and marker tables checked; 3 figures inspected | [Review](results/soupx/job-44405863/REVO30-P4/) |
-| 44408206 / Oct 7 | Raw + SoupX 44404963 + CellBender 44403564 | COMPLETED 0:0; updated comparator; counts/IDs/call flags checked; 3 figures inspected | [Review](results/soupx/job-44408206/REVO30-P4/) |
-| 44409555 / Oct 7 | Initial 23-sample raw-input array | First four FAILED at plotting; remaining tasks cancelled | Eight data folders later deleted; historical diagnostics retained |
-
-| REVO30-P4 method | Molecules retained | Removed | Positive-reference marker retention | Negative-reference marker removal |
-|---|---:|---:|---:|---:|
-| Raw | 84,811,621 | — | — | — |
-| SoupX 44404963 / 44409807 | 82,183,607 | 3.09865% | 99.80% | 35.40% |
-| CellBender 44400520 | 81,406,722 | 4.01466% | 99.77% | 40.01% |
-| CellBender 44403564 | 81,056,997 | 4.42702% | 99.72% | 40.71% |
-
-- CellBender 44400520 had convergence warnings; 44403564 (learning rate 5e-05, 150 epochs) passed reviewed convergence diagnostics. Neither was biologically accepted.
-- Comparison uses original called cells only: 9,426 / 5,419 additional CellBender calls excluded respectively. In 44403564, original cell 55584626 is uncalled with zero corrected molecules, explicitly retained; jointly called sensitivity gives 4.42274% removal.
-- Corrected-total correlations ≈0.9998 coexist with negative removed-total correlations (−0.5740 / −0.5644): corrections are not equivalent. More removal is not necessarily better.
-- Marker references are post-hoc: 26 genes, four overlap rho fitting, six unresolved clusters; excluding fitting markers gives similar retention. SoupX half-maximum spans are not confidence intervals.
-- All-sample 44409807 reproduces the pilot counts exactly for REVO30-P4. All 23 fits and representative marker figures were inspected; numerical status remains `validated_pending_qc` for biological acceptance.
-
-## Historical raw-input runs
-
-Legacy flat-path attribution uses logs/accounting/timestamps, not immutable job metadata. Unknown parents remain unknown; overwritten files cannot be reconstructed from a current path.
-
-| Job / date | Stage / parent | Execution | Output / qualification | Log |
-|---|---|---|---|---|
-| 44176755 / Sep 29 | Normalization; exact parent not recorded | COMPLETED | [SCT retained](data/norm_feat/job-44176755/sct.rds); LogNormalize overwritten/unavailable | [Log](logs/20260929-0143-norm-feat-pipeline.log) |
-| 44194877 / Sep 30 | QC; raw filtered MEX | COMPLETED | Labeled, DoubletFinder-clean and Scrublet-clean checkpoints; incomplete historical QC settings | [Log](logs/20260930-0006-qc-pipeline.log) |
-| 44212906 / Sep 30 | LogNormalize; exact parent not recorded | COMPLETED | [Checkpoint](data/norm_feat/job-44212906/lognorm.rds) | [Log](logs/20260930-1325-norm-feat-pipeline.log) |
-| 44276132 / Oct 1 | QC; 23 raw filtered MEX archives | COMPLETED 0:0 | 299,393 input → 231,993 QC-passing; DoubletFinder-clean 228,077; Scrublet-clean 226,738; cell sets checked; historical BD-rate clamp limitation | [Log](logs/20261001-172502-qc-pipeline-44276132.log) |
-| 44280920 / Oct 1 | LogNormalize; 44276132 Scrublet-clean | COMPLETED 0:0 | **Wrong regression specification**: absent `percent_mito`; only nFeature_RNA regressed; preserved, not downstream input | [Log](logs/20261001-195329-norm-feat-pipeline-44280920.log) |
-| 44281196 / Oct 1 | Corrected LogNormalize; 44276132 Scrublet-clean | COMPLETED 0:0 | Both percent.mt and nFeature_RNA regressed; historical downstream input | [Log](logs/20261001-203622-norm-feat-pipeline-44281196.log) |
-
-### Historical integration
-
-All used 23 samples and seed 1234. Historical Harmony maximum=10; scVI used original RNA counts, 3,000 selected genes, two layers, negative-binomial likelihood, automatic epoch limit (35 in 44281712). Legacy diagnostics sampled 20,000 cells, later runs 50,000; iLISI perplexity=30, Euclidean sample-label silhouettes.
-
-| Job / date | Method | Parent / cells | PCA / integrated axes | Execution / availability | Log |
-|---|---|---|---|---|---|
-| 44184472 / Sep 29 | Legacy Harmony | Mutable flat path; 262,936 | 30 / 30 | CANCELLED; no uniquely attributable output | [Log](logs/20260929-1358-integration-pipeline.log) |
-| 44190509 / Sep 29 | Legacy Harmony, LogNormalize + SCT | Mutable flat paths; 262,936 each | 30 / 30 | COMPLETED; shared `data/integration/lognorm.rds` and `sct.rds`; attribution qualified | [Log](logs/20260929-1717-integration-pipeline.log) |
-| 44193502 / Sep 29 | Harmony | Exact producer unknown; 262,936 | 30 / 30 | COMPLETED | [Log](logs/20260929-213551-integration-harmony-44193502.log) |
-| 44193503 / Sep 29 | scVI | Exact producer unknown; 262,936 | 30 / 30 | COMPLETED | [Log](logs/20260929-213551-integration-scvi-44193503.log) |
-| 44215817 / Sep 30 | scVI | Exact producer unknown; 262,303 | 30 / 30 | COMPLETED | [Log](logs/20260930-154712-integration-scvi-44215817.log) |
-| 44215822 / Sep 30 | Harmony | Exact producer unknown; 262,303 | 30 / 30 | COMPLETED | [Log](logs/20260930-154738-integration-harmony-44215822.log) |
-| 44227281 / Sep 30 | scVI | Exact producer unknown; 262,303 | 30 / 20 | COMPLETED | [Log](logs/20260930-223724-integration-scvi-44227281.log) |
-| 44281709 / Oct 1 | Harmony | 44281196; 226,738 | 20 / 20 | COMPLETED 0:0; diagnostics retained | [Log](logs/20261001-220536-integration-harmony-44281709.log) |
-| 44281712 / Oct 1 | scVI | 44281196; 226,738 | 20 / 20 | COMPLETED 0:0; diagnostics retained | [Log](logs/20261001-220558-integration-scvi-44281712.log) |
-| 44282203 / Oct 1–2 | CCA | 44281196; 226,738 | 20 / 20 | COMPLETED 0:0; 23h03m57s; diagnostics and UMAP fits logged; no independent full-object audit at completion | [Log](logs/20261001-234739-integration-cca-44282203.log) |
-| 44445961 / Oct 9 | CCA UMAP exploration, 15-task array | 44282203: CCA checkpoint and saved default UMAP; 226,738 | — / 20 | COMPLETED 15/15, exit 0:0; 1h10m10s overall; all comparison PNGs present; no object persistence or plot inspection | [Record](results/integration/cca/job-44282203/.INFO), [results](results/integration/cca/job-44282203/) |
-
-### Historical clustering
-
-U=unintegrated PCA, H=Harmony, S=scVI. A–C: 262,303 cells; D/E: 226,738. All jobs below completed; 44310241's integration parent was not recorded in this history.
-
-| Profile | Axes U/H/S | Neighbors | Resolutions |
-|---|---|---:|---|
-| A | 30/30/30 | 20 | 0.4, 0.6, 0.8, 1.0 |
-| B | 30/30/30 | 60 | 0.1, 0.2, 0.3, 0.4 |
-| C | 30/30/20 | 100 | 0.05, 0.1, 0.15, 0.2, 0.25, 0.3 |
-| D | 20/20/20 | 100 | 0.05, 0.1, 0.15, 0.2, 0.25, 0.3 |
-| E | 20/20/20 | 100 | 0.4, 0.6, 0.8, 1.0 |
-
-A–E settings: Annoy Euclidean, 50 trees, SNN pruning 1/15; Louvain, 10 starts/iterations; seed 1234; 50,000 diagnostic cells. Cluster counts follow resolution order, not an optimal-resolution recommendation.
-
-| Job | Method / profile | Parent / input reduction | Cluster counts | Record |
-|---|---|---|---|---|
-| 44221464 | U / A | 44215822: preserved PCA | 34/40/43/51 | [Log](logs/20260930-192711-clustering-unintegrated-44221464.log) |
-| 44221465 | H / A | 44215822: Harmony | 33/37/44/52 | [Log](logs/20260930-192741-clustering-harmony-44221465.log) |
-| 44221467 | S / A | 44215817: scVI | 38/49/55/60 | [Log](logs/20260930-192742-clustering-scvi-44221467.log) |
-| 44222698 | U / B | 44215822: preserved PCA | 19/24/29/32 | [Log](logs/20260930-211635-clustering-unintegrated-44222698.log) |
-| 44222697 | H / B | 44215822: Harmony | 19/24/28/30 | [Log](logs/20260930-211633-clustering-harmony-44222697.log) |
-| 44222701 | S / B | 44215817: scVI | 26/33/34/37 | [Log](logs/20260930-211654-clustering-scvi-44222701.log) |
-| 44228331 | U / C | 44215822: preserved PCA | 15/19/21/24/25/25 | [Log](logs/20260930-235042-clustering-unintegrated-44228331.log) |
-| 44228335 | H / C | 44215822: Harmony | 15/18/20/22/22/24 | [Log](logs/20260930-235047-clustering-harmony-44228335.log) |
-| 44228330 | S / C | 44227281: scVI | 17/23/27/30/31/31 | [Log](logs/20260930-235041-clustering-scvi-44228330.log) |
-| 44282105 | U / D | 44281196: PCA directly | 11/14/16/17/18/19 | [Bundle](results/clustering/unintegrated/job-44282105/analysis.rds) |
-| 44282104 | H / D | 44281709: Harmony | 12/15/16/16/17/20 | [Bundle](results/clustering/harmony/job-44282104/analysis.rds) |
-| 44282108 | S / D | 44281712: scVI | 15/20/23/28/31/32 | [Bundle](results/clustering/scvi/job-44282108/analysis.rds) |
-| 44282547 | U / E | 44281196: PCA directly | 21/24/27/30 | [Bundle](results/clustering/unintegrated/job-44282547/analysis.rds) |
-| 44282546 | H / E | 44281709: Harmony | 20/24/28/30 | [Bundle](results/clustering/harmony/job-44282546/analysis.rds) |
-| 44282549 | S / E | 44281712: scVI | 33/38/42/47 | [Bundle](results/clustering/scvi/job-44282549/analysis.rds) |
-| 44310241 | CCA; 0.1/0.2/0.3/0.4/0.6/0.8/1.0 | Integration parent not recorded | 16/21/25/25/29/33/36 | [Bundle](results/clustering/cca/job-44310241/analysis.rds) |
-
-D/E bundles passed provenance, cell-set, settings and diagnostic checks; most full RDS files were not reopened. scVI E was independently reopened by 44282993. Profile E **plots omit resolution 1.0 only** (47 scVI clusters exceed 45-color palette); objects/CSV tables retain all four resolutions.
-
-### Marker discovery on CCA 44310241
-
-Input: 226,738 cells, 20,916 genes, 23 normalized layers. RNA Wilcoxon/Presto, positive markers, min.pct=0.25, logfc.threshold=0.25, no cell cap; Bonferroni-adjusted p<0.05 for selection, ranked by decreasing log2FC.
-
-| Job / date | Purpose / input | Execution / limit |
-|---|---|---|
-| 44394946 / Oct 6 | Preflight on 44310241 | COMPLETED 0:0; full checkpoint read, 50-gene all-cell API test only |
-| 44395117 / Oct 6 | Software/figure validation on 44310241 | COMPLETED 0:0; normalization, joining, test statistics, ranking and figures checked on restricted features |
-| 44395220 / Oct 6 | Seven-resolution production markers on 44310241 | CANCELLED by user; [partial output](results/find_markers/cca/job-44395220/), [log](logs/20261006-154439-find-markers-44395220.log) |
-| 44395226 / Oct 6 | Plots from 44395220 + checkpoint 44310241 | CANCELLED by user |
-| 44396189 / Oct 6 | Production plot check | CANCELLED by user |
-
-No completed production marker analysis. Subsequent CSV-only simplification is **not covered by earlier validation**; new production/plot runs await explicit authorization.
-
-## Supporting jobs: plotting, checks and failed attempts
-
-Targets below are validation/comparison inputs, not new analysis checkpoints. Grouped IDs retain individual outcomes.
-
-### Historical plotting and retired augmentation
-
-| Job | Inputs / task | Recorded outcome | Record |
-|---|---|---|---|
-| 44215826; 44220807 | scVI 44215817 + Harmony 44215822 comparison | Both COMPLETED; second reused output directory | [First log](logs/20260930-163630-integration-plots-44215826.log), [second](logs/20260930-183438-integration-plots-44220807.log) |
-| 44227466 | scVI 44227281 + Harmony 44215822 comparison | COMPLETED | [Log](logs/20260930-232055-integration-plots-44227466.log) |
-| 44282037 | scVI 44281712 + Harmony 44281709 comparison | COMPLETED 0:0; seven figures | [Manifest/results](results/integration/comparison/scvi-job-44281712_harmony-job-44281709/) |
-| 44310707 / 44310708 / 44310709 | Retired augmentation of scVI 44281712 / Harmony 44281709 / CCA 44282203 respectively | Last recorded RUNNING Oct 3 20:49; augmented copies later removed; terminal states unknown | `logs/20261003-204712-add-tsne-<ID>.log` |
-| 44310723 | Comparison depending on all three augmentation jobs | Last recorded PENDING Oct 3; comparison directory later removed; terminal state unknown | [Log](logs/integration-plots-44310723.out) |
-| 44221470 | Clustering A: U 44221464 / H 44221465 / S 44221467 | FAILED 1:0; >45-color guard; partial comparisons only | [Log](logs/20260930-195423-clustering-plots-44221470.log) |
-| 44222706 | Clustering B: U 44222698 / H 44222697 / S 44222701 | COMPLETED | [Log](logs/20260930-215708-clustering-plots-44222706.log) |
-| 44228340 | Clustering C: U 44228331 / H 44228335 / S 44228330 | COMPLETED | [Log](logs/20261001-010945-clustering-plots-44228340.log) |
-| 44282442 | Clustering D: U 44282105 / H 44282104 / S 44282108 | COMPLETED 0:0; full comparisons | [Log](logs/20261002-004357-clustering-plots-44282442.log) |
-| 44283792 | Clustering E: U 44282547 / H 44282546 / S 44282549 | COMPLETED 0:0; plots 0.4/0.6/0.8, tables all four resolutions | [Log](logs/20261002-065719-clustering-plots-44283792.log) |
-| 44282993 | Full saved scVI E checkpoint 44282549 | COMPLETED 0:0; assignments, 20-D latent space and UMAP provenance matched | [Log](logs/scvi-checkpoint-verify-44282993.out) |
-
-### SoupX and QC checks
-
-| Job | Inputs / target | Recorded outcome | Record |
-|---|---|---|---|
-| 44405241 / 44405362 / 44405494 | Pilot review: SoupX 44404963 + CellBender 44400520 | Each FAILED 1:0: plot-order arguments / H5 latent-group reader / venv symlink respectively; replaced by 44405863 | `results/soupx/job-<ID>/REVO30-P4/` |
-| 44408133 | Pilot review with CellBender 44403564 | FAILED 1:0; partial argument matching in dot-size settings; replaced by 44408206 | `results/soupx/job-44408133/REVO30-P4/` |
-| 44409538; 44409543 | SoupX plotting preflight | First FAILED (Assay5 namespace); second COMPLETED 0:0, marker totals checked | `logs/soupx-review-<ID>.log` |
-| 44409564 | Dependent check for initial array 44409555 | CANCELLED with array | Historical cancellation record |
-| 44409746 | Final SoupX plotting-helper preflight | COMPLETED 0:0; restored nonempty Features label; figures inspected | [Log](logs/soupx-review-44409746.log) |
-| 44409813 | All 23 saved count/marker outputs from 44409807 | COMPLETED 0:0; independent sparse-count and marker arithmetic checks passed | [Log](logs/soupx-verify-44409813.log) |
-| 44410208 | Plot-only array on 44409807 | All 23 COMPLETED 0:0; widened plots, numerical summaries unchanged | `logs/soupx-plots-44410208_<task>.log` |
-| 44411222 | SoupX-to-Seurat loader, all 23 samples | COMPLETED 0:0; exact counts/IDs/metadata, MT names, merge and raw-loader regression passed | [Log](logs/qc-soupx-io-test-44411222.log) |
-| 44413862; 44413925 | Upper-ribosomal QC test | First FAILED on named-vector expectation; diagnostic confirmed matching values | Historical test record |
-| 44413950; 44414023 | 4-MAD / final 3-MAD ribosomal tests on SoupX 44409807 | 3-MAD verification COMPLETED 0:0; 222 / 1,401 criterion flags respectively; not unique QC exclusions | [Final test log](logs/qc-ribo-mad3-test-44414023.log) |
-| 44414192 | Two-sample QC pilot array on SoupX 44409807 | Two samples completed; parallel workflow withdrawn | Disposable outputs removed |
-| 44414252; 44414254; 44414264 | Pilot collector / dependent check / read check | First two CANCELLED; third FAILED reading interrupted clean-RDS write | Disposable invalid output removed |
-| 44414269 | Sequential QC on REVO26-C/REVO30-P4, SoupX 44409807 | COMPLETED 0:0; counts/flags/Scrublet/gene 9–10 boundary verified; clean 10,294 / 11,945 | Disposable test RDS removed |
-| 44415118 | Saved QC 44415111 | FAILED 1:0; compared historical settings with mutable params; remaining validation incomplete, no demonstrated data defect | [Log](logs/qc-soupx-output-check-44415118.log) |
-| 44415439 | Saved QC 44415373 | COMPLETED 0:0; exact input counts, saved settings, independent flags/retention/gene filtering passed | [Log](logs/qc-soupx-verify-44415439.log) |
-| 44437549 | Sensitivity 44437522 tables/plots | COMPLETED 0:0; independent checks and UMAP legend refinement | [Log](logs/qc-sensitivity-plotcheck-44437549.log) |
-| 44438061; 44438064 | Production QC preflight, REVO29-N4 | First FAILED on named-vector test; second COMPLETED 0:0; thresholds, equality, independence and sensitivity agreement passed | `logs/qc-preflight-<ID>.log` |
-| 44438069 | Production QC 44438067 | FAILED: assumed historical Scrublet scores identical | [Log](logs/qc-combined-verify-44438069.log) |
-| 44438245 | Score diagnostic: 44438067 vs historical scores | BD-rate table additions explain REVO30-P10 score change; **no doublet calls changed**; other 22 samples identical | [Log](logs/qc-score-check-44438245.log) |
-| 44438254 | Production QC 44438067 | FAILED: assumed source/merged gene order identical; corrected check to align by IDs | [Log](logs/qc-combined-verify-44438254.log) |
-| 44438256 | Production QC 44438067 | COMPLETED 0:0; saved parameters, thresholds, counts/IDs/metadata, flags and gene boundary passed; exact sensitivity agreement | [Log](logs/qc-combined-verify-44438256.log) |
-
-### Integration checks
-
-| Job | Inputs / target | Recorded outcome | Record |
-|---|---|---|---|
-| 44417083 | Plot-only CCA 44282203 | COMPLETED 0:0; six PNGs; inspected sample and faceted CCA plots; no new integration | [Log](logs/integration-plot-test-44417083.log) |
-| 44417228 | CCA plotting rejection cases | COMPLETED 0:0; existing output directory and missing UMAP correctly rejected | [Log](logs/integration-plot-neg-44417228.log) |
-| 44436241 | Saved Harmony 44435612 | COMPLETED 0:0; IDs/metadata/RNA/PCA, finite aligned embeddings and diagnostics checked; completed before cancellation request | [Log](logs/harmony-verify-44436241.log) |
 
 ## Reading and maintaining this index
 
-- **Update a row, do not append a narrative.** Record job/date, stage, explicit parent/input role, status, one-line outcome and an existing evidence link. Keep lineage synchronized when a branch changes.
-- Detailed parameters, seeds, timing, resources and checks belong in per-run `.INFO`, saved execution metadata and original logs. Current source settings are not historical evidence.
-- Separate execution from output availability and computational checks from biological acceptance. Unknown parents/statuses stay unknown; file presence alone does not prove completion.
-- No extra resource-consuming validation/check jobs for successful runs unless investigating an actual failure or explicitly requested. Coordinate jobs with their owning threads.
-- Historical SVG copies were removed Oct 7; PNGs remain where outputs were retained. Old shared-path figures may mix runs. Links here are evidence locations, not a fresh audit of all artifacts.
-- Clusters, mixing metrics, convergence and visually plausible UMAPs do not establish cell identities or biological preservation. Use [README](README.md) for current launch commands.
+- One row per run: job/date, config, execution, one-line outcome, evidence link.
+- `.INFO` files in `data/job-<id>/` and `results/job-<id>/` hold the full
+  resolved config, inputs, per-stage outcomes and status; link them as Record.
+- Separate execution from checks and computational checks from biological
+  acceptance; completed means the pipeline finished, not that clusters are
+  validated cell identities.
+- Keep pipeline evidence (logs, run folders) unless removal is requested;
+  a row without a Record link should say where evidence went.

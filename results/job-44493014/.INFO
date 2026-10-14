@@ -1,0 +1,107 @@
+# Pipeline run job-44493014
+
+## Run
+- Status: completed
+- Started: 2026-10-11 22:35:31 CEST
+- Finished: 2026-10-12 00:58:12 CEST
+- Input source: soupx
+- Code: git fa599b2c6028ae73166a75593a98b50062539288; R 4.6.1; Seurat 5.5.1; harmony 2.0.5
+
+## Inputs
+- REVO26-C: data/raw_data/soupx/REVO26-C/job-44409807/corrected_counts.rds
+- REVO26-N4: data/raw_data/soupx/REVO26-N4/job-44409807/corrected_counts.rds
+- REVO26-N10: data/raw_data/soupx/REVO26-N10/job-44409807/corrected_counts.rds
+- REVO26-P4: data/raw_data/soupx/REVO26-P4/job-44409807/corrected_counts.rds
+- REVO26-P10: data/raw_data/soupx/REVO26-P10/job-44409807/corrected_counts.rds
+- REVO27-C: data/raw_data/soupx/REVO27-C/job-44409807/corrected_counts.rds
+- REVO27-N4: data/raw_data/soupx/REVO27-N4/job-44409807/corrected_counts.rds
+- REVO27-N10: data/raw_data/soupx/REVO27-N10/job-44409807/corrected_counts.rds
+- REVO27-P4: data/raw_data/soupx/REVO27-P4/job-44409807/corrected_counts.rds
+- REVO27-P10: data/raw_data/soupx/REVO27-P10/job-44409807/corrected_counts.rds
+- REVO29-C: data/raw_data/soupx/REVO29-C/job-44409807/corrected_counts.rds
+- REVO29-N4: data/raw_data/soupx/REVO29-N4/job-44409807/corrected_counts.rds
+- REVO29-P4: data/raw_data/soupx/REVO29-P4/job-44409807/corrected_counts.rds
+- REVO30-C: data/raw_data/soupx/REVO30-C/job-44409807/corrected_counts.rds
+- REVO30-N4: data/raw_data/soupx/REVO30-N4/job-44409807/corrected_counts.rds
+- REVO30-N10: data/raw_data/soupx/REVO30-N10/job-44409807/corrected_counts.rds
+- REVO30-P10: data/raw_data/soupx/REVO30-P10/job-44409807/corrected_counts.rds
+- REVO30-P4: data/raw_data/soupx/REVO30-P4/job-44409807/corrected_counts.rds
+- REVO31-C: data/raw_data/soupx/REVO31-C/job-44409807/corrected_counts.rds
+- REVO31-N4: data/raw_data/soupx/REVO31-N4/job-44409807/corrected_counts.rds
+- REVO31-N8: data/raw_data/soupx/REVO31-N8/job-44409807/corrected_counts.rds
+- REVO31-P10: data/raw_data/soupx/REVO31-P10/job-44409807/corrected_counts.rds
+- REVO31-P4: data/raw_data/soupx/REVO31-P4/job-44409807/corrected_counts.rds
+- Ambient correction producer: job-44409807; corrected counts reused, not rerun.
+
+## Settings
+### shared
+- dims: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30
+
+### run
+- input_source: soupx
+- samples: REVO26-C, REVO26-N4, REVO26-N10, REVO26-P4, REVO26-P10, REVO27-C, REVO27-N4, REVO27-N10, REVO27-P4, REVO27-P10, REVO29-C, REVO29-N4, REVO29-P4, REVO30-C, REVO30-N4, REVO30-N10, REVO30-P10, REVO30-P4, REVO31-C, REVO31-N4, REVO31-N8, REVO31-P10, REVO31-P4
+- seed: 1234
+
+### qc
+- metrics: mitochondrial_genes=ATP6, ATP8, COX1, COX2, COX3, CYTB, ND1, ND2, ND3, ND4, ND4L, ND5, ND6; mitochondrial_pattern=^MT-; ribosomal_pattern=^RP[LS]; hemoglobin_genes=HBB, HBE1, HBM, HBQ1, HBZ
+- filtering: min_features=200; max_features_cap=5000; feature_mads=4; max_mito_cap=20; mito_mads=4; max_hb_percent=0.5; min_ribo_percent=0; min_log10_genes_per_umi=0.8; min_cells_per_feature=10
+- remove_genes: MT-ATP6, MT-COX1, MT-COX2, MT-COX3, MT-CYTB, MT-ND1, MT-ND2, MT-ND4, RPL37, RPS12, RPS24, RPS8, ENSSSCG00000052671, ENSSSCG00000048856
+- doublets: bd_multiplet_table=100:0, 500:0.1, 1000:0.2, 2000:0.5, 3000:0.7, 4000:1, 5000:1.2, 6000:1.4, 7000:1.7, 8000:1.9, 9000:2.1, 10000:2.4, 11000:2.6, 12000:2.8, 13000:3.1, 14000:3.3, 15000:3.5, 16000:3.8, 17000:4, 18000:4.2, 19000:4.5, 20000:4.7; n_variable_features=2000; pcs=1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20; seed=1234; scrublet=min_counts=3; n_prin_comps=30; threshold=0.15; seed=0
+
+### norm
+- n_variable_features: 3000
+- vars_to_regress: percent.mt, nFeature_RNA, S.Score, G2M.Score
+- lognorm_method: LogNormalize
+- lognorm_scale_factor: 10000
+- hvg_selection_method: vst
+- n_pcs: 50
+
+### cell_cycle
+- rename_map: ENSSSCG00000015785=MLF1IP, ENSSSCG00000031741=RRM2, ENSSSCG00000026302=MKI67, ENSSSCG00000008677=TACC3, ENSSSCG00000017893=FAM64A, ENSSSCG00000017213=HN1, ENSSSCG00000007493=AURKA
+- ctrl: 43
+- seed: 1234
+- tail_cutoffs: REVO26-C:0.258:0.248, REVO26-N4:0.352:0.248, REVO26-N10:0.324:0.248, REVO26-P4:0.257:0.248, REVO26-P10:0.296:0.248, REVO27-C:0.380:0.295, REVO27-N4:0.380:0.295, REVO27-N10:0.380:0.295, REVO27-P4:0.380:0.295, REVO27-P10:0.380:0.295, REVO29-C:0.371:0.236, REVO29-N4:0.371:0.236, REVO29-P4:0.371:0.236, REVO30-C:0.320:0.250, REVO30-N4:0.320:0.250, REVO30-N10:0.320:0.250, REVO30-P10:0.320:0.250, REVO30-P4:0.320:0.250, REVO31-C:0.380:0.250, REVO31-N4:0.380:0.250, REVO31-N8:0.380:0.250, REVO31-P10:0.380:0.250, REVO31-P4:0.380:0.250
+
+### integration
+- method: harmony
+- harmony: max_iter=10
+
+### clustering
+- seed: 1234
+- k_param: 100
+- nn_method: annoy
+- distance: euclidean
+- n_trees: 50
+- prune_snn: 0.0666666666666667
+- algorithm: 4
+- leiden_method: leidenbase
+- leiden_objective_function: modularity
+- resolutions: 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7
+- n_iter: 10
+
+## Stages
+### QC
+- 2026-10-11 23:01:58 CEST
+- 299393 input cells; 271228 QC-passing; 265763 Scrublet-clean (88.77%)
+- 21463 genes after the per-feature minimum; 14 listed genes removed; 23 samples
+- 8 QC figures saved (6 before/after comparisons, 2 per-sample UMAP sets)
+### normalization
+- 2026-10-11 23:32:37 CEST
+- 256550 cells; 21463 genes; 3000 consensus HVGs; 50 PCs
+- regressed: percent.mt, nFeature_RNA, S.Score, G2M.Score
+- cell-cycle: 9213 tail cells removed (3.47%); 256550 cells retained; cutoffs in misc$cell_cycle
+- 31 normalization figures saved (per-sample HVGs, cell-cycle removal, overlap, elbow, PC1-5 loadings)
+### integration
+- 2026-10-11 23:51:46 CEST
+- method: harmony; dims 1-30; batch variable: sample
+- Harmony converged after 6 iterations
+- 6 UMAP figures saved
+### clustering
+- 2026-10-12 00:58:10 CEST
+- Leiden clusters: 15 at resolution 0.1; 17 at resolution 0.2; 19 at resolution 0.3; 20 at resolution 0.4; 22 at resolution 0.5; 24 at resolution 0.6; 24 at resolution 0.7
+- final object saved: data/job-44493014/clustered.rds
+- cluster figure + assignments CSV saved (umap_resolutions, clustree)
+
+## Outputs
+- Final object: data/job-44493014/clustered.rds
+- Figures: results/job-44493014/{qc_plots,norm_plots,integration_plots,clusters_plots}

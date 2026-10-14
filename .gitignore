@@ -61,13 +61,13 @@ AGENTS.md
 # logs
 logs/
 
-# analysis outputs (Seurat RDS and derived files); results/qc is versioned
+# analysis outputs (Seurat RDS and derived files)
 output/
 results/*
-!results/qc
-!results/norm_feat
-!results/integration
-!results/clustering
+!results/job*
+# Keep generated vector/PDF figures local; version PNG figures instead.
+results/**/*.pdf
+results/**/*.svg
 
 # env
 renv/

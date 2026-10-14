@@ -8,7 +8,7 @@
 
 set -euo pipefail
 if [[ $# -ne 2 ]]; then
-  echo "Usage: sbatch scripts/sbatch_find_markers.sh <clustering/lognorm.rds> <0.1,0.2,...>" >&2
+  echo "Usage: sbatch scripts/sbatch_find_markers.sh <data/job-XXX/clustered.rds> <resolution>" >&2
   exit 1
 fi
 cd "${SLURM_SUBMIT_DIR:-/work/project/revo-pig-sc/analysis}"
@@ -19,4 +19,4 @@ module purge
 module load compilers/gcc/12.2.0
 module load statistics/R/4.6.1
 export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1
-Rscript R/find_markers/main.R "$@"
+Rscript R/clusters/find_markers.R "$1" "$2"
