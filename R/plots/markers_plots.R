@@ -68,7 +68,7 @@ plot_marker_features <- function(
       plot.subtitle = element_text(size = 10),
       plot.caption = element_text(size = 7, hjust = 0)
     )
-    for (extension in c("png", "svg")) {
+    for (extension in c("png", "pdf")) {
       save_marker_plot(plot, gene, directory, width = 5.2, height = 5.8,
         extension = extension)
     }

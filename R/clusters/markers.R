@@ -36,7 +36,7 @@ marker_feature_panels <- list(
   ),
   Macrophages_AM_like = c(
     "LGALS3", "APOE", "S100A12", "FCN2", "PTGR1",
-    "CIDEC", "FCGR1A", "FCN1", "GPNMB", "SIGLEC1",
+    "CIDEC", "FCGR1A", "FCN1", "GPNMB", "SIGLEC1", #cd169
     # Owner-approved screenshot-MP additions 2026-10-13:
     "PON2", # cl 3 log2FC 2.21/pct.1 0.513
     "TLR4", # cl 3 pct.1 0.917 (screenshot TLR4hi); also cl 13
@@ -136,7 +136,7 @@ marker_feature_panels <- list(
   ),
   Ciliated = c(
     "DNAH11", "CIMIP1", "RSPH4A", "C1orf87", "RSPH1",
-    "SNTN", "UBXN10", "CIBAR2", "CFAP144", "CIMAP1B"
+    "SNTN", "UBXN10", "CIBAR2", "CFAP144", "CIMAP1B", "PIFO"
   ),
   Tuft = c(
     "SH2D7", "POU2F3", "RGS21", "RGS13", "AVIL",

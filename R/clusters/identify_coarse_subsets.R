@@ -1,5 +1,5 @@
-# Coarse-subset highlight entry point: one SVG per broad subset, each showing
-# the subset's res-0.7 clusters in distinct palette colors on a grey background.
+# Coarse-subset highlight PDFs: one PDF per broad subset, res-0.7 clusters in
+# distinct palette colors on a grey background, via scCustomize (no raster).
 # Usage: Rscript R/clusters/identify_coarse_subsets.R <annotated_clustered.rds>
 #
 # Read-only: the object is loaded for plotting only; nothing is written back.
@@ -38,9 +38,9 @@ out_dir <- file.path("results", basename(dirname(input)),
   "clusters_plots", "subset")
 
 if (!file.exists(input)) stop("Input not found: ", input)
-existing <- list.files(out_dir, pattern = "\\.svg$")
+existing <- list.files(out_dir, pattern = "\\.pdf$")
 if (length(existing) > 0L) {
-  stop("Subset SVGs already exist in ", out_dir, ": ",
+  stop("Subset PDFs already exist in ", out_dir, ": ",
     paste(existing, collapse = ", "),
     "; preserve them before running again.")
 }
@@ -70,22 +70,19 @@ for (subset in names(subset_clusters)) {
   colors <- viz_palette[seq_along(clusters)]
   message("Subset ", subset, ": clusters ", paste(clusters, collapse = ","))
   set.seed(seed)
-  # Fixed small point size with raster off: scCustomize auto-rasterizes above
-  # 200k cells and the raster path ignores pt.size (byte-identical reruns).
   p <- scCustomize::Cluster_Highlight_Plot(seurat_object = obj,
     cluster_name = clusters, highlight_color = colors,
     background_color = "lightgray", reduction = reduction,
-    pt.size = 0.2,
-    raster = FALSE, label = TRUE) +
+    pt.size = 0.2, raster = FALSE, label = TRUE) +
     ggplot2::ggtitle(paste0(subset, " \u2014 resolution 0.7 (",
       paste(clusters, collapse = ", "), ")")) +
     ggplot2::labs(caption =
       "Same coordinates as umap_resolutions.png (umap_harmony). Highlighted clusters in subset colors; other cells grey.")
-  out_svg <- file.path(out_dir, paste0(subset, ".svg"))
-  ggplot2::ggsave(out_svg, plot = p, width = 10, height = 8,
-    units = "in", device = "svg", bg = "white")
-  message("  Saved: ", out_svg, " (", file.size(out_svg), " bytes)")
-  stopifnot("Empty figure written" = file.size(out_svg) > 0)
+  out_pdf <- file.path(out_dir, paste0(subset, ".pdf"))
+  ggplot2::ggsave(out_pdf, plot = p, width = 10, height = 8,
+    units = "in", device = "pdf", bg = "white")
+  message("  Saved: ", out_pdf, " (", file.size(out_pdf), " bytes)")
+  stopifnot("Empty figure written" = file.size(out_pdf) > 0)
 }
 
 stopifnot(
@@ -93,4 +90,4 @@ stopifnot(
     file.exists(input) && file.mtime(input) == in_mtime &&
       file.size(input) == in_size
 )
-message("Subset highlight SVGs completed: ", out_dir)
+message("Subset highlight PDFs completed: ", out_dir)

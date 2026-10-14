@@ -193,7 +193,11 @@ fail_run_record <- function(record, stage, error) {
 }
 
 format_value <- function(value) {
-  if (is.data.frame(value)) {
+  if (is.null(value)) {
+    # An intentional NULL (e.g. a deliberately package-default detector
+    # argument) must be visible in .INFO, not rendered as an empty string.
+    "NULL"
+  } else if (is.data.frame(value)) {
     paste(apply(value, 1, paste, collapse = ":"), collapse = ", ")
   } else if (is.list(value)) {
     paste(names(value), vapply(value, format_value, character(1)),

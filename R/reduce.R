@@ -7,8 +7,8 @@ suppressPackageStartupMessages({
 
 # --- QC diagnostics -----------------------------------------------------------
 
-# Temporary per-sample PCA used only for QC visualization and doublet detection;
-# never alters the saved counts.
+# Temporary per-sample PCA used only for QC visualization; the doublet
+# detector reads the raw counts, not this embedding.
 preprocess_qc_umap <- function(seurat_obj, params) {
   set.seed(params$seed)
   seurat_obj <- NormalizeData(seurat_obj, verbose = FALSE)
