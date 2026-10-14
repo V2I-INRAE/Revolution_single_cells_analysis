@@ -2,42 +2,12 @@
 # Sourced by main.R; the parameter values live in
 # config$qc$doublets$scdblfinder and are recorded in .INFO.
 #
-# dbr is a fraction, not a percentage. The "bd_table" value derives the rate
-# per sample from the BD Rhapsody multiplet table, the same derivation the
-# pipeline used with Scrublet; an explicit NULL uses the package's 10X rate
-# prior. dbr_sd = 1 removes the rate-deviation penalty in thresholding.
-# Neither is an implicit BD Rhapsody default. Scores are not on Scrublet's
-# scale: use scDblFinder.class, never the old Scrublet threshold of 0.15.
-
-# Interpolate BD percentages; extend the last segment above the table without a cap.
-bd_multiplet_rate <- function(n_cells, table) {
-  rate <- approx(table$cells, table$rate, xout = n_cells, rule = 2)$y
-  if (n_cells > max(table$cells)) {
-    last <- tail(table, 2L)
-    rate <- last$rate[2] + (n_cells - last$cells[2]) *
-      diff(last$rate) / diff(last$cells)
-  }
-  return(rate / 100)
-}
-
-# Resolve the configured dbr into the adapter's numeric-or-NULL contract:
-# "bd_table" derives the per-sample rate from the BD Rhapsody table, a number
-# passes through, NULL keeps the package's 10X prior.
-resolve_scdblfinder_dbr <- function(n_cells, doublets_config) {
-  dbr <- doublets_config$scdblfinder$dbr
-  if (identical(dbr, "bd_table")) {
-    rate <- bd_multiplet_rate(n_cells, doublets_config$bd_multiplet_table)
-    message(sprintf(
-      "scDblFinder expected doublet rate: %.4f%% for %d input cells (BD interpolation; upper linear extrapolation, no cap).",
-      100 * rate, n_cells
-    ))
-    return(rate)
-  }
-  if (!is.null(dbr) && !(is.numeric(dbr) && length(dbr) == 1L)) {
-    stop("config$qc$doublets$scdblfinder$dbr must be \"bd_table\", one fraction, or NULL.")
-  }
-  return(dbr)
-}
+# dbr is a fraction, not a percentage, and the pipeline passes NULL: no
+# externally supplied rate. dbr_sd = 1 disables the rate-deviation penalty, so
+# the threshold follows the score distribution. The BD Rhapsody multiplet
+# table was removed on 2026-10-13 because that penalty made its rate inert.
+# Scores are not on Scrublet's scale: use scDblFinder.class, never the old
+# Scrublet threshold of 0.15.
 
 detect_scdblfinder_doublets <- function(seurat_obj, dbr, dbr_sd, clusters, seed) {
   # Require explicit scientific choices, including an intentional NULL.

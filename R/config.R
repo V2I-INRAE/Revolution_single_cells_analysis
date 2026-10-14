@@ -62,40 +62,26 @@ config <- list(
       "ENSSSCG00000052671", "ENSSSCG00000048856"
     ),
     doublets = list(
-      # BD Rhapsody Instrument User Guide, Doc ID 214062 Rev. 3.0, pp. 80-81:
-      # captured cells on retrieved beads, not HT loaded cells per lane.
-      # https://www.bdbiosciences.com/content/dam/bdb/marketing-documents/BD-Rhapsody-Single-Cell-Analysis-System-Instrument.pdf
-      bd_multiplet_table = data.frame(
-        cells = c(
-          100, 500, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000,
-          9000, 10000, 11000, 12000, 13000, 14000, 15000, 16000, 17000,
-          18000, 19000, 20000
-        ),
-        rate = c(
-          0.0, 0.1, 0.2, 0.5, 0.7, 1.0, 1.2, 1.4, 1.7, 1.9,
-          2.1, 2.4, 2.6, 2.8, 3.1, 3.3, 3.5, 3.8, 4.0,
-          4.2, 4.5, 4.7
-        )
-      ),
       # Temporary per-sample PCA/UMAP used for QC diagnostics only.
       n_variable_features = 2000,
       pcs = 1:20,
       seed = 1234,
       # Doublet detection with scDblFinder on each sample's counts, all cells,
-      # before any filtering. Parameter values below are PROPOSED and await
-      # owner approval; alternatives are listed in the run record:
-      # - dbr: "bd_table" derives the per-sample rate from the BD table above
-      #   (the derivation used in the Scrublet era); numeric = fixed fraction;
-      #   NULL = the package's 10X rate prior.
-      # - dbr_sd = 1 removes the rate-deviation penalty in thresholding.
-      # - clusters = FALSE classifies without internal clustering (this stage
-      #   has no cluster structure yet); TRUE would cluster internally.
+      # before any filtering. The BD Rhapsody multiplet table was dropped by
+      # owner decision on 2026-10-13: with the rate-deviation penalty disabled
+      # its rate did not constrain the calls at all, so it implied an anchor
+      # the detector never used. Settings now:
+      # - dbr = NULL: no externally supplied rate. The package uses its own
+      #   internal estimate, and dbr_sd = 1 disables the rate-deviation
+      #   penalty, so the threshold follows the score distribution.
+      # - clusters = TRUE: the package clusters the capture internally and
+      #   generates artificial doublets from that cluster structure.
       # Scores are scDblFinder's, not Scrublet's: calls come from
       # scDblFinder.class, never the old Scrublet score threshold.
       scdblfinder = list(
-        dbr = "bd_table",
+        dbr = NULL,
         dbr_sd = 1,
-        clusters = FALSE,
+        clusters = TRUE,
         seed = 1234L
       )
     )
@@ -245,9 +231,11 @@ validate_config <- function(config) {
     "cell_cycle$rename_map must have unique sources and targets" =
       !anyDuplicated(c(names(config$cell_cycle$rename_map),
         unname(config$cell_cycle$rename_map))),
-    "qc$doublets$scdblfinder$dbr must be \"bd_table\", NULL, or one fraction in [0, 1]" =
-      identical(config$qc$doublets$scdblfinder$dbr, "bd_table") ||
-        is.null(config$qc$doublets$scdblfinder$dbr) ||
+    "qc$doublets$scdblfinder must define dbr, dbr_sd, clusters and seed" =
+      all(c("dbr", "dbr_sd", "clusters", "seed") %in%
+        names(config$qc$doublets$scdblfinder)),
+    "qc$doublets$scdblfinder$dbr must be NULL or one fraction in [0, 1]" =
+      is.null(config$qc$doublets$scdblfinder$dbr) ||
         (is.numeric(config$qc$doublets$scdblfinder$dbr) &&
           length(config$qc$doublets$scdblfinder$dbr) == 1L &&
           is.finite(config$qc$doublets$scdblfinder$dbr) &&

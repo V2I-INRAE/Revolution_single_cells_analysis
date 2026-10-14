@@ -72,6 +72,7 @@ run_stage <- function(stage, code) {
 # labeled object is then dropped and only the clean object carries forward.
 qc <- run_stage("QC", local({
   labeled_objs <- list()
+  detector_records <- list()
   for (sample in config$run$samples) {
     counts <- read_qc_counts(sample, config$run$input_source)
     obj <- build_seurat_obj_from_counts(counts, sample, config$qc)
@@ -88,11 +89,12 @@ qc <- run_stage("QC", local({
     doublets <- config$qc$doublets$scdblfinder
     obj <- detect_scdblfinder_doublets(
       obj,
-      dbr = resolve_scdblfinder_dbr(ncol(obj), config$qc$doublets),
+      dbr = doublets$dbr,
       dbr_sd = doublets$dbr_sd,
       clusters = doublets$clusters,
       seed = doublets$seed
     )
+    detector_records[[sample]] <- obj@misc$qc$scdblfinder
     labeled_objs[[sample]] <- label_retained_cells(obj)
     rm(obj, reduced_obj, coordinates)
     gc()
@@ -114,11 +116,41 @@ qc <- run_stage("QC", local({
 
   n_input <- ncol(labeled)
   n_qc_pass <- sum(labeled$keep_qc)
+  n_doublet_qc_pass <- sum(labeled$keep_qc & labeled$predicted_doublets)
+  n_doublet_qc_overlap <- sum(labeled$qc_outlier & labeled$predicted_doublets)
   clean <- filter_labeled_cells(labeled, config$qc)
   clean <- remove_listed_genes(clean, config$qc)
   validate_clean_object(clean)
   rm(labeled)
   gc()
+
+  # Per-capture detector provenance: the configured values are not enough, the
+  # realized threshold, calls and versions must be readable from .INFO.
+  detector <- config$qc$doublets$scdblfinder
+  detector_lines <- c(
+    paste0("scDblFinder per sample (doublets/input cells, threshold; dbr ",
+      if (is.null(detector$dbr)) "NULL, package-internal rate" else
+        paste0("fixed at ", detector$dbr), "):"),
+    vapply(names(detector_records), function(sample) {
+      r <- detector_records[[sample]]
+      paste0("  ", sample, ": ", r$n_doublets, "/", r$n_input_cells, " (",
+        sprintf("%.2f%%", 100 * r$n_doublets / r$n_input_cells),
+        "), threshold ", sprintf("%.4f", r$threshold), ", dbr ",
+        if (is.null(r$parameters$dbr)) "NULL" else
+          sprintf("%.5f", r$parameters$dbr))
+    }, character(1)),
+    paste0("  rate penalty: ", if (is.null(detector$dbr_sd))
+        "dbr.sd NULL (package heuristic 0.3 * dbr + 0.025)"
+      else paste0("dbr.sd ", detector$dbr_sd, if (detector$dbr_sd >= 1)
+        " (disabled: the expected rate does not constrain thresholding)" else
+        " (active)"),
+      "; clusters ", detector$clusters, "; seed ", detector$seed),
+    paste0("  doublet calls among QC-passing cells: ", n_doublet_qc_pass,
+      "; overlap with QC outliers: ", n_doublet_qc_overlap),
+    paste0("  versions: scDblFinder ", detector_records[[1]]$versions[["scDblFinder"]],
+      ", SingleCellExperiment ", detector_records[[1]]$versions[["SingleCellExperiment"]],
+      ", BiocParallel ", detector_records[[1]]$versions[["BiocParallel"]])
+  )
 
   list(
     obj = clean,
@@ -128,7 +160,8 @@ qc <- run_stage("QC", local({
       paste0(nrow(clean), " genes after the per-feature minimum; ",
         length(clean@misc$qc$removed_genes), " listed genes removed; ",
         length(config$run$samples), " samples"),
-      "8 QC figures saved (6 before/after comparisons, 2 per-sample UMAP sets)"
+      "8 QC figures saved (6 before/after comparisons, 2 per-sample UMAP sets)",
+      detector_lines
     )
   )
 }))

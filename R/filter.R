@@ -129,7 +129,6 @@ filter_labeled_cells <- function(seurat_obj, qc_config) {
     meta <- metadata[colnames(obj), , drop = FALSE]
     obj <- AddMetaData(obj, meta)
     obj$keep_cell <- TRUE
-    obj$doublet_filter_method <- "scDblFinder"
 
     message(sample, " / doublet-clean: ", ncol(obj), " cells; ", nrow(obj), " genes")
     objects[[sample]] <- obj

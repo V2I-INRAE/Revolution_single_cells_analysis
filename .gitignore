@@ -65,6 +65,9 @@ logs/
 output/
 results/*
 !results/job*
+# Keep generated vector/PDF figures local; version PNG figures instead.
+results/**/*.pdf
+results/**/*.svg
 
 # env
 renv/
