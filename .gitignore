@@ -70,6 +70,9 @@ results/*
 !results/**/*.pdf
 *.png
 results/**/*.svg
+results/literature_review/
+results/misc/
+results/preprocessing/
 
 # env
 renv/
