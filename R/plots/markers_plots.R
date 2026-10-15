@@ -12,10 +12,15 @@ panel_pdf_nrow <- 4L
 panel_pdf_genes_per_page <- panel_pdf_ncol * panel_pdf_nrow
 # Raster resolution of the embedded cell layer. Frame elements (titles,
 # axes, legend text) stay vector; only the point layer is rasterized via
-# ggrastr::rasterise() below. Owner-approved 300 dpi keeps tiles sharp at
-# ~720 x 750 px per tile — sufficient for on-screen review, A4 print and
-# Illustrator contour tracing.
-panel_pdf_raster_dpi <- 300
+# ggrastr::rasterise() below. 600 dpi gives ~1440 x 1500 px per tile,
+# close to the single-gene PNGs (1560 x 1740 px), so tiles stay sharp at
+# A4 print and in Illustrator contour tracing.
+panel_pdf_raster_dpi <- 600
+# Point size used for the PDF tiles only. Tiles are ~0.46x the PNG width
+# (~2.4 in vs 5.2 in), so the PNG pt.size would look ~2x larger on a tile.
+# Scaling it down keeps the PDF dot density visually matched to the PNGs.
+marker_png_pt.size <- 0.1
+panel_pdf_pt.size <- 0.04
 
 save_marker_plot <- function(plot, stem, directory, width, height, extension = "png") {
   path <- file.path(directory, paste0(stem, ".", extension))
@@ -60,7 +65,7 @@ plot_marker_features <- function(
   dir.create(directory, recursive = TRUE, showWarnings = FALSE)
   caption <- paste(strwrap(paste(
     "All cells; RNA LogNormalize data on", reduction,
-    "(no z-scores); viridis, low purple to high yellow; zeros in grey.",
+    "(no z-scores); viridis, zero in low purple to high yellow.",
     "Unavailable sample features also plot as zero after layer joining.",
     "Configured panels, not cluster annotations."
   ), width = 65), collapse = "\n")
@@ -69,14 +74,14 @@ plot_marker_features <- function(
   #
   # Per-gene PNGs are written one file per gene (unchanged delivery). The
   # panel PDF is one multipage A4 file: 12 gene tiles per page (3 x 4 grid).
-  # Cell layers are rasterized at panel_pdf_raster_dpi (owner-approved 300)
-  # so the PDF stays small and Illustrator-friendly; titles, axes and legend
+  # Cell layers are rasterized at panel_pdf_raster_dpi (600) so the PDF
+  # stays small and Illustrator-friendly; titles, axes and legend
   # text stay vector. The page header/footer carry the panel subtitle and
   # methods caption once per page instead of repeating them on every tile.
   page_header <- paste(label, "|", sel.clust)
   page_footer <- paste(
     "All cells; RNA LogNormalize data on", reduction,
-    "(no z-scores); viridis, low purple to high yellow; zeros in grey.",
+    "(no z-scores); viridis, zero in low purple to high yellow.",
     "Unavailable sample features also plot as zero after layer joining.",
     "Configured panels, not cluster annotations."
   )
@@ -109,7 +114,8 @@ plot_marker_features <- function(
       reduction = reduction,
       layer = "data",
       colors_use = viridisLite::viridis(256),
-      pt.size = 0.1,
+      na_cutoff = 0,
+      pt.size = marker_png_pt.size,
       stroke.size = 0,
       raster = FALSE,
       order = TRUE,
@@ -136,6 +142,18 @@ plot_marker_features <- function(
     ) + theme(
       plot.title = element_text(size = 10, face = "bold", hjust = 0.5)
     ) + guides(colour = guide_colourbar(display = "rectangles"))
+    # PDF tiles are ~0.46x the PNG width, so reuse of the PNG point size
+    # would render relatively ~2x larger dots. Scale the point layers down
+    # to panel_pdf_pt.size; the PNG plot above is unaffected. The base plot
+    # uses a constant size, hence aes_params; mapped sizes need no handling.
+    pdf_point_scale <- panel_pdf_pt.size / marker_png_pt.size
+    for (i in seq_along(pdf_plot$layers)) {
+      if (inherits(pdf_plot$layers[[i]]$geom, "GeomPoint") &&
+        !is.null(pdf_plot$layers[[i]]$aes_params$size)) {
+        pdf_plot$layers[[i]]$aes_params$size <-
+          pdf_plot$layers[[i]]$aes_params$size * pdf_point_scale
+      }
+    }
     # Rasterize only the point layer; frame elements stay vector (Seurat
     # 5.5.1's own raster=TRUE path ignores the dpi setting, so rasterising
     # the vector plot explicitly preserves geometry at panel_pdf_raster_dpi).

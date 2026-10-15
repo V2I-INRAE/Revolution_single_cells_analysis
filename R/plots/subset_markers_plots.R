@@ -1,0 +1,63 @@
+suppressPackageStartupMessages({
+  library(ggplot2)
+  library(scCustomize)
+})
+
+# Maximum cells per identity drawn in the heatmap. Without a cap the larger
+# subsets would render tens of thousands of columns: slow and visually
+# merged. Recorded in each output .INFO.
+subset_heatmap_max_cells_per_ident <- 500L
+
+plot_subset_dotplot <- function(alldata, top5, sel.clust, directory) {
+  dots <- scCustomize::DotPlot_scCustom(
+    seurat_object = alldata,
+    features = rev(as.character(unique(top5$gene))),
+    group.by = sel.clust,
+    flip_axes = TRUE
+  ) + ggplot2::labs(
+    title = paste(sel.clust, "| top 5 markers per subcluster"),
+    subtitle = "Dot size: detection; colour: scaled average expression",
+    caption = "Subset cells; RNA LogNormalize expression. Exploratory subcluster markers, not condition DE.",
+    x = NULL, y = "Subcluster"
+  ) + ggplot2::theme(
+    axis.text.y = ggplot2::element_text(size = 9),
+    axis.text.x = ggplot2::element_text(size = 9)
+  )
+  save_figure(dots, directory, "dotplot_top5",
+    width = max(12, nlevels(Idents(alldata)) * 0.35),
+    height = max(6, length(unique(top5$gene)) * 0.22 + 2)
+  )
+}
+
+plot_subset_heatmap <- function(
+  alldata, top25, sel.clust, directory, seed
+) {
+  genes <- unique(as.character(top25$gene))
+  idents <- levels(Idents(alldata))
+  set.seed(seed)
+  cells <- unlist(lapply(idents, function(ident) {
+    candidates <- colnames(alldata)[Idents(alldata) == ident]
+    if (length(candidates) > subset_heatmap_max_cells_per_ident) {
+      sample(candidates, subset_heatmap_max_cells_per_ident)
+    } else {
+      candidates
+    }
+  }), use.names = FALSE)
+  heatmap <- Seurat::DoHeatmap(alldata,
+    features = genes,
+    cells = cells,
+    group.by = sel.clust,
+    assay = "RNA",
+    slot = "scale.data",
+    label = TRUE,
+    size = 3
+  ) + ggplot2::labs(
+    caption = paste("Subset cells; RNA scaled expression (scale.data),",
+      "max", subset_heatmap_max_cells_per_ident, "cells per subcluster;",
+      "seed", seed, ". Exploratory subcluster markers, not condition DE.")
+  )
+  save_figure(heatmap$gtable, directory, "heatmap_top25",
+    width = max(10, length(idents) * 0.8 + 4),
+    height = max(10, length(genes) * 0.06)
+  )
+}

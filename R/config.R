@@ -144,7 +144,7 @@ config <- list(
   # Integration route: harmony (default) | cca.
   integration = list(
     method = "harmony",
-    harmony = list(max_iter = 10L),
+    harmony = list(max_iter = 30L),
     # Shared by the unintegrated PCA and integrated-method UMAPs.
     umap = list(min.dist = 0.3, n.neighbors = 30L)
   ),

@@ -18,8 +18,8 @@ coarse_subsets <- c(
 # Cluster numbers are this run's own labels; verified 1-24 each exactly once
 # against results/job-44542861/clusters_plots/markers/0.7/cluster_identities_res0.7.md.
 coarse_subsets_44542861 <- c(
-  `2` = "T cells & NK", `3` = "T cells & NK", `4` = "T cells & NK",
-  `5` = "T cells & NK", `8` = "T cells & NK",
+  `2` = "CD4_T_cells", `3` = "NK_cells", `4` = "unconventional_T_cells",
+  `5` = "CD8_T_cells", `8` = "T_cells_unresolved",
   `7` = "B cells", `9` = "B cells",
   `1` = "Macrophage_Monocytes", `11` = "Macrophage_Monocytes",
   `14` = "Macrophage_Monocytes", `21` = "Macrophage_Monocytes",

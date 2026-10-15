@@ -1,5 +1,5 @@
 # Manual cluster annotation, based on the Seurat skill's annotate_clusters_manual().
-# Source this file to reuse the function, or run it to apply coarse_subsets:
+# Source this file to reuse the function, or run it to apply coarse_subsets_44542861:
 # Rscript R/clusters/annotate.R <clustered.rds> <annotated_clustered.rds>
 
 #' Manually annotate clusters with cell type or subset labels
@@ -63,12 +63,12 @@ if (sys.nframe() == 0L) {
   message("Loading (input is never written): ", input)
   obj <- readRDS(input)
   clusters <- as.character(obj[[cluster_col, drop = TRUE]])
-  if (anyDuplicated(names(coarse_subsets)) ||
-      !setequal(unique(clusters), names(coarse_subsets))) {
-    stop("coarse_subsets must assign each cluster exactly once.")
+  if (anyDuplicated(names(coarse_subsets_44542861)) ||
+      !setequal(unique(clusters), names(coarse_subsets_44542861))) {
+    stop("coarse_subsets_44542861 must assign each cluster exactly once.")
   }
 
-  obj <- annotate_clusters_manual(obj, coarse_subsets,
+  obj <- annotate_clusters_manual(obj, coarse_subsets_44542861,
     cluster_col = cluster_col, new_col_name = "subset")
 
   dir.create(dirname(output), recursive = TRUE, showWarnings = FALSE)

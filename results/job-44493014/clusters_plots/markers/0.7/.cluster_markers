@@ -1,6 +1,33 @@
 Marker panel documentation — job-44493014, resolution 0.7
 ===========================================================
 
+Feature display cutoff, 2026-10-14
+---------------------------------
+Owner-approved na_cutoff = 1.5 in FeaturePlot_scCustom applies to all
+feature-panel PNGs and PDFs. RNA log-normalized values below 1.5 display
+as background grey, which does not imply absent expression. PNG and PDF
+captions now state the threshold. Other settings and the dotplot are
+unchanged. Existing figures from job 44561454 have not been regenerated.
+
+Top-five dotplot coverage update, 2026-10-14
+-----------------------------------------
+Compared markers_top5.csv from completed marker rerun 44561454 with each
+cluster's corresponding marker_feature_panels entry in R/clusters/markers.R,
+using the cluster-to-panel map below. The dotplot uses this same top-five
+selection from the full significant marker table, ranked by avg_log2FC.
+Only cluster 3 (Macrophages_AM_like) was incomplete: LOC100520753 (review)
+and PON1 were absent. Both are now added without replacing FCN1, GPNMB,
+SIGLEC1 or any existing panel entries. The review suffix remains exact.
+This supplements the earlier candidate-pool selection and manual additions.
+
+Validation passed by sourcing markers.R and comparing it with the pre-edit
+staged version: all 120 cluster-gene entries (119 distinct genes) now occur
+in their matching panels across all 24 clusters. Only these two genes were
+added; all previous entries and their relative order, the other 24 panels
+(including Mast_like_exploratory), and all 39 translations are unchanged.
+No object load, marker discovery, annotation change or plot rerun occurred.
+Existing feature-panel figures therefore predate these two additions.
+
 Current panels: ten genes per cluster, approved 2026-10-13
 --------------------------------------------------------
 R/clusters/markers.R now defines 24 panels of ten distinct genes each.

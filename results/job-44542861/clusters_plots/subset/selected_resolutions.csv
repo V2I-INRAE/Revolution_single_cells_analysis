@@ -1,0 +1,13 @@
+subset,subclustering_job,resolution
+B cells,44614229,0.4
+CD4_T_cells,44614236,0.4
+CD8_T_cells,44614237,0.4
+DC,44614230,0.3
+Endothelial,44614231,0.3
+Epithelial,44614232,0.4
+Granulocytes,44614233,0.3
+Macrophage_Monocytes,44614234,0.4
+NK_cells,44614238,0.4
+Stromal,44614235,0.4
+T_cells_unresolved,44614240,0.4
+unconventional_T_cells,44614239,0.4
