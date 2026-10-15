@@ -1,0 +1,8 @@
+"subset","before","T_flag","B_flag","plasma_flag","removed","retained","pct_removed","output","validation"
+"T_cell_nk",109494,0,78,12,90,109404,0.0821962847279303,"data/job-44493014/subsets/T_cell_nk/job-44577467/subclustered.rds","passed"
+"B_cells",29165,226,0,0,226,28939,0.774901422938454,"data/job-44493014/subsets/B_cells/job-44577467/subclustered.rds","passed"
+"Myeloid",54105,200,217,64,465,53640,0.859439977820904,"data/job-44493014/subsets/Myeloid/job-44577467/subclustered.rds","passed"
+"Granulocytes",23532,54,23,7,83,23449,0.352711201767806,"data/job-44493014/subsets/Granulocytes/job-44577467/subclustered.rds","passed"
+"Endothelial",15389,124,73,25,219,15170,1.42309441809084,"data/job-44493014/subsets/Endothelial/job-44577467/subclustered.rds","passed"
+"Epithelial",11315,212,90,28,327,10988,2.88996906760937,"data/job-44493014/subsets/Epithelial/job-44577467/subclustered.rds","passed"
+"Stromal",12401,82,51,23,151,12250,1.21764373840819,"data/job-44493014/subsets/Stromal/job-44577467/subclustered.rds","passed"
