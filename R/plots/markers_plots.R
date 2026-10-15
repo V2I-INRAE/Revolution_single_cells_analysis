@@ -1,4 +1,21 @@
-suppressPackageStartupMessages(library(ggplot2))
+suppressPackageStartupMessages({
+  library(ggplot2)
+  library(patchwork)
+})
+
+# Paginated per-panel PDF layout (owner-approved 2026-10-14): A4 portrait,
+# 3 columns x 4 rows = 12 gene tiles per page. Tile geometry (~2.4 x 2.5 in
+# usable) matches the earlier single-gene figure proportions, so titles stay
+# legible in print and selectable in Illustrator.
+panel_pdf_ncol <- 3L
+panel_pdf_nrow <- 4L
+panel_pdf_genes_per_page <- panel_pdf_ncol * panel_pdf_nrow
+# Raster resolution of the embedded cell layer. Frame elements (titles,
+# axes, legend text) stay vector; only the point layer is rasterized via
+# ggrastr::rasterise() below. Owner-approved 300 dpi keeps tiles sharp at
+# ~720 x 750 px per tile — sufficient for on-screen review, A4 print and
+# Illustrator contour tracing.
+panel_pdf_raster_dpi <- 300
 
 save_marker_plot <- function(plot, stem, directory, width, height, extension = "png") {
   path <- file.path(directory, paste0(stem, ".", extension))
@@ -49,6 +66,42 @@ plot_marker_features <- function(
   ), width = 65), collapse = "\n")
 
   # RNA data is already log-normalized. Do not log it again or use scale.data.
+  #
+  # Per-gene PNGs are written one file per gene (unchanged delivery). The
+  # panel PDF is one multipage A4 file: 12 gene tiles per page (3 x 4 grid).
+  # Cell layers are rasterized at panel_pdf_raster_dpi (owner-approved 300)
+  # so the PDF stays small and Illustrator-friendly; titles, axes and legend
+  # text stay vector. The page header/footer carry the panel subtitle and
+  # methods caption once per page instead of repeating them on every tile.
+  page_header <- paste(label, "|", sel.clust)
+  page_footer <- paste(
+    "All cells; RNA LogNormalize data on", reduction,
+    "(no z-scores); viridis, low purple to high yellow; zeros in grey.",
+    "Unavailable sample features also plot as zero after layer joining.",
+    "Configured panels, not cluster annotations."
+  )
+  # Print one full or partial page to the panel PDF device. Drawing goes
+  # through patchworkGrob + grid.draw (not print.patchwork) so rendering
+  # errors propagate instead of being swallowed by patchwork 1.3.2's
+  # print method, which catches grid.draw() errors without rethrowing.
+  print_panel_page <- function(plots) {
+    page <- patchwork::wrap_plots(plots,
+      ncol = panel_pdf_ncol, nrow = panel_pdf_nrow) +
+      patchwork::plot_annotation(
+        title = page_header,
+        caption = paste(strwrap(page_footer, width = 110), collapse = "\n"),
+        theme = theme(
+          plot.title = element_text(size = 12, face = "bold"),
+          plot.caption = element_text(size = 7, hjust = 0))
+      )
+    grid::grid.newpage()
+    grid::grid.draw(patchwork::patchworkGrob(page))
+  }
+  pdf_path <- file.path(directory, paste0(label, ".pdf"))
+  grDevices::pdf(pdf_path, width = 8.27, height = 11.69, bg = "white")
+  pdf_device <- grDevices::dev.cur()
+  on.exit(grDevices::dev.off(pdf_device), add = TRUE)
+  page_plots <- list()
   for (gene in present) {
     plot <- scCustomize::FeaturePlot_scCustom(
       seurat_object = alldata,
@@ -61,16 +114,39 @@ plot_marker_features <- function(
       raster = FALSE,
       order = TRUE,
       combine = FALSE
-    )[[1L]] + labs(
-      subtitle = paste(strwrap(paste(label, "|", sel.clust), width = 45), collapse = "\n"),
+    )[[1L]]
+    # PNG delivery is unchanged: the original annotated plot (panel|cluster
+    # subtitle + methods caption) is saved exactly as before this change.
+    save_marker_plot(plot + labs(
+      subtitle = paste(strwrap(paste(label, "|", sel.clust), width = 45),
+        collapse = "\n"),
       caption = caption
     ) + theme(
       plot.subtitle = element_text(size = 10),
       plot.caption = element_text(size = 7, hjust = 0)
-    )
-    for (extension in c("png", "pdf")) {
-      save_marker_plot(plot, gene, directory, width = 5.2, height = 5.8,
-        extension = extension)
+    ), gene, directory, width = 5.2, height = 5.8, extension = "png")
+    # Separate PDF tile copy: gene title only (page header/footer carry the
+    # panel context once per page). display="rectangles" renders the
+    # colourbar as vector coloured rectangles with vector text, so the whole
+    # legend can be removed or restyled in Illustrator.
+    pdf_plot <- plot + labs(
+      title = gene,
+      subtitle = NULL,
+      caption = NULL
+    ) + theme(
+      plot.title = element_text(size = 10, face = "bold", hjust = 0.5)
+    ) + guides(colour = guide_colourbar(display = "rectangles"))
+    # Rasterize only the point layer; frame elements stay vector (Seurat
+    # 5.5.1's own raster=TRUE path ignores the dpi setting, so rasterising
+    # the vector plot explicitly preserves geometry at panel_pdf_raster_dpi).
+    page_plots[[gene]] <- ggrastr::rasterise(pdf_plot,
+      layers = "Point", dpi = panel_pdf_raster_dpi)
+    if (length(page_plots) == panel_pdf_genes_per_page) {
+      print_panel_page(page_plots)
+      page_plots <- list()
     }
+  }
+  if (length(page_plots) > 0L) {
+    print_panel_page(page_plots)
   }
 }

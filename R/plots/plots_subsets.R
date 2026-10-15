@@ -1,4 +1,4 @@
-# Coarse-subset UMAPs: one panel per subset, wrapped into one PNG and PDF.
+# Coarse-subset UMAPs: faceted highlights and an all-subsets view, PNG and PDF.
 # Usage: Rscript R/plots/plots_subsets.R <annotated_clustered.rds>
 #
 # Read-only: the object is loaded for plotting only; nothing is written back.
@@ -28,7 +28,7 @@ out_dir <- file.path("results", basename(dirname(input)),
   "clusters_plots", "subset")
 
 if (!file.exists(input)) stop("Input not found: ", input)
-existing <- list.files(out_dir, pattern = "^coarse_subsets\\.(png|pdf)$")
+existing <- list.files(out_dir, pattern = "^coarse_subsets(_all)?\\.(png|pdf)$")
 if (length(existing) > 0L) {
   stop("Combined subset plots already exist in ", out_dir, ": ",
     paste(existing, collapse = ", "),
@@ -44,12 +44,13 @@ obj <- readRDS(input)
 # Reuse approved annotations; do not redefine subsets from cluster numbers.
 SeuratObject::Idents(obj) <- "subset"
 subsets <- levels(SeuratObject::Idents(obj))
+subset_colors <- stats::setNames(viz_palette[seq_along(subsets)], subsets)
 message("Plotting subset panels: ", paste(subsets, collapse = ", "))
 
 set.seed(seed)
 panels <- lapply(seq_along(subsets), function(i) {
   panel <- scCustomize::Cluster_Highlight_Plot(seurat_object = obj,
-    cluster_name = subsets[[i]], highlight_color = viz_palette[[i]],
+    cluster_name = subsets[[i]], highlight_color = subset_colors[[subsets[[i]]]],
     background_color = "lightgray", reduction = reduction,
     pt.size = 0.1, stroke.size = 0, raster = FALSE, label = FALSE) +
     ggplot2::labs(title = subsets[[i]]) +
@@ -70,6 +71,21 @@ ggplot2::ggsave(out_pdf, plot = p, width = 12, height = height,
   units = "in", device = grDevices::pdf, compress = TRUE,
   useDingbats = TRUE, bg = "white")
 message("  Saved: ", out_pdf, " (", file.size(out_pdf), " bytes)")
+
+p_all <- scCustomize::Cluster_Highlight_Plot(seurat_object = obj,
+  cluster_name = subsets, highlight_color = unname(subset_colors[subsets]),
+  background_color = "lightgray", reduction = reduction,
+  pt.size = 0.1, stroke.size = 0, raster = FALSE, label = FALSE) +
+  ggplot2::labs(title = "Coarse subsets, all on one UMAP",
+    caption = "All cells on umap_harmony, coloured by saved subset. No re-clustering.") +
+  ggplot2::theme(legend.position = "right")
+p_all <- ggrastr::rasterise(p_all, layers = "Point", dpi = 300)
+save_figure(p_all, out_dir, "coarse_subsets_all", width = 12, height = height)
+out_pdf_all <- file.path(out_dir, "coarse_subsets_all.pdf")
+ggplot2::ggsave(out_pdf_all, plot = p_all, width = 12, height = height,
+  units = "in", device = grDevices::pdf, compress = TRUE,
+  useDingbats = TRUE, bg = "white")
+message("  Saved: ", out_pdf_all, " (", file.size(out_pdf_all), " bytes)")
 
 stopifnot(
   "Input file changed during run" =

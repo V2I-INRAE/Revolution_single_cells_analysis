@@ -1,5 +1,6 @@
 # Manual cluster annotation, based on the Seurat skill's annotate_clusters_manual().
-# Callers supply the approved labels and own saving the object and run records.
+# Source this file to reuse the function, or run it to apply coarse_subsets:
+# Rscript R/clusters/annotate.R <clustered.rds> <annotated_clustered.rds>
 
 #' Manually annotate clusters with cell type or subset labels
 #'
@@ -43,4 +44,48 @@ annotate_clusters_manual <- function(
   print(table(seurat_obj[[new_col_name]]))
 
   return(seurat_obj)
+}
+
+# Run only when called with Rscript, not when sourced by another script.
+if (sys.nframe() == 0L) {
+  suppressPackageStartupMessages(library(Seurat))
+  source("R/clusters/annotations.R")
+
+  args <- commandArgs(trailingOnly = TRUE)
+  if (length(args) != 2L) {
+    stop("Usage: Rscript R/clusters/annotate.R <clustered.rds> <annotated_clustered.rds>")
+  }
+  input <- args[[1L]]
+  output <- args[[2L]]
+  cluster_col <- "harmony_snn_res.0.7"
+  input_info <- file.info(input)[, c("size", "mtime")]
+
+  message("Loading (input is never written): ", input)
+  obj <- readRDS(input)
+  clusters <- as.character(obj[[cluster_col, drop = TRUE]])
+  if (anyDuplicated(names(coarse_subsets)) ||
+      !setequal(unique(clusters), names(coarse_subsets))) {
+    stop("coarse_subsets must assign each cluster exactly once.")
+  }
+
+  obj <- annotate_clusters_manual(obj, coarse_subsets,
+    cluster_col = cluster_col, new_col_name = "subset")
+
+  dir.create(dirname(output), recursive = TRUE, showWarnings = FALSE)
+  saveRDS(obj, output)
+  message("Saved: ", output, " (", file.size(output), " bytes)")
+
+  # Reopen the actual output; metadata includes cell IDs and cluster assignments.
+  reopened <- readRDS(output)
+  stopifnot(
+    identical(reopened[[]], obj[[]]),
+    identical(SeuratObject::Idents(reopened), SeuratObject::Idents(obj)),
+    identical(reopened@assays, obj@assays),
+    identical(reopened@reductions, obj@reductions),
+    identical(reopened@graphs, obj@graphs),
+    identical(file.info(input)[, c("size", "mtime")], input_info)
+  )
+  message("Reopen checks passed: ", ncol(reopened),
+    " cells; metadata, identities, assays/layers/counts, reductions and graphs preserved.")
+  message("Subset annotation completed: ", output)
 }
