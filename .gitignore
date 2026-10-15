@@ -65,8 +65,10 @@ logs/
 output/
 results/*
 !results/job*
-# Keep generated vector/PDF figures local; version PNG figures instead.
-results/**/*.pdf
+# Keep PDF plots in results; ignore PNG files everywhere.
+!results/**/
+!results/**/*.pdf
+*.png
 results/**/*.svg
 
 # env
