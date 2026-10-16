@@ -1,4 +1,4 @@
-# Coarse-subset UMAPs: faceted highlights and an all-subsets view, PNG and PDF.
+# Coarse-subset UMAP: all saved subsets on one square figure, PNG and PDF.
 # Usage: Rscript R/plots/plots_subsets.R <annotated_clustered.rds>
 #
 # Read-only: the object is loaded for plotting only; nothing is written back.
@@ -6,8 +6,8 @@
 # active identity, so identities are set in memory to the saved subset column.
 # The file on disk is never modified.
 #
-# PDF size note: 8 panels x 256k cells as vector circles (~14 MB) crashes
-# vector editors, so point layers are rasterized at 300 dpi via ggrastr
+# PDF size note: large cell layers as vector circles can overwhelm vector
+# editors, so point layers are rasterized at 300 dpi via ggrastr
 # (text, axes and legends stay vector). PNG is rendered by save_figure.
 suppressPackageStartupMessages({
   library(Seurat)
@@ -28,7 +28,7 @@ out_dir <- file.path("results", basename(dirname(input)),
   "clusters_plots", "subset")
 
 if (!file.exists(input)) stop("Input not found: ", input)
-existing <- list.files(out_dir, pattern = "^coarse_subsets(_all)?\\.(png|pdf)$")
+existing <- list.files(out_dir, pattern = "^coarse_subsets_all\\.(png|pdf)$")
 if (length(existing) > 0L) {
   stop("Combined subset plots already exist in ", out_dir, ": ",
     paste(existing, collapse = ", "),
@@ -45,46 +45,36 @@ obj <- readRDS(input)
 SeuratObject::Idents(obj) <- "subset"
 subsets <- levels(SeuratObject::Idents(obj))
 subset_colors <- stats::setNames(viz_palette[seq_along(subsets)], subsets)
-message("Plotting subset panels: ", paste(subsets, collapse = ", "))
+message("Plotting all subsets: ", paste(subsets, collapse = ", "))
 
 set.seed(seed)
-panels <- lapply(seq_along(subsets), function(i) {
-  panel <- scCustomize::Cluster_Highlight_Plot(seurat_object = obj,
-    cluster_name = subsets[[i]], highlight_color = subset_colors[[subsets[[i]]]],
-    background_color = "lightgray", reduction = reduction,
-    pt.size = 0.1, stroke.size = 0, raster = FALSE, label = FALSE) +
-    ggplot2::labs(title = subsets[[i]]) +
-    ggplot2::theme(legend.position = "none")
-  # Rasterize point layers only (300 dpi); labels, axes, legends stay
-  # vector so the PDF stays editable and light.
-  ggrastr::rasterise(panel, layers = "Point", dpi = 300)
-})
-p <- patchwork::wrap_plots(panels, ncol = 3) +
-  patchwork::plot_annotation(title = "Coarse subsets",
-    caption = "All cells on umap_harmony; each panel highlights one saved subset, with all other cells grey. No re-clustering.")
-
-height <- 4 * ceiling(length(subsets) / 3)
-save_figure(p, out_dir, "coarse_subsets", width = 12, height = height)
-out_pdf <- file.path(out_dir, "coarse_subsets.pdf")
-# Compressed vector circles use the standard Dingbats font to reduce file size.
-ggplot2::ggsave(out_pdf, plot = p, width = 12, height = height,
-  units = "in", device = grDevices::pdf, compress = TRUE,
-  useDingbats = TRUE, bg = "white")
-message("  Saved: ", out_pdf, " (", file.size(out_pdf), " bytes)")
-
-p_all <- scCustomize::Cluster_Highlight_Plot(seurat_object = obj,
-  cluster_name = subsets, highlight_color = unname(subset_colors[subsets]),
-  background_color = "lightgray", reduction = reduction,
-  pt.size = 0.1, stroke.size = 0, raster = FALSE, label = FALSE) +
-  ggplot2::labs(title = "Coarse subsets, all on one UMAP",
-    caption = "All cells on umap_harmony, coloured by saved subset. No re-clustering.") +
+p_all <- scCustomize::Cluster_Highlight_Plot(
+  seurat_object = obj,
+  cluster_name = subsets,
+  highlight_color = unname(subset_colors[subsets]),
+  background_color = "lightgray",
+  reduction = reduction,
+  pt.size = 0.1,
+  stroke.size = 0,
+  raster = FALSE,
+  label = FALSE
+) +
+  ggplot2::labs(
+    title = "Coarse subsets, all on one UMAP",
+    caption = "All cells on umap_harmony, coloured by saved subset. No re-clustering."
+  ) +
   ggplot2::theme(legend.position = "right")
+
 p_all <- ggrastr::rasterise(p_all, layers = "Point", dpi = 300)
-save_figure(p_all, out_dir, "coarse_subsets_all", width = 12, height = height)
+
+save_figure(p_all, out_dir, "coarse_subsets_all", width = 12, height = 12)
+
 out_pdf_all <- file.path(out_dir, "coarse_subsets_all.pdf")
-ggplot2::ggsave(out_pdf_all, plot = p_all, width = 12, height = height,
+
+ggplot2::ggsave(out_pdf_all, plot = p_all, width = 12, height = 12,
   units = "in", device = grDevices::pdf, compress = TRUE,
   useDingbats = TRUE, bg = "white")
+
 message("  Saved: ", out_pdf_all, " (", file.size(out_pdf_all), " bytes)")
 
 stopifnot(

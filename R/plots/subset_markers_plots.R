@@ -23,10 +23,11 @@ plot_subset_dotplot <- function(alldata, top5, sel.clust, directory) {
     axis.text.y = ggplot2::element_text(size = 9),
     axis.text.x = ggplot2::element_text(size = 9)
   )
-  save_figure(dots, directory, "dotplot_top5",
-    width = max(12, nlevels(Idents(alldata)) * 0.35),
-    height = max(6, length(unique(top5$gene)) * 0.22 + 2)
-  )
+  side <- max(12, nlevels(Idents(alldata)) * 0.35,
+    length(unique(top5$gene)) * 0.22 + 2)
+  save_figure(dots, directory, "dotplot_top5", width = side, height = side)
+  ggplot2::ggsave(file.path(directory, "dotplot_top5.pdf"), plot = dots,
+    width = side, height = side, units = "in", bg = "white")
 }
 
 plot_subset_heatmap <- function(
@@ -56,8 +57,8 @@ plot_subset_heatmap <- function(
       "max", subset_heatmap_max_cells_per_ident, "cells per subcluster;",
       "seed", seed, ". Exploratory subcluster markers, not condition DE.")
   )
-  save_figure(heatmap$gtable, directory, "heatmap_top25",
-    width = max(10, length(idents) * 0.8 + 4),
-    height = max(10, length(genes) * 0.06)
-  )
+  side <- max(10, length(idents) * 0.8 + 4, length(genes) * 0.06)
+  save_figure(heatmap, directory, "heatmap_top25", width = side, height = side)
+  ggplot2::ggsave(file.path(directory, "heatmap_top25.pdf"), plot = heatmap,
+    width = side, height = side, units = "in", bg = "white")
 }

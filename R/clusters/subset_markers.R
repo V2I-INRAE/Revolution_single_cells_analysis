@@ -45,7 +45,8 @@ for (csv in pipeline_csvs) {
     file.remove(csv_path)
   }
 }
-for (stem in c("dotplot_top5.png", "heatmap_top25.png")) {
+for (stem in c("dotplot_top5.png", "dotplot_top5.pdf",
+  "heatmap_top25.png", "heatmap_top25.pdf")) {
   stem_path <- file.path(directory, stem)
   if (file.exists(stem_path)) {
     file.remove(stem_path)
