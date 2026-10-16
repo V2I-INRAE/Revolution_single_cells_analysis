@@ -1,0 +1,30 @@
+# T_cells_unresolved Subclustering Identity Report (`job-44614240`, Resolution `0.4`)
+
+- **Parent Run / Subset**: `job-44542861` $\rightarrow$ `T_cells_unresolved` (`job-44614240`; Parent Cluster 8)
+- **Clustering Parameters**: `harmony_snn_res.0.4` (`11,935` cells across `5` clusters; `2,000` HVGs, `dims 1:20`, `k_param = 100`)
+- **QC & Reassignment Summary — Complete Dissolution of `T_cells_unresolved`**:
+  - **Remove Cluster 2 (`2,514` cells, `21.06%`, `APOE⁺ FCN2⁺ BTC⁺ CD163⁺ LGALS3⁺ C3⁺ CD9⁺` T-Cell + Alveolar Macrophage doublets)**.
+  - **Reassign all remaining `9,421` clean T cells (`78.94%`) to their true lineages**:
+    - **Cluster 1 (`4,017` cells, `GZMK⁺ CXCR6⁺ CCR5⁺ CRTAM⁺ CD8A⁺` $T_{EM}/T_{RM}$) & Cluster 3 (`2,213` cells, `ADGRG1^{hi} GZMB^{hi} GNLY^{hi} FCGR3A^{hi} TBX21⁺ KLF2^{hi}` $T_{EMRA}/T_{EFF}$) $\rightarrow$ `CD8_T_cells` (`+6,230` cells)**.
+    - **Cluster 4 (`1,669` cells, `CD40LG^{hi} CD28^{hi} MAF^{hi} IL7R^{hi} CD5^{hi}` Helper T cells) $\rightarrow$ `CD4_T_cells` (`+1,669` cells)**.
+    - **Cluster 5 (`1,522` cells, `CD2⁻ SOX13^{hi} RHEX^{hi} BLK^{hi} GATA3^{hi}` $\gamma\delta$ T cells) $\rightarrow$ `unconventional_T_cells` (`+1,522` cells)**.
+- **Master Index & References**: See `../../NOTES_BARCODE_REASSIGNMENT_AND_CLEANUP.md`.
+
+---
+
+## Summary Table (`harmony_snn_res.0.4`)
+
+| Cluster | Cells (%) | Proposed Known Subset | QC / Doublet Flag | Key Named Top-25 Markers | Additional Canonical Markers (`markers_significant.csv`) |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **1** | 4,017 (33.66%) | **Parenchymal Tissue-Resident / Effector-Memory `CD8⁺` T Cells ($T_{EM}/T_{RM}$, `GZMK⁺ GZMA⁺ CXCR6⁺ CCR5⁺ CRTAM⁺ CD96⁺ JAML⁺ KLRK1⁺ CD8A⁺ CCL5^{hi} CD69^{hi}`)** | **Reassign (Not Doublet) $\rightarrow$ `CD8_T_cells`** | `GZMK` (`31.9%`, `log2FC = 1.85`), `CD96` (`32.7%`), `CRTAM` (`45.1%`), `JAML` (`26.1%`), `TNFSF9` (`34.0%`), `KLRK1` (`50.9%`), `GZMA` (`57.8%`), `CXCR6` (`39.2%`), `RHOB`, `CD8A` (`56.9%`), `NR4A1`, `EGR1`, `CCL4` (`47.9%`), `CCL5` (`86.9%`), `CTSW`, `CCR5` (`46.6%`), `CD52`, `CD69` (`62.8%`) | `PRF1` (#26, `37.0%`), `CD3G` (#28, `53.0%`), `BHLHE40` (#29, `38.0%`), `RUNX3` (#31, `41.0%`), `LCK` (#38, `39.0%`), `CD2` (`74.0%`), `ID2` (`78.0%`), `CD3D` (`63.0%`), `CD3E` (`58.0%`), `IL2RB` (`62.0%`), `HLA-DRA`/`SLA-DRB1`/`SLA-DQB1` |
+| **2** | 2,514 (21.06%) | **T-Cell + Alveolar Macrophage (`APOE⁺ FCN2⁺ BTC⁺ CD163⁺ LGALS3⁺ C3⁺ CD9⁺ CYBB⁺ LGMN⁺ ANXA1⁺ NCF2⁺`) Doublets** | **REMOVE (Doublet)** | `APOE` (`28.0%`, `log2FC = 4.39`), `FCN2` (`25.8%`, `3.88`), `BTC` (`28.1%`), `CD163` (`35.0%`), `LGALS3` (`32.9%`), `C3` (`26.7%`), `CD9` (`33.2%`), `CYBB` (`27.0%`), `LGMN` (`26.7%`), `ANXA1` (`42.6%`), `TXNRD1`, `NCF2` (`25.0%`), `ANXA5`, `SCPEP1`, `CEBPD`, `CTSD` (`31.5%`) | Diluted pan-T markers (`CD3D` `31%`, `CD3E` `32%`, `CD3G` `22%`, `CD2` `41%`) + Alveolar Macrophage markers |
+| **3** | 2,213 (18.54%) | **Intravascular Cytolytic Effector `CD8⁺` T Cells ($T_{EMRA}/T_{EFF}$, `ADGRG1/GPR56^{hi} GZMB^{hi} GNLY^{hi} GZMH^{hi} PRF1⁺ NKG7^{hi} FCGR3A^{hi} TBX21⁺ KLF2^{hi} KLF3⁺ S1PR1⁺ IL10⁺`)** | **Reassign (Not Doublet) $\rightarrow$ `CD8_T_cells`** | `ADGRG1` (`70.2%`, `log2FC = 3.46`), `GZMB` (`64.8%`), `RASA3` (`45.4%`), `IL10` (`26.3%`), `GNLY` (`61.3%`), `GZMH` (`47.9%`), `KLF3` (`37.7%`), `PTPN4`, `ADD3`, `ITM2C`, `S1PR1` (`34.0%`), `TBX21` (`47.7%`), `NKG7` (`63.7%`), `KLF2` (`78.7%`), `FGL2` (`33.0%`) | `PRF1` (#26, `50.0%`), `ITGB2` (#28, `49.0%`), `IL2RB` (#44, `76.0%`), `TRAT1` (#45, `56.0%`), `CCL5` (`94.0%`), `FCGR3A` (`87.0%`), `CD2` (`82.0%`), `GZMA` (`69.0%`), `CD8A` (`54.0%`), `PRDM1` (`48.0%`), `CD3D` (`64.0%`), `CD5` (`53.0%`); `CXCR6⁻` (`3%`) |
+| **4** | 1,669 (13.98%) | **Helper / Effector-Memory `CD4⁺` T Cells (`CD40LG^{hi} CD28^{hi} MAF^{hi} IL7R^{hi} IL6R⁺ IL18R1⁺ TCF7⁺ CD5^{hi} CD6⁺ GPR183⁺ SOCS3⁺`)** | **Reassign (Not Doublet) $\rightarrow$ `CD4_T_cells`** | `CD40LG` (`33.9%`, `log2FC = 2.97`), `CD28` (`43.3%`, `log2FC = 2.31`), `MAF` (`47.9%`), `IL6R` (`27.4%`), `CGA` (`25.6%`), `SOCS3` (`46.3%`), `IL7R` (`50.4%`), `IL18R1` (`33.1%`), `TCF7` (`33.0%`), `CD5` (`65.8%`), `SAMHD1`, `MYC` (`31.6%`), `JUNB`, `PDE4B` | `GPR183` (#21, `68.0%`), `FOXO1` (#34, `37.0%`), `CD69` (#36, `60.0%`), `CD6` (`38.0%`), `GATA3` (`38.0%`), `CD3D` (`49.0%`); `GNLY⁻` (`2%`), `GZMB⁻` (`4%`), `PRF1⁻` (`4%`), `CD8A^{lo}` (`18%`) |
+| **5** | 1,522 (12.75%) | **`CD2⁻ WC1⁺` Porcine $\gamma\delta$ T Cells (`SOX13^{hi} RHEX^{hi} BLK^{hi} GATA3^{hi} MAF⁺ ZBTB16/PLZF⁺ ID2^{hi} IL2RA/CD25⁺ IL7R^{hi} AQP3^{hi} CGA⁺ AHR⁺`)** | **Reassign (Not Doublet) $\rightarrow$ `unconventional_T_cells`** | `SOX13` (`44.5%`, `log2FC = 4.19`), `RHEX` (`33.4%`, `4.09`), `BLK` (`37.4%`, `3.97`), `IL2RA` (`34.2%`), `CGA` (`39.4%`), `SAMSN1`, `AQP3` (`51.9%`), `IL7R` (`56.7%`), `GATA3` (`56.5%`), `FURIN`, `MYC`, `MAF` (`46.4%`), `PDE4D` (`51.4%`), `SGK1` (`54.7%`), `ZBTB16` (`28.2%`) | `AHR` (#30, `32.0%`), `TCF7` (#36, `35.0%`), `CD96` (#42, `30.0%`), `ID2` (`86.0%`), `CXCR6` (`38.0%`), `CD247` (`58.0%`), `CD69` (`62.0%`); `CD2⁻` (`13%`), `LCK⁻` (`4%`), `CD6⁻` (`6%`), `CD8A⁻` (`15%`), `GNLY⁻` (`2%`) |
+
+---
+
+## Concise Cluster Rationale
+
+* **Why Parent Cluster 8 Formed**: **Cluster 2 (`2,514` cells, `REMOVE`)** is a T-Cell + Alveolar Macrophage (`APOE⁺ FCN2⁺ CD163⁺ LGALS3⁺ C3⁺ CD9⁺`) doublet/ambient-damaged cluster that bridged the T-cell and myeloid continents in the whole-lung UMAP, pulling lower-UMI cells from three distinct T-cell lineages into a single unresolved cluster.
+* **Clean T-Cell Subclusters (`9,421` cells $\rightarrow$ Reassign)**: **C1 (`4,017`)** matches `CD8_T_cells` C1 (`GZMK⁺ CXCR6⁺ CCR5⁺` parenchymal $T_{EM}/T_{RM}$); **C3 (`2,213`)** matches `CD8_T_cells` C2 (`ADGRG1^{hi} GZMB^{hi} GNLY^{hi} KLF2^{hi}` intravascular $T_{EMRA}$); **C4 (`1,669`)** matches `CD4_T_cells` C1/C2 (`CD40LG^{hi} CD28^{hi} MAF^{hi} IL7R^{hi}` helper `CD4⁺` T cells); and **C5 (`1,522`)** matches `unconventional_T_cells` C2/C3 (`CD2⁻ SOX13^{hi} RHEX^{hi} BLK^{hi} GATA3^{hi}` porcine $\gamma\delta$ T cells).

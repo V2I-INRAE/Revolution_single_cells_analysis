@@ -80,3 +80,7 @@ renv/
 
 # Rplots artifacts
 Rplots.pdf
+
+# macOS Finder metadata (all directories, any depth)
+**/.DS_Store
+.DS_Store
