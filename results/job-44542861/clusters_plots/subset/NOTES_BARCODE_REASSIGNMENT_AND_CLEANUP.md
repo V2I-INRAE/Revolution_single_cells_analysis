@@ -1,12 +1,16 @@
 # Master Subset Annotation Index, Doublet/Reassignment Ledger & Handoff Guide (`job-44542861`)
 
-This document is the central index for the 12 subclustered coarse compartments of `job-44542861` (`228,627` total cells across 23 porcine Control and EVLP lung samples). It links to all 12 subset identity reports and literature reviews, lists every doublet cluster and lineage reassignment, evaluates `k_param` / dimensionality settings per subset, provides execution instructions for the next agent, and indexes all primary literature references used across the annotations.
+This document is the central index for the 12 subclustered coarse compartments of `job-44542861` (**238,627 recorded original cells** across 23 porcine Control and EVLP lung samples). It links the original identity reports, designated doublet removals and planned lineage reassignments. **Cleanup/reassignment counts below are expected outcomes, not executed operations.** The reviewed regrouping and parameter policy is in Sections 4–5.
+
+**Current companion analyses:** [nested marker panels](NOTES_REVIEWED_MARKER_PANELS.md) and [sequential regrouping proposal](NOTES_CLUSTER_REGROUPING_PROPOSAL.md). Original identity reports remain unchanged for provenance; their fine labels and earlier parameter recommendations are not automatically endorsed. The annotation record `data/job-44542861/annotated_clustered.INFO` and all 12 cluster/sample summaries support the corrected total.
 
 ---
 
 ## 1. Directory of Subset Reports & Literature Dossiers
 
 ### A. Subset Identity Reports (`12 / 12` Complete)
+
+“Clean Cells Kept” is the expected count after the listed cleanup/transfers, with the NK-derived T destination scenario specified below. Optional mast/ILC2-like exports are not applied in these totals.
 
 | # | Coarse Subset | Subcluster Job | Selected Res | Total Cells | Clean Cells Kept | Doublets Removed | Reassigned Out / In | Subset Identity Report Path |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
@@ -22,9 +26,9 @@ This document is the central index for the 12 subclustered coarse compartments o
 | 10 | **`Stromal`** | `job-44614235` | `0.4` (7 cl.) | `11,398` | `11,079` | `319` (C6) | `0` / `0` | `Stromal/job-44614235/markers_res0.4/cluster_identities_res0.4.md` |
 | 11 | **`unconventional_T_cells`** | `job-44614239` | `0.4` (8 cl.) | `20,852` | `22,374`* | `0` | `0` (`399` ILC2 opt.) / `+1,522` | `unconventional_T_cells/job-44614239/markers_res0.4/cluster_identities_res0.4.md` |
 | 12 | **`T_cells_unresolved`** | `job-44614240` | `0.4` (5 cl.) | `11,935` | **`0` (Dissolved)** | `2,514` (C2) | `-9,421` (C1, C3, C4, C5) | `T_cells_unresolved/job-44614240/markers_res0.4/cluster_identities_res0.4.md` |
-| **Total** | **12 Subsets $\rightarrow$ 11 Clean** | — | — | **`228,627`** | **`224,183` (`98.06%`)** | **`4,444` (`1.94%`)** | **`21,157` reassigned** | — |
+| **Total** | **12 original → 11 expected containers** (scenario) | — | — | **`238,627`** | **`234,183` (`98.14%`)** | **`4,444` (`1.86%`)** | **`21,157` planned outgoing transfers** | — |
 
-*\*Note: If `NK_cells` C3 & C4 (`4,953` `CD3⁺ CD8αα⁺` NK-like T / NKT cells) are assigned to `unconventional_T_cells` instead of `CD8_T_cells`, `CD8_T_cells` = `33,565` cells and `unconventional_T_cells` = `27,327` cells.*
+*\*Scenario, not a resolved lineage decision: the displayed CD8 count of 38,518 assumes all 4,953 NK C3/C4 cells enter CD8; unconventional-T then contains 22,374. If all enter unconventional-T instead, CD8=33,565 and unconventional-T=27,327. Before that decision, there are 33,565 specified-recipient CD8 cells, 22,374 unconventional-T cells, and 4,953 T-lineage cells pending placement. Do not call them confirmed NKT/MAIT/gamma-delta cells or count them twice. Eleven final containers assumes this routing is resolved and optional mast/ILC2-like exports are not made; those choices change container counts, not the retained global total.*
 
 ### B. Associated Literature & Parent Annotation Dossiers
 * **Porcine Lung Macrophage & Monocyte Literature Review**: `results/literature_review/porcine_lung_macrophage_monocyte_subsets/literature_report.md` (with `paper_summary_table.csv` and `search_log.md`)
@@ -48,9 +52,11 @@ This document is the central index for the 12 subclustered coarse compartments o
 
 ---
 
-## 3. All Confirmed Lineage Reassignments (`Reassign (Not Doublet)` — `21,157` Mandatory + `1,401` Optional)
+## 3. Planned Lineage Reassignments (`21,157` Mandatory Outgoing + `1,401` Optional)
 
-| Source Subset | Subcluster Job | Resolution & Cluster ID | Cells (% of Subset) | True Biological Identity & Key Markers | Target Coarse Subset |
+Of the 21,157 planned outgoing transfers, **16,204 have specified recipient compartments** and **4,953 NK-derived T cells require recipient-lineage review**. Historical descriptive identities/marker summaries below are retained as working annotations, not receptor-validated subtype claims. CD247 alone does not establish T lineage; cytotoxic/NK-receptor programmes alone do not distinguish NK-like alpha-beta from gamma-delta T cells. Consult the companion marker review for limitations. Optional transfers retain all cells.
+
+| Source Subset | Subcluster Job | Resolution & Cluster ID | Cells (% of Subset) | Working Biological Identity & Key Markers | Target Coarse Subset |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **`CD4_T_cells`** | `job-44614236` | `res 0.4` — **Cluster `3`** | `3,748` (`14.48%`) | **Naive / Central Memory `CD8⁺` T Cells** (`CD8B` `95.0%`, `CD8A` `71.0%`, `CD4` `0.8%`, `SELL` `69.6%`, `CCR7` `53.0%`, `LEF1`, `TCF7`) | **`CD8_T_cells`** |
 | **`CD4_T_cells`** | `job-44614236` | `res 0.4` — **Cluster `4`** | `3,035` (`11.72%`) | **`GZMK⁺ CCL5⁺` Effector-Memory `CD8⁺` T Cells** (`CD8A` `74.4%`, `CD8B` `62.2%`, `CD4` `4.1%`, `CCL5` `90.9%`, `GZMK` `61.3%`, `KLRK1` `57.2%`, `CXCR3`) | **`CD8_T_cells`** |
@@ -65,54 +71,73 @@ This document is the central index for the 12 subclustered coarse compartments o
 
 ---
 
-## 4. Assessment of `k_param`, `dims`, and Re-Subclustering Needs Across All 12 Subsets
+## 4. Reviewed regrouping and graph-parameter policy
 
-### Why `k_param = 100` Affected Small/Medium Subsets
-In `R/config.R`, `config$clustering$k_param = 100` was tuned for the `228,627`-cell whole-lung object. When `R/clusters/subcluster.R` runs on an individual subset (`7,436` to `42,214` cells), inheriting `k_param = 100` means each cell's SNN neighborhood spans `0.7%–1.35%` of the entire subset. While `k_param = 100` worked well for large compartments (`B_cells`, `Granulocytes`, `Macrophage_Monocytes`), it merges closely related sub-lineages or rare (<250-cell) states in smaller subsets.
+**This section supersedes the earlier promises of specific lineage splits with smaller `k_param` and the untested assertion of an established `k=50` optimum.** The evidence supports candidate groupings and sensitivity tests, not guaranteed splits.
 
-### Subset-by-Subset Parameter Recommendations
+Read the [full sequential regrouping proposal](NOTES_CLUSTER_REGROUPING_PROPOSAL.md) and [reviewed marker-panel tables](NOTES_REVIEWED_MARKER_PANELS.md) before adopting the historical identity labels. In particular, broad identity, original fine-cluster provenance, and state/programme should be separate annotations. A clustree plateau or shared parent on one original graph is not donor/resampling validation, subtype equivalence, or a developmental trajectory.
 
-| Subset (`job`) | Current Params (`n_hvg`, `dims`, `k_param`, `res`) | Should You Re-Subcluster? | Recommended `k_param` & `dims` If Re-Subclustering (and Why) |
-| :--- | :--- | :--- | :--- |
-| **`B_cells`** (`job-44614229`) | `2000` HVGs, `1:20`, `k=100`, `res 0.4` | **No (Keep as-is)** | `k=100` already cleanly resolved all 5 B-cell and 4 ASC/Plasma states (including `255` `AICDA⁺` GC B cells) with a 100% stable clustree plateau (`0.4–0.5`). |
-| **`Granulocytes`** (`job-44614233`) | `500` HVGs, `1:10`, `k=100`, `res 0.3` | **No (Keep as-is)** | `k=100` already cleanly separated all 3 Neutrophil states, Eosinophils (`3,814`), Mast Cells (`1,002`), and Basophils (`271`). |
-| **`DC`** (`job-44614230`) | `1500` HVGs, `1:20`, `k=100`, `res 0.3` | **Optional (`k_param` change recommended if splitting `cDC2` vs `DC3/MoDC`)** | **`k_param = 25–30`, `dims = 1:15`**: In `7,436` cells, `k=100` forced canonical `FCER1A⁺ CD1.1⁺ CD207⁺` `cDC2` and inflammatory `MRC1⁺ CD163⁺ FCGR3A⁺` `DC3/MoDC` into a single cluster (C2, `1,460` cells). Lowering `k_param` to `25–30` will cleanly split `cDC2` from `DC3/MoDC`. |
-| **`Endothelial`** (`job-44614231`) | `2000` HVGs, `1:15`, `k=100`, `res 0.3` | **Optional after removing C6 (`318` doublets)** | **`k_param = 30`, `dims = 1:15`**: `res 0.3` (`k=100`) already resolved LEC, Venous, `gCap`, `aCap` (Aerocytes), and Arterial ECs. However, if re-running after removing C6 doublets, lowering `k_param` to `30` will allow separation of **Resting Venous (`ACKR1⁺ HDAC9⁺ SELE⁻`)** vs. **EVLP-Activated Venous (`ACKR1⁺ SELE⁺ VCAM1⁺`)** and **Bronchial Systemic Venous (`COL15A1⁺ VWA1⁺ PLVAP⁺`)** ECs. |
-| **`Stromal`** (`job-44614235`) | `2000` HVGs, `1:15`, `k=100`, `res 0.4` | **Optional after removing C6 (`319` doublets)** | **`k_param = 25–30`, `dims = 1:15`**: At `k=100`, C2 (`2,751` cells) co-clusters `WIF1⁺ GREM1⁺ PDGFRA⁺` Alveolar Ductal Myofibroblasts with `MYH11^{hi} ACTA2^{hi}` Airway Smooth Muscle (`ASM`), and C7 (`188` cells, smaller than `2 × k_param`) merges `ABCC9⁺ KCNJ8⁺` Pericytes with `ACTA2⁺ MYH11⁺` Vascular Smooth Muscle (`VSMC`). Lowering `k_param` to `25–30` will split Pericytes from VSMCs and Ductal Myofibroblasts from ASM. |
-| **`Epithelial`** (`job-44614232`) | `2000` HVGs, `1:20`, `k=100`, `res 0.4` | **No (Just drop C7 `603` doublets)** | `res 0.4` (`k=100`) already resolved all 10 clean epithelial populations including rare Ionocytes (`292`), Basal (`258`), Tuft-1 (`320`), and Tuft-2 (`448`). Only lower `k_param` to `25–30` if re-subclustering after C7 removal to isolate ultra-rare `<100`-cell PNECs or Serous gland cells. |
-| **`Macrophage_Monocytes`** (`job-44614234`) | `2000` HVGs, `1:20`, `k=100`, `res 0.4` | **No (Just drop C10 `245` & C9 `445` doublets)** | In `42,214` cells, `k=100` (`0.24%` of subset) is well-scaled and cleanly resolved 3 PAM states, Interstitial Macrophages, 3 Monocyte/MoMac states, and `MARCO^{hi} TIMD4⁺` Macrophages. If re-subclustering after dropping C9/C10, `k_param = 50` is optimal. |
-| **`CD4_T_cells`** (`job-44614236`) | `2000` HVGs, `1:20`, `k=100`, `res 0.4` | **Yes (After removing C3+C4 `6,783` `CD8⁺` & adding `1,669` from `T_cells_unresolved` C4)** | **`k_param = 30–40`, `dims = 1:20`**: With `20,774` pure `CD4⁺` T cells (no longer distorted by `CD8⁺` cytotoxic PCs), lowering `k_param` to `30–40` will cleanly separate `FOXP3⁺ IL2RA^{hi} CTLA4^{hi}` Tregs from `ICOS^{hi} BCL6⁺ MAF^{hi}` Tfh and Cycling `TOP2A⁺` `CD4⁺` T cells (currently merged in C5). |
-| **`CD8_T_cells`** (`job-44614237`) | `2000` HVGs, `1:20`, `k=100`, `res 0.4` | **Yes (After adding `+17,966` reassigned `CD8⁺` T cells)** | **`k_param = 40–50`, `dims = 1:20`**: Re-subclustering the unified `38,518`-cell `CD8⁺` T-cell compartment (combining Naive/CM, `GZMK⁺` $T_{EM}$, `ITGAE⁺` $T_{RM}$, `CX3CR1⁺ ADGRG1⁺` $T_{EMRA}$, `IL23R⁺ RORC⁺` Tc17/MAIT, and `CD8αα⁺` NKT) with `k_param = 40–50` will give a complete, unified `CD8⁺` T-cell trajectory. |
-| **`NK_cells`** (`job-44614238`) | `2000` HVGs, `1:15`, `k=100`, `res 0.4` | **Optional (After removing C3+C4 `4,953` `CD3⁺` T/NKT cells)** | **`k_param = 30–40`, `dims = 1:15`**: Removing C3 & C4 leaves `19,389` pure `CD3E⁻` NK/ILC1 cells across 5 already-clean clusters (C1, C2, C5, C6, C7). Re-subclustering with `k_param = 30–40` is optional for a T-cell–free NK UMAP. |
-| **`unconventional_T_cells`** (`job-44614239`) | `2000` HVGs, `1:20`, `k=100`, `res 0.4` | **Optional (If merging `+1,522` from `T_cells_unresolved` C5)** | **`k_param = 30–40`, `dims = 1:20`**: Existing `res 0.4` already cleanly resolves 6 `CD2⁻ WC1⁺` $\gamma\delta$ T states, `CD2⁺ EOMES^{hi}` $\gamma\delta$ T cells (C7, `455`), and Pulmonary `ILC2s` (C8, `399`). Re-subcluster with `k_param = 30–40` if integrating `T_cells_unresolved` C5 (`1,522` cells). |
-| **`T_cells_unresolved`** (`job-44614240`) | `2000` HVGs, `1:20`, `k=100`, `res 0.4` | **Dissolve completely (`0` cells remain)** | Do not re-run: C2 (`2,514` doublets) is removed, and C1 (`4,017`), C3 (`2,213`), C4 (`1,669`), and C5 (`1,522`) are reassigned to `CD8_T_cells`, `CD4_T_cells`, and `unconventional_T_cells`. |
+### Baseline versus sensitivity settings
+
+`R/config.R` currently sets `k_param=100`; no subset-optimal k has been demonstrated. Across the original 7,436–42,214-cell subsets, 100 neighbours correspond to roughly **0.24%–1.35%** of cells, but that fraction alone does not determine biological resolution. Smaller k may reveal structure **or fragment it**; larger k may oversmooth. A rare cluster being smaller than twice k is a reason to inspect sensitivity, not proof of mixed lineage.
+
+For graph refits, start from the reported subset HVGs/dimensions and k=100; compare k=50 with dimensions/features fixed and resolutions 0.2/0.3/0.4. Reserve targeted k≈30 tests for specific, cell-level-supported questions. Do not change k merely to obtain fewer reporting groups. Metadata roll-ups do not require new clustering.
+
+| Subset | Reported original settings (HVGs; dims; k; res) | Pragmatic annotation / refit recommendation |
+|---|---|---|
+| B_cells | 2,000; 1:20; 100; 0.4 | Merge mature-plasma C3+C4 as a candidate curated identity. Broad ASC C3+C4+C7+C8 is a reporting umbrella with secondary states retained. Existing res0.3 is the first comparison; no k change required. |
+| CD4_T_cells | 2,000; 1:20; 100; 0.4 | After C3/C4 transfer out and unresolved-T C4 transfer in, refit the 20,774-cell pool before graph-dependent conclusions. C1+C5 can share a broad helper-memory/activated umbrella; C5 is not resolved Treg/Tfh. |
+| CD8_T_cells | 2,000; 1:20; 100; 0.4 | Refit after incoming transfers; 33,565 cells before NK-derived T placement, 38,518 if all enter here. No forced original six-group mapping or C3+C4 merge: C3 lineage remains provisional. |
+| DC | 1,500; 1:20; 100; 0.3 | Keep four operational groups. Do not force C2 into cDC2/DC3/MoDC subtypes or infer C4 precursor lineage from a graph parent. Targeted sensitivity only if warranted. |
+| Endothelial | 2,000; 1:15; 100; 0.3 | Remove C6; retain five vascular identities and separate activation scores. Refit if cleaned graph/neighbourhood analyses are needed; no obligatory venous subdivision. |
+| Epithelial | 2,000; 1:20; 100; 0.4 | Remove C7. Broad ciliated C1+C5 and secretory C2+C3 are recommended; tuft/brush-like C8+C9 is an optional umbrella. Preserve secondary programmes and rare lineages. |
+| Granulocytes | 500; 1:10; 100; 0.3 | Broad neutrophils C1+C2+C5 with inflammatory/IFN/granule-rich states; minimal merge C1+C2. Keep eosinophils, basophils and mast identity distinct. No new graph required for reporting. |
+| Macrophage_Monocytes | 2,000; 1:20; 100; 0.4 | Remove C9/C10. Broad PAM C1+C2+C3 and monocyte/MoMac C5+C6+C8 with state reporting; retain C4 and niche-provisional C7 separately. k=50 is sensitivity, not a proven optimum. |
+| NK_cells | 2,000; 1:15; 100; 0.4 | Move C3/C4 out to T-lineage review; refit for new boundary decisions. C5 remains low-information, not a validated subtype or automatically C2. C6/C7 identities are provisional NK/ILC-like states. |
+| Stromal | 2,000; 1:15; 100; 0.4 | Remove C6. Default C1+C4 matrix/adventitial-like umbrella; C3+C5 optional alveolar/niche roll-up, with fine distinctions preserved. Keep contractile C2 and mural C7 separate. No guaranteed pericyte/VSMC or myofibroblast/ASM split with smaller k. |
+| unconventional_T_cells | 2,000; 1:20; 100; 0.4 | Refit after adding unresolved-T C5. Broad CD2-low gamma-delta-like C1–C6 with state reporting; C7 and ILC2-like C8 distinct. Do not force low-signal C5 into another fine cluster. |
+| T_cells_unresolved | 2,000; 1:20; 100; 0.4 | Dissolve after C2 removal and other-cluster transfers; no new graph for this container. |
+
+**Stromal caution:** C1 and C4 coexist in all five baseline-control samples; C1 cannot simply be described as an EVLP-only replacement for C4. Shared matrix markers support a broad umbrella, not a proven single subtype. C5's niche-associated programme warrants preservation. Details and control counts are in the proposal.
+
+**Implementation status:** the inspected `R/clusters/subcluster.R` and `R/utils/cli.R` support `--hvg` and `--dims`, not `--k-param`. A per-run k override would require a separately approved code change. Do not alter the shared configuration globally for one subset. No such implementation or job submission has been performed.
 
 ---
 
-## 5. Handoff Guidance for the Next Agent: How to Proceed
+## 5. Handoff guidance — cleanup, hierarchical annotation, then selective refit
 
-Every subclustered Seurat object (`data/job-44542861/subsets/<Subset>/<job_id>/subclustered.rds`) preserves the exact same cell barcodes (`colnames(seurat_obj)`) as the parent whole-lung object (`data/job-44542861/annotated_clustered.rds`).
+**Plan only: this document does not certify an executed cleaned RDS.** Original subset objects preserve parent cell barcodes according to the annotation records. Recheck this at execution. The detailed source/job/resolution index and validation criteria are in [the regrouping proposal](NOTES_CLUSTER_REGROUPING_PROPOSAL.md).
 
-### Option A (Recommended): Parent Object Cleanup + Selective Re-Subclustering
-1. **Extract Barcode Lists**:
-   * Load the subclustered `.rds` objects listed in **Section 2 (Doublets)** and **Section 3 (Reassignments)** and extract the cell barcodes (`colnames(sub_obj)`) matching the specified resolution and cluster IDs.
-2. **Update and Filter the Parent Seurat Object (`data/job-44542861/annotated_clustered.rds`)**:
-   * Remove all `4,444` doublet barcodes from the parent object (`subset(parent, cells = setdiff(colnames(parent), doublet_barcodes))`).
-   * Reassign `parent$subset` (and `Idents(parent)`) for the `21,157` T-cell barcodes according to **Section 3** (`T_cells_unresolved` is eliminated).
-   * Save the updated parent object (e.g., `data/job-44542861/annotated_clustered_cleaned.rds`).
-3. **Run Selective Re-Subclustering (`scripts/sbatch_subcluster.sh` + `scripts/sbatch_subset_markers.sh`)**:
-   * Add a `--k-param` CLI override (or set `k_param = 35` in `R/config.R` for subclustering) so subclustering uses `k_param = 30–50` instead of `100`.
-   * Re-run subclustering on the modified T/NK subsets (`CD4_T_cells`, `CD8_T_cells`, and optionally `NK_cells` and `unconventional_T_cells`), plus any non-T subset where finer `k_param = 25–30` splitting is desired (`DC`, `Stromal`, `Endothelial`).
+### A. Barcode cleanup and reassignment
 
-### Option B (Lightweight / Fast): Direct Barcode-Level Metadata Lookup Table (No Re-Clustering)
-If new UMAPs are not required and you want to proceed immediately to compositional (`run_group_distribution.R`) or differential expression analyses:
-1. Loop through all 12 `subclustered.rds` objects and build a master lookup table keyed by `barcode` with columns: `orig_subset`, `subcluster_id`, `curated_coarse_subset`, `curated_fine_subset`, and `qc_status` (`"Keep"` vs. `"REMOVE_Doublet"`).
-2. Assign each `(orig_subset, subcluster_id)` to its `Proposed Known Subset` from the 12 `cluster_identities_res<res>.md` reports and its `Target Coarse Subset` from **Section 3**.
-3. Exclude `qc_status == "REMOVE_Doublet"` (`4,444` cells), yielding **`224,183` clean, annotated single cells** across 11 coarse compartments.
+1. Extract removal and transfer barcode sets from the original subset jobs using their selected resolutions in Sections 2–3. Never match a bare cluster number across jobs or resolutions.
+2. Assert source ownership, unique barcode keys, disjoint retained/removed sets, and exactly one curated destination for every retained cell. Removal takes precedence; transfers conserve cells.
+3. Remove the designated **4,444** doublet barcodes. Expected retention is **234,183 of 238,627 cells (98.14%)**.
+4. Apply the **16,204** transfers with specified recipient compartments; route the additional **4,953** NK-derived T cells through explicit lineage review before choosing CD8 versus unconventional-T. Leaving NK is planned, but the recipient subtype is not established. Preserve a pending-review bucket if necessary rather than force or double-count them.
+5. Preserve optional mast (1,002) and ILC2-like (399) cells as distinct identities, whether exported to dedicated compartments or retained in their original containers. Global retention is unchanged by these optional transfers.
+6. Save any future cleaned object under a new name, without overwriting the original; verify barcodes, counts, metadata and source provenance after reopening.
+
+### B. Hierarchical annotations without compulsory reclustering
+
+Build a barcode lookup retaining `orig_subset`, `orig_subcluster_job`, `orig_resolution`, `orig_subcluster_id`, `curated_compartment`, broad/fine curated identities, programme/state annotations, confidence, QC status and reassignment status.
+
+Use the proposal rather than blindly copying every historical biological label. Prioritise B C3+C4, epithelial C2+C3 and C1+C5, granulocyte C1+C2, and the broad stromal C1+C4 umbrella. Preserve source labels and secondary states. Broader ASC/PAM/neutrophil/gamma-delta roll-ups are reporting choices, not proof that constituent populations are identical. Purely metadata-level regrouping does not require renormalisation or new UMAPs.
+
+### C. Selective graph refits and validation
+
+For receiving CD4/CD8/unconventional pools, refit features, scaling/PCA, integration, neighbours and clustering before graph-dependent analyses. Refit NK for new boundaries after outgoing transfers; refit other cleaned compartments if their graph is needed downstream. Do not concatenate old embeddings or graphs. Existing retained labels may still support explicitly provisional metadata-level analyses.
+
+Start with the bounded k=100 versus k=50 comparison in Section 4, retaining reported dimensions/features initially. Evaluate closest-cluster multigene separation, QC effects, donor replication, seed/graph sensitivity and held-out donor performance where feasible. Treat repeated samples/timepoints from a donor as dependent observations. Low detection is not biological absence; absence of a five-gene panel is not a removal criterion.
+
+Keep state-specific composition/DE alongside broad counts so merging cannot hide EVLP-associated responses. Recompute marker panels against cleaned curated labels. Use cell-cycle/stress-feature sensitivity analyses when justified; do not automatically regress away condition biology. A clustree is not evidence of temporal cell conversion.
+
+**Expected final global count remains 234,183.** Eleven compartments assumes the unresolved-T container is dissolved, NK-derived T placement is resolved, and mast/ILC2-like populations remain inside existing containers; optional dedicated compartments or a temporary pending-review bucket alter the container count, not cell retention.
 
 ---
 
 ## 6. Master Literature Reference Index (By Lineage)
+
+**Historical reference index retained for provenance, not newly literature-verified in this documentation update.** The preceding abstract-level review identified attribution/PMID problems and unsupported marker-specific interpretations in some entries, including the “Shin et al.” attribution for PMID 39875369, the Fairbairn journal/DOI, and the Schupp PMID (the verified atlas is **34030460**, not 34097468). See [verified anchors and qualifications](NOTES_REVIEWED_MARKER_PANELS.md). Do not use these historical claims alone to justify a subtype, niche, or merger; original reference entries have not been comprehensively corrected here.
 
 ### A. Porcine & Mammalian Monocytes, Alveolar Macrophages (PAMs), IMs, PIMs & DCs
 1. **Álvarez et al. (2023)** *Cells* (`PMID: 37626913`, `PMC10453229`, DOI: `10.3390/cells12162103`) — Comprehensive review of porcine monocyte/macrophage markers; establishes PAMs as `CD203a(ENPP1)^{hi} CLEC12B⁺ CD206(MRC1)^{hi} CD169(SIGLEC1)^{hi} CD163^{hi} CD172a(SIRPA)^{hi} FCGR1A^{hi} CD14^{lo} CD16^{lo}` (`Macrophage_Monocytes` C1–C3).
