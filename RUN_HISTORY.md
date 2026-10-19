@@ -16,6 +16,7 @@ Owner-authorized cleanup on Oct 15 removed all contents of job-44542861 `cluster
 
 | Job / date | Config / route | Execution | Outcome and checks | Record |
 |---|---|---|---|---|
+| Local cleanup readiness / Oct 18 | Proposed cleanup of revised data/job-44542861/annotated_clustered.rds (annotation 44611569) using 12 approved child jobs | BLOCKED before execution; local R 4.6.1, 64 GiB RAM | R syntax PASS; missing renv/activate.R and local Seurat; no RDS loaded or output created | [INFO](logs/local-cleanup-20261018.INFO) |
 | 44625188 / Oct 15 | Group composition; input data/job-44542861/clustered.rds, producer 44542861; harmony_snn_res.0.7 | COMPLETED 0:0, 2m04s; 1 CPU, 128 GB, 4 h | 238627 cells, 24 clusters; three PNGs reopened; count/proportion/input checks PASS | [INFO](results/job-44542861/clusters_plots/0.7/distribution/.INFO) |
 | 44625189 / Oct 15 | Group composition B_cells; input data/job-44542861/subsets/B_cells/job-44614229/subclustered.rds; res 0.4 | COMPLETED 0:0, 30s; 1 CPU, 128 GB, 4 h | 26790 cells, 9 clusters; three PNGs reopened; count/proportion/input checks PASS | [INFO](results/job-44542861/clusters_plots/subset/B_cells/job-44614229/0.4/distribution/.INFO) |
 | 44625190 / Oct 15 | Group composition CD4_T_cells; input data/job-44542861/subsets/CD4_T_cells/job-44614236/subclustered.rds; res 0.4 | COMPLETED 0:0, 30s; 1 CPU, 128 GB, 4 h | 25888 cells, 6 clusters; three PNGs reopened; count/proportion/input checks PASS | [INFO](results/job-44542861/clusters_plots/subset/CD4_T_cells/job-44614236/0.4/distribution/.INFO) |
