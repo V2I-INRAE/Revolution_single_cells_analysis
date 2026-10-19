@@ -1,7 +1,8 @@
 # Refit one saved coarse identity using the existing pipeline functions.
-# Usage: Rscript R/clusters/subcluster.R <input.rds> "<subset label>" <folder> [--only-pca | --hvg=<number> --dims=<number>]
-# Example: data/job-44542861/annotated_clustered.rds "T cells & NK" T_cell_nk --hvg=1000 --dims=20
-# Full-run overrides are optional; --only-pca accepts neither override.
+# Usage: Rscript R/clusters/subcluster.R <input.rds> "<subset label>" <folder>
+#   [--only-pca | --hvg=<number> --dims=<number> --k-param=<number> --resolutions=0.1,0.2,...]
+# Example: data/job-44542861/clean_annotated_object.rds DC DC --hvg=1500 --dims=10 --k-param=50
+# Full-run overrides are optional; --only-pca accepts no overrides.
 # No normalization, QC filtering or cell-cycle scoring is repeated.
 
 suppressPackageStartupMessages(library(Seurat))
@@ -18,8 +19,8 @@ source("R/plots/plots_normalized_data.R", local = TRUE)
 source("R/plots/plots_clustered_data.R", local = TRUE)
 
 run_subclustering <- function(input, subset_label, folder, only_pca = FALSE,
-  n_hvg = NULL, dims = NULL) {
-  validate_subcluster_options(only_pca, n_hvg, dims)
+  n_hvg = NULL, dims = NULL, k_param = NULL, resolutions = NULL) {
+  validate_subcluster_options(only_pca, n_hvg, dims, k_param, resolutions)
   # Print each warning where it occurs instead of an end-of-run count.
   warning_options <- options(warn = 1)
   on.exit(options(warning_options), add = TRUE)
@@ -28,6 +29,8 @@ run_subclustering <- function(input, subset_label, folder, only_pca = FALSE,
   config <- config
   if (!is.null(n_hvg)) config$norm$n_variable_features <- as.integer(n_hvg)
   if (!is.null(dims)) config$dims <- seq_len(dims)
+  if (!is.null(k_param)) config$clustering$k_param <- as.integer(k_param)
+  if (!is.null(resolutions)) config$clustering$resolutions <- resolutions
   if (max(config$dims) > config$norm$n_pcs) {
     stop("--dims cannot exceed the number of computed PCs (", config$norm$n_pcs, ").")
   }
@@ -52,7 +55,8 @@ run_subclustering <- function(input, subset_label, folder, only_pca = FALSE,
     paste0("Started: ", format(Sys.time(), "%Y-%m-%d %H:%M:%S %Z")),
     paste0("Job: ", run_id),
     paste0("Input (read-only): ", input),
-    paste0("Producer: ", parent_job, "; subset: ", subset_label),
+    paste0("Input record: ", tools::file_path_sans_ext(input), ".INFO"),
+    paste0("Pipeline parent: ", parent_job, "; subset: ", subset_label),
     paste0("Mode: ", if (only_pca) "PCA only" else "full subclustering"),
     "Methods: reuse normalized RNA; refit HVGs, scaling/regression and PCA; no QC or cell-cycle rescoring.",
     paste0("HVGs requested: ", config$norm$n_variable_features,
@@ -109,7 +113,8 @@ run_subclustering <- function(input, subset_label, folder, only_pca = FALSE,
 
   obj@misc$subcluster <- list(
     input = input, subset_label = subset_label, run_id = run_id,
-    only_pca = only_pca, overrides = list(hvg = n_hvg, dims = dims),
+    only_pca = only_pca,
+    overrides = list(hvg = n_hvg, dims = dims, k_param = k_param, resolutions = resolutions),
     settings = list(norm = config$norm, dims = config$dims, seed = config$run$seed,
       integration = if (!only_pca) config$integration else NULL,
       clustering = if (!only_pca) config$clustering else NULL),
@@ -205,5 +210,6 @@ if (sys.nframe() == 0L) {
   args <- parse_subcluster_args(commandArgs(trailingOnly = TRUE))
   # Seurat derives command names from the call stack; keep a direct entry call.
   run_subclustering(args$input, args$subset_label, args$folder,
-    only_pca = args$only_pca, n_hvg = args$n_hvg, dims = args$dims)
+    only_pca = args$only_pca, n_hvg = args$n_hvg, dims = args$dims,
+    k_param = args$k_param, resolutions = args$resolutions)
 }

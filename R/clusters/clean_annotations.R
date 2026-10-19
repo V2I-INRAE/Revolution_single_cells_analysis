@@ -44,106 +44,143 @@ run_cleanup_44542861 <- function(
   input = "data/job-44542861/annotated_clustered.rds",
   output = "data/job-44542861/clean_annotated_object.rds"
 ) {
-
   info_file <- paste0(tools::file_path_sans_ext(output), ".INFO")
   stopifnot(!file.exists(output), !file.exists(info_file))
 
-  writeLines(c
-    (paste("Input:", input), paste("Output:", output), paste("Started:", Sys.time()),
+  # Record the exact rules before loading any objects.
+  info <- c(
+    "# Annotation cleanup",
+    "Status: running",
+    paste("Started:", Sys.time()),
     paste("Producer job:", Sys.getenv("SLURM_JOB_ID", unset = "manual")),
+    paste("Input:", input),
+    paste("Output:", output),
     "Method: approved doublet removal and compartment reassignment by exact barcode.",
     "Normalized RNA retained; no refitting; no random seed needed (deterministic).",
-    "Status: running", capture.output(print(cleanup_sources_44542861, row.names = FALSE)),
-    capture.output(print(cleanup_rules_44542861, row.names = FALSE))), info_file
+    "Sources:",
+    capture.output(print(cleanup_sources_44542861, row.names = FALSE)),
+    "Rules:",
+    capture.output(print(cleanup_rules_44542861, row.names = FALSE))
   )
+  completed <- FALSE
+  validation <- "Validation: pending"
+  writeLines(info, info_file)
+  on.exit({
+    info[info == "Status: running"] <- paste("Status:",
+      if (completed) "completed" else "failed/incomplete; see execution log")
+    writeLines(c(info, paste("Finished:", Sys.time()), validation), info_file)
+  }, add = TRUE)
 
-  annotated_cluster <- readRDS(input)
-  annotated_cluster$cleanup_original_subset <- as.character(annotated_cluster$subset)
-  annotated_cluster$cleanup_source_cluster <- NA_character_
-  annotated_cluster$cleanup_source_job <- NA_character_
-  annotated_cluster$cleanup_source_resolution <- NA_character_
+  # Preserve the original compartment and child-cluster provenance.
+  obj <- readRDS(input)
+  obj$cleanup_original_subset <- as.character(obj$subset)
+  obj$cleanup_source_cluster <- NA_character_
+  obj$cleanup_source_job <- NA_character_
+  obj$cleanup_source_resolution <- NA_character_
 
-  # Discard old fits once; they are not refitted by cell removal/reassignment.
-  for (name in c(
-      Reductions(annotated_cluster),
-      Graphs(annotated_cluster),
-      Neighbors(annotated_cluster)
-    )
-  ) {
-    annotated_cluster[[name]] <- NULL
+  # Discard old fits once; cell removal/reassignment does not refit them.
+  for (name in c(Reductions(obj), Graphs(obj), Neighbors(obj))) {
+    obj[[name]] <- NULL
   }
-  rna <- annotated_cluster[["RNA"]]
-
-  for (layer in Layers(rna, search = "^scale\\.data($|\\.)")) LayerData(rna, layer = layer) <- NULL
-
-  annotated_cluster[["RNA"]] <- rna
-
+  rna <- obj[["RNA"]]
+  for (layer in Layers(rna, search = "^scale\\.data($|\\.)")) {
+    LayerData(rna, layer = layer) <- NULL
+  }
+  obj[["RNA"]] <- rna
   rm(rna)
 
+  # Read each original child once; select cells by its job and resolution.
   for (i in seq_len(nrow(cleanup_sources_44542861))) {
     entry <- cleanup_sources_44542861[i, ]
-    child <- readRDS(file.path(dirname(input), "subsets", entry$folder, entry$job, "subclustered.rds"))
-    clusters <- as.character(child[[paste0("harmony_snn_res.", entry$resolution), drop = TRUE]])
-    at <- match(colnames(child), colnames(annotated_cluster))
-    annotated_cluster$cleanup_source_cluster[at] <- clusters
-    annotated_cluster$cleanup_source_job[at] <- entry$job
-    annotated_cluster$cleanup_source_resolution[at] <- entry$resolution
+    child_path <- file.path(dirname(input), "subsets", entry$folder,
+      entry$job, "subclustered.rds")
+    child <- readRDS(child_path)
+    cluster_col <- paste0("harmony_snn_res.", entry$resolution)
+    clusters <- as.character(child[[cluster_col, drop = TRUE]])
+    at <- match(colnames(child), colnames(obj))
+    obj$cleanup_source_cluster[at] <- clusters
+    obj$cleanup_source_job[at] <- entry$job
+    obj$cleanup_source_resolution[at] <- entry$resolution
 
     rules <- cleanup_rules_44542861[cleanup_rules_44542861$folder == entry$folder, ]
-
     for (j in seq_len(nrow(rules))) {
       rule <- rules[j, ]
       barcodes <- colnames(child)[clusters == rule$cluster]
-      message(entry$folder, " C", rule$cluster, ": ", rule$action, " ", length(barcodes), " cells")
+      message(entry$folder, " C", rule$cluster, ": ", rule$action,
+        " ", length(barcodes), " cells")
       stopifnot(length(barcodes) == as.integer(rule$cells))
 
       if (rule$action == "remove") {
-        annotated_cluster <- remove_doublets(annotated_cluster, barcodes)
+        obj <- remove_doublets(obj, barcodes)
       } else {
-        annotated_cluster <- reassign_cells(annotated_cluster, barcodes, entry$label, rule$target)
+        obj <- reassign_cells(obj, barcodes, entry$label, rule$target)
       }
     }
     rm(child)
     gc(verbose = FALSE)
   }
 
-  barcodes <- colnames(annotated_cluster)[annotated_cluster$cleanup_original_subset == "unconventional_T_cells"]
-  annotated_cluster <- reassign_cells(annotated_cluster, barcodes,
+  # Rename the original unconventional pool; incoming cells already use this label.
+  barcodes <- colnames(obj)[obj$cleanup_original_subset == "unconventional_T_cells"]
+  obj <- reassign_cells(obj, barcodes,
     "unconventional_T_cells", "Unconventional_T_and_ILCs")
-  # Retain the previously agreed qualified annotations separately from routing.
-  lineage <- c("Granulocytes/4" = "mast_cells", "unconventional_T_cells/8" = "ILC2_like",
-    "T_cells_unresolved/5" = "gamma_delta_like_T", "NK_cells/3" = "NK_like_T_subtype_unresolved",
-    "NK_cells/4" = "NK_like_T_subtype_unresolved")
-  key <- paste(annotated_cluster$cleanup_original_subset, annotated_cluster$cleanup_source_cluster, sep = "/")
+
+  # Keep qualified lineage notes separate from compartment routing.
+  lineage <- c(
+    "Granulocytes/4" = "mast_cells",
+    "unconventional_T_cells/8" = "ILC2_like",
+    "T_cells_unresolved/5" = "gamma_delta_like_T",
+    "NK_cells/3" = "NK_like_T_subtype_unresolved",
+    "NK_cells/4" = "NK_like_T_subtype_unresolved"
+  )
+  key <- paste(obj$cleanup_original_subset, obj$cleanup_source_cluster, sep = "/")
   notes <- unname(lineage[key])
   notes[is.na(notes)] <- "compartment_only"
-  annotated_cluster$cleanup_lineage_note <- notes
-  DefaultAssay(annotated_cluster) <- "RNA"
-  annotated_cluster@misc$cleanup_44542861 <- list(input = input,
-    sources = cleanup_sources_44542861, rules = cleanup_rules_44542861,
-    parent_analysis = annotated_cluster@misc[c("integration", "clustering")])
-  annotated_cluster@misc$integration <- NULL
-  annotated_cluster@misc$clustering <- NULL
+  obj$cleanup_lineage_note <- notes
+  DefaultAssay(obj) <- "RNA"
+  obj@misc$cleanup_44542861 <- list(
+    input = input,
+    sources = cleanup_sources_44542861,
+    rules = cleanup_rules_44542861,
+    parent_analysis = obj@misc[c("integration", "clustering")]
+  )
+  obj@misc$integration <- NULL
+  obj@misc$clustering <- NULL
 
-  # Save once, then reopen for a small saved-output check.
-  cells <- colnames(annotated_cluster)
-  counts <- table(annotated_cluster$subset)
-  layers <- Layers(annotated_cluster[["RNA"]])
-  saveRDS(annotated_cluster, output)
-  rm(annotated_cluster)
+  # Save once, release the in-memory object, then verify the saved output.
+  cells <- colnames(obj)
+  metadata <- obj[[]]
+  counts <- table(obj$subset)
+  layers <- Layers(obj[["RNA"]])
+  saveRDS(obj, output)
+  rm(obj)
   gc(verbose = FALSE)
+
   saved <- readRDS(output)
-  stopifnot(ncol(saved) == 234183L, identical(colnames(saved), cells),
-    identical(table(saved$subset), counts), identical(Layers(saved[["RNA"]]), layers),
+  stopifnot(
+    ncol(saved) == 234183L,
+    identical(colnames(saved), cells),
+    identical(saved[[]], metadata),
+    identical(table(saved$subset), counts),
+    identical(Layers(saved[["RNA"]]), layers),
     length(Reductions(saved)) == 0L,
-    identical(as.character(Idents(saved)), as.character(saved$subset)))
-  cat("\nStatus: completed; saved cell IDs, counts, RNA layers and identities verified.\n",
-    capture.output(print(counts)), sep = "\n", file = info_file, append = TRUE)
+    length(Graphs(saved)) == 0L,
+    length(Neighbors(saved)) == 0L,
+    length(Layers(saved[["RNA"]], search = "^scale\\.data($|\\.)")) == 0L,
+    identical(as.character(Idents(saved)), as.character(saved$subset))
+  )
+  validation <- c(
+    "Validation: saved cell IDs, metadata, compartment counts, RNA layer names and identities verified; old fits absent.",
+    capture.output(print(counts))
+  )
+  completed <- TRUE
   invisible(output)
 }
 
-# Sourcing is safe. Old --dry-run/CLI arguments are rejected, not silently run.
+# Sourcing defines the runner without executing cleanup; the CLI takes no arguments.
 if (sys.nframe() == 0L) {
-  if (length(commandArgs(trailingOnly = TRUE))) stop("Run without arguments; source this file to set input/output.")
+  if (length(commandArgs(trailingOnly = TRUE))) {
+    stop("Run without arguments; source this file to set input/output.")
+  }
   run_cleanup_44542861()
 }
