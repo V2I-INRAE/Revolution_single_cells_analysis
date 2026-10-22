@@ -3,7 +3,6 @@ source("R/DEG/publication_style.R")
 plot_pseudobulk_de <- function(pb, output_dir, label, mapping,
                               fdr_cutoff = 0.05, logfc_cutoff = 0.5, seed = 1234) {
   dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
-  rd_bu <- rev(RColorBrewer::brewer.pal(11, "RdBu"))
   sample_info <- pb$sample_info
   sample_info$condition <- factor(sample_info$condition, levels = c("Control", "P4", "N4"))
   sample_info <- sample_info[order(sample_info$condition, sample_info$pig), ]
@@ -28,8 +27,7 @@ plot_pseudobulk_de <- function(pb, output_dir, label, mapping,
   write.csv(data.frame(gene = gene_order, z_scores[gene_order, , drop = FALSE],
     check.names = FALSE), csv[["heatmap_zscores"]], row.names = FALSE)
 
-  class_colors <- c("Not significant" = "grey75", "Significant, small effect" = "black",
-    "Down" = rd_bu[1], "Up" = rd_bu[11])
+  class_levels <- c("Not significant", "Significant, small effect", "Down", "Up")
   volcano_data <- lapply(names(pb$results), function(comparison) {
     tab <- pb$results[[comparison]]
     safe_symbol <- mapping$safe_name[match(tab$gene, mapping$gene)]
@@ -40,7 +38,7 @@ plot_pseudobulk_de <- function(pb, output_dir, label, mapping,
     tab$class[tab$FDR <= fdr_cutoff] <- "Significant, small effect"
     tab$class[tab$FDR <= fdr_cutoff & tab$logFC <= -logfc_cutoff] <- "Down"
     tab$class[tab$FDR <= fdr_cutoff & tab$logFC >= logfc_cutoff] <- "Up"
-    tab$class <- factor(tab$class, levels = names(class_colors))
+    tab$class <- factor(tab$class, levels = class_levels)
     tab$label <- FALSE
     ranked <- order(tab$FDR, tab$PValue, -abs(tab$logFC), tab$gene)
     for (direction in c("Down", "Up")) {
@@ -120,21 +118,22 @@ render_pseudobulk_heatmap <- function(z_scores, row_hc, sample_info, output_dir,
 
 render_pseudobulk_volcano <- function(plot_data, output_dir, label,
                                      fdr_cutoff = 0.05, logfc_cutoff = 0.5, seed = 1234) {
-  rd_bu <- rev(RColorBrewer::brewer.pal(11, "RdBu"))
-  class_colors <- c("Not significant" = "grey75", "Significant, small effect" = "black",
-    "Down" = rd_bu[1], "Up" = rd_bu[11])
+  class_colors <- c("Not significant" = "#CCCCCC", "Significant, small effect" = "#000000",
+    "Down" = "#88699B", "Up" = "#44AA99")
   plot_data$class <- factor(plot_data$class, levels = names(class_colors))
   volcano_data <- split(plot_data, plot_data$contrast)
-  x_limit <- max(abs(plot_data$logFC)) * 1.08
-  y_limit <- max(plot_data$neg_log10_fdr) * 1.12
   titles <- c(P4_vs_Control = "P4 vs Control", N4_vs_Control = "N4 vs Control", P4_vs_N4 = "P4 vs N4")
   ratios <- c(P4_vs_Control = "P4 / Control", N4_vs_Control = "N4 / Control", P4_vs_N4 = "P4 / N4")
   for (comparison in names(volcano_data)) {
     tab <- volcano_data[[comparison]]
+    # Grey background first; preserve all coordinates while drawing significant genes last.
+    tab <- tab[order(tab$class), ]
+    x_limit <- max(abs(tab$logFC)) * 1.04
+    y_limit <- max(tab$neg_log10_fdr) * 1.12
     counts <- table(tab$class)
     p <- plotthis::ScatterPlot(tab, x = "logFC", y = "neg_log10_fdr", color_by = "class",
       color_name = "", palcolor = class_colors, shape = 16,
-      size_by = 1.1, alpha = 0.8, border_size = 0,
+      size_by = 1.65, alpha = 1, border_size = 0,
       theme = "theme_classic", theme_args = list(base_size = 10),
       legend.position = "bottom", combine = FALSE, seed = seed,
       title = paste0(label, ": ", titles[[comparison]]),
@@ -152,11 +151,12 @@ render_pseudobulk_volcano <- function(plot_data, output_dir, label,
         nudge_x = ifelse(tab$logFC[tab$label] < 0, -0.7, 0.7), nudge_y = 0.3,
         bg.color = "white", bg.r = 0.12, box.padding = 0.8,
         force = 10, force_pull = 0.1, max.iter = 100000, max.time = Inf) +
+      ggplot2::scale_x_continuous(expand = ggplot2::expansion(mult = 0)) +
       ggplot2::coord_cartesian(xlim = c(-x_limit, x_limit), ylim = c(0, y_limit)) +
       ggplot2::guides(color = ggplot2::guide_legend(nrow = 2, byrow = TRUE)) +
-      deg_theme() +
-      ggplot2::labs(color = NULL, caption = deg_wrap(sprintf("Dashed guides: log2 FC +/-%g and FDR %g. Small effect: |log2 FC| < %g.\nFDR-only DE results are unchanged; labels show up to five top genes per outer direction.",
+      deg_theme() + ggplot2::theme(aspect.ratio = 1) +
+      ggplot2::labs(color = NULL, caption = deg_wrap(sprintf("Dashed guides: log2 FC +/-%g and FDR %g. Small effect: |log2 FC| < %g.\nFull linear x/y ranges are set per contrast; all genes retained. Labels: up to five per outer direction.",
         logfc_cutoff, fdr_cutoff, logfc_cutoff)))
-    save_deg_figure(p, output_dir, paste0("volcano_", comparison), height = 145)
+    save_deg_figure(p, output_dir, paste0("volcano_", comparison), height = 200)
   }
 }
