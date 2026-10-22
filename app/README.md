@@ -102,10 +102,13 @@ Drag to pan and scroll to zoom. Gene and group changes preserve the view.
 Changing datasets resets zoom because the embeddings differ. **Reset view**
 restores the active embedding's full extent. All cells in each saved source
 are retained; the app does not downsample.
-In subset views, dots grow gradually from 2 to at most 8 pixels as you zoom in.
-Gene and group changes preserve that size; zooming out or resetting the view
-shrinks them again. The full parent keeps fixed 2-pixel dots. Sizing runs in
-the browser and does not reload cells or expression from R.
+Dot size is a display choice, not a property of the data. Each view starts at a
+diameter between 2 and 5 pixels set by its total cell count (the 234,183-cell
+parent stays at 2 pixels; the smallest subsets start near 5). As you zoom in,
+dots grow sub-linearly with linear zoom (the 0.65 power) and stop at 12 pixels
+in the parent and 16 pixels in subsets. Gene and group changes preserve that
+size; zooming out or resetting the view shrinks them back to the view's base
+size. Sizing runs in the browser and does not reload cells or expression from R.
 
 ## Save a PDF for editing
 

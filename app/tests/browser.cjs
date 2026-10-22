@@ -101,6 +101,10 @@ fs.mkdirSync(artifacts, { recursive: true });
     const checkSize = size => page.waitForFunction(size =>
       document.getElementById('umap').data.every(trace =>
         Math.abs(trace.marker.size - size) < 1e-8), size);
+    // Mirrors the display-only sizing in app/R/plot.R.
+    const pointSize = (n, parent) => ({
+      base: Math.max(2, Math.min(5, 2 * Math.pow(234183 / n, 0.25))),
+      cap: parent ? 12 : 16 });
     const checkView = async before => {
       const after = await view();
       for (const axis of ['x', 'y']) {
@@ -149,8 +153,9 @@ fs.mkdirSync(artifacts, { recursive: true });
         const p = document.getElementById('umap');
         return p?.layout?.uirevision === id && p.data[0].x.length === n;
       }, fixture, { timeout: 120000 });
+      const points = pointSize(fixture.n, fixture.parent);
       await foregroundCount(0);
-      await checkSize(2);
+      await checkSize(points.base);
       assert.equal(await page.locator('input[name="controls-groups"]:checked').count(), 0);
       assert.ok(await page.evaluate(anchors => {
         const p = document.getElementById('umap').data[0];
@@ -221,11 +226,11 @@ fs.mkdirSync(artifacts, { recursive: true });
       await page.waitForTimeout(500);
       const zoomed = await view();
       assert.ok(zoomed.x[1] - zoomed.x[0] < fullView.x[1] - fullView.x[0]);
-      if (!fixture.parent) await page.waitForFunction(() =>
-        document.getElementById('umap').data[0].marker.size > 2);
+      await page.waitForFunction(base =>
+        document.getElementById('umap').data[0].marker.size > base, points.base);
       const zoomSize = await page.evaluate(() => document.getElementById('umap').data[0].marker.size);
-      if (fixture.parent) assert.equal(zoomSize, 2);
-      else assert.ok(zoomSize > 2 && zoomSize < 8, 'Subset dots must grow gradually on zoom');
+      assert.ok(zoomSize > points.base && zoomSize <= points.cap,
+        'Dots must grow with zoom and stay below the view cap');
       await checkSize(zoomSize);
       // Test a user-set zoom, not the transient aspect padding of a new plot.
       await selectGene('IL1B', 'ENSSSCG00000039214', fixture.n);
@@ -257,7 +262,7 @@ fs.mkdirSync(artifacts, { recursive: true });
           'xaxis.range': inset(full.x), 'yaxis.range': inset(full.y),
         });
       }, fullView);
-      await checkSize(fixture.parent ? 2 : 8);
+      await checkSize(points.cap);
       await page.getByRole('button', { name: 'Reset view', exact: true }).click();
       // Plotly may add different aspect-ratio padding after an explicit reset.
       await page.waitForFunction(ranges => {
@@ -267,18 +272,18 @@ fs.mkdirSync(artifacts, { recursive: true });
           layout.yaxis.range[0] <= ranges.umap_2[0] &&
           layout.yaxis.range[1] >= ranges.umap_2[1];
       }, fixture.ranges);
-      await checkSize(2);
+      await checkSize(points.base);
       console.log(`PASS: ${fixture.id}, ${fixture.n} cells, saved UMAP, cluster IDs, expression and zoom.`);
     }
     // A subset callback must not survive a return to the full parent.
     await page.locator('#controls-view').locator('..').locator('.selectize-input').click();
     await page.locator('.selectize-dropdown-content [data-value="parent"]').click();
     await page.waitForFunction(() => document.getElementById('umap').layout.uirevision === 'parent');
-    await checkSize(2);
+    await checkSize(pointSize(234183, true).base);
     assert.equal(await page.locator('.shiny-output-error').count(), 0);
     assert.deepEqual(errors, []);
     console.log('PASS: exactly the cleaned parent and seven approved subset views are registered and selectable.');
-    console.log('PASS: numeric-only clusters, gene/alias search, restricted and empty selections, fixed scales, subset-only bounded dot sizing, zoom/reset, no UI errors.');
+    console.log('PASS: numeric-only clusters, gene/alias search, restricted and empty selections, fixed scales, bounded zoom-dependent dot sizing, zoom/reset, no UI errors.');
   } finally {
     await browser.close();
   }
