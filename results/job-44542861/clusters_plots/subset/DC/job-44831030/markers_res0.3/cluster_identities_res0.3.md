@@ -1,0 +1,31 @@
+# DC Subclustering Identity Report (`job-44831030`, Resolution `0.3`)
+
+- **Parent Run / Subset**: `job-44542861` $\rightarrow$ `DC` (`job-44831030`; cleaned baseline, `k=100`; Parent Clusters 16 [`4,542` pDC] + 19 [`2,894` cDC])
+- **Clustering Parameters**: `harmony_snn_res.0.3` (`7,436` cells across `4` clusters; `1,500` HVGs, `dims 1:10`, `k_param = 100`)
+- **QC & Parameter Assessment**: **No coherent doublet-cluster signature identified in these exports; no reassignment indicated.**
+  - T-cell (`CD3D/E`), B-cell (`CD19`, `MS4A1`), plasma (`JCHAIN`), monocyte (`S100A9`, `FCN1`, `CD14`) and epithelial (`EPCAM`) markers have no significant rows in any cluster. `PECAM1` appears with small mixed-direction fold changes (C1 `−1.09`, C2 `+0.68`, C3 `+0.87`) without endothelial context (`CLDN5`/`CDH5`/`VWF` absent) — retained-DC signal, not an EC doublet program. `SDC1` enrichment marks C1 (pDC, `+3.54`, `48%`) with depletion elsewhere, not a plasma program. No cluster shows a coherent foreign-lineage signature in these exports.
+  - **Reassignment check**: prior run `job-44614230` resolved the same `7,436` cells in `4` clusters (C1 pDC; C2 cDC2 + DC3/MoDC; C3 cDC1; C4 mregDC) with no doublets. This cleaned run reproduces `7,436` cells in `4` clusters with the same four programs and no new coherent doublet signature in these exports.
+  - **`k_param` Note**: `k_param = 100` spans `1.34%` of this subset; C2 merges canonical `FCER1A⁺ CD1.1⁺ CD207⁺` `cDC2` with inflammatory `MRC1⁺ CD163⁺ FCGR3A⁺ TLR4⁺ IL1B⁺` `DC3/MoDC`. If splitting them is desired, consider testing `k_param = 25–30` with `dims = 1:15` (untested proposal).
+- **Master Index & References**: See `../../../NOTES_BARCODE_REASSIGNMENT_AND_CLEANUP.md` (Auray et al. 2016 `PMID: 27837108`; Maisonnasse et al. 2016 `PMID: 26530136`; Mair et al. 2022 `PMID: 35371050`; Baillou et al. 2025 `PMID: 41235223`).
+
+---
+
+## Summary Table (`harmony_snn_res.0.3`)
+
+| Cluster | Cells (%) | Proposed Known Subset | QC / Doublet Flag | Key Named Top-25 Markers | Additional Canonical Markers (`markers_significant.csv`) |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **1** | 4,499 (60.50%) | **Plasmacytoid Dendritic Cells (`pDC`, `CD4^{hi} TCF4^{hi} IRF8⁺ BCL11A^{hi} VPREB1⁺ BLNK^{hi} NCR1⁺ TLR7/9⁺`)** | Keep (Clean) | `VPREB1` (`76%`), `PIGE-108A11.3`, `IGLL1 (review)` (`73%`), `NEXN`, `LOC100620627`, `TDRD1`, `SMIM5` (`76%`), `ATP13A2` (`95%`), `CD4` (#12, `88%`), `NCR1` (#11, `60%`), `CD8B` (`52%`), `BLNK` (#23, `97%`), `MGP` (`90%`), `COBLL1` (`80%`), `BHLHA15` (`34%`) | `CMKLR1` (#38, `69%`), `IRF7` (#134, `48%`), `TCF4` (`E2-2`, #150, `95%`), `TLR3` (#176, `58%`), `CLEC12A` (#221, `68%`), `BCL11A` (#238, `92%`), `TLR7` (#334, `66%`), `PLD4` (#409, `83%`), `TLR9` (#443, `31%`), `IRF8` (#476, `99%`), `RUNX2` (#493, `81%`), `SDC1` (`48%`, pDC-associated here, not a plasma program) |
+| **2** | 1,460 (19.63%) | **cDC2-like DCs with Inflammatory / DC3-like Features (`FCER1A⁺ CD1.1⁺ CD207⁺ SIRPA⁺ KLF4⁺`; `MRC1⁺ CD163⁺ FCGR3A⁺ IL1B⁺`)** | Keep (Clean) | `FCER1A` (#1, `32%`), `CD1.1 (review)` (#4, `64%`), `CD207` (`Langerin`, #5, `25%`), `S100A4` (#6, `70.5%`), `TLR4` (#7, `37%`), `MS4A2` (#9, `88%`), `FCGR3A` (#11, `79%`), `CXCL2` (#12, `55%`), `MRC1` (`CD206`, #14, `46%`), `AREG` (#15, `65%`), `CD163` (#16, `30%`), `AXL` (#21, `36%`), `IL1B` (#3, `38%`), `IL1A` (#23, `49%`) | `CEBPB` (#30, `78%`), `KLF4` (#70, `76%`), `SIRPA` (#185, `57%`), `NOTCH2` (#464, `59%`), `SLA-DQB1` (`100%`), `SLA-DRB1 (review)` (`99%`) |
+| **3** | 1,160 (15.60%) | **Classical Type 1 Dendritic Cells (`cDC1`, `XCR1^{hi} CADM1^{hi} ANPEP/CD13⁺ CLNK⁺ DNASE1L3⁺ BATF3⁺ WDFY4^{hi} LY75⁺`)** | Keep (Clean) | `CLNK` (#2, `49%`), `ANPEP` (`CD13`, #3, `50%`), `CADM1` (#7, `78%`), `XCR1` (#8, `79%`), `SNX22` (#11, `33%`), `DNASE1L3` (#17, `62%`), `XIRP2`, `ME1` | `ZNF366` (`DC-SCRIPT`, #40, `49%`), `LY75` (`DEC-205`, #49, `56%`), `BATF3` (#53, `62%`), `WDFY4` (#73, `79%`), `ITGAE` (`CD103`, #109, `39%`), `FLT3` (#321, `76%`); `IRF8` detected (`88%`) without positive enrichment |
+| **4** | 317 (4.26%) | **Mature / Migratory Immunoregulatory DCs (`mregDC`, `CCR7^{hi} FSCN1^{hi} LAMP3^{hi} IDO1^{hi} IL4I1⁺ CD274/PD-L1⁺ PDCD1LG2/PD-L2⁺`)** | Keep (Clean) | `TMEM150C` (#1, `74%`), `KREMEN1` (#2, `31%`), `IDO1` (#4, `78%`), `FSCN1` (#7, `84%`), `S1PR1` (#9, `62%`), `CD200` (#17, `47%`), `PDCD1LG2` (`PD-L2`, #20, `49%`), `IL4I1` (#19, `52%`), `CCL22` (#25, `41%`) | `STAT4` (#26, `43%`), `CCR7` (#40, `97%`), `CD274` (`PD-L1`, #54, `58%`), `CD40` (#68, `86%`), `CD80` (#142, `71%`), `LAMP3` (`DC-LAMP`, #174, `94%`), `RELB` (#200, `77%`), `CD83` (#488, `96%`), `FLT3` (#571, `77%`) |
+
+---
+
+## Concise Cluster Rationale
+
+* **C1 (`4,499`) — `pDC`**: Expresses core pDC master regulators (`TCF4/E2-2` `95%`, `BCL11A` `92%`, `RUNX2` `81%`), endosomal TLRs (`TLR7` `66%`, `TLR9` `31%`, `TLR3` `58%`), together with `IRF7` (`48%`), and porcine-specific pDC surface markers `CD4^{hi}` (`88%`), `CD8B⁺` (`52%`), and `NCR1 (NKp46)⁺` (`60%`; Mair et al. 2022 `PMID: 35371050`). `SDC1` (`48%`) is pDC-associated here.
+* **C2 (`1,460`) — `cDC2` + `DC3/MoDC`**: Captures canonical porcine lung `cDC2` (`FCER1A⁺ CD1.1⁺ CD207/Langerin⁺ MS4A2⁺ SIRPA⁺ KLF4⁺ NOTCH2⁺ MHC-II^{hi}`) with inflammatory/DC3-like features (`CD163⁺ MRC1⁺ FCGR3A⁺ TLR4⁺ IL1B⁺ AREG⁺`; Baillou et al. 2025 `PMID: 41235223`). Finer cDC2/DC3 identity is unresolved; `CD163` alone does not establish monocytic origin, and DC3 and MoDC are not treated as synonyms here.
+* **C3 (`1,160`) — `cDC1`**: Cross-presenting `XCR1^{hi} CADM1^{hi} ANPEP(CD13)⁺ CLNK⁺ SNX22⁺ DNASE1L3⁺ WDFY4^{hi} LY75(DEC-205)⁺ ITGAE(CD103)⁺ BATF3⁺ ZNF366⁺ FLT3⁺` `cDC1` (Auray et al. 2016 `PMID: 27837108`). `IRF8` is broadly detected (`88%`) without positive enrichment.
+* **C4 (`317`) — `mregDC`**: Mature/migratory `mregDC`-like state (`CCR7^{hi} FSCN1^{hi} LAMP3^{hi} CD83^{hi} CD40^{hi} CD80^{hi} S1PR1⁺`) upregulating tryptophan/phenylalanine catabolism (`IDO1` `78%`, `IL4I1` `52%`) and PD-1 ligands (`CD274/PD-L1` `58%`, `PDCD1LG2/PD-L2` `49%`), plus `STAT4` and `CD200`.
+
+> Note: pre-red-palette outputs (viridis dotplot + prior CSVs/heatmaps) are archived in `old/` in this directory; current plots use the red scale.

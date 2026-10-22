@@ -1,0 +1,35 @@
+gene,feature_id,cluster,cluster_label,in_top25,in_md_identity,in_md_canonical,top25_rank,significant_rank,de_status,in_object,p_val,avg_log2FC,pct.1,pct.2,p_val_adj,pct_difference,note
+NKX3-1,NKX3-1,5,Naive / Central-Memory (T_N / T_CM) CD8⁺ T Cells (SELL^hi CCR7^hi LEF1^hi),TRUE,FALSE,FALSE,1,1,significant_positive,TRUE,0,6.11453615949502,0.319,0.005,0,0.314,
+LIX1,LIX1,5,Naive / Central-Memory (T_N / T_CM) CD8⁺ T Cells (SELL^hi CCR7^hi LEF1^hi),TRUE,TRUE,FALSE,2,2,significant_positive,TRUE,0,5.77122638322508,0.397,0.007,0,0.39,
+CERS6,CERS6,5,Naive / Central-Memory (T_N / T_CM) CD8⁺ T Cells (SELL^hi CCR7^hi LEF1^hi),TRUE,TRUE,FALSE,3,3,significant_positive,TRUE,0,5.15827878996385,0.773,0.036,0,0.737,
+SELL,SELL,5,Naive / Central-Memory (T_N / T_CM) CD8⁺ T Cells (SELL^hi CCR7^hi LEF1^hi),TRUE,TRUE,FALSE,4,4,significant_positive,TRUE,0,4.75860526851518,0.615,0.028,0,0.587,Markdown context: Alias: CD62L.
+CCR7,CCR7,5,Naive / Central-Memory (T_N / T_CM) CD8⁺ T Cells (SELL^hi CCR7^hi LEF1^hi),TRUE,TRUE,FALSE,5,5,significant_positive,TRUE,0,4.62622250426442,0.842,0.054,0,0.788,
+LEF1,LEF1,5,Naive / Central-Memory (T_N / T_CM) CD8⁺ T Cells (SELL^hi CCR7^hi LEF1^hi),TRUE,TRUE,FALSE,6,6,significant_positive,TRUE,0,4.45011074538966,0.822,0.058,0,0.764,
+GOLIM4,GOLIM4,5,Naive / Central-Memory (T_N / T_CM) CD8⁺ T Cells (SELL^hi CCR7^hi LEF1^hi),TRUE,FALSE,FALSE,7,7,significant_positive,TRUE,0,4.38823005375488,0.648,0.039,0,0.609,
+RFLNB,RFLNB,5,Naive / Central-Memory (T_N / T_CM) CD8⁺ T Cells (SELL^hi CCR7^hi LEF1^hi),TRUE,FALSE,FALSE,8,8,significant_positive,TRUE,0,4.27578461488713,0.355,0.019,0,0.336,
+FAM171B,FAM171B,5,Naive / Central-Memory (T_N / T_CM) CD8⁺ T Cells (SELL^hi CCR7^hi LEF1^hi),TRUE,FALSE,FALSE,9,9,significant_positive,TRUE,0,4.00647669340567,0.32,0.02,0,0.3,
+NEBL,NEBL,5,Naive / Central-Memory (T_N / T_CM) CD8⁺ T Cells (SELL^hi CCR7^hi LEF1^hi),TRUE,FALSE,FALSE,10,10,significant_positive,TRUE,0,3.93853421869438,0.324,0.017,0,0.307,
+NAV3,NAV3,5,Naive / Central-Memory (T_N / T_CM) CD8⁺ T Cells (SELL^hi CCR7^hi LEF1^hi),TRUE,FALSE,FALSE,11,11,significant_positive,TRUE,0,3.45764207915677,0.385,0.023,0,0.362,
+PDK1,PDK1,5,Naive / Central-Memory (T_N / T_CM) CD8⁺ T Cells (SELL^hi CCR7^hi LEF1^hi),TRUE,FALSE,FALSE,12,12,significant_positive,TRUE,0,3.10100802152687,0.572,0.076,0,0.496,
+ENSSSCG00000009240,ENSSSCG00000009240,5,Naive / Central-Memory (T_N / T_CM) CD8⁺ T Cells (SELL^hi CCR7^hi LEF1^hi),TRUE,FALSE,FALSE,13,13,significant_positive,TRUE,0,2.87972964303628,0.911,0.237,0,0.674,
+NISCH,NISCH,5,Naive / Central-Memory (T_N / T_CM) CD8⁺ T Cells (SELL^hi CCR7^hi LEF1^hi),TRUE,FALSE,FALSE,14,14,significant_positive,TRUE,0,2.61933325100859,0.548,0.099,0,0.449,
+RAB3IP,RAB3IP,5,Naive / Central-Memory (T_N / T_CM) CD8⁺ T Cells (SELL^hi CCR7^hi LEF1^hi),TRUE,FALSE,FALSE,15,15,significant_positive,TRUE,0,2.39362241845505,0.362,0.057,0,0.305,
+HPSE,HPSE,5,Naive / Central-Memory (T_N / T_CM) CD8⁺ T Cells (SELL^hi CCR7^hi LEF1^hi),TRUE,FALSE,FALSE,16,16,significant_positive,TRUE,0,2.27859615282926,0.441,0.075,0,0.366,
+BACH2,BACH2,5,Naive / Central-Memory (T_N / T_CM) CD8⁺ T Cells (SELL^hi CCR7^hi LEF1^hi),TRUE,TRUE,FALSE,17,17,significant_positive,TRUE,0,2.11132992884401,0.57,0.117,0,0.453,
+SPTBN1,SPTBN1,5,Naive / Central-Memory (T_N / T_CM) CD8⁺ T Cells (SELL^hi CCR7^hi LEF1^hi),TRUE,FALSE,FALSE,18,18,significant_positive,TRUE,0,2.10439335586574,0.523,0.116,0,0.407,
+CLEC1B,CLEC1B,5,Naive / Central-Memory (T_N / T_CM) CD8⁺ T Cells (SELL^hi CCR7^hi LEF1^hi),TRUE,FALSE,FALSE,19,19,significant_positive,TRUE,0,2.03696331627199,0.283,0.055,0,0.228,
+LDLRAP1,LDLRAP1,5,Naive / Central-Memory (T_N / T_CM) CD8⁺ T Cells (SELL^hi CCR7^hi LEF1^hi),TRUE,FALSE,FALSE,20,20,significant_positive,TRUE,0,2.02323047759829,0.344,0.073,0,0.271,
+MLLT1,MLLT1,5,Naive / Central-Memory (T_N / T_CM) CD8⁺ T Cells (SELL^hi CCR7^hi LEF1^hi),TRUE,FALSE,FALSE,21,21,significant_positive,TRUE,0,2.01108309671242,0.268,0.056,0,0.212,
+YBX3,YBX3,5,Naive / Central-Memory (T_N / T_CM) CD8⁺ T Cells (SELL^hi CCR7^hi LEF1^hi),TRUE,FALSE,FALSE,22,22,significant_positive,TRUE,0,1.99452469086851,0.426,0.098,0,0.328,
+CD28,CD28,5,Naive / Central-Memory (T_N / T_CM) CD8⁺ T Cells (SELL^hi CCR7^hi LEF1^hi),TRUE,FALSE,FALSE,23,23,significant_positive,TRUE,0,1.99143269928312,0.707,0.193,0,0.514,
+IMMP2L,IMMP2L,5,Naive / Central-Memory (T_N / T_CM) CD8⁺ T Cells (SELL^hi CCR7^hi LEF1^hi),TRUE,FALSE,FALSE,24,24,significant_positive,TRUE,0,1.96692448878742,0.504,0.101,0,0.403,
+GPR174,GPR174,5,Naive / Central-Memory (T_N / T_CM) CD8⁺ T Cells (SELL^hi CCR7^hi LEF1^hi),TRUE,FALSE,FALSE,25,25,significant_positive,TRUE,0,1.94079898843697,0.506,0.133,0,0.373,
+TCF7,TCF7,5,Naive / Central-Memory (T_N / T_CM) CD8⁺ T Cells (SELL^hi CCR7^hi LEF1^hi),FALSE,FALSE,TRUE,NA,27,significant_positive,TRUE,0,1.87703279044687,0.835,0.269,0,0.566,
+KLF2,KLF2,5,Naive / Central-Memory (T_N / T_CM) CD8⁺ T Cells (SELL^hi CCR7^hi LEF1^hi),FALSE,FALSE,TRUE,NA,437,significant_positive,TRUE,1.68782713684667e-176,0.438953396932346,0.735,0.44,3.56519726116122e-172,0.295,
+BCL2,BCL2,5,Naive / Central-Memory (T_N / T_CM) CD8⁺ T Cells (SELL^hi CCR7^hi LEF1^hi),FALSE,FALSE,TRUE,NA,49,significant_positive,TRUE,0,1.50802051346128,0.894,0.438,0,0.456,
+CD27,CD27,5,Naive / Central-Memory (T_N / T_CM) CD8⁺ T Cells (SELL^hi CCR7^hi LEF1^hi),FALSE,FALSE,TRUE,NA,55,significant_positive,TRUE,0,1.48388701717464,0.346,0.105,0,0.241,
+CRTAM,CRTAM,5,Naive / Central-Memory (T_N / T_CM) CD8⁺ T Cells (SELL^hi CCR7^hi LEF1^hi),FALSE,FALSE,TRUE,NA,370,significant_positive,TRUE,1.45505087352004e-226,0.514388411098848,0.77,0.463,3.07350396013638e-222,0.307,
+GZMB,GZMB,5,Naive / Central-Memory (T_N / T_CM) CD8⁺ T Cells (SELL^hi CCR7^hi LEF1^hi),FALSE,FALSE,TRUE,NA,NA,not_significant,TRUE,0.0461676597841485,-0.746694373748509,0.356,0.335,1,0.021,Markdown context: GZMB/GZMH without significant rows
+GZMH,GZMH,5,Naive / Central-Memory (T_N / T_CM) CD8⁺ T Cells (SELL^hi CCR7^hi LEF1^hi),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,Markdown context: GZMB/GZMH without significant rows No exported marker row; NA statistics do not imply zero expression.
+PRF1,PRF1,5,Naive / Central-Memory (T_N / T_CM) CD8⁺ T Cells (SELL^hi CCR7^hi LEF1^hi),FALSE,FALSE,TRUE,NA,945,significant_negative,TRUE,1.66579178009949e-120,-1.60308975973312,0.3,0.429,3.51865197710415e-116,-0.129,"Markdown context: PRF1 depleted (#945, 30%)"
+CD8A,CD8A,5,Naive / Central-Memory (T_N / T_CM) CD8⁺ T Cells (SELL^hi CCR7^hi LEF1^hi),FALSE,FALSE,TRUE,NA,821,significant_negative,TRUE,1.20246974318309e-73,-0.920842032087882,0.583,0.584,2.53997683852564e-69,-0.001,Markdown context: CD8A detected (58%) but significantly lower in expression

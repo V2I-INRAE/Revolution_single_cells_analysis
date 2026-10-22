@@ -1,0 +1,28 @@
+gene,feature_id,cluster,cluster_label,in_top25,in_md_identity,in_md_canonical,top25_rank,significant_rank,de_status,in_object,p_val,avg_log2FC,pct.1,pct.2,p_val_adj,pct_difference,note
+FCER1A,FCER1A,2,cDC2-like DCs with Inflammatory / DC3-like Features,TRUE,TRUE,FALSE,1,1,significant_positive,TRUE,0,6.39383739962637,0.317,0.009,0,0.308,"Markdown context: FCER1A (#1, 31.7%)"
+ENSSSCG00000035960,ENSSSCG00000035960,2,cDC2-like DCs with Inflammatory / DC3-like Features,TRUE,FALSE,FALSE,2,2,significant_positive,TRUE,0,6.32330740376761,0.332,0.007,0,0.325,
+IL1B,ENSSSCG00000039214,2,cDC2-like DCs with Inflammatory / DC3-like Features,TRUE,TRUE,FALSE,3,3,significant_positive,TRUE,0,5.80616272572524,0.377,0.013,0,0.364,"Markdown context: IL1B (#3, 37.7%)"
+CD1.1 (review),ENSSSCG00000025644,2,cDC2-like DCs with Inflammatory / DC3-like Features,TRUE,TRUE,FALSE,4,4,significant_positive,TRUE,0,5.70513815300967,0.639,0.023,0,0.616,"Markdown context: CD1.1 (review) (#4, 63.9%) Reviewed feature label retained from marker CSV/.INFO translation; no orthologue inferred."
+CD207,CD207,2,cDC2-like DCs with Inflammatory / DC3-like Features,TRUE,TRUE,FALSE,5,5,significant_positive,TRUE,3.25659438522776e-295,5.08417525499849,0.254,0.008,6.87890431991659e-291,0.246,"Markdown context: CD207 (#5, 25.4%)"
+S100A4,S100A4,2,cDC2-like DCs with Inflammatory / DC3-like Features,TRUE,FALSE,FALSE,6,6,significant_positive,TRUE,0,5.06436391493737,0.704,0.05,0,0.654,
+TLR4,TLR4,2,cDC2-like DCs with Inflammatory / DC3-like Features,TRUE,TRUE,FALSE,7,7,significant_positive,TRUE,0,4.67182001292928,0.368,0.016,0,0.352,"Markdown context: TLR4 (#7, 36.8%)"
+IGSF6,IGSF6,2,cDC2-like DCs with Inflammatory / DC3-like Features,TRUE,FALSE,FALSE,8,8,significant_positive,TRUE,3.96872016869369e-288,4.31645952490839,0.306,0.019,8.38312761233167e-284,0.287,
+MS4A2,MS4A2,2,cDC2-like DCs with Inflammatory / DC3-like Features,TRUE,TRUE,FALSE,9,9,significant_positive,TRUE,0,4.28428234218276,0.882,0.123,0,0.759,"Markdown context: MS4A2 (#9, 88.2%)"
+FCGR3A,ENSSSCG00000036618,2,cDC2-like DCs with Inflammatory / DC3-like Features,TRUE,FALSE,FALSE,10,10,significant_positive,TRUE,0,4.23109236813624,0.787,0.151,0,0.636,
+AMPD3,AMPD3,2,cDC2-like DCs with Inflammatory / DC3-like Features,TRUE,FALSE,FALSE,11,11,significant_positive,TRUE,0,4.21041829940084,0.466,0.026,0,0.44,
+CXCL2,CXCL2,2,cDC2-like DCs with Inflammatory / DC3-like Features,TRUE,FALSE,FALSE,12,12,significant_positive,TRUE,0,4.13350461500333,0.554,0.06,0,0.494,
+CHPT1,CHPT1,2,cDC2-like DCs with Inflammatory / DC3-like Features,TRUE,FALSE,FALSE,13,13,significant_positive,TRUE,0,4.07781056990876,0.41,0.025,0,0.385,
+MRC1,MRC1,2,cDC2-like DCs with Inflammatory / DC3-like Features,TRUE,TRUE,FALSE,14,14,significant_positive,TRUE,1.79492948564362e-312,4.0178799111947,0.464,0.037,3.79142955252501e-308,0.427,"Markdown context: MRC1 (#14, 46.4%)"
+AREG,AREG,2,cDC2-like DCs with Inflammatory / DC3-like Features,TRUE,FALSE,FALSE,15,15,significant_positive,TRUE,0,3.99330984338101,0.646,0.104,0,0.542,
+CD163,CD163,2,cDC2-like DCs with Inflammatory / DC3-like Features,TRUE,TRUE,FALSE,16,16,significant_positive,TRUE,1.42998471662262e-134,3.98051555723752,0.297,0.032,3.02055671692195e-130,0.265,"Markdown context: CD163 (#16, 29.7%)"
+SLC39A8,SLC39A8,2,cDC2-like DCs with Inflammatory / DC3-like Features,TRUE,FALSE,FALSE,17,17,significant_positive,TRUE,2.88725001273944e-298,3.95816024394341,0.33,0.023,6.09873820190952e-294,0.307,
+LOC100524972,ENSSSCG00000013100,2,cDC2-like DCs with Inflammatory / DC3-like Features,TRUE,FALSE,FALSE,18,18,significant_positive,TRUE,0,3.95343121762376,0.466,0.034,0,0.432,
+CD300C,CD300C,2,cDC2-like DCs with Inflammatory / DC3-like Features,TRUE,FALSE,FALSE,19,19,significant_positive,TRUE,0,3.87357903416539,0.483,0.062,0,0.421,
+CLDN1,CLDN1,2,cDC2-like DCs with Inflammatory / DC3-like Features,TRUE,FALSE,FALSE,20,20,significant_positive,TRUE,7.04473599868731e-188,3.76491608208746,0.276,0.038,1.48805958500272e-183,0.238,
+AXL,AXL,2,cDC2-like DCs with Inflammatory / DC3-like Features,TRUE,FALSE,FALSE,21,21,significant_positive,TRUE,7.85150845593617e-277,3.71295900173152,0.359,0.038,1.6584741311474e-272,0.321,
+IL1A,IL1A,2,cDC2-like DCs with Inflammatory / DC3-like Features,TRUE,FALSE,FALSE,22,22,significant_positive,TRUE,0,3.68068827088768,0.49,0.041,0,0.449,
+PTAFR,PTAFR,2,cDC2-like DCs with Inflammatory / DC3-like Features,TRUE,FALSE,FALSE,23,23,significant_positive,TRUE,0,3.67378443118838,0.462,0.044,0,0.418,
+PPP1R3B,PPP1R3B,2,cDC2-like DCs with Inflammatory / DC3-like Features,TRUE,FALSE,FALSE,24,24,significant_positive,TRUE,0,3.61192675975252,0.435,0.045,0,0.39,
+HBEGF,HBEGF,2,cDC2-like DCs with Inflammatory / DC3-like Features,TRUE,FALSE,FALSE,25,25,significant_positive,TRUE,0,3.58553860769562,0.48,0.064,0,0.416,
+KLF4,KLF4,2,cDC2-like DCs with Inflammatory / DC3-like Features,FALSE,TRUE,FALSE,NA,71,significant_positive,TRUE,0,2.55074975705502,0.763,0.216,0,0.547,"Markdown context: KLF4 (#71, 76.3%)"
+SIRPA,ENSSSCG00000028461,2,cDC2-like DCs with Inflammatory / DC3-like Features,FALSE,TRUE,FALSE,NA,184,significant_positive,TRUE,6.74632916695654e-124,1.67878152758007,0.572,0.291,1.42502710993623e-119,0.281,"Markdown context: SIRPA (#184, 57.2%)"

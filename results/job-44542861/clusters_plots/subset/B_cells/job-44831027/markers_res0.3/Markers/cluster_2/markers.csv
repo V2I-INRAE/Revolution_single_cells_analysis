@@ -1,0 +1,32 @@
+gene,feature_id,cluster,cluster_label,in_top25,in_md_identity,in_md_canonical,top25_rank,significant_rank,de_status,in_object,p_val,avg_log2FC,pct.1,pct.2,p_val_adj,pct_difference,note
+ZBTB32,ZBTB32,2,Atypical Memory (FCRL5⁺ TBX21⁺) / Marginal-Zone–like B Cells,TRUE,TRUE,FALSE,1,1,significant_positive,TRUE,0,3.51728320112634,0.44,0.047,0,0.393,Markdown context: ZBTB32 (#1)
+C4BPB,C4BPB,2,Atypical Memory (FCRL5⁺ TBX21⁺) / Marginal-Zone–like B Cells,TRUE,FALSE,FALSE,2,2,significant_positive,TRUE,0,3.23274691103496,0.286,0.04,0,0.246,
+CD1.1 (review),ENSSSCG00000025644,2,Atypical Memory (FCRL5⁺ TBX21⁺) / Marginal-Zone–like B Cells,TRUE,TRUE,FALSE,3,3,significant_positive,TRUE,0,3.1869369782926,0.479,0.069,0,0.41,"Markdown context: CD1.1 (review) (#3, 48%) Reviewed feature label retained from marker CSV/.INFO translation; no orthologue inferred."
+ENSSSCG00000050648,ENSSSCG00000050648,2,Atypical Memory (FCRL5⁺ TBX21⁺) / Marginal-Zone–like B Cells,TRUE,FALSE,FALSE,4,4,significant_positive,TRUE,0,3.16597815300721,0.259,0.037,0,0.222,
+YBX3,YBX3,2,Atypical Memory (FCRL5⁺ TBX21⁺) / Marginal-Zone–like B Cells,TRUE,TRUE,FALSE,5,5,significant_positive,TRUE,0,3.05658786049243,0.606,0.179,0,0.427,Markdown context: YBX3
+ENSSSCG00000055147,ENSSSCG00000055147,2,Atypical Memory (FCRL5⁺ TBX21⁺) / Marginal-Zone–like B Cells,TRUE,FALSE,FALSE,6,6,significant_positive,TRUE,0,2.97910943119765,0.523,0.079,0,0.444,
+SERPINB9,SERPINB9,2,Atypical Memory (FCRL5⁺ TBX21⁺) / Marginal-Zone–like B Cells,TRUE,TRUE,FALSE,7,7,significant_positive,TRUE,0,2.77938798624161,0.37,0.075,0,0.295,Markdown context: SERPINB9
+FCRL5,ENSSSCG00000026210,2,Atypical Memory (FCRL5⁺ TBX21⁺) / Marginal-Zone–like B Cells,TRUE,TRUE,FALSE,8,8,significant_positive,TRUE,0,2.77698300503214,0.741,0.125,0,0.616,"Markdown context: FCRL5 (#8, 74%)"
+LMO2,LMO2,2,Atypical Memory (FCRL5⁺ TBX21⁺) / Marginal-Zone–like B Cells,TRUE,FALSE,FALSE,9,9,significant_positive,TRUE,0,2.7440628649573,0.709,0.182,0,0.527,
+FCGR2B,ENSSSCG00000006350,2,Atypical Memory (FCRL5⁺ TBX21⁺) / Marginal-Zone–like B Cells,TRUE,TRUE,FALSE,10,10,significant_positive,TRUE,0,2.74257584885104,0.323,0.055,0,0.268,"Markdown context: FCGR2B (#10, 32%)"
+CD72,CD72,2,Atypical Memory (FCRL5⁺ TBX21⁺) / Marginal-Zone–like B Cells,TRUE,TRUE,FALSE,11,11,significant_positive,TRUE,0,2.71890801288024,0.344,0.061,0,0.283,Markdown context: CD72
+ITGAD,ITGAD,2,Atypical Memory (FCRL5⁺ TBX21⁺) / Marginal-Zone–like B Cells,TRUE,TRUE,FALSE,12,12,significant_positive,TRUE,0,2.55300326300076,0.64,0.119,0,0.521,Markdown context: ITGAD (CD11d) Alias: CD11d.
+HCK,HCK,2,Atypical Memory (FCRL5⁺ TBX21⁺) / Marginal-Zone–like B Cells,TRUE,TRUE,FALSE,13,13,significant_positive,TRUE,0,2.48360455954424,0.551,0.112,0,0.439,Markdown context: HCK
+SCIMP,SCIMP,2,Atypical Memory (FCRL5⁺ TBX21⁺) / Marginal-Zone–like B Cells,TRUE,TRUE,FALSE,14,14,significant_positive,TRUE,0,2.39144655048272,0.589,0.147,0,0.442,Markdown context: SCIMP
+ENSSSCG00000021343,ENSSSCG00000021343,2,Atypical Memory (FCRL5⁺ TBX21⁺) / Marginal-Zone–like B Cells,TRUE,FALSE,FALSE,15,15,significant_positive,TRUE,0,2.38943774398511,0.404,0.091,0,0.313,
+ID2,ID2,2,Atypical Memory (FCRL5⁺ TBX21⁺) / Marginal-Zone–like B Cells,TRUE,FALSE,FALSE,16,16,significant_positive,TRUE,0,2.34216594129748,0.646,0.258,0,0.388,
+MS4A1,MS4A1,2,Atypical Memory (FCRL5⁺ TBX21⁺) / Marginal-Zone–like B Cells,TRUE,TRUE,TRUE,17,17,significant_positive,TRUE,0,2.30515238933895,0.934,0.446,0,0.488,"Markdown context: Shared B-branch rationale; representative lineage context, not necessarily a significant row in every member cluster."
+SLA,SLA,2,Atypical Memory (FCRL5⁺ TBX21⁺) / Marginal-Zone–like B Cells,TRUE,FALSE,FALSE,18,18,significant_positive,TRUE,0,2.2848648873006,0.522,0.132,0,0.39,
+ENSSSCG00000015664,ENSSSCG00000015664,2,Atypical Memory (FCRL5⁺ TBX21⁺) / Marginal-Zone–like B Cells,TRUE,FALSE,FALSE,19,19,significant_positive,TRUE,0,2.26779461308142,0.791,0.287,0,0.504,
+FCGR3A,ENSSSCG00000036618,2,Atypical Memory (FCRL5⁺ TBX21⁺) / Marginal-Zone–like B Cells,TRUE,FALSE,FALSE,20,20,significant_positive,TRUE,0,2.24453458891403,0.332,0.084,0,0.248,
+PLEK,PLEK,2,Atypical Memory (FCRL5⁺ TBX21⁺) / Marginal-Zone–like B Cells,TRUE,FALSE,FALSE,21,21,significant_positive,TRUE,0,2.20434545189969,0.633,0.191,0,0.442,
+PTPN22,PTPN22,2,Atypical Memory (FCRL5⁺ TBX21⁺) / Marginal-Zone–like B Cells,TRUE,FALSE,FALSE,22,22,significant_positive,TRUE,0,2.16693086947826,0.412,0.092,0,0.32,
+ITGB5,ITGB5,2,Atypical Memory (FCRL5⁺ TBX21⁺) / Marginal-Zone–like B Cells,TRUE,FALSE,FALSE,23,23,significant_positive,TRUE,0,2.15906793389761,0.344,0.073,0,0.271,
+CNR2,CNR2,2,Atypical Memory (FCRL5⁺ TBX21⁺) / Marginal-Zone–like B Cells,TRUE,FALSE,TRUE,24,24,significant_positive,TRUE,0,2.1145257742175,0.53,0.147,0,0.383,
+LAMP3,LAMP3,2,Atypical Memory (FCRL5⁺ TBX21⁺) / Marginal-Zone–like B Cells,TRUE,FALSE,FALSE,25,25,significant_positive,TRUE,0,2.11068333905153,0.381,0.1,0,0.281,
+TBX21,TBX21,2,Atypical Memory (FCRL5⁺ TBX21⁺) / Marginal-Zone–like B Cells,FALSE,TRUE,TRUE,NA,26,significant_positive,TRUE,0,2.08481023863656,0.389,0.146,0,0.243,Markdown context: Alias: T-bet.
+PAX5,PAX5,2,Atypical Memory (FCRL5⁺ TBX21⁺) / Marginal-Zone–like B Cells,FALSE,TRUE,TRUE,NA,147,significant_positive,TRUE,0,1.15183301691183,0.728,0.282,0,0.446,"Markdown context: Shared B-branch rationale; representative lineage context, not necessarily a significant row in every member cluster."
+SPIB,SPIB,2,Atypical Memory (FCRL5⁺ TBX21⁺) / Marginal-Zone–like B Cells,FALSE,FALSE,TRUE,NA,27,significant_positive,TRUE,0,2.01910918473745,0.47,0.13,0,0.34,
+TNFRSF13C,TNFRSF13C,2,Atypical Memory (FCRL5⁺ TBX21⁺) / Marginal-Zone–like B Cells,FALSE,FALSE,TRUE,NA,36,significant_positive,TRUE,0,1.8957810325722,0.503,0.184,0,0.319,Markdown context: Alias: BAFF-R.
+FCRL3,FCRL3,2,Atypical Memory (FCRL5⁺ TBX21⁺) / Marginal-Zone–like B Cells,FALSE,FALSE,TRUE,NA,49,significant_positive,TRUE,0,1.65114749999636,0.463,0.197,0,0.266,
+CD19,CD19,2,Atypical Memory (FCRL5⁺ TBX21⁺) / Marginal-Zone–like B Cells,FALSE,FALSE,TRUE,NA,211,significant_positive,TRUE,0,1.02404492969795,0.54,0.242,0,0.298,
