@@ -1,0 +1,13 @@
+"contrast","class","n_genes"
+"N4_vs_Control","Not significant",6150
+"P4_vs_Control","Not significant",5163
+"P4_vs_N4","Not significant",8468
+"N4_vs_Control","Significant, small effect",444
+"P4_vs_Control","Significant, small effect",557
+"P4_vs_N4","Significant, small effect",188
+"N4_vs_Control","Down",1685
+"P4_vs_Control","Down",2207
+"P4_vs_N4","Down",639
+"N4_vs_Control","Up",1610
+"P4_vs_Control","Up",1962
+"P4_vs_N4","Up",594
