@@ -14,14 +14,15 @@ group_distribution_output_dir <- function(input, resolution) {
   parts <- strsplit(substring(input, nchar(data_root) + 1L), "/", fixed = TRUE)[[1L]]
   if (!grepl("^job-[0-9]+$", parts[[1L]])) stop("Input lacks a parent job directory.")
   if (length(parts) == 2L &&
-      parts[[2L]] %in% c("clustered.rds", "annotated_clustered.rds")) {
+      (parts[[2L]] %in% c("clustered.rds", "annotated_clustered.rds") ||
+        parts[[2L]] == "refit_clean_annotated.rds")) {
     return(file.path("results", parts[[1L]], "clusters_plots",
-      resolution, "distribution"))
+      "distribution", resolution))
   }
   if (length(parts) == 5L && parts[[2L]] == "subsets" &&
       grepl("^job-[0-9]+$", parts[[4L]]) && parts[[5L]] == "subclustered.rds") {
     return(file.path("results", parts[[1L]], "clusters_plots", "subset",
-      parts[[3L]], parts[[4L]], resolution, "distribution"))
+      parts[[3L]], parts[[4L]], "distribution", resolution))
   }
   stop("Expected data/job-XXX/{clustered,annotated_clustered}.rds or ",
     "data/job-XXX/subsets/<folder>/job-YYY/subclustered.rds.")

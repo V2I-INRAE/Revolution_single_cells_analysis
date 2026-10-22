@@ -52,23 +52,26 @@ if (sys.nframe() == 0L) {
   source("R/clusters/annotations.R")
 
   args <- commandArgs(trailingOnly = TRUE)
-  if (length(args) != 2L) {
-    stop("Usage: Rscript R/clusters/annotate.R <clustered.rds> <annotated_clustered.rds>")
+  if (length(args) < 2L || length(args) > 4L) {
+    stop("Usage: Rscript R/clusters/annotate.R <clustered.rds> <annotated_clustered.rds> [cluster_col] [annotation_name]")
   }
   input <- args[[1L]]
   output <- args[[2L]]
-  cluster_col <- "harmony_snn_res.0.7"
+  cluster_col <- if (length(args) >= 3L) args[[3L]] else "harmony_snn_res.0.7"
+  annotation_name <-
+    if (length(args) >= 4L) args[[4L]] else "coarse_subsets_44542861"
+  annotations <- get(annotation_name)
   input_info <- file.info(input)[, c("size", "mtime")]
 
   message("Loading (input is never written): ", input)
   obj <- readRDS(input)
   clusters <- as.character(obj[[cluster_col, drop = TRUE]])
-  if (anyDuplicated(names(coarse_subsets_44542861)) ||
-      !setequal(unique(clusters), names(coarse_subsets_44542861))) {
-    stop("coarse_subsets_44542861 must assign each cluster exactly once.")
+  if (anyDuplicated(names(annotations)) ||
+      !setequal(unique(clusters), names(annotations))) {
+    stop(annotation_name, " must assign each cluster exactly once.")
   }
 
-  obj <- annotate_clusters_manual(obj, coarse_subsets_44542861,
+  obj <- annotate_clusters_manual(obj, annotations,
     cluster_col = cluster_col, new_col_name = "subset")
 
   dir.create(dirname(output), recursive = TRUE, showWarnings = FALSE)

@@ -30,3 +30,20 @@ coarse_subsets_44542861 <- c(
   `23` = "Epithelial", `24` = "Epithelial",
   `10` = "Stromal", `20` = "Stromal"
 )
+
+# Owner-approved coarse subsets for job-44890936, harmony_snn_res.0.4.
+# Cluster numbers are this run's own labels (22 clusters); verified 1-22 each
+# exactly once against
+# results/job-44890936/clusters_plots/markers_res0.4/cluster_identities_res0.4.md.
+# Working pre-subclustering groups; not final cell-type annotations.
+coarse_subsets_44890936 <- c(
+  `1` = "T_NK_ILC", `3` = "T_NK_ILC", `5` = "T_NK_ILC",
+  `6` = "B_plasma", `7` = "B_plasma",
+  `2` = "Myeloid", `10` = "Myeloid", `12` = "Myeloid", `20` = "Myeloid",
+  `4` = "Granulocytes", `13` = "Granulocytes",
+  `14` = "DC", `17` = "DC",
+  `9` = "Endothelial", `11` = "Endothelial",
+  `15` = "Epithelial", `16` = "Epithelial", `19` = "Epithelial",
+  `21` = "Epithelial", `22` = "Epithelial",
+  `8` = "Stromal", `18` = "Stromal"
+)

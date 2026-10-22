@@ -13,11 +13,15 @@ plot_subset_dotplot <- function(alldata, top5, sel.clust, directory) {
     seurat_object = alldata,
     features = rev(as.character(unique(top5$gene))),
     group.by = sel.clust,
-    flip_axes = TRUE
+    flip_axes = TRUE,
+    scale = FALSE
+  ) + ggplot2::scale_colour_gradientn(
+    colours = c("#FFF5F0", "#FCBBA1", "#CB181D", "#67000D"),
+    limits = c(0, NA)
   ) + ggplot2::labs(
     title = paste(sel.clust, "| top 5 markers per subcluster"),
-    subtitle = "Dot size: detection; colour: scaled average expression",
-    caption = "Subset cells; RNA LogNormalize expression. Exploratory subcluster markers, not condition DE.",
+    subtitle = "Dot size: detection; colour: normalized average expression",
+    caption = "Subset cells; RNA LogNormalize data, no gene-wise scaling. Colour: 0 to plot maximum.\nExploratory subcluster markers, not condition DE.",
     x = NULL, y = "Subcluster"
   ) + ggplot2::theme(
     axis.text.y = ggplot2::element_text(size = 9),

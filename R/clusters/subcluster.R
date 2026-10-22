@@ -151,9 +151,9 @@ run_subclustering <- function(input, subset_label, folder, only_pca = FALSE,
     stop("Requested downstream dimensions exceed the actual number of PCA components.")
   }
 
-  plot_variable_features(obj, plot_dir)
-  plot_pca_elbow(obj, plot_dir)
-  plot_pca_loadings(obj, plot_dir, dims = 1:10)
+  plot_variable_features(obj, file.path(plot_dir, "norm_plots"))
+  plot_pca_elbow(obj, file.path(plot_dir, "norm_plots"))
+  plot_pca_loadings(obj, file.path(plot_dir, "norm_plots"), dims = 1:10)
 
   if (!only_pca) {
     obj <- integrate_object(obj, config$integration, config$dims, config$run$seed)

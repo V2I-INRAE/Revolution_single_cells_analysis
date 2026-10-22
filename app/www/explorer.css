@@ -1,0 +1,20 @@
+.app-title { font-size: 1rem; font-weight: 700; letter-spacing: .06em; }
+.app-subtitle { margin-left: 1rem; font-weight: 400; letter-spacing: 0; color: #526174; }
+.dataset-line { display: flex; gap: 1.4rem; color: #526174; font-size: .85rem; padding: .1rem .3rem; }
+.umap-card { min-height: 540px; }
+.plot-header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; width: 100%; }
+#heading { font-size: 1.1rem; font-weight: 600; }
+#summary { display: block; color: #526174; margin-top: .2rem; font-weight: 400; }
+.selection-actions { display: flex; gap: .5rem; margin-bottom: .9rem; }
+.control-help { color: #526174; font-size: .8rem; line-height: 1.5; }
+.group-choice { display: inline-flex; align-items: center; gap: .4rem; width: 265px; font-size: .8rem; }
+.group-swatch { width: .55rem; height: .55rem; border-radius: 2px; flex-shrink: 0; }
+.group-name { flex: 1; overflow-wrap: anywhere; }
+.group-count { color: #64748b; font-size: .72rem; }
+.checkbox { margin-bottom: .5rem; }
+.availability-notice { color: #805800; margin-bottom: .4rem; }
+.card-footer { color: #526174; font-size: .8rem; }
+@media (max-width: 700px) {
+  .dataset-line { gap: .7rem; flex-wrap: wrap; }
+  .app-subtitle { margin-left: .5rem; }
+}
