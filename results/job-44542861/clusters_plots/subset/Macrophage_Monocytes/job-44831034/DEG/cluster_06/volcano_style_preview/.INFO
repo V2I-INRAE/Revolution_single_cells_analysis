@@ -1,0 +1,37 @@
+# Volcano reference-style approval preview
+- Status: completed and visually validated per-contrast y-axis follow-up2026-10-22; approval preview only, production figures not replaced.
+- Authorization: opaque reference colours, larger circular dots, square plot panel, full linear x-range separately per contrast; cluster06 preview before rollout.
+- Input: read-only cluster_06/plots/volcano_data.csv from paired pseudobulk44922357; parent subcluster44831034 / pipeline44542861. Original label seed1234, display FDR<=0.05 and abs(log2FC)>=0.5 read from original DEG/.INFO and cluster_06/.INFO.
+- Script: existing render_pseudobulk_volcano() in R/DEG/pseudobulk_plots.R, called directly from saved CSV; no model fits, statistical tests, classification or label selection recomputed.
+- Reference: owner screenshot2026-10-22 at17.21.25; solid point colours sampled by parent: grey#CCCCCC, down#88699B, up#44AA99, small-effect#000000.
+- Style: effective alpha1,1.65mm circular dots (previous1.1mm), reference colours; grey drawn before significant points. Per-contrast symmetric full x-range=max(abs(logFC))*1.04 and coordinate y-range=0 to that contrast's max(-log10(FDR))*1.12, plus existing5% y expansion. No shared x/y limits. Square plotting panel within170x200mm page; approved9-11pt fonts.
+- Outputs: three contrast PDF/PNG pairs in this directory; existing production and publication_preview figures remain untouched.
+- Evidence: logs/volcano-style-preview-20261022.log (single canonical execution log).
+- Validation PASS: all3292 genes and10 selected labels per contrast retained; built point coordinates, colours/order/classes, effective alpha1 and1.65mm size checked; logFC/FDR match saved original fits. All79 original CSV/RDS/PDF/PNG files, including production and earlier approved previews, byte-identical by MD5.
+- PDF/PNG checks PASS: all3 PDFs reopened and rendered via PDFKit, one169.686x199.672mm page (Cairo rounding),9/10/11pt text, embedded Nimbus Sans, vector-only drawing, exact reference RGB/grey and PDF opacity1. All30 selected labels and captions present; rendered page-edge ink0. Three PNGs2007x2362px at300dpi. All three PDF renders and one saved PNG visually inspected; labels readable with no observed collisions/clipping.
+- Plotting job44972075 COMPLETED exit0,18s,peakRSS446712KiB. No statistical tests, normalization or feature/sample exclusions. Broader57-volcano rollout remains pending owner approval.
+- Failed checks retained in canonical log: initial runner-path failure44971987; alpha-field assertion44972037. plotthis encodes alpha in colour and leaves ggplot alpha=NA, which preserves colour opacity; corrected harness checks effective RGBA and PDF opacity, not an explicit alpha column. PDFKit character-bound queries emitted inconsistent coordinates for shadowed labels, so page clipping was checked using actual rendered ink and visual review instead.
+- Initial job44971987 failed before reading any input: runner was in login-node /tmp and not visible on compute node. Retrying unchanged plotting code with runner on shared project storage; original error retained in canonical log.
+- Plotting allocation: 44972037
+- Execution started: 2026-10-22 17:33:08.408476
+- Execution failed: all(point$alpha == 1) is not TRUE
+- Original files unchanged: TRUE
+- Plotting allocation: 44972075
+- Execution started: 2026-10-22 17:35:07.423567
+- Execution status: three PDF/PNG pairs rendered; visual/PDF reopening pending.
+- Settings: opaque1.65mm circles; reference palette; significant points above grey; square plot panel;170x200mm; per-contrast symmetric x-range=max(abs(logFC))*1.04, no further x expansion; common y-range retained.
+- Input/hash check PASS: 79 original CSV/RDS/PDF/PNG files unchanged.
+- Execution finished: 2026-10-22 17:35:16.408348
+
+## Independent y-axis follow-up (2026-10-22)
+- Status: started; owner approved colours and requested scaling y to each actual contrast, not uniform limits across plots.
+- Input/producers/thresholds/seed unchanged from above; only display y-limits and caption changed. Regenerate these same3 previews, not production figures.
+- Validation PASS, job44972841 exit0/20s/446368KiB peakRSS: independent coordinate y-limits=max(-log10(FDR))*1.12, with existing5% expansion at both ends. N4-Control: coordinate0..4.369743769, rendered-0.218487188..4.588230958; P4-Control: coordinate0..6.946269252, rendered-0.347313463..7.293582715; P4-N4: coordinate0..3.187025249, rendered-0.159351262..3.346376512.
+- All3292 points/10 labels per contrast retained; x/y coordinates, colours/order/classes, size1.65mm, effective alpha1 and statistics verified. All79 original CSV/RDS/PDF/PNG files unchanged by MD5; production and earlier publication_preview figures untouched.
+- All3 PDFs reopened/rendered and visually inspected: labels readable, no observed clipping/collisions, all30 selected labels and updated per-contrast-x/y caption present, rendered page-edge ink0. One170x200mm page (Cairo rounding),9/10/11pt text, embedded fonts, vector-only drawing, reference colours and PDF opacity1. Three matching2007x2362 PNGs; all6 files SHA256-identical local/remote. All9 DEG scripts parse; git diff --check PASS. No scoring/statistical analyses, commits or pushes.
+- Plotting allocation: 44972841
+- Execution started: 2026-10-22 17:51:16.892326
+- Execution status: three PDF/PNG pairs rendered; visual/PDF reopening pending.
+- Settings: opaque1.65mm circles; reference palette; significant points above grey; square plot panel;170x200mm; per-contrast symmetric x-range=max(abs(logFC))*1.04; per-contrast coordinate y-range=0 to max(-log10(FDR))*1.12, plus existing5% scale expansion at each end. No shared x/y limits.
+- Input/hash check PASS: 79 original CSV/RDS/PDF/PNG files unchanged.
+- Execution finished: 2026-10-22 17:51:25.455091

@@ -1,0 +1,50 @@
+# Macrophage_Monocytes cluster 4
+Status: DE/diagnostics/plots completed; Hallmark completed
+Started: 2026-10-21 18:23:37.913116
+Run settings: results/job-44542861/clusters_plots/subset/Macrophage_Monocytes/job-44831034/DEG/.INFO
+Input: data/job-44542861/subsets/Macrophage_Monocytes/job-44831034/subclustered.rds
+Cluster column: harmony_snn_res.0.2
+Producer allocation: 44922357
+Seed: 1234 for GSEA and label placement; DE/MDS/heatmap deterministic.
+Evidence: logs/macrophage_monocytes-all-clusters-pseudobulk-20261021.log
+Finished: 2026-10-21 18:24:06.289061
+Cells: 2707 ; samples: 15 ; pigs: 5 ; min cells per sample: 79
+Candidate genes: 15902 ; low-expression genes removed: 9934 ; tested: 5968 ; genes outside original common-layer intersection: 5221
+Heatmap genes: 1595
+Validation: one basic reopening of new RDS/CSV outputs PASS at 2026-10-21 18:24:35.531071; all12 PNGs inspected. No repeated numerical audits or statistical reruns.
+
+## Publication-size figure replacement (2026-10-22)
+Status: figures regenerated; PDF reopening and visual review pending.
+Started: 2026-10-22 12:08:47.896725
+Plotting allocation: 44951244 array index: 4
+Script: R/DEG/regenerate_publication.R; saved-results renderer and approved publication_style.R.
+Read-only input: results/job-44542861/clusters_plots/subset/Macrophage_Monocytes/job-44831034/DEG/cluster_04
+Recorded display selection: Volcano/heatmap selection: FDR<=0.05 AND abs(log2FC)>=0.5 within the same contrast; heatmap union across contrasts.
+Recorded label seed: 1234 ; GSEA parameters read from saved gsea_results.rds.
+Replaces only 12 PDFs and 12 matching PNGs in diagnostics/, plots/, gsea/hallmark/.
+Approved cluster06 style: 170mm wide; labels9pt, axis10pt, titles11pt, tags14pt; MDS dots3.2mm, axes/guides0.25mm; embedded-font PDF and300dpi PNG.
+MDS display labels omit shared REVO prefix, explicitly noted in caption; full data IDs unchanged.
+No fitting, DE/GSEA tests, source-object writes, changed thresholds/colours, sample or gene exclusions.
+Run record: logs/deg-publication-rollout.INFO; evidence: logs/deg-publication-rollout-<array job>_<index>.log
+Finished: 2026-10-22 12:09:34.200011
+Input consistency PASS: samples 15; genes 5968; heatmap_genes 1595
+Scientific files unchanged: 31 CSV/RDS files byte-identical by MD5.
+
+## Publication-size figure replacement (2026-10-22)
+Status: completed; final saved-PDF/font/text checks and visual review passed.
+Started: 2026-10-22 12:19:07.753513
+Plotting allocation: 44951410 array index: 4
+Script: R/DEG/regenerate_publication.R; saved-results renderer and approved publication_style.R.
+Read-only input: results/job-44542861/clusters_plots/subset/Macrophage_Monocytes/job-44831034/DEG/cluster_04
+Recorded display selection: Volcano/heatmap selection: FDR<=0.05 AND abs(log2FC)>=0.5 within the same contrast; heatmap union across contrasts.
+Recorded label seed: 1234 ; GSEA parameters read from saved gsea_results.rds.
+Diagnostics-only layout correction: inner titles, axis wrapping and label repulsion; no other figures regenerated.
+Approved cluster06 style: 170mm wide; labels9pt, axis10pt, titles11pt, tags14pt; MDS dots3.2mm, axes/guides0.25mm; embedded-font PDF and300dpi PNG.
+MDS display labels omit shared REVO prefix, explicitly noted in caption; full data IDs unchanged.
+No fitting, DE/GSEA tests, source-object writes, changed thresholds/colours, sample or gene exclusions.
+Run record: logs/deg-publication-rollout.INFO; evidence: logs/deg-publication-rollout-<array job>_<index>.log
+Finished: 2026-10-22 12:19:40.327351
+Input consistency PASS: samples 15; genes 5968
+Scientific files unchanged: 31 CSV/RDS files byte-identical by MD5.
+
+Final publication validation:12 PDFs and matching PNGs delivered at170mm width; embedded fonts >=9pt, captions/labels present, no page-edge clipping. Scientific CSV/RDS files unchanged; no DE/GSEA tests. Full-scope evidence and limitations: logs/deg-publication-rollout.INFO.

@@ -1,0 +1,9 @@
+# Epithelial cluster 7
+Status: pending owner decision; no DE, plotting or GSEA performed.
+Started: 2026-10-21 18:05:20.225737
+Input (read-only): data/job-44542861/subsets/Epithelial/job-44831032/subclustered.rds
+Producer: subclustering44831032 / pipeline44542861; allocation44922357.
+Cluster metadata: harmony_snn_res.0.3; same paired Control/P4/N4 panel.
+Preflight: 255 total cells; T0H/T4H aggregates range1 to30 cells, eight samples below10 cells. Every Control aggregate has fewer than10 cells; no complete triplet remains if applying>=10.
+No cell-count filtering, sample removal, merging or changed pairing rule was chosen.
+Evidence: logs/epithelial-all-clusters-pseudobulk-20261021.log

@@ -1,0 +1,43 @@
+# Epithelial paired pseudobulk pipeline
+Status: completed for clusters1 to5; clusters6/7 pending owner decision on sparse sample aggregates.
+Started: 2026-10-21 18:05:20.305949
+Producer allocation: 44922357
+Script: R/DEG/run_pseudobulk.R; count/DE, diagnostics, DE plotting and Hallmark modules.
+Input (read-only): data/job-44542861/subsets/Epithelial/job-44831032/subclustered.rds
+Source producer: job-44831032
+Population: Epithelial ; cluster column: harmony_snn_res.0.3 ; clusters: 1, 2, 3, 4, 5
+Groups: paired Control/T0H, P4/T4H positive airway-pressure ventilation, N4/T4H negative-pressure ventilation.
+T8H becomes T10H in memory only. Late samples are outside this analysis panel.
+All panel samples and cells retained within each requested cluster; no downsampling. Per-sample cell counts are recorded in sample_metadata.csv.
+Candidates: intersection of ALL original RNA counts.* layers, before sample/time/cluster selection.
+Filtering per cluster: filterByExpr(group=condition), default min.count=10/min.total.count=15/large.n=10/min.prop=0.7.
+Normalization: recalculate filtered library sizes, then TMM. No integrated or normalized cell counts used.
+Model: ~ pig + condition; edgeR glmQLFit(legacy=FALSE), dispersion=NULL, robust=FALSE; glmQLFTest.
+Contrasts: P4-Control, N4-Control, P4-N4. BH FDR separately per cluster/contrast; both gene directions retained.
+DE exports: full statistics and FDR<=0.05 tables, without an effect-size cutoff.
+Volcano/heatmap selection: FDR<=0.05 AND abs(log2FC)>=0.5 within the same contrast; heatmap union across contrasts.
+MDS: same filtered TMM DGEList as DE; top500 pairwise leading-logFC distances, prior.count=2; no pig-effect removal.
+Heatmap: TMM log2 CPM prior.count=2, row z-scores over all samples, Euclidean/complete row clustering, fixed Control/P4/N4 then pig order; RdBu blue-low/red-high saturated at +/-2.5; pig effects retained.
+Volcano: exact logFC and -log10(BH FDR), four classes, +/-0.5 and FDR0.05 dashed guides; five labels per direction.
+Pig display-name mapping: results/misc/Ensembl_ID/gene-mapping/pig_to_human_orthologues_annotated.csv ; pig_safe_name only when pig_rename_status=rename. Original feature IDs retained; no human rename.
+References: results/job-44542861/clusters_plots/subset/Endothelial/job-44831031/DEG/references ; MSigDB2026.1.Hs Hallmark pig projection, taxon9823. Reactome used only for consistent pig aliases, not enrichment tests.
+GSEA exclusions: eight previously approved features B2M/ENSSSCG00000004687, LDHB/ENSSSCG00000000576, ARFIP2/TRIM3, GNA12/ENSSSCG00000032549; absent/filtered members need no exclusion.
+Additional approved GSEA exclusions by cluster:
+GSEA mapping: exact unambiguous pig symbol/Ensembl aliases, then existing safe pig name; NCBI canonical ID or Ensembl fallback; unmatched/ambiguous features remain SOURCE:<feature> nonhits. Additional tested-ID collisions block GSEA for that cluster pending owner decision.
+GSEA ranks: all tested features minus approved exclusions; sign(logFC)*sqrt(F), decreasing with gene-ID tie-breaker. No gene FDR/fold-change filtering.
+GSEA: fgseaMultilevel(minSize=15,maxSize=500,gseaParam=1,scoreType=std,eps=0,nproc=1); seed1234 reset per contrast. BH separately per cluster/contrast; pathway reporting FDR<0.01.
+GSEA direction: positive NES favours first phenotype; negative favours second. Display up to eight terms/direction, including nonsignificant terms; stars mark FDR<0.01. Lowest-FDR running score in each direction.
+Interpretation: baseline contrasts combine time/perfusion and pressure effects; no claim of exclusive induction or pathway activation.
+No ORA/GO/Reactome analysis in this run. Source RDS and input references are read-only.
+Verification: one basic reopening of saved results and figure inspection after execution; no repeated audits or reruns.
+Evidence: logs/epithelial-all-clusters-pseudobulk-20261021.log
+R: 4.6.1 ; Seurat: 5.5.1 ; edgeR: 4.10.5 ; fgsea: 1.38.0 ; plotthis: 0.14.1.1
+Finished: 2026-10-21 18:08:20.916816
+Original count layers: 23 ; candidate genes: 15902
+Summary: cluster_summary.csv
+Input identity preflight: verified9426 cells, subset=Epithelial, matching subclustering44831032 record; own harmony_snn_res.0.3, not parent cluster metadata.
+Requested clusters1 to7; execution covers1 to5. Clusters6/7 deferred pending owner decision on sample aggregates with1 to9 cells; see their .INFO files. No samples/cells silently filtered.
+One basic saved-output review PASS: 2026-10-21 18:08:22.714408; all60 final PNGs inspected. No repeated numerical audits or verification reruns.
+Execution: exit0. Analyzed5842 cells in15 paired samples/five pigs per cluster. Tested genes9059/9409/6337/4238/2856; heatmap genes4144/3268/2838/272/1066 for clusters1 to5.
+Hallmark: completed all15 cluster/contrast analyses; eligible pathways49/48/45/44/40, using pig projection. No additional GSEA exclusions or unresolved mapping collisions. P4-N4 pathway FDR<0.01 favours P4/N4: 2/1,0/14,1/8,0/1,0/4.
+Figure review: heatmap row names intentionally hidden, as in the endothelial plots; gene IDs exported in CSVs. Cluster3 P4-N4 long gene label is readable at full size. Cluster4 MDS axis/legend layout corrected from saved coordinates only and final figure inspected; no recomputation of MDS, DE or GSEA. Other completed figures not rerendered.

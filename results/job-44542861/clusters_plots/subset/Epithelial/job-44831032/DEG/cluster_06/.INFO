@@ -1,0 +1,9 @@
+# Epithelial cluster 6
+Status: pending owner decision; no DE, plotting or GSEA performed.
+Started: 2026-10-21 18:05:20.224593
+Input (read-only): data/job-44542861/subsets/Epithelial/job-44831032/subclustered.rds
+Producer: subclustering44831032 / pipeline44542861; allocation44922357.
+Cluster metadata: harmony_snn_res.0.3; same paired Control/P4/N4 panel.
+Preflight: 292 total cells; T0H/T4H aggregates range2 to32 cells, four samples below10 cells. Only one pig has all three aggregates>=10 cells.
+No cell-count filtering, sample removal, merging or changed pairing rule was chosen.
+Evidence: logs/epithelial-all-clusters-pseudobulk-20261021.log

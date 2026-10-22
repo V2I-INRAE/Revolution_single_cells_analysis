@@ -1,0 +1,34 @@
+# DEG final-size publication preview
+Status: completed and validated; owner approved; broad production rollout completed.
+Started: 2026-10-22 11:41:03.845741
+Plotting allocation: 44950779
+Script: R/DEG/preview_publication.R; shared renderers and publication_style.R.
+Read-only input directory: results/job-44542861/clusters_plots/subset/Macrophage_Monocytes/job-44831034/DEG/cluster_06
+Parents: paired pseudobulk producer44922357; subcluster44831034; cleanup44827588; pipeline44542861.
+Inputs: pseudobulk_fit.rds, diagnostics/mds.rds and mds_coordinates.csv, plots/volcano_data.csv and heatmap_zscores.csv, gsea/hallmark/gsea_results.rds.
+Method: render saved MDS coordinates, volcano classes/labels and GSEA results; reconstruct heatmap from saved TMM DGEList and verify against existing matrix.
+No model fitting, new tests, fgseaMultilevel, changed thresholds/colours/data, or source writes.
+Display selection: original FDR<=0.05 and abs(log2FC)>=0.5; Hallmark pathway threshold from saved parameters.
+Final sizes: width170mm; MDS135/QC180/heatmap160/volcano145/GSEA dot170/running110mm high. Place at100% in Affinity.
+Text: labels/ticks/legends9pt, axis10pt, titles11pt, tags14pt; MDS size3.2mm; axes/guides0.25mm. Cairo embedded-font PDF and matching300dpi PNG; raster heatmap matrix retained.
+Label placement seed: 1234
+MDS display labels omit only the shared REVO prefix, explicitly documented in caption; full data IDs retained, no samples or labels dropped.
+Scope inventory: 228 production PDFs / 19 clusters: Endothelial5, Epithelial5, Macrophage_Monocytes5, DC3, Granulocytes1 (12 PDFs per cluster).
+Standalone endothelial pilot outputs were superseded/removed Oct21; standalone script styling remains pending with full rollout.
+Approval gate: preview only; no production PDFs replaced. All other clusters await owner approval.
+Evidence: logs/deg-publication-preview.log
+Finished: 2026-10-22 11:42:04.431802
+Scientific input check PASS: 56 original files byte-identical by MD5 before/after.
+Reopened input checks PASS: 15 sample identities/MDS coordinates; heatmap gene order and matrix agree to1e-12; all volcano genes/logFC/FDR agree with saved fit; GSEA rendered directly from saved result/display tables.
+
+Validation / delivery
+- Final plotting allocation44950779: exit0, elapsed1m13s, peakRSS976520KiB. 12 PDFs and matching PNGs delivered locally and retained on cluster.
+- Native macOS PDFKit reopened/rendered all12 PDFs: one page each, widths169.686mm (Cairo rounds to integer points; <0.4mm from170mm target), extracted fonts9/10/11pt plus14pt panel tags. All12 rendered figures visually inspected; no clipped captions/legends or overlapping MDS labels in final layout.
+- Embedded Nimbus Sans font streams present in every PDF; text remains text. No raster images in MDS/QC/volcano/running-score plots; heatmap has three raster matrix slices, GSEA dot plots one raster colourbar each. Other components remain vector.
+- Original56 source/result files byte-identical before/after; 15 samples, 3292 genes per volcano contrast, 767 heatmap genes. Heatmap order/values match original CSV to1e-12.
+- Initial allocation44949376 failed on too-small patchwork viewport; fixed explicit bottom legends. Subsequent plotting-only iterations corrected long-label crowding, caption alignment and GSEA legend clipping; no statistical reruns. Original attempts retained in the same log.
+- R syntax parsing and git diff --check PASS. Full analysis pipeline not rerun; no dependencies installed. Local plotting dependencies are incomplete; rendering used existing cluster environment.
+- Affinity import/editability has not been tested in Affinity itself. Owner must check the preview at100% placement before rollout.
+- Remaining: apply approved layout to228 existing production PDFs across19 clusters, update standalone endothelial plot scripts (their historical pilot outputs no longer exist), and review other clusters at final size. Production PDFs remain untouched.
+
+Owner approval received Oct22; production rollout completed across19 clusters/228 PDF+PNG pairs. Preview images retained as approved reference. See logs/deg-publication-rollout.INFO.

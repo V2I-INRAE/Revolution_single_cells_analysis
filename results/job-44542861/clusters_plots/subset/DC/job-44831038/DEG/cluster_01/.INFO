@@ -1,0 +1,51 @@
+# DC cluster 1
+Status: DE/diagnostics/plots and Hallmark completed; approved GSEA-only collision exclusions applied.
+Started: 2026-10-21 18:19:41.770017
+Run settings: results/job-44542861/clusters_plots/subset/DC/job-44831038/DEG/.INFO
+Input: data/job-44542861/subsets/DC/job-44831038/subclustered.rds
+Cluster column: harmony_snn_res.0.2
+Producer allocation: 44922357
+Seed: 1234 for GSEA and label placement; DE/MDS/heatmap deterministic.
+Evidence: logs/dc-all-clusters-pseudobulk-20261021.log
+Finished: 2026-10-21 18:20:14.436733
+Cells: 4367 ; samples: 15 ; pigs: 5 ; min cells per sample: 83
+Candidate genes: 15902 ; low-expression genes removed: 6037 ; tested: 9865 ; genes outside original common-layer intersection: 5221
+Heatmap genes: 5275
+Validation: one basic reopening of new RDS/CSV outputs PASS at 2026-10-21 18:21:23.22891; six PNGs inspected, labels readable. No repeated numerical audits or statistical reruns.
+Hallmark completed18:38: owner approved GSEA-only exclusion of both members of TBC1D14/ZC3H15 identifier pairs. One basic saved-output review and six new PNGs inspected; exact exclusions in gsea/hallmark/.INFO. DE and existing plots unchanged.
+
+## Publication-size figure replacement (2026-10-22)
+Status: figures regenerated; PDF reopening and visual review pending.
+Started: 2026-10-22 12:05:19.975787
+Plotting allocation: 44951238 array index: 5
+Script: R/DEG/regenerate_publication.R; saved-results renderer and approved publication_style.R.
+Read-only input: results/job-44542861/clusters_plots/subset/DC/job-44831038/DEG/cluster_01
+Recorded display selection: Volcano/heatmap selection: FDR<=0.05 AND abs(log2FC)>=0.5 within the same contrast; heatmap union across contrasts.
+Recorded label seed: 1234 ; GSEA parameters read from saved gsea_results.rds.
+Replaces only 12 PDFs and 12 matching PNGs in diagnostics/, plots/, gsea/hallmark/.
+Approved cluster06 style: 170mm wide; labels9pt, axis10pt, titles11pt, tags14pt; MDS dots3.2mm, axes/guides0.25mm; embedded-font PDF and300dpi PNG.
+MDS display labels omit shared REVO prefix, explicitly noted in caption; full data IDs unchanged.
+No fitting, DE/GSEA tests, source-object writes, changed thresholds/colours, sample or gene exclusions.
+Run record: logs/deg-publication-rollout.INFO; evidence: logs/deg-publication-rollout-<array job>_<index>.log
+Finished: 2026-10-22 12:06:37.486864
+Input consistency PASS: samples 15; genes 9865; heatmap_genes 5275
+Scientific files unchanged: 31 CSV/RDS files byte-identical by MD5.
+
+## Publication-size figure replacement (2026-10-22)
+Status: completed; final saved-PDF/font/text checks and visual review passed.
+Started: 2026-10-22 12:17:22.060276
+Plotting allocation: 44951406 array index: 5
+Script: R/DEG/regenerate_publication.R; saved-results renderer and approved publication_style.R.
+Read-only input: results/job-44542861/clusters_plots/subset/DC/job-44831038/DEG/cluster_01
+Recorded display selection: Volcano/heatmap selection: FDR<=0.05 AND abs(log2FC)>=0.5 within the same contrast; heatmap union across contrasts.
+Recorded label seed: 1234 ; GSEA parameters read from saved gsea_results.rds.
+Diagnostics-only layout correction: inner titles, axis wrapping and label repulsion; no other figures regenerated.
+Approved cluster06 style: 170mm wide; labels9pt, axis10pt, titles11pt, tags14pt; MDS dots3.2mm, axes/guides0.25mm; embedded-font PDF and300dpi PNG.
+MDS display labels omit shared REVO prefix, explicitly noted in caption; full data IDs unchanged.
+No fitting, DE/GSEA tests, source-object writes, changed thresholds/colours, sample or gene exclusions.
+Run record: logs/deg-publication-rollout.INFO; evidence: logs/deg-publication-rollout-<array job>_<index>.log
+Finished: 2026-10-22 12:17:59.184257
+Input consistency PASS: samples 15; genes 9865
+Scientific files unchanged: 31 CSV/RDS files byte-identical by MD5.
+
+Final publication validation:12 PDFs and matching PNGs delivered at170mm width; embedded fonts >=9pt, captions/labels present, no page-edge clipping. Scientific CSV/RDS files unchanged; no DE/GSEA tests. Full-scope evidence and limitations: logs/deg-publication-rollout.INFO.

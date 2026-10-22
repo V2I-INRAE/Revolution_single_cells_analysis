@@ -1,0 +1,45 @@
+# Endothelial paired pseudobulk pipeline
+Status: completed for all five clusters, including approved Hallmark completion for clusters2/5.
+Started: 2026-10-21 17:38:04.134249
+Producer allocation: 44922357
+Script: R/DEG/run_pseudobulk.R; count/DE, diagnostics, DE plotting and Hallmark modules.
+Input (read-only): data/job-44542861/subsets/Endothelial/job-44831031/subclustered.rds
+Source producer: job-44831031
+Population: Endothelial ; cluster column: harmony_snn_res.0.3 ; clusters: 1, 2, 3, 4, 5
+Groups: paired Control/T0H, P4/T4H positive airway-pressure ventilation, N4/T4H negative-pressure ventilation.
+T8H becomes T10H in memory only. Late samples are outside this analysis panel.
+All panel samples and cells retained, including the 22-cell cluster-5 REVO26-N4 aggregate; no downsampling.
+Candidates: intersection of ALL original RNA counts.* layers, before sample/time/cluster selection (15902 expected).
+Filtering per cluster: filterByExpr(group=condition), default min.count=10/min.total.count=15/large.n=10/min.prop=0.7.
+Normalization: recalculate filtered library sizes, then TMM. No integrated or normalized cell counts used.
+Model: ~ pig + condition; edgeR glmQLFit(legacy=FALSE), dispersion=NULL, robust=FALSE; glmQLFTest.
+Contrasts: P4-Control, N4-Control, P4-N4. BH FDR separately per cluster/contrast; both gene directions retained.
+DE exports: full statistics and FDR<=0.05 tables, without an effect-size cutoff.
+Volcano/heatmap selection: FDR<=0.05 AND abs(log2FC)>=0.5 within the same contrast; heatmap union across contrasts.
+MDS: same filtered TMM DGEList as DE; top500 pairwise leading-logFC distances, prior.count=2; no pig-effect removal.
+Heatmap: TMM log2 CPM prior.count=2, row z-scores over all samples, Euclidean/complete row clustering, fixed Control/P4/N4 then pig order; RdBu blue-low/red-high saturated at +/-2.5; pig effects retained.
+Volcano: exact logFC and -log10(BH FDR), four classes, +/-0.5 and FDR0.05 dashed guides; five labels per direction.
+Pig display-name mapping: results/misc/Ensembl_ID/gene-mapping/pig_to_human_orthologues_annotated.csv ; pig_safe_name only when pig_rename_status=rename. Original feature IDs retained; no human rename.
+References: results/job-44542861/clusters_plots/subset/Endothelial/job-44831031/DEG/references ; MSigDB2026.1.Hs Hallmark pig projection, taxon9823. Reactome used only for consistent pig aliases, not enrichment tests.
+GSEA exclusions: eight previously approved features B2M/ENSSSCG00000004687, LDHB/ENSSSCG00000000576, ARFIP2/TRIM3, GNA12/ENSSSCG00000032549; absent/filtered members need no exclusion.
+GSEA mapping: exact unambiguous pig symbol/Ensembl aliases, then existing safe pig name; NCBI canonical ID or Ensembl fallback; unmatched/ambiguous features remain SOURCE:<feature> nonhits. Additional tested-ID collisions block GSEA for that cluster pending owner decision.
+GSEA ranks: all tested features minus approved exclusions; sign(logFC)*sqrt(F), decreasing with gene-ID tie-breaker. No gene FDR/fold-change filtering.
+GSEA: fgseaMultilevel(minSize=15,maxSize=500,gseaParam=1,scoreType=std,eps=0,nproc=1); seed1234 reset per contrast. BH separately per cluster/contrast; pathway reporting FDR<0.01.
+GSEA direction: positive NES favours first phenotype; negative favours second. Display up to eight terms/direction, including nonsignificant terms; stars mark FDR<0.01. Lowest-FDR running score in each direction.
+Interpretation: baseline contrasts combine time/perfusion and pressure effects; no claim of exclusive induction or pathway activation.
+Replacement authorized by owner: old cluster_01 results removed, shared Hallmark/Reactome input references moved outside cluster_01; original logs and source RDS retained. No ORA/GO/Reactome analysis in this run.
+Oracle: requested plan review retried but endpoint unavailable; no oracle approval obtained.
+Verification: one basic saved-output reopening PASS on 2026-10-21 17:42; final PNGs inspected. No repeated numerical audits or model/GSEA verification reruns.
+Evidence: logs/endothelial-all-clusters-pseudobulk-20261021.log
+R: 4.6.1 ; Seurat: 5.5.1 ; edgeR: 4.10.5 ; fgsea: 1.38.0 ; plotthis: 0.14.1.1
+Finished: 2026-10-21 17:40:56.245352
+Original count layers: 23 ; candidate genes: 15902
+Summary: cluster_summary.csv
+Execution: initial attempt stopped before any DE/figure outputs because edgeR::plotMDS is not exported; corrected to limma::plotMDS, which dispatches the native edgeR DGEList method. Successful execution exit0, 3m03.45s, peak RSS3885668KiB.
+Saved-output review: all five model RDSs/metadata/DE CSVs and heatmap/volcano selections reopened once; 15 complete paired samples per cluster, original feature IDs preserved; available GSEA RDS/CSVs/ranks/coverage reopened. All basic checks passed.
+Figures: 60 PNG/PDF pairs. Gene-label overlap corrected in clusters2/3 and MDS label overlap in clusters2/3/4 from saved models only; corrected overlaps inspected. No refitting or GSEA verification reruns.
+Hallmark complete: clusters1/2/3/4/5, all three contrasts; 49/49/49/45/49 eligible pathways respectively. P4-N4 pathway FDR<0.01 favours P4/N4: 0/9, 0/4, 1/1, 2/0, 0/7.
+Hallmark collision resolved: owner approved excluding both TNFSF15 and ENSSSCG00000034087 from GSEA only in clusters2/5; both map to NCBI:100624969. Both expression features remain in DE and gene plots. No merging or arbitrary rank assignment.
+Hallmark completion started: 2026-10-21 17:54:15.192616
+Owner approved both TNFSF15/ENSSSCG00000034087 feature rows excluded from GSEA only in clusters2/5; same mapped pig gene NCBI:100624969. No changes to DE, diagnostics or gene plots.
+Hallmark completion finished: 2026-10-21 17:54:40; new outputs reopened once, basic review PASS. All 12 new PNGs inspected without clipping or direction-label errors. Frozen mapping and saved Hallmark pathways reused; DE and clusters1/3/4 not rerun. Details: cluster_02/gsea/hallmark/.INFO and cluster_05/gsea/hallmark/.INFO.

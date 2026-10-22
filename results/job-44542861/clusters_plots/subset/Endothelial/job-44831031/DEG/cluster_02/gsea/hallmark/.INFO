@@ -1,0 +1,19 @@
+# Endothelial cluster 2 Hallmark completion
+Status: completed; one basic saved-output review PASS and all six PNGs inspected.
+Started: 2026-10-21 17:54:15.365729
+Producer allocation: 44922357
+Parent/input: results/job-44542861/clusters_plots/subset/Endothelial/job-44831031/DEG/cluster_02/pseudobulk_fit.rds
+Shared settings: results/job-44542861/clusters_plots/subset/Endothelial/job-44831031/DEG/.INFO
+Frozen mapping: results/job-44542861/clusters_plots/subset/Endothelial/job-44831031/DEG/candidate_gene_mapping.csv
+Frozen Hallmark gene sets: results/job-44542861/clusters_plots/subset/Endothelial/job-44831031/DEG/cluster_01/gsea/hallmark/gsea_results.rds
+Database: MSigDB2026.1.Hs Hallmark projected to Sus scrofa, taxon9823.
+Owner-approved additional GSEA exclusions: TNFSF15 and ENSSSCG00000034087, both mapped to NCBI:100624969; these are two features representing one mapped gene ID. Exclude both in clusters2/5 only, retain in DE/plots.
+Ranks: all tested features minus original approved exclusions and these two additional features; sign(logFC)*sqrt(F); gene-ID tie-breaker.
+Method: fgseaMultilevel(minSize=15,maxSize=500,gseaParam=1,scoreType=std,eps=0,nproc=1); seed1234 reset per contrast; BH per cluster/contrast; pathway FDR<0.01.
+Contrasts: P4-Control, N4-Control, P4-N4. Positive NES favours first phenotype; negative favours second.
+No count aggregation, DE refitting, MDS/heatmap/volcano rerendering, or rerun of clusters1/3/4.
+Verification: one basic reopening of new saved GSEA outputs, then PNG inspection; no repeated audits.
+Evidence: logs/endothelial-all-clusters-pseudobulk-20261021.log
+Finished: 2026-10-21 17:54:29.55447
+Tested genes: 7518 ; total excluded features: 9 ; ranked features: 7509 ; eligible pathways: 49
+Figure inspection: all six final PNGs show readable labels, unclipped panels and correct contrast/NES direction. P4-N4 pathway FDR<0.01: zero favour P4, four favour N4.

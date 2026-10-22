@@ -1,0 +1,9 @@
+# DC cluster 4
+Status: pending owner decision on sparse sample aggregates; no DE, plotting or GSEA performed.
+Started: 2026-10-21 18:19:38.323174
+Input (read-only): data/job-44542861/subsets/DC/job-44831038/subclustered.rds
+Source producer: job-44831038; pipeline44542861; allocation44922357
+Cluster column: harmony_snn_res.0.2, approved by owner; paired Control/P4/N4.
+Preflight minimum cells per sample: 6 ; at least one aggregate below10 cells.
+No sample/cell filtering, re-pairing, merging, downsampling, normalization or DE was performed for this deferred cluster.
+Evidence: logs/dc-all-clusters-pseudobulk-20261021.log

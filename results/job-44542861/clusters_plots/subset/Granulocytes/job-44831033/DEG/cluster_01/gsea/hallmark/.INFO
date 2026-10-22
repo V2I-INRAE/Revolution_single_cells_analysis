@@ -1,0 +1,26 @@
+# Granulocytes cluster 1 Hallmark completion
+Status: completed; one basic saved-output review PASS and all six PNGs inspected.
+Started: 2026-10-21 18:34:13.360393
+Producer allocation: 44922357
+Parent/input: results/job-44542861/clusters_plots/subset/Granulocytes/job-44831033/DEG/cluster_01/pseudobulk_fit.rds
+Shared settings: results/job-44542861/clusters_plots/subset/Granulocytes/job-44831033/DEG/.INFO
+Frozen mapping: results/job-44542861/clusters_plots/subset/Granulocytes/job-44831033/DEG/candidate_gene_mapping.csv
+Frozen Hallmark gene sets: results/job-44542861/clusters_plots/subset/DC/job-44831038/DEG/cluster_02/gsea/hallmark/gsea_results.rds
+Database: 2026.1.Hs Hallmark projected to Sus scrofa, taxon 9823
+Owner approved excluding both members of each additional identifier collision from GSEA only; retain all features in DE and existing plots.
+Additional excluded features: ENSSSCG00000027349, ENSSSCG00000032894
+Resolved pairs: ENSSSCG00000027349 -> NCBI:100622341; ENSSSCG00000032894 -> NCBI:100622341
+Ranks: all tested features minus original approved exclusions and additional features above; sign(logFC)*sqrt(F), gene-ID tie-breaker. No gene FDR/fold-change cutoff.
+Method: fgseaMultilevel(minSize=15,maxSize=500,gseaParam=1,scoreType=std,eps=0,nproc=1); seed1234reset per contrast; BH per cluster/contrast; pathway FDR<0.01
+Contrasts: P4-Control, N4-Control, P4-N4. Positive NES favours first phenotype; negative favours second.
+No count aggregation, DE refitting, MDS/heatmap/volcano changes, or rerun of completed GSEA in other clusters.
+Sparse clusters remain deferred. Owner requests an agreed minimum-cell rule before their analysis; no rule or sample filtering approved yet.
+Verification: one basic reopening of newly saved GSEA outputs, then PNG inspection; no repeated audits.
+Evidence: logs/granulocytes-all-clusters-pseudobulk-20261021.log
+Failure: EIF4EBP2 P4-N4 F=-2.08586729462603e-08, logFC=-0.00146125172240697, PValue=1, FDR=1. Original saved DE results unchanged; no gene dropped.
+Resumed: 2026-10-21 18:38:14.92991
+Numerical correction: sign(logFC)*sqrt(pmax(F,0)); EIF4EBP2 receives rank0, original F/PValue/FDR preserved. Consistent with edgeR upper-tail pf(F<=0)=1.
+Recovery: reuse completed P4-Control/N4-Control CSVs and plots; run P4-N4 only, then assemble the complete saved GSEA object. No baseline GSEA rerun.
+Finished: 2026-10-21 18:38:21.045555
+Tested features: 6691 ; total exclusions: 5 ; ranked features: 6686 ; eligible pathways: 49
+Figure inspection: all six PNGs readable and unclipped; contrast/NES directions clear. P4-N4 pathway FDR<0.01: one favours P4, three favour N4.
