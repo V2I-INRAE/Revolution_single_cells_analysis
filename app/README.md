@@ -69,7 +69,8 @@ saved-data checks are recorded in each cache's `.INFO` file.
 
 Dependencies are already listed in the project's `renv.lock`. Preparation
 uses `Seurat`, `Matrix`, and `HDF5Array`. The app uses `shiny`, `bslib`,
-`plotly`, `htmlwidgets`, `viridisLite`, and `HDF5Array`.
+`plotly`, `htmlwidgets`, `viridisLite`, and `HDF5Array`; PDF export also uses
+the existing `ggplot2` and `ggrastr` packages.
 
 ## Navigate
 
@@ -106,6 +107,24 @@ Gene and group changes preserve that size; zooming out or resetting the view
 shrinks them again. The full parent keeps fixed 2-pixel dots. Sizing runs in
 the browser and does not reload cells or expression from R.
 
+## Save a PDF for editing
+
+Click **Save PDF** next to **Reset view** for the current cluster or
+gene-expression plot. The download keeps the dataset, checked groups,
+expression restriction, gene color range, zoom and dot size. Reset the view
+first if you want the full embedding instead of a close-up.
+
+The PDF uses the same method as the existing marker-panel PDFs: all cell dots
+form one 600-dpi raster layer, while titles, axes, cluster legends and gene
+color scales remain editable vectors. Open the PDF in Illustrator or Affinity
+to edit those elements. Individual cell dots are not separate editable objects.
+The page follows the browser plot dimensions; the PDF layout is redrawn from
+the same cached values rather than taking a screenshot. The filename includes
+the dataset, saved clustering resolution and gene ID or `clusters`.
+
+The existing Plotly camera button still saves PNGs. PDF generation runs only
+when requested and does not reopen the source Seurat object or rebuild caches.
+
 ## Code organization
 
 * `config.R` lists registered views and the ordered active selection.
@@ -113,6 +132,7 @@ the browser and does not reload cells or expression from R.
 * `R/data.R` opens the cache and retrieves individual expression vectors.
 * `R/controls.R` owns the Shiny controls module.
 * `R/plot.R` builds WebGL traces and updates the plot without rebuilding it.
+* `R/export.R` saves the current plot as a hybrid PDF with editable frame elements.
 * `app.R` connects the modules, layout, and status text.
 * `www/explorer.css` contains layout styling.
 
@@ -146,5 +166,7 @@ Ensembl-alias search, expression values, restricted and empty selections,
 fixed color scales, zoom preservation and reset, and subset-only dot sizing.
 They also check saved coordinates and expression-to-cell correspondence.
 Screenshots are saved under `.amp/in/artifacts/explorer-clean-sources/`.
+Parent UMAP and zoomed DC feature-plot PDF downloads are checked and saved
+under `.amp/in/artifacts/explorer-pdf/`.
 Set `EXPLORER_TEST_URL` when checking a separate local test instance instead
 of the default `http://127.0.0.1:3838`.

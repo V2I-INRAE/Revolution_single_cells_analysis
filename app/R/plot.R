@@ -65,13 +65,13 @@ explorer_plot <- function(data) {
       // Remove only this view's handler, including a pending animation frame.
       if (el._explorerZoomCleanup) el._explorerZoomCleanup();
       el._explorerZoomCleanup = null;
-      if (!view.parent) {
-        let frame = null;
-        const resize = function() {
-          if (frame !== null) return;
-          frame = requestAnimationFrame(function() {
-            frame = null;
-            const axes = el._fullLayout;
+      let frame = null;
+      const resize = function() {
+        if (frame !== null) return;
+        frame = requestAnimationFrame(function() {
+          frame = null;
+          const axes = el._fullLayout;
+          if (!view.parent) {
             const zoom = Math.max(1,
               (view.ranges.umap_1[1] - view.ranges.umap_1[0]) /
                 (axes.xaxis.range[1] - axes.xaxis.range[0]),
@@ -82,15 +82,24 @@ explorer_plot <- function(data) {
             // zoom size without another redraw when both sizes already match.
             if (el.data.some(trace => trace.marker.size !== size)) {
               Plotly.restyle(el, {'marker.size': size}, [0, 1]);
+              return;
             }
+          }
+          // Only small viewport metadata is sent, never cell or gene arrays.
+          // Shiny suppresses unchanged values; this does not redraw the plot.
+          Shiny.setInputValue('umap_view', {
+            id: x.layout.uirevision,
+            ranges: {umap_1: axes.xaxis.range.slice(), umap_2: axes.yaxis.range.slice()},
+            size: el.data[0].marker.size, width: axes.width, height: axes.height
           });
-        };
-        el.on('plotly_afterplot', resize);
-        el._explorerZoomCleanup = function() {
-          el.removeListener('plotly_afterplot', resize);
-          if (frame !== null) cancelAnimationFrame(frame);
-        };
-      }
+        });
+      };
+      el.on('plotly_afterplot', resize);
+      el._explorerZoomCleanup = function() {
+        el.removeListener('plotly_afterplot', resize);
+        if (frame !== null) cancelAnimationFrame(frame);
+      };
+      resize();
       Shiny.setInputValue('umap_ready', x.layout.uirevision, {priority: 'event'});
     }", data = list(parent = data$parent, ranges = ranges))
 }

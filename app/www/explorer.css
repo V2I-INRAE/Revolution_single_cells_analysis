@@ -2,7 +2,7 @@
 .app-subtitle { margin-left: 1rem; font-weight: 400; letter-spacing: 0; color: #526174; }
 .dataset-line { display: flex; gap: 1.4rem; color: #526174; font-size: .85rem; padding: .1rem .3rem; }
 .umap-card { min-height: 540px; }
-.plot-header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; width: 100%; }
+.plot-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; width: 100%; }
 #heading { font-size: 1.1rem; font-weight: 600; }
 #summary { display: block; color: #526174; margin-top: .2rem; font-weight: 400; }
 .selection-actions { display: flex; gap: .5rem; margin-bottom: .9rem; }

@@ -3,6 +3,7 @@ source("config.R", local = TRUE)
 source("R/data.R", local = TRUE)
 source("R/controls.R", local = TRUE)
 source("R/plot.R", local = TRUE)
+source("R/export.R", local = TRUE)
 views <- explorer_config(normalizePath(".."))[explorer_active_views]
 format_count <- function(x) format(x, big.mark = ",", scientific = FALSE, trim = TRUE)
 
@@ -19,7 +20,10 @@ ui <- bslib::page_sidebar(
     bslib::card_header(shiny::div(class = "plot-header",
       shiny::div(shiny::textOutput("heading"),
         shiny::textOutput("summary", container = shiny::tags$small)),
-      shiny::actionButton("reset", "Reset view", class = "btn-sm"))),
+      shiny::div(class = "d-flex gap-2",
+        shiny::downloadButton("pdf", "Save PDF", class = "btn-sm",
+          title = "600 dpi cell image; editable text, axes and legends."),
+        shiny::actionButton("reset", "Reset view", class = "btn-sm")))),
     plotly::plotlyOutput("umap", height = "100%"),
     bslib::card_footer(shiny::uiOutput("notice"),
       shiny::textOutput("source", container = shiny::tags$small)))
@@ -45,17 +49,36 @@ server <- function(input, output, session) {
       controls$gene() %in% data()$genes$id)
       gene() else NULL
   })
+  foreground <- shiny::reactive({
+    selected <- current_gene()
+    groups <- if (controls$mode() == "gene" && is.null(selected)) character(0) else
+      controls$groups()
+    explorer_foreground(data(), controls$grouping(), groups,
+      selected, controls$restrict())
+  })
   output$umap <- plotly::renderPlotly(explorer_plot(data()))
   shiny::observe({
     # Wait for this view's black trace before applying its foreground values.
     shiny::req(identical(input$umap_ready, controls$view()))
-    selected <- current_gene()
-    groups <- if (controls$mode() == "gene" && is.null(selected)) character(0) else
-      controls$groups()
-    foreground <- explorer_foreground(data(), controls$grouping(), groups,
-      selected, controls$restrict())
-    update_explorer_plot(session, foreground)
+    update_explorer_plot(session, foreground())
   })
+  output$pdf <- shiny::downloadHandler(
+    filename = function() {
+      current <- data()
+      selected <- current_gene()
+      feature <- if (is.null(selected)) "clusters" else
+        gsub("[^A-Za-z0-9_.-]", "_", selected$id)
+      paste0(current$id, "_", current$source$cluster_column, "_", feature, ".pdf")
+    },
+    content = function(path) {
+      current <- data()
+      view <- input$umap_view
+      shiny::req(identical(view$id, current$id))
+      save_explorer_pdf(path, current, foreground(), view, current_gene(),
+        current$colors[[controls$grouping()]][controls$groups()])
+    },
+    contentType = "application/pdf"
+  )
   shiny::observeEvent(input$reset, {
     ranges <- explorer_ranges(data())
     plotly::plotlyProxy("umap", session) |>

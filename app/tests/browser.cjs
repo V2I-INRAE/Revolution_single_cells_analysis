@@ -80,6 +80,20 @@ fs.mkdirSync(artifacts, { recursive: true });
     const foregroundCount = n => page.waitForFunction(n =>
       document.getElementById('umap')?.data?.[1]?.x?.length === n, n);
     const snapshot = name => page.screenshot({ path: `${artifacts}/${name}.png`, fullPage: true });
+    const savePdf = async filename => {
+      const [download] = await Promise.all([
+        page.waitForEvent('download', { timeout: 120000 }),
+        page.getByRole('link', { name: /Save PDF/ }).click()
+      ]);
+      assert.equal(download.suggestedFilename(), filename);
+      const directory = '.amp/in/artifacts/explorer-pdf';
+      fs.mkdirSync(directory, { recursive: true });
+      const file = path.join(directory, filename);
+      await download.saveAs(file);
+      const bytes = fs.readFileSync(file);
+      assert.equal(bytes.subarray(0, 5).toString(), '%PDF-');
+      assert.ok(bytes.length > 10000, 'Download must contain a rendered PDF, not an empty file');
+    };
     const view = () => page.evaluate(() => {
       const p = document.getElementById('umap');
       return { x: p._fullLayout.xaxis.range, y: p._fullLayout.yaxis.range };
@@ -166,6 +180,7 @@ fs.mkdirSync(artifacts, { recursive: true });
         assert.equal(await page.evaluate(() =>
           document.getElementById('umap').data[0].marker.color), '#000000');
         await snapshot('00-default-reference');
+        await savePdf('parent_harmony_snn_res.0.7_clusters.pdf');
       } else {
         // The preceding view leaves gene mode and restriction active.
         assert.equal(await page.locator('#controls-gene').inputValue(), 'PECAM1');
@@ -221,6 +236,11 @@ fs.mkdirSync(artifacts, { recursive: true });
       await checkExpression(fixture.genes.PECAM1);
       await checkView(zoomed);
       await checkSize(zoomSize);
+      if (fixture.id === 'dc') {
+        await savePdf('dc_harmony_snn_res.0.2_PECAM1.pdf');
+        await checkView(zoomed);
+        await checkSize(zoomSize);
+      }
       await page.getByRole('button', { name: 'Clear', exact: true }).click();
       await page.locator('#controls-restrict').check();
       await foregroundCount(0);
