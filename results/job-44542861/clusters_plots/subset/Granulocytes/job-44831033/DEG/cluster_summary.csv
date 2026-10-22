@@ -1,0 +1,4 @@
+"cluster","cells","samples","pigs","min_cells","candidate_genes","heatmap_genes","contrast","tested","up","down","up_fdr_logfc","down_fdr_logfc","hallmark_status","input_features","excluded_features","ranked_features","pathway_matched_features","reference_pathways","tested_pathways","positive_FDR_lt_0.01","negative_FDR_lt_0.01","missing_pvalues"
+1,7109,15,5,115,15902,2457,"P4_vs_Control",6691,1057,878,1057,878,"completed",6691,5,6686,2134,50,49,12,1,0
+1,7109,15,5,115,15902,2457,"N4_vs_Control",6691,829,786,829,786,"completed",6691,5,6686,2134,50,49,20,0,0
+1,7109,15,5,115,15902,2457,"P4_vs_N4",6691,56,5,56,5,"completed",6691,5,6686,2134,50,49,1,3,0
