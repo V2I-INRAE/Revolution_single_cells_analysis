@@ -9,6 +9,7 @@ suppressPackageStartupMessages({
   library(ggplot2)
 })
 source("R/utils/save_plots.R")
+source("R/DEG/pseudobulk_plots.R")
 
 input_dir <- "results/job-44542861/clusters_plots/subset/Endothelial/job-44831031/DEG/cluster_01"
 volcano_only <- "--volcano-only" %in% commandArgs(trailingOnly = TRUE)
@@ -68,38 +69,8 @@ if (!volcano_only) {
   selected <- rownames(log2_cpm)[rowSums(passes) > 0]
   z_scores <- t(scale(t(log2_cpm[selected, sample_info$sample, drop = FALSE])))
   row_hc <- hclust(dist(z_scores, method = "euclidean"), method = "complete")
-  color_function <- colorRamp2(seq(-2.5, 2.5, length.out = 11), rd_bu)
-  annotation <- ComplexHeatmap::HeatmapAnnotation(
-    Condition = sample_info$condition, Pig = sample_info$pig,
-    col = list(Condition = setNames(viz_palette[1:3], levels(sample_info$condition)),
-      Pig = setNames(viz_palette[1:5], levels(sample_info$pig))),
-    annotation_name_gp = grid::gpar(fontsize = 10)
-  )
-  heatmap <- ComplexHeatmap::Heatmap(z_scores, name = "Log2 CPM\nrow z-score", col = color_function,
-    cluster_rows = row_hc, row_dend_reorder = FALSE,
-    cluster_columns = FALSE, cluster_column_slices = FALSE,
-    column_split = sample_info$condition, column_gap = grid::unit(3, "mm"),
-    top_annotation = annotation, show_row_names = FALSE,
-    column_names_rot = 60, column_names_gp = grid::gpar(fontsize = 10),
-    rect_gp = grid::gpar(col = NA), use_raster = TRUE,
-    raster_device = "agg_png", raster_quality = 4, raster_by_magick = FALSE,
-    heatmap_legend_param = list(at = c(-2.5, 0, 2.5),
-      labels = c("<= -2.5", "0", ">= 2.5")))
-  for (extension in c("png", "pdf")) {
-    path <- file.path(output_dir, paste0("heatmap_groups.", extension))
-    if (extension == "png") {
-      png(path, width = 11, height = 10, units = "in", res = 300, type = "cairo")
-    } else {
-      pdf(path, width = 11, height = 10)
-    }
-    drawn <- draw(heatmap, column_title = paste("Endothelial cluster 1:",
-      format(nrow(z_scores), big.mark = ","), "DE genes across 15 samples"),
-      padding = grid::unit(c(14, 4, 5, 4), "mm"))
-    grid::grid.text(sprintf("FDR <= %g and |log2 FC| >= %g in at least one contrast. Pig effects retained.",
-      fdr_cutoff, logfc_cutoff),
-      x = 0.5, y = grid::unit(4, "mm"), gp = grid::gpar(fontsize = 9))
-    dev.off()
-  }
+  drawn <- render_pseudobulk_heatmap(z_scores, row_hc, sample_info, output_dir,
+    "Endothelial cluster 1", fdr_cutoff, logfc_cutoff)
   gene_order <- rownames(z_scores)[row_order(drawn)]
   write.csv(data.frame(gene = gene_order, z_scores[gene_order, ], check.names = FALSE),
     file.path(output_dir, "heatmap_zscores.csv"), row.names = FALSE)
@@ -136,43 +107,8 @@ class_counts <- as.data.frame(table(plot_data$contrast, plot_data$class),
   responseName = "n_genes")
 names(class_counts)[1:2] <- c("contrast", "class")
 write.csv(class_counts, file.path(output_dir, "volcano_summary.csv"), row.names = FALSE)
-x_limit <- max(abs(plot_data$logFC)) * 1.08
-y_limit <- max(plot_data$neg_log10_fdr) * 1.12
-titles <- c(P4_vs_Control = "Control vs P4", N4_vs_Control = "Control vs N4", P4_vs_N4 = "P4 vs N4")
-ratios <- c(P4_vs_Control = "P4 / Control", N4_vs_Control = "N4 / Control", P4_vs_N4 = "P4 / N4")
-volcano_plots <- lapply(names(volcano_data), function(comparison) {
-  tab <- volcano_data[[comparison]]
-  counts <- table(tab$class)
-  p <- ScatterPlot(tab, x = "logFC", y = "neg_log10_fdr", color_by = "class",
-    color_name = "", palcolor = class_colors, shape = 16,
-    size_by = 0.9, alpha = 0.8, border_size = 0,
-    theme = "theme_classic", theme_args = list(base_size = 12),
-    legend.position = "bottom", combine = FALSE, seed = seed,
-    title = paste("Endothelial cluster 1:", titles[[comparison]]),
-    subtitle = sprintf("Down: %s   |   Significant, small effect: %s   |   Up: %s",
-      format(counts[["Down"]], big.mark = ","),
-      format(counts[["Significant, small effect"]], big.mark = ","),
-      format(counts[["Up"]], big.mark = ",")),
-    xlab = paste0("Log2 fold change (", ratios[[comparison]], ")"),
-    ylab = "-log10(BH FDR)")[[1]] +
-    geom_vline(xintercept = c(-logfc_cutoff, logfc_cutoff), linetype = "dashed", color = "grey50") +
-    geom_hline(yintercept = -log10(fdr_cutoff), linetype = "dashed", color = "grey50") +
-    ggrepel::geom_text_repel(data = tab[tab$label, ],
-      aes(logFC, neg_log10_fdr, label = display_gene), inherit.aes = FALSE,
-      seed = seed, size = 3.2, max.overlaps = Inf, min.segment.length = 0,
-      nudge_x = ifelse(tab$logFC[tab$label] < 0, -0.7, 0.7), nudge_y = 0.3,
-      bg.color = "white", bg.r = 0.12,
-      box.padding = 0.5, max.iter = 20000, max.time = Inf) +
-    coord_cartesian(xlim = c(-x_limit, x_limit), ylim = c(0, y_limit)) +
-    guides(color = guide_legend(nrow = 2, byrow = TRUE)) +
-    labs(color = NULL, caption = sprintf("Dashed guides: log2 FC +/-%g and FDR %g. Small effect: |log2 FC| < %g.\nFDR-only DE results are unchanged; labels show five top genes per outer direction.",
-      logfc_cutoff, fdr_cutoff, logfc_cutoff))
-  save_figure(p, output_dir, paste0("volcano_", comparison), width = 8.5, height = 7)
-  ggsave(file.path(output_dir, paste0("volcano_", comparison, ".pdf")), p,
-    width = 8.5, height = 7, bg = "white")
-  p
-})
-names(volcano_plots) <- names(volcano_data)
+render_pseudobulk_volcano(plot_data, output_dir, "Endothelial cluster 1",
+  fdr_cutoff, logfc_cutoff, seed)
 
 info[info == "Status: running"] <- "Status: plots generated; one saved-output and visual review pending"
 writeLines(c(info, paste("Finished:", Sys.time()),

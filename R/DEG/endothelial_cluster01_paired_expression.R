@@ -6,6 +6,7 @@ suppressPackageStartupMessages({
   library(ggplot2)
 })
 source("R/utils/save_plots.R")
+source("R/DEG/publication_style.R")
 
 input_dir <- "results/job-44542861/clusters_plots/subset/Endothelial/job-44831031/DEG/cluster_01"
 output_dir <- file.path(input_dir, "paired_expression")
@@ -70,18 +71,18 @@ for (comparison in names(saved$results)) {
   }))
   p <- LinePlot(expression, x = "condition", y = "log2_cpm", group_by = "pig",
     facet_by = "panel", facet_ncol = 2, facet_scales = "free_y",
-    palcolor = pig_colors, pt_size = 2, line_width = 0.5, line_alpha = 0.85,
-    theme = "theme_classic", theme_args = list(base_size = 11), aspect.ratio = 0.55,
+    palcolor = pig_colors, pt_size = 2.5, line_width = 0.25, line_alpha = 0.85,
+    theme = "theme_classic", theme_args = list(base_size = 10), aspect.ratio = NULL,
     legend.position = "bottom", legend.direction = "horizontal", combine = FALSE, seed = seed,
     title = paste("Endothelial cluster 1:", gsub("_", " ", comparison)),
     subtitle = "Volcano-labelled genes: higher in the first group (left), lower (right). Five paired pigs.",
     xlab = "Condition", ylab = "TMM-normalized log2 CPM (prior count = 2)")[[1]] +
-    labs(caption = "Each colour connects samples from one pig, not a time course. Y-axis varies by gene.\nDirection counts use within-pig log2 CPM differences for the named contrast.\nDE-selected genes: descriptive check, not independent validation.") +
-    theme(strip.text = element_text(size = 10), plot.caption = element_text(hjust = 0),
+    deg_theme() +
+    labs(caption = deg_wrap("Each colour connects samples from one pig, not a time course. Y-axis varies by gene.\nDirection counts use within-pig log2 CPM differences for the named contrast.\nDE-selected genes: descriptive check, not independent validation.")) +
+    theme(strip.text = element_text(size = 9), plot.caption = element_text(hjust = 0),
       legend.title = element_blank())
   stem <- paste0("paired_", comparison)
-  save_figure(p, output_dir, stem, width = 10, height = 12)
-  ggsave(file.path(output_dir, paste0(stem, ".pdf")), p, width = 10, height = 12, bg = "white")
+  save_deg_figure(p, output_dir, stem, height = 250)
   expression_tables[[comparison]] <- expression[, setdiff(names(expression), "panel")]
   change_tables[[comparison]] <- changes
 }

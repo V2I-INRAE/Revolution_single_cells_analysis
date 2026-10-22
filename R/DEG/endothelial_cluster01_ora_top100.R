@@ -8,6 +8,7 @@ suppressPackageStartupMessages({
   library(ggplot2)
 })
 source("R/utils/save_plots.R")
+source("R/DEG/publication_style.R")
 
 input_dir <- "results/job-44542861/clusters_plots/subset/Endothelial/job-44831031/DEG/cluster_01"
 relaxed <- "--relaxed" %in% commandArgs(trailingOnly = TRUE)
@@ -153,28 +154,27 @@ plots <- lapply(names(results), function(direction) {
     size_by = "overlap", size_name = "Overlap (genes)",
     palette = "viridis", lower_cutoff = 0, upper_cutoff = colour_max,
     shape = 21, alpha = 1, border_size = 0.3,
-    theme = "theme_classic", theme_args = list(base_size = 11),
-    aspect.ratio = 1, combine = FALSE, seed = 1234,
+    theme = "theme_classic", theme_args = list(base_size = 10),
+    aspect.ratio = NULL, combine = FALSE, seed = 1234,
     title = if (direction == "N4_higher") "Higher in N4 than P4" else "Higher in P4 than N4",
     subtitle = paste(n, "of", total_selected, "selected genes have usable Hallmark membership"),
     xlab = "Fold enrichment (observed / expected)", ylab = "")[[1]] +
-    geom_vline(xintercept = 1, linetype = "dashed", colour = "grey60") +
-    scale_y_discrete() +
-    scale_size_area(max_size = 7, limits = c(0, max(plot_data$overlap)),
+    geom_vline(xintercept = 1, linetype = "dashed", colour = "grey60", linewidth = 0.25) +
+    scale_y_discrete(labels = function(x) vapply(x, deg_wrap, character(1), width = 32)) +
+    scale_size_area(max_size = 5, limits = c(0, max(plot_data$overlap)),
       breaks = if (all_genes) c(10, 20, 30) else c(5, 10)) +
-    coord_cartesian(xlim = c(0, x_max))
+    coord_cartesian(xlim = c(0, x_max)) + deg_theme() +
+    theme(legend.box = "vertical")
   p
 })
-figure <- patchwork::wrap_plots(plots, ncol = 2, guides = "collect") +
+figure <- patchwork::wrap_plots(plots, ncol = 1, guides = "collect") +
   patchwork::plot_annotation(title = "Endothelial cluster 1: directional Hallmark ORA at T4H",
     subtitle = sprintf("%s from paired P4-N4; gene FDR <= %g and |log2 FC| >= %g",
       selection_label, fdr_cutoff, logfc_cutoff),
-    caption = paste0("Pig orthologue projection of human MSigDB ", unique(hallmark$db_version),
+    caption = deg_wrap(paste0("Pig orthologue projection of human MSigDB ", unique(hallmark$db_version),
       "; background: ", length(background), " tested, annotated pig genes.\n",
-      "Ten terms per direction ranked by pathway FDR; displayed terms are not necessarily significant. BH correction covers all 50 terms per direction."))
-save_figure(figure, output_dir, paste0("hallmark_ora_", selection_tag), width = 17, height = 7.5)
-ggsave(file.path(output_dir, paste0("hallmark_ora_", selection_tag, ".pdf")), figure,
-  width = 17, height = 7.5, bg = "white")
+      "Ten terms per direction ranked by pathway FDR; displayed terms are not necessarily significant. BH correction covers all 50 terms per direction.")), theme = deg_theme())
+save_deg_figure(figure, output_dir, paste0("hallmark_ora_", selection_tag), height = 230)
 
 info[info == "Status: running"] <- "Status: outputs generated; independent validation pending"
 writeLines(c(info, paste("Finished:", Sys.time()),

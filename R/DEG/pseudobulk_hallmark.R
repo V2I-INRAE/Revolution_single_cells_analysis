@@ -1,3 +1,5 @@
+source("R/DEG/publication_style.R")
+
 # Pig identifiers only. Human orthologue names are not pig feature renames.
 prepare_hallmark <- function(common_genes, mapping_file, reference_dir) {
   hallmark <- readRDS(file.path(reference_dir, "hallmark_pig.rds"))
@@ -92,42 +94,9 @@ run_pseudobulk_hallmark <- function(pb, reference, output_dir, label,
     plot_tables[[contrast]] <- display
     write.csv(display[, setdiff(names(display), "leadingEdge")],
       file.path(output_dir, paste0(contrast, "_displayed_pathways.csv")), row.names = FALSE)
-    figure <- plotthis::ScatterPlot(display, x = "NES", y = "label", size_by = "size",
-      size_name = "Matched genes", color_by = "neg_log10_fdr", color_name = "-log10(BH FDR)",
-      palette = "viridis", lower_cutoff = 0, upper_cutoff = max(display$neg_log10_fdr),
-      shape = 21, alpha = 1, border_size = 0.3, aspect.ratio = NULL,
-      theme = "theme_classic", theme_args = list(base_size = 11),
-      title = paste(label, "Hallmark GSEA"),
-      subtitle = paste(groups[1], "minus", groups[2], "|", nlevels(pb$sample_info$pig),
-        "paired pigs | * pathway FDR <", pathway_fdr),
-      xlab = paste("NES: negative favours", groups[2], "; positive favours", groups[1]),
-      ylab = "", combine = FALSE, seed = seed)[[1]] +
-      ggplot2::scale_y_discrete(labels = function(x) vapply(x, function(z)
-        paste(strwrap(z, width = 55), collapse = "\n"), character(1))) +
-      ggplot2::geom_vline(xintercept = 0, linetype = "dashed", colour = "grey50") +
-      ggplot2::labs(caption = paste0("Up to eight terms per direction by FDR; unstarred terms may not be significant.\n",
-        "Pig orthologue projection of MSigDB ", reference$database_version,
-        ". BH across ", nrow(result), " pathways in this cluster/contrast.\n",
-        length(ranks[[contrast]]), " ranked features; no gene FDR/logFC filtering."))
-    save_figure(figure, output_dir, paste0(contrast, "_gsea_dotplot"), width = 12.5, height = 10)
-    ggplot2::ggsave(file.path(output_dir, paste0(contrast, "_gsea_dotplot.pdf")), figure,
-      width = 12.5, height = 10, bg = "white")
-    top <- as.data.frame(dplyr::ungroup(dplyr::slice_head(dplyr::group_by(
-      result[is.finite(result$NES) & !is.na(result$padj), ], direction), n = 1)))
-    running <- lapply(seq_len(nrow(top)), function(i) {
-      fgsea::plotEnrichment(pathways[[top$pathway[i]]], ranks[[contrast]]) +
-        ggplot2::labs(title = paste(strwrap(gsub("_", " ", top$pathway[i]), width = 53), collapse = "\n"),
-          subtitle = sprintf("%s minus %s | NES %.2f | BH FDR %.3g | favours %s",
-            groups[1], groups[2], top$NES[i], top$padj[i], top$direction[i]),
-          x = paste("Rank:", groups[1], "higher (left) to", groups[2], "higher (right)"),
-          y = "Running enrichment score") + ggplot2::theme_classic(base_size = 11)
-    })
-    figure <- patchwork::wrap_plots(running, ncol = 2) +
-      patchwork::plot_annotation(title = paste(label, "Hallmark:", groups[1], "minus", groups[2]),
-        caption = "Lowest-FDR pathway in each direction, regardless of significance. Pig orthologue projection; no claim of pathway activation.")
-    save_figure(figure, output_dir, paste0(contrast, "_running_scores"), width = 14, height = 5)
-    ggplot2::ggsave(file.path(output_dir, paste0(contrast, "_running_scores.pdf")), figure,
-      width = 14, height = 5, bg = "white")
+    render_pseudobulk_hallmark(result, display, ranks[[contrast]], pathways,
+      reference$database_version, nlevels(pb$sample_info$pig), contrast, output_dir,
+      label, pathway_fdr, seed)
   }
   summary <- do.call(rbind, lapply(names(results), function(contrast) {
     x <- results[[contrast]]
@@ -148,4 +117,45 @@ run_pseudobulk_hallmark <- function(pb, reference, output_dir, label,
       excluded_features = excluded_features)),
     file.path(output_dir, "gsea_results.rds"))
   list(status = "completed", summary = summary)
+}
+
+# Plot existing enrichment results; this function never runs fgseaMultilevel.
+render_pseudobulk_hallmark <- function(result, display, ranks, pathways,
+    database_version, n_pigs, contrast, output_dir, label, pathway_fdr = 0.01, seed = 1234) {
+  groups <- strsplit(contrast, "_vs_", fixed = TRUE)[[1]]
+  figure <- plotthis::ScatterPlot(display, x = "NES", y = "label", size_by = "size",
+    size_name = "Matched genes", color_by = "neg_log10_fdr", color_name = "-log10(BH FDR)",
+    palette = "viridis", lower_cutoff = 0, upper_cutoff = max(display$neg_log10_fdr),
+    shape = 21, alpha = 1, border_size = 0.3, aspect.ratio = NULL,
+    theme = "theme_classic", theme_args = list(base_size = 10),
+    title = paste(label, "Hallmark GSEA"),
+    subtitle = paste(groups[1], "minus", groups[2], "|", n_pigs,
+      "paired pigs | * pathway FDR <", pathway_fdr),
+    xlab = paste("NES: negative favours", groups[2], "; positive favours", groups[1]),
+    ylab = "", combine = FALSE, seed = seed)[[1]] +
+    ggplot2::scale_y_discrete(labels = function(x) vapply(x, function(z)
+      paste(strwrap(z, width = 32), collapse = "\n"), character(1))) +
+    ggplot2::geom_vline(xintercept = 0, linetype = "dashed", colour = "grey50", linewidth = 0.25) +
+    deg_theme() +
+    ggplot2::theme(legend.position = "bottom", legend.box = "vertical") +
+    ggplot2::scale_size_continuous(range = c(2, 5)) +
+    ggplot2::labs(caption = deg_wrap(paste0("Up to eight terms per direction by FDR; unstarred terms may not be significant.\n",
+      "Pig orthologue projection of MSigDB ", database_version,
+      ". BH across ", nrow(result), " pathways in this cluster/contrast.\n",
+      length(ranks), " ranked features; no gene FDR/logFC filtering.")))
+  save_deg_figure(figure, output_dir, paste0(contrast, "_gsea_dotplot"), height = 170)
+  top <- as.data.frame(dplyr::ungroup(dplyr::slice_head(dplyr::group_by(
+    result[is.finite(result$NES) & !is.na(result$padj), ], direction), n = 1)))
+  running <- lapply(seq_len(nrow(top)), function(i) {
+    fgsea::plotEnrichment(pathways[[top$pathway[i]]], ranks) +
+      ggplot2::labs(title = paste(strwrap(gsub("_", " ", top$pathway[i]), width = 34), collapse = "\n"),
+        subtitle = sprintf("%s minus %s | NES %.2f\nBH FDR %.3g | favours %s",
+          groups[1], groups[2], top$NES[i], top$padj[i], top$direction[i]),
+        x = paste0("Rank: ", groups[1], " higher (left)\nto ", groups[2], " higher (right)"),
+        y = "Running enrichment score") + deg_theme()
+  })
+  figure <- patchwork::wrap_plots(running, ncol = 2) +
+    patchwork::plot_annotation(title = paste(label, "Hallmark:", groups[1], "minus", groups[2]),
+      caption = deg_wrap("Lowest-FDR pathway in each direction, regardless of significance. Pig orthologue projection; no claim of pathway activation."), theme = deg_theme())
+  save_deg_figure(figure, output_dir, paste0(contrast, "_running_scores"), height = 110)
 }

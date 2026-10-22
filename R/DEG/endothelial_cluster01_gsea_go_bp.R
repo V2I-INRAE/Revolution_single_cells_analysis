@@ -6,6 +6,7 @@ suppressPackageStartupMessages({
   library(ggplot2)
 })
 source("R/utils/save_plots.R")
+source("R/DEG/publication_style.R")
 
 parent_dir <- "results/job-44542861/clusters_plots/subset/Endothelial/job-44831031/DEG/cluster_01/gsea"
 output_dir <- file.path(parent_dir, "go_bp")
@@ -89,38 +90,37 @@ for (contrast in names(ranks)) {
     size_name = "Matched genes", color_by = "neg_log10_fdr", color_name = "-log10(BH FDR)",
     palette = "viridis", lower_cutoff = 0, upper_cutoff = max(display$neg_log10_fdr),
     shape = 21, alpha = 1, border_size = 0.3, aspect.ratio = NULL,
-    theme = "theme_classic", theme_args = list(base_size = 11),
+    theme = "theme_classic", theme_args = list(base_size = 10),
     title = "Endothelial cluster 1: GO Biological Process GSEA",
     subtitle = paste(groups[1], "minus", groups[2], "| Five paired pigs | * term FDR < 0.01"),
-    xlab = paste("Normalized enrichment score (NES): negative favours", groups[2],
+    xlab = paste("NES: negative favours", groups[2],
       "; positive favours", groups[1]), ylab = "", combine = FALSE, seed = 1234)[[1]] +
     scale_y_discrete(labels = function(x) vapply(x, function(label)
-      paste(strwrap(label, width = 55), collapse = "\n"), character(1))) +
-    geom_vline(xintercept = 0, linetype = "dashed", colour = "grey50") +
-    labs(caption = paste0("Up to eight terms per direction by FDR; unstarred terms may not be significant. GO terms overlap.\n",
+      paste(strwrap(label, width = 32), collapse = "\n"), character(1))) +
+    geom_vline(xintercept = 0, linetype = "dashed", colour = "grey50", linewidth = 0.25) +
+    deg_theme() +
+      theme(legend.position = "bottom", legend.box = "vertical") +
+      scale_size_continuous(range = c(2, 5)) +
+      labs(caption = deg_wrap(paste0("Up to eight terms per direction by FDR; unstarred terms may not be significant. GO terms overlap.\n",
       "Pig orthologue projection of MSigDB ", unique(reference$db_version),
       ". BH across ", nrow(result), " GO:BP terms in this contrast.\n",
-      length(ranks[[contrast]]), " ranked features; unchanged mapping; no gene FDR/logFC filtering."))
-  save_figure(figure, output_dir, paste0(contrast, "_gsea_dotplot"), width = 12.5, height = 12)
-  ggsave(file.path(output_dir, paste0(contrast, "_gsea_dotplot.pdf")), figure,
-    width = 12.5, height = 12, bg = "white")
+      length(ranks[[contrast]]), " ranked features; unchanged mapping; no gene FDR/logFC filtering.")))
+  save_deg_figure(figure, output_dir, paste0(contrast, "_gsea_dotplot"), height = 230)
 
   top <- result %>% filter(is.finite(NES), !is.na(padj)) %>%
     group_by(direction) %>% slice_head(n = 1) %>% ungroup()
   running <- lapply(seq_len(nrow(top)), function(i) {
     fgsea::plotEnrichment(pathways[[top$pathway[i]]], ranks[[contrast]]) +
-      labs(title = paste(strwrap(gsub("_", " ", top$pathway[i]), width = 53), collapse = "\n"),
-        subtitle = sprintf("%s minus %s | NES %.2f | BH FDR %.3g | favours %s",
+      labs(title = paste(strwrap(gsub("_", " ", top$pathway[i]), width = 34), collapse = "\n"),
+        subtitle = sprintf("%s minus %s | NES %.2f\nBH FDR %.3g | favours %s",
           groups[1], groups[2], top$NES[i], top$padj[i], top$direction[i]),
-        x = paste("Rank:", groups[1], "higher (left) to", groups[2], "higher (right)"),
-        y = "Running enrichment score") + theme_classic(base_size = 11)
+        x = paste0("Rank: ", groups[1], " higher (left)\nto ", groups[2], " higher (right)"),
+        y = "Running enrichment score") + deg_theme()
   })
   figure <- patchwork::wrap_plots(running, ncol = 2) +
     patchwork::plot_annotation(title = paste("GO:BP GSEA:", groups[1], "minus", groups[2]),
-      caption = "Lowest-FDR term in each direction, regardless of significance. Pig orthologue projection; no claim of pathway activation.")
-  save_figure(figure, output_dir, paste0(contrast, "_running_scores"), width = 14, height = 5)
-  ggsave(file.path(output_dir, paste0(contrast, "_running_scores.pdf")), figure,
-    width = 14, height = 5, bg = "white")
+      caption = deg_wrap("Lowest-FDR term in each direction, regardless of significance. Pig orthologue projection; no claim of pathway activation."), theme = deg_theme())
+  save_deg_figure(figure, output_dir, paste0(contrast, "_running_scores"), height = 140)
 }
 
 summary <- bind_rows(lapply(names(results), function(contrast) {

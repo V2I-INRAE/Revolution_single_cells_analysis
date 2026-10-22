@@ -1,4 +1,5 @@
 # The driver sources R/utils/save_plots.R before calling this module.
+source("R/DEG/publication_style.R")
 plot_pseudobulk_de <- function(pb, output_dir, label, mapping,
                               fdr_cutoff = 0.05, logfc_cutoff = 0.5, seed = 1234) {
   dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
@@ -18,45 +19,6 @@ plot_pseudobulk_de <- function(pb, output_dir, label, mapping,
   row_hc <- if (length(selected) > 1) {
     stats::hclust(stats::dist(z_scores, method = "euclidean"), method = "complete")
   } else FALSE
-  if (length(selected)) {
-    annotation <- ComplexHeatmap::HeatmapAnnotation(
-      Condition = sample_info$condition, Pig = sample_info$pig,
-      col = list(Condition = setNames(viz_palette[1:3], levels(sample_info$condition)),
-        Pig = setNames(viz_palette[seq_along(levels(sample_info$pig))], levels(sample_info$pig))),
-      annotation_name_gp = grid::gpar(fontsize = 10))
-    heatmap <- ComplexHeatmap::Heatmap(z_scores, name = "Log2 CPM\nrow z-score",
-      col = circlize::colorRamp2(seq(-2.5, 2.5, length.out = 11), rd_bu),
-      cluster_rows = row_hc, row_dend_reorder = FALSE,
-      cluster_columns = FALSE, cluster_column_slices = FALSE,
-      column_split = sample_info$condition, column_gap = grid::unit(3, "mm"),
-      top_annotation = annotation, show_row_names = FALSE,
-      column_names_rot = 60, column_names_gp = grid::gpar(fontsize = 10),
-      rect_gp = grid::gpar(col = NA), use_raster = TRUE,
-      raster_device = "agg_png", raster_quality = 4, raster_by_magick = FALSE,
-      heatmap_legend_param = list(at = c(-2.5, 0, 2.5), labels = c("<= -2.5", "0", ">= 2.5")))
-  }
-  for (extension in c("png", "pdf")) {
-    path <- file.path(output_dir, paste0("heatmap_groups.", extension))
-    if (extension == "png") {
-      grDevices::png(path, width = 11, height = 10, units = "in", res = 300, type = "cairo")
-    } else {
-      grDevices::pdf(path, width = 11, height = 10)
-    }
-    title <- paste0(label, ": ", format(length(selected), big.mark = ","),
-      " DE genes across ", nrow(sample_info), " samples")
-    if (length(selected)) {
-      ComplexHeatmap::draw(heatmap, column_title = title,
-        padding = grid::unit(c(14, 4, 5, 4), "mm"))
-    } else {
-      grid::grid.newpage()
-      grid::grid.text(title, y = 0.9, gp = grid::gpar(fontsize = 16))
-      grid::grid.text("No genes pass the joint FDR and absolute log2 fold-change thresholds.",
-        gp = grid::gpar(fontsize = 12))
-    }
-    grid::grid.text(sprintf("FDR <= %g and |log2 FC| >= %g in at least one contrast. Pig effects retained.",
-      fdr_cutoff, logfc_cutoff), x = 0.5, y = grid::unit(4, "mm"), gp = grid::gpar(fontsize = 9))
-    grDevices::dev.off()
-  }
   gene_order <- if (length(selected) > 1) rownames(z_scores)[row_hc$order] else selected
   csv <- setNames(file.path(output_dir, paste0(c("heatmap_genes", "heatmap_zscores",
     "volcano_data", "volcano_summary"), ".csv")),
@@ -93,6 +55,76 @@ plot_pseudobulk_de <- function(pb, output_dir, label, mapping,
   class_counts <- as.data.frame(table(plot_data$contrast, plot_data$class), responseName = "n_genes")
   names(class_counts)[1:2] <- c("contrast", "class")
   write.csv(class_counts, csv[["volcano_summary"]], row.names = FALSE)
+  render_pseudobulk_heatmap(z_scores, row_hc, sample_info, output_dir, label,
+    fdr_cutoff, logfc_cutoff)
+  render_pseudobulk_volcano(plot_data, output_dir, label, fdr_cutoff, logfc_cutoff, seed)
+  stems <- c("heatmap_groups", paste0("volcano_", names(volcano_data)))
+  list(csv = csv, png = setNames(file.path(output_dir, paste0(stems, ".png")), stems),
+    n_heatmap_genes = length(selected))
+}
+
+# Render from either freshly prepared or saved matrices/tables, without DE tests.
+render_pseudobulk_heatmap <- function(z_scores, row_hc, sample_info, output_dir, label,
+                                      fdr_cutoff = 0.05, logfc_cutoff = 0.5) {
+  dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
+  selected <- rownames(z_scores)
+  rd_bu <- rev(RColorBrewer::brewer.pal(11, "RdBu"))
+  if (length(selected)) {
+    annotation <- ComplexHeatmap::HeatmapAnnotation(
+      Condition = sample_info$condition, Pig = sample_info$pig,
+      col = list(Condition = setNames(viz_palette[1:3], levels(sample_info$condition)),
+        Pig = setNames(viz_palette[seq_along(levels(sample_info$pig))], levels(sample_info$pig))),
+      annotation_name_gp = grid::gpar(fontsize = 9),
+      annotation_legend_param = list(
+        Condition = list(title_gp = grid::gpar(fontsize = 9, fontface = "bold"), labels_gp = grid::gpar(fontsize = 9)),
+        Pig = list(title_gp = grid::gpar(fontsize = 9, fontface = "bold"), labels_gp = grid::gpar(fontsize = 9))))
+    heatmap <- ComplexHeatmap::Heatmap(z_scores, name = "Log2 CPM\nrow z-score",
+      col = circlize::colorRamp2(seq(-2.5, 2.5, length.out = 11), rd_bu),
+      cluster_rows = row_hc, row_dend_reorder = FALSE,
+      cluster_columns = FALSE, cluster_column_slices = FALSE,
+      column_split = sample_info$condition, column_gap = grid::unit(3, "mm"),
+      top_annotation = annotation, show_row_names = FALSE,
+      column_names_rot = 60, column_names_gp = grid::gpar(fontsize = 9),
+      column_title_gp = grid::gpar(fontsize = 10),
+      rect_gp = grid::gpar(col = NA), use_raster = TRUE,
+      raster_device = "agg_png", raster_quality = 4, raster_by_magick = FALSE,
+      heatmap_legend_param = list(title_gp = grid::gpar(fontsize = 9, fontface = "bold"),
+        labels_gp = grid::gpar(fontsize = 9), at = c(-2.5, 0, 2.5), labels = c("<= -2.5", "0", ">= 2.5")))
+  }
+  drawn <- NULL
+  for (extension in c("png", "pdf")) {
+    path <- file.path(output_dir, paste0("heatmap_groups.", extension))
+    if (extension == "png") {
+      grDevices::png(path, width = 170 / 25.4, height = 160 / 25.4, units = "in", res = 300, type = "cairo")
+    } else {
+      grDevices::cairo_pdf(path, family = "sans", width = 170 / 25.4, height = 160 / 25.4)
+    }
+    title <- paste0(label, "\n", format(length(selected), big.mark = ","),
+      " DE genes across ", nrow(sample_info), " samples")
+    if (length(selected)) {
+      drawn <- ComplexHeatmap::draw(heatmap, column_title = title,
+        column_title_gp = grid::gpar(fontsize = 11, fontface = "bold"),
+        padding = grid::unit(c(14, 3, 3, 3), "mm"))
+    } else {
+      grid::grid.newpage()
+      grid::grid.text(title, y = 0.9, gp = grid::gpar(fontsize = 11))
+      grid::grid.text("No genes pass the joint FDR and absolute log2 fold-change thresholds.",
+        gp = grid::gpar(fontsize = 12))
+    }
+    grid::grid.text(sprintf("FDR <= %g and |log2 FC| >= %g in at least one contrast. Pig effects retained.",
+      fdr_cutoff, logfc_cutoff), x = 0.5, y = grid::unit(4, "mm"), gp = grid::gpar(fontsize = 9))
+    grDevices::dev.off()
+  }
+  invisible(drawn)
+}
+
+render_pseudobulk_volcano <- function(plot_data, output_dir, label,
+                                     fdr_cutoff = 0.05, logfc_cutoff = 0.5, seed = 1234) {
+  rd_bu <- rev(RColorBrewer::brewer.pal(11, "RdBu"))
+  class_colors <- c("Not significant" = "grey75", "Significant, small effect" = "black",
+    "Down" = rd_bu[1], "Up" = rd_bu[11])
+  plot_data$class <- factor(plot_data$class, levels = names(class_colors))
+  volcano_data <- split(plot_data, plot_data$contrast)
   x_limit <- max(abs(plot_data$logFC)) * 1.08
   y_limit <- max(plot_data$neg_log10_fdr) * 1.12
   titles <- c(P4_vs_Control = "P4 vs Control", N4_vs_Control = "N4 vs Control", P4_vs_N4 = "P4 vs N4")
@@ -102,8 +134,8 @@ plot_pseudobulk_de <- function(pb, output_dir, label, mapping,
     counts <- table(tab$class)
     p <- plotthis::ScatterPlot(tab, x = "logFC", y = "neg_log10_fdr", color_by = "class",
       color_name = "", palcolor = class_colors, shape = 16,
-      size_by = 0.9, alpha = 0.8, border_size = 0,
-      theme = "theme_classic", theme_args = list(base_size = 12),
+      size_by = 1.1, alpha = 0.8, border_size = 0,
+      theme = "theme_classic", theme_args = list(base_size = 10),
       legend.position = "bottom", combine = FALSE, seed = seed,
       title = paste0(label, ": ", titles[[comparison]]),
       subtitle = sprintf("Down: %s   |   Significant, small effect: %s   |   Up: %s",
@@ -112,23 +144,19 @@ plot_pseudobulk_de <- function(pb, output_dir, label, mapping,
         format(counts[["Up"]], big.mark = ",")),
       xlab = paste0("Log2 fold change (", ratios[[comparison]], ")"),
       ylab = "-log10(BH FDR)")[[1]] +
-      ggplot2::geom_vline(xintercept = c(-logfc_cutoff, logfc_cutoff), linetype = "dashed", color = "grey50") +
-      ggplot2::geom_hline(yintercept = -log10(fdr_cutoff), linetype = "dashed", color = "grey50") +
+      ggplot2::geom_vline(xintercept = c(-logfc_cutoff, logfc_cutoff), linetype = "dashed", color = "grey50", linewidth = 0.25) +
+      ggplot2::geom_hline(yintercept = -log10(fdr_cutoff), linetype = "dashed", color = "grey50", linewidth = 0.25) +
       ggrepel::geom_text_repel(data = tab[tab$label, ],
         ggplot2::aes(logFC, neg_log10_fdr, label = display_gene), inherit.aes = FALSE,
-        seed = seed, size = 3.2, max.overlaps = Inf, min.segment.length = 0,
+        seed = seed, size = 9 / ggplot2::.pt, segment.size = 0.25, max.overlaps = Inf, min.segment.length = 0,
         nudge_x = ifelse(tab$logFC[tab$label] < 0, -0.7, 0.7), nudge_y = 0.3,
         bg.color = "white", bg.r = 0.12, box.padding = 0.8,
         force = 10, force_pull = 0.1, max.iter = 100000, max.time = Inf) +
       ggplot2::coord_cartesian(xlim = c(-x_limit, x_limit), ylim = c(0, y_limit)) +
       ggplot2::guides(color = ggplot2::guide_legend(nrow = 2, byrow = TRUE)) +
-      ggplot2::labs(color = NULL, caption = sprintf("Dashed guides: log2 FC +/-%g and FDR %g. Small effect: |log2 FC| < %g.\nFDR-only DE results are unchanged; labels show up to five top genes per outer direction.",
-        logfc_cutoff, fdr_cutoff, logfc_cutoff))
-    save_figure(p, output_dir, paste0("volcano_", comparison), width = 8.5, height = 7)
-    ggplot2::ggsave(file.path(output_dir, paste0("volcano_", comparison, ".pdf")), p,
-      width = 8.5, height = 7, bg = "white")
+      deg_theme() +
+      ggplot2::labs(color = NULL, caption = deg_wrap(sprintf("Dashed guides: log2 FC +/-%g and FDR %g. Small effect: |log2 FC| < %g.\nFDR-only DE results are unchanged; labels show up to five top genes per outer direction.",
+        logfc_cutoff, fdr_cutoff, logfc_cutoff)))
+    save_deg_figure(p, output_dir, paste0("volcano_", comparison), height = 145)
   }
-  stems <- c("heatmap_groups", paste0("volcano_", names(volcano_data)))
-  list(csv = csv, png = setNames(file.path(output_dir, paste0(stems, ".png")), stems),
-    n_heatmap_genes = length(selected))
 }
