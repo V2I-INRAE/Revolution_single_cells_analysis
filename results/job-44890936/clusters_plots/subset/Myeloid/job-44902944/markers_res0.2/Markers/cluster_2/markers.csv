@@ -1,0 +1,51 @@
+gene,feature_id,cluster,cluster_label,in_top25,in_md_identity,in_md_canonical,top25_rank,significant_rank,de_status,in_object,p_val,avg_log2FC,pct.1,pct.2,p_val_adj,pct_difference,note
+IL1R2,IL1R2,2,Inflammatory monocyte-like cells (IL1B/VCAN/CD14/CSF1R),TRUE,TRUE,FALSE,1,1,significant_positive,TRUE,0,6.64540115830641,0.762,0.041,0,0.721,
+RETN,RETN,2,Inflammatory monocyte-like cells (IL1B/VCAN/CD14/CSF1R),TRUE,FALSE,FALSE,2,2,significant_positive,TRUE,0,6.178530819366,0.367,0.013,0,0.354,
+ENSSSCG00000004180,ENSSSCG00000004180,2,Inflammatory monocyte-like cells (IL1B/VCAN/CD14/CSF1R),TRUE,FALSE,FALSE,3,3,significant_positive,TRUE,0,6.03603178370911,0.382,0.013,0,0.369,
+THBS1,THBS1,2,Inflammatory monocyte-like cells (IL1B/VCAN/CD14/CSF1R),TRUE,TRUE,FALSE,4,4,significant_positive,TRUE,0,5.34871895977969,0.689,0.177,0,0.512,
+ENSSSCG00000033952,ENSSSCG00000033952,2,Inflammatory monocyte-like cells (IL1B/VCAN/CD14/CSF1R),TRUE,FALSE,FALSE,5,5,significant_positive,TRUE,0,5.23092537881138,0.253,0.009,0,0.244,
+G0S2,G0S2,2,Inflammatory monocyte-like cells (IL1B/VCAN/CD14/CSF1R),TRUE,FALSE,FALSE,6,6,significant_positive,TRUE,0,5.07958493480555,0.49,0.026,0,0.464,
+AREG,AREG,2,Inflammatory monocyte-like cells (IL1B/VCAN/CD14/CSF1R),TRUE,TRUE,FALSE,7,7,significant_positive,TRUE,0,5.01486633526377,0.725,0.063,0,0.662,
+DGAT2,DGAT2,2,Inflammatory monocyte-like cells (IL1B/VCAN/CD14/CSF1R),TRUE,FALSE,FALSE,8,8,significant_positive,TRUE,0,5.01099655786725,0.604,0.034,0,0.57,
+EREG,EREG,2,Inflammatory monocyte-like cells (IL1B/VCAN/CD14/CSF1R),TRUE,TRUE,FALSE,9,9,significant_positive,TRUE,0,4.993139939477,0.558,0.026,0,0.532,
+ENSSSCG00000024568,ENSSSCG00000024568,2,Inflammatory monocyte-like cells (IL1B/VCAN/CD14/CSF1R),TRUE,FALSE,FALSE,10,10,significant_positive,TRUE,0,4.96133771620197,0.338,0.018,0,0.32,
+COXFA4L3,COXFA4L3,2,Inflammatory monocyte-like cells (IL1B/VCAN/CD14/CSF1R),TRUE,FALSE,FALSE,11,11,significant_positive,TRUE,0,4.64114411559231,0.806,0.118,0,0.688,
+NFE2,NFE2,2,Inflammatory monocyte-like cells (IL1B/VCAN/CD14/CSF1R),TRUE,FALSE,FALSE,12,12,significant_positive,TRUE,0,4.62855287704526,0.304,0.023,0,0.281,
+STEAP4,STEAP4,2,Inflammatory monocyte-like cells (IL1B/VCAN/CD14/CSF1R),TRUE,FALSE,FALSE,13,13,significant_positive,TRUE,0,4.58194015807997,0.304,0.015,0,0.289,
+IL1B,ENSSSCG00000039214,2,Inflammatory monocyte-like cells (IL1B/VCAN/CD14/CSF1R),TRUE,TRUE,FALSE,14,14,significant_positive,TRUE,0,4.53039695290009,0.774,0.148,0,0.626,
+CYP1B1,CYP1B1,2,Inflammatory monocyte-like cells (IL1B/VCAN/CD14/CSF1R),TRUE,FALSE,FALSE,15,15,significant_positive,TRUE,0,4.42347575781346,0.371,0.087,0,0.284,
+PLBD1,PLBD1,2,Inflammatory monocyte-like cells (IL1B/VCAN/CD14/CSF1R),TRUE,FALSE,FALSE,16,16,significant_positive,TRUE,0,4.35296196345351,0.782,0.18,0,0.602,
+SULT1A3,SULT1A3,2,Inflammatory monocyte-like cells (IL1B/VCAN/CD14/CSF1R),TRUE,FALSE,FALSE,17,17,significant_positive,TRUE,0,4.16898037337351,0.336,0.029,0,0.307,
+GPR84,GPR84,2,Inflammatory monocyte-like cells (IL1B/VCAN/CD14/CSF1R),TRUE,FALSE,FALSE,18,18,significant_positive,TRUE,0,4.02353533750743,0.285,0.081,0,0.204,
+NRG1,NRG1,2,Inflammatory monocyte-like cells (IL1B/VCAN/CD14/CSF1R),TRUE,FALSE,FALSE,19,19,significant_positive,TRUE,0,3.96659570093112,0.638,0.052,0,0.586,
+SELL,SELL,2,Inflammatory monocyte-like cells (IL1B/VCAN/CD14/CSF1R),TRUE,FALSE,FALSE,20,20,significant_positive,TRUE,0,3.87404702927115,0.508,0.07,0,0.438,
+TGM3,TGM3,2,Inflammatory monocyte-like cells (IL1B/VCAN/CD14/CSF1R),TRUE,FALSE,FALSE,21,21,significant_positive,TRUE,0,3.85194331842647,0.901,0.127,0,0.774,
+CHI3L1,CHI3L1,2,Inflammatory monocyte-like cells (IL1B/VCAN/CD14/CSF1R),TRUE,FALSE,FALSE,22,22,significant_positive,TRUE,0,3.84561405283951,0.254,0.08,0,0.174,
+IL1R1,IL1R1,2,Inflammatory monocyte-like cells (IL1B/VCAN/CD14/CSF1R),TRUE,FALSE,FALSE,23,23,significant_positive,TRUE,0,3.83434020699161,0.472,0.033,0,0.439,
+ENSSSCG00000031916,ENSSSCG00000031916,2,Inflammatory monocyte-like cells (IL1B/VCAN/CD14/CSF1R),TRUE,FALSE,FALSE,24,24,significant_positive,TRUE,0,3.8223045415779,0.277,0.021,0,0.256,
+SDS,SDS,2,Inflammatory monocyte-like cells (IL1B/VCAN/CD14/CSF1R),TRUE,FALSE,FALSE,25,25,significant_positive,TRUE,0,3.7431017911078,0.412,0.056,0,0.356,
+VCAN,VCAN,2,Inflammatory monocyte-like cells (IL1B/VCAN/CD14/CSF1R),FALSE,TRUE,FALSE,NA,26,significant_positive,TRUE,0,3.73492543599714,0.796,0.295,0,0.501,
+CD14,CD14,2,Inflammatory monocyte-like cells (IL1B/VCAN/CD14/CSF1R),FALSE,TRUE,FALSE,NA,104,significant_positive,TRUE,0,2.22337142691902,0.864,0.519,0,0.345,
+CSF1R,CSF1R,2,Inflammatory monocyte-like cells (IL1B/VCAN/CD14/CSF1R),FALSE,TRUE,FALSE,NA,200,significant_positive,TRUE,0,1.62457642337975,0.664,0.347,0,0.317,
+FCN1,ENSSSCG00000029414,2,Inflammatory monocyte-like cells (IL1B/VCAN/CD14/CSF1R),FALSE,TRUE,FALSE,NA,278,significant_positive,TRUE,0,1.39972678808007,0.911,0.685,0,0.226,
+MAFB,MAFB,2,Inflammatory monocyte-like cells (IL1B/VCAN/CD14/CSF1R),FALSE,TRUE,FALSE,NA,343,significant_positive,TRUE,0,1.22892057418249,0.856,0.763,0,0.093,
+PTPRC,PTPRC,2,Inflammatory monocyte-like cells (IL1B/VCAN/CD14/CSF1R),FALSE,FALSE,TRUE,NA,786,significant_positive,TRUE,0,0.604832753352345,0.975,0.904,0,0.071,
+TYROBP,TYROBP,2,Inflammatory monocyte-like cells (IL1B/VCAN/CD14/CSF1R),FALSE,FALSE,TRUE,NA,788,significant_positive,TRUE,0,0.603689678201564,0.977,0.941,0,0.036,
+LYZ,LYZ,2,Inflammatory monocyte-like cells (IL1B/VCAN/CD14/CSF1R),FALSE,FALSE,TRUE,NA,3352,significant_negative,TRUE,9.41787317312935e-290,-2.29107333810458,0.548,0.652,1.98933735036011e-285,-0.104,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+FCGR3A,ENSSSCG00000036618,2,Inflammatory monocyte-like cells (IL1B/VCAN/CD14/CSF1R),FALSE,FALSE,TRUE,NA,210,significant_positive,TRUE,0,1.58235027255819,0.919,0.781,0,0.138,
+CD163,CD163,2,Inflammatory monocyte-like cells (IL1B/VCAN/CD14/CSF1R),FALSE,FALSE,TRUE,NA,NA,not_significant,TRUE,0.0235627007937523,0.409625066532816,0.798,0.957,1,-0.159,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+MS4A7,MS4A7,2,Inflammatory monocyte-like cells (IL1B/VCAN/CD14/CSF1R),FALSE,FALSE,TRUE,NA,321,significant_positive,TRUE,1.03043319227942e-318,1.2834238878514,0.278,0.099,2.17658403205182e-314,0.179,
+C5AR1,C5AR1,2,Inflammatory monocyte-like cells (IL1B/VCAN/CD14/CSF1R),FALSE,FALSE,TRUE,NA,374,significant_positive,TRUE,3.66676108050805e-272,1.16292969833524,0.856,0.817,7.74529943035715e-268,0.039,
+S100A8,S100A8,2,Inflammatory monocyte-like cells (IL1B/VCAN/CD14/CSF1R),FALSE,FALSE,TRUE,NA,885,significant_positive,TRUE,1.79568883708387e-28,0.474462192476027,0.503,0.667,3.79303353057225e-24,-0.164,
+S100A9,ENSSSCG00000006588,2,Inflammatory monocyte-like cells (IL1B/VCAN/CD14/CSF1R),FALSE,FALSE,TRUE,NA,2391,significant_negative,TRUE,0,-0.829221785869921,0.317,0.65,0,-0.333,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+CSF3R,CSF3R,2,Inflammatory monocyte-like cells (IL1B/VCAN/CD14/CSF1R),FALSE,FALSE,TRUE,NA,128,significant_positive,TRUE,0,2.05860016354161,0.656,0.533,0,0.123,
+TREM1,TREM1,2,Inflammatory monocyte-like cells (IL1B/VCAN/CD14/CSF1R),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+LTF,LTF,2,Inflammatory monocyte-like cells (IL1B/VCAN/CD14/CSF1R),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+MMP8,MMP8,2,Inflammatory monocyte-like cells (IL1B/VCAN/CD14/CSF1R),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+C1QA,C1QA,2,Inflammatory monocyte-like cells (IL1B/VCAN/CD14/CSF1R),FALSE,FALSE,TRUE,NA,3573,significant_negative,TRUE,0,-6.00150647461466,0.038,0.889,0,-0.851,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+MRC1,MRC1,2,Inflammatory monocyte-like cells (IL1B/VCAN/CD14/CSF1R),FALSE,FALSE,TRUE,NA,3548,significant_negative,TRUE,0,-5.09455024651399,0.059,0.885,0,-0.826,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+PPARG,PPARG,2,Inflammatory monocyte-like cells (IL1B/VCAN/CD14/CSF1R),FALSE,FALSE,TRUE,NA,3159,significant_negative,TRUE,0,-1.60350632527388,0.321,0.784,0,-0.463,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+FCER1A,FCER1A,2,Inflammatory monocyte-like cells (IL1B/VCAN/CD14/CSF1R),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+FLT3,FLT3,2,Inflammatory monocyte-like cells (IL1B/VCAN/CD14/CSF1R),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+PECAM1,PECAM1,2,Inflammatory monocyte-like cells (IL1B/VCAN/CD14/CSF1R),FALSE,FALSE,TRUE,NA,65,significant_positive,TRUE,0,2.67886754495676,0.319,0.044,0,0.275,Positive diagnostic signal; not sufficient alone to assign endothelial identity.
+CDH5,CDH5,2,Inflammatory monocyte-like cells (IL1B/VCAN/CD14/CSF1R),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.

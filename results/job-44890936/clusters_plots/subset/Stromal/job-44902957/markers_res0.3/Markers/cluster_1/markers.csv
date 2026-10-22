@@ -1,0 +1,53 @@
+gene,feature_id,cluster,cluster_label,in_top25,in_md_identity,in_md_canonical,top25_rank,significant_rank,de_status,in_object,p_val,avg_log2FC,pct.1,pct.2,p_val_adj,pct_difference,note
+IGF1,IGF1,1,COL14A1/PI16 fibroblast-like cells (IL6/PTGS2 state),TRUE,FALSE,FALSE,1,1,significant_positive,TRUE,0,2.67703845385623,0.362,0.069,0,0.293,
+IL6,IL6,1,COL14A1/PI16 fibroblast-like cells (IL6/PTGS2 state),TRUE,TRUE,FALSE,2,2,significant_positive,TRUE,3.54298248096236e-162,2.1625174035907,0.334,0.125,7.48384189453679e-158,0.209,
+PTGS2,PTGS2,1,COL14A1/PI16 fibroblast-like cells (IL6/PTGS2 state),TRUE,TRUE,FALSE,3,3,significant_positive,TRUE,4.47476574339166e-160,2.12163071530043,0.387,0.165,9.45204767976621e-156,0.222,
+VIPR2,VIPR2,1,COL14A1/PI16 fibroblast-like cells (IL6/PTGS2 state),TRUE,FALSE,FALSE,4,4,significant_positive,TRUE,7.70070420245342e-271,2.11342215933863,0.405,0.122,1.62661974868424e-266,0.283,
+ITGBL1,ITGBL1,1,COL14A1/PI16 fibroblast-like cells (IL6/PTGS2 state),TRUE,FALSE,FALSE,5,5,significant_positive,TRUE,5.4136532629517e-161,2.07520383584137,0.351,0.143,1.14352597873329e-156,0.208,
+FOSL1,FOSL1,1,COL14A1/PI16 fibroblast-like cells (IL6/PTGS2 state),TRUE,FALSE,FALSE,6,6,significant_positive,TRUE,8.78620158698937e-257,2.06137682630499,0.412,0.134,1.85590936121976e-252,0.278,
+ART4,ART4,1,COL14A1/PI16 fibroblast-like cells (IL6/PTGS2 state),TRUE,FALSE,FALSE,7,7,significant_positive,TRUE,3.10243629337579e-198,1.92606633659418,0.256,0.054,6.55327618249769e-194,0.202,
+TPMT,TPMT,1,COL14A1/PI16 fibroblast-like cells (IL6/PTGS2 state),TRUE,FALSE,FALSE,8,8,significant_positive,TRUE,1.96237765372555e-152,1.91349125571037,0.29,0.1,4.14513031796447e-148,0.19,
+NTRK2,NTRK2,1,COL14A1/PI16 fibroblast-like cells (IL6/PTGS2 state),TRUE,FALSE,FALSE,9,9,significant_positive,TRUE,1.60802471028403e-113,1.81875297609484,0.258,0.098,3.39663059553295e-109,0.16,
+ENSSSCG00000035293,ENSSSCG00000035293,1,COL14A1/PI16 fibroblast-like cells (IL6/PTGS2 state),TRUE,FALSE,FALSE,10,10,significant_positive,TRUE,0,1.81074954063994,0.962,0.554,0,0.408,
+SEMA3D,SEMA3D,1,COL14A1/PI16 fibroblast-like cells (IL6/PTGS2 state),TRUE,FALSE,FALSE,11,11,significant_positive,TRUE,2.11794364718292e-281,1.79139090080432,0.558,0.237,4.47373236594447e-277,0.321,
+CFD,CFD,1,COL14A1/PI16 fibroblast-like cells (IL6/PTGS2 state),TRUE,TRUE,FALSE,12,12,significant_positive,TRUE,0,1.77924392733489,0.912,0.483,0,0.429,
+C7,C7,1,COL14A1/PI16 fibroblast-like cells (IL6/PTGS2 state),TRUE,TRUE,FALSE,13,13,significant_positive,TRUE,0,1.73754936240032,0.879,0.396,0,0.483,
+CXCL12,CXCL12,1,COL14A1/PI16 fibroblast-like cells (IL6/PTGS2 state),TRUE,TRUE,FALSE,14,14,significant_positive,TRUE,3.6402120436627e-264,1.71918353443871,0.48,0.172,7.68921989982872e-260,0.308,
+CPZ,CPZ,1,COL14A1/PI16 fibroblast-like cells (IL6/PTGS2 state),TRUE,FALSE,FALSE,15,15,significant_positive,TRUE,3.57252627030942e-188,1.70893795968704,0.368,0.133,7.5462472407746e-184,0.235,
+RCAN1,RCAN1,1,COL14A1/PI16 fibroblast-like cells (IL6/PTGS2 state),TRUE,FALSE,FALSE,16,16,significant_positive,TRUE,7.02137227918192e-255,1.69514519195305,0.679,0.387,1.4831244665316e-250,0.292,
+ADAMTSL1,ADAMTSL1,1,COL14A1/PI16 fibroblast-like cells (IL6/PTGS2 state),TRUE,FALSE,FALSE,17,17,significant_positive,TRUE,2.29246448500252e-203,1.65827946665317,0.392,0.14,4.84237273167082e-199,0.252,
+CCDC80,CCDC80,1,COL14A1/PI16 fibroblast-like cells (IL6/PTGS2 state),TRUE,FALSE,FALSE,18,18,significant_positive,TRUE,0,1.63342027950213,0.947,0.668,0,0.279,
+GSN,GSN,1,COL14A1/PI16 fibroblast-like cells (IL6/PTGS2 state),TRUE,FALSE,FALSE,19,19,significant_positive,TRUE,0,1.63263749178779,0.987,0.735,0,0.252,
+NPM3,NPM3,1,COL14A1/PI16 fibroblast-like cells (IL6/PTGS2 state),TRUE,FALSE,FALSE,20,20,significant_positive,TRUE,1.04164141497576e-211,1.60029095325349,0.447,0.182,2.2002591608533e-207,0.265,
+LUM,LUM,1,COL14A1/PI16 fibroblast-like cells (IL6/PTGS2 state),TRUE,TRUE,FALSE,21,21,significant_positive,TRUE,0,1.53332020786241,0.932,0.52,0,0.412,
+COL14A1,COL14A1,1,COL14A1/PI16 fibroblast-like cells (IL6/PTGS2 state),TRUE,TRUE,FALSE,22,22,significant_positive,TRUE,0,1.52855811151954,0.972,0.55,0,0.422,
+C2,C2,1,COL14A1/PI16 fibroblast-like cells (IL6/PTGS2 state),TRUE,FALSE,FALSE,23,23,significant_positive,TRUE,2.65105185004245e-224,1.52264332623152,0.449,0.172,5.59981682284467e-220,0.277,
+FGL2,FGL2,1,COL14A1/PI16 fibroblast-like cells (IL6/PTGS2 state),TRUE,FALSE,FALSE,24,24,significant_positive,TRUE,0,1.51800018927001,0.954,0.505,0,0.449,
+SERPINF1,SERPINF1,1,COL14A1/PI16 fibroblast-like cells (IL6/PTGS2 state),TRUE,FALSE,FALSE,25,25,significant_positive,TRUE,0,1.51300275787967,0.942,0.489,0,0.453,
+PI16,PI16,1,COL14A1/PI16 fibroblast-like cells (IL6/PTGS2 state),FALSE,TRUE,FALSE,NA,168,significant_positive,TRUE,0,0.802047156926973,0.866,0.351,0,0.515,
+DCN,DCN,1,COL14A1/PI16 fibroblast-like cells (IL6/PTGS2 state),FALSE,TRUE,FALSE,NA,449,significant_positive,TRUE,1.13594204934847e-230,0.436335483373211,0.994,0.942,2.39945039083878e-226,0.052,
+COL1A1,COL1A1,1,COL14A1/PI16 fibroblast-like cells (IL6/PTGS2 state),FALSE,TRUE,FALSE,NA,32,significant_positive,TRUE,0,1.43711104329456,0.997,0.977,0,0.02,
+COL1A2,COL1A2,1,COL14A1/PI16 fibroblast-like cells (IL6/PTGS2 state),FALSE,TRUE,FALSE,NA,33,significant_positive,TRUE,0,1.42781967800514,0.992,0.913,0,0.079,
+COL3A1,COL3A1,1,COL14A1/PI16 fibroblast-like cells (IL6/PTGS2 state),FALSE,TRUE,FALSE,NA,49,significant_positive,TRUE,0,1.22492700677087,0.993,0.956,0,0.037,
+PDGFRA,PDGFRA,1,COL14A1/PI16 fibroblast-like cells (IL6/PTGS2 state),FALSE,FALSE,TRUE,NA,1210,significant_negative,TRUE,3.99285804063693e-87,-1.0258542998273,0.707,0.726,8.43411403923738e-83,-0.019,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+TCF21,TCF21,1,COL14A1/PI16 fibroblast-like cells (IL6/PTGS2 state),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+DPT,DPT,1,COL14A1/PI16 fibroblast-like cells (IL6/PTGS2 state),FALSE,FALSE,TRUE,NA,418,significant_positive,TRUE,2.49824227313843e-181,0.455820529674224,0.824,0.496,5.2770371535503e-177,0.328,
+COL13A1,COL13A1,1,COL14A1/PI16 fibroblast-like cells (IL6/PTGS2 state),FALSE,FALSE,TRUE,NA,1368,significant_negative,TRUE,6.19795443167157e-128,-2.57123969413926,0.081,0.251,1.30919391460199e-123,-0.17,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+NPNT,NPNT,1,COL14A1/PI16 fibroblast-like cells (IL6/PTGS2 state),FALSE,FALSE,TRUE,NA,1379,significant_negative,TRUE,1.34179893467598e-183,-3.11205759535964,0.101,0.318,2.83428188971607e-179,-0.217,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+FGF10,FGF10,1,COL14A1/PI16 fibroblast-like cells (IL6/PTGS2 state),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+LGR5,LGR5,1,COL14A1/PI16 fibroblast-like cells (IL6/PTGS2 state),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+MFAP5,MFAP5,1,COL14A1/PI16 fibroblast-like cells (IL6/PTGS2 state),FALSE,FALSE,TRUE,NA,810,significant_negative,TRUE,9.13698821961031e-268,-0.255546245547607,0.807,0.306,1.93000602162829e-263,0.501,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+DPP4,DPP4,1,COL14A1/PI16 fibroblast-like cells (IL6/PTGS2 state),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+POSTN,POSTN,1,COL14A1/PI16 fibroblast-like cells (IL6/PTGS2 state),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+ACTA2,ACTA2,1,COL14A1/PI16 fibroblast-like cells (IL6/PTGS2 state),FALSE,FALSE,TRUE,NA,1392,significant_negative,TRUE,0,-4.5325814619017,0.122,0.476,0,-0.354,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+TAGLN,TAGLN,1,COL14A1/PI16 fibroblast-like cells (IL6/PTGS2 state),FALSE,FALSE,TRUE,NA,1335,significant_negative,TRUE,3.8652731398171e-206,-1.99277850742417,0.576,0.707,8.16461645323566e-202,-0.131,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+MYH11,MYH11,1,COL14A1/PI16 fibroblast-like cells (IL6/PTGS2 state),FALSE,FALSE,TRUE,NA,1396,significant_negative,TRUE,0,-7.20303054684728,0.017,0.379,0,-0.362,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+CNN1,CNN1,1,COL14A1/PI16 fibroblast-like cells (IL6/PTGS2 state),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+PDGFRB,PDGFRB,1,COL14A1/PI16 fibroblast-like cells (IL6/PTGS2 state),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+RGS5,RGS5,1,COL14A1/PI16 fibroblast-like cells (IL6/PTGS2 state),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+PECAM1,PECAM1,1,COL14A1/PI16 fibroblast-like cells (IL6/PTGS2 state),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+CDH5,CDH5,1,COL14A1/PI16 fibroblast-like cells (IL6/PTGS2 state),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+EPCAM,EPCAM,1,COL14A1/PI16 fibroblast-like cells (IL6/PTGS2 state),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+PTPRC,PTPRC,1,COL14A1/PI16 fibroblast-like cells (IL6/PTGS2 state),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+MSLN,NA,1,COL14A1/PI16 fibroblast-like cells (IL6/PTGS2 state),FALSE,FALSE,TRUE,NA,NA,absent_from_object,FALSE,NA,NA,NA,NA,NA,NA,No exact source RNA feature/recorded alias match; no new mapping inferred. No exported marker row; NA statistics do not imply zero expression.
+UPK3B,UPK3B,1,COL14A1/PI16 fibroblast-like cells (IL6/PTGS2 state),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.

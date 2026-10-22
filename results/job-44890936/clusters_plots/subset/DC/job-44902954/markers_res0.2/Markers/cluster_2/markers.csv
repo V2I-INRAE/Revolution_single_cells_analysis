@@ -1,0 +1,41 @@
+gene,feature_id,cluster,cluster_label,in_top25,in_md_identity,in_md_canonical,top25_rank,significant_rank,de_status,in_object,p_val,avg_log2FC,pct.1,pct.2,p_val_adj,pct_difference,note
+FCER1A,FCER1A,2,cDC2-like cells with inflammatory/DC3-like features,TRUE,TRUE,FALSE,1,1,significant_positive,TRUE,0,6.47218513780812,0.321,0.009,0,0.312,
+ENSSSCG00000035960,ENSSSCG00000035960,2,cDC2-like cells with inflammatory/DC3-like features,TRUE,FALSE,FALSE,2,2,significant_positive,TRUE,0,6.33591353035293,0.335,0.007,0,0.328,
+CD1.1 (review),ENSSSCG00000025644,2,cDC2-like cells with inflammatory/DC3-like features,TRUE,TRUE,FALSE,3,3,significant_positive,TRUE,0,5.63138309765043,0.638,0.024,0,0.614,Feature label retained from this producer's frozen mapping; annotation remains under review.
+IL1B,ENSSSCG00000039214,2,cDC2-like cells with inflammatory/DC3-like features,TRUE,TRUE,FALSE,4,4,significant_positive,TRUE,0,5.42434334586328,0.368,0.014,0,0.354,
+CD207,CD207,2,cDC2-like cells with inflammatory/DC3-like features,TRUE,TRUE,FALSE,5,5,significant_positive,TRUE,3.97322075230875e-295,5.11582151558948,0.255,0.008,8.39263419510177e-291,0.247,
+S100A4,S100A4,2,cDC2-like cells with inflammatory/DC3-like features,TRUE,FALSE,FALSE,6,6,significant_positive,TRUE,0,5.11133700948072,0.712,0.05,0,0.662,
+TLR4,TLR4,2,cDC2-like cells with inflammatory/DC3-like features,TRUE,FALSE,FALSE,7,7,significant_positive,TRUE,0,4.70593973782945,0.365,0.016,0,0.349,
+SLAMF9,SLAMF9,2,cDC2-like cells with inflammatory/DC3-like features,TRUE,FALSE,FALSE,8,8,significant_positive,TRUE,1.33498268488505e-283,4.60350862438678,0.25,0.008,2.8198839252827e-279,0.242,
+IGSF6,IGSF6,2,cDC2-like cells with inflammatory/DC3-like features,TRUE,FALSE,FALSE,9,9,significant_positive,TRUE,2.5291206496173e-285,4.34887758275135,0.303,0.019,5.34226154818663e-281,0.284,
+FCGR3A,ENSSSCG00000036618,2,cDC2-like cells with inflammatory/DC3-like features,TRUE,FALSE,TRUE,10,10,significant_positive,TRUE,0,4.2574776820038,0.782,0.151,0,0.631,
+MS4A2,MS4A2,2,cDC2-like cells with inflammatory/DC3-like features,TRUE,FALSE,FALSE,11,11,significant_positive,TRUE,0,4.24384236027459,0.884,0.124,0,0.76,
+CHPT1,CHPT1,2,cDC2-like cells with inflammatory/DC3-like features,TRUE,FALSE,FALSE,12,12,significant_positive,TRUE,0,4.21630933248109,0.413,0.025,0,0.388,
+AMPD3,AMPD3,2,cDC2-like cells with inflammatory/DC3-like features,TRUE,FALSE,FALSE,13,13,significant_positive,TRUE,0,4.18271041132103,0.462,0.026,0,0.436,
+CXCL2,CXCL2,2,cDC2-like cells with inflammatory/DC3-like features,TRUE,FALSE,FALSE,14,14,significant_positive,TRUE,0,4.10744967135912,0.551,0.06,0,0.491,
+CYSLTR2,CYSLTR2,2,cDC2-like cells with inflammatory/DC3-like features,TRUE,FALSE,FALSE,15,15,significant_positive,TRUE,1.85335872297167e-239,4.0940723701718,0.25,0.013,3.91484963053307e-235,0.237,
+MRC1,MRC1,2,cDC2-like cells with inflammatory/DC3-like features,TRUE,TRUE,FALSE,16,16,significant_positive,TRUE,6.66318758692944e-310,3.98657559595903,0.463,0.038,1.40746511398711e-305,0.425,
+SLC39A8,SLC39A8,2,cDC2-like cells with inflammatory/DC3-like features,TRUE,FALSE,FALSE,17,17,significant_positive,TRUE,2.04468082819451e-297,3.94960894351363,0.331,0.023,4.31897931339526e-293,0.308,
+LOC100524972,ENSSSCG00000013100,2,cDC2-like cells with inflammatory/DC3-like features,TRUE,FALSE,FALSE,18,18,significant_positive,TRUE,0,3.93922383523539,0.467,0.035,0,0.432,
+AREG,AREG,2,cDC2-like cells with inflammatory/DC3-like features,TRUE,FALSE,FALSE,19,19,significant_positive,TRUE,0,3.92451638323629,0.648,0.105,0,0.543,
+CD300C,CD300C,2,cDC2-like cells with inflammatory/DC3-like features,TRUE,FALSE,FALSE,20,20,significant_positive,TRUE,0,3.89867548130894,0.488,0.062,0,0.426,
+CLDN1,CLDN1,2,cDC2-like cells with inflammatory/DC3-like features,TRUE,FALSE,FALSE,21,21,significant_positive,TRUE,1.4155606501592e-188,3.77490602841987,0.277,0.038,2.99008876133127e-184,0.239,
+AXL,AXL,2,cDC2-like cells with inflammatory/DC3-like features,TRUE,FALSE,TRUE,22,22,significant_positive,TRUE,5.62809656361233e-277,3.7744774646743,0.359,0.038,1.18882283713183e-272,0.321,
+CD163,CD163,2,cDC2-like cells with inflammatory/DC3-like features,TRUE,TRUE,FALSE,23,23,significant_positive,TRUE,4.38547618406506e-132,3.76665966256148,0.295,0.032,9.26344134360062e-128,0.263,
+PTAFR,PTAFR,2,cDC2-like cells with inflammatory/DC3-like features,TRUE,FALSE,FALSE,24,24,significant_positive,TRUE,0,3.65251112890842,0.458,0.044,0,0.414,
+ABCA9,ABCA9,2,cDC2-like cells with inflammatory/DC3-like features,TRUE,FALSE,FALSE,25,25,significant_positive,TRUE,9.58706762009635e-199,3.59384871235512,0.313,0.049,2.02507629339295e-194,0.264,
+FCGR2B,ENSSSCG00000006350,2,cDC2-like cells with inflammatory/DC3-like features,FALSE,TRUE,FALSE,NA,34,significant_positive,TRUE,0,3.30066496496911,0.629,0.179,0,0.45,
+SIRPA,ENSSSCG00000028461,2,cDC2-like cells with inflammatory/DC3-like features,FALSE,TRUE,FALSE,NA,187,significant_positive,TRUE,7.9725894878557e-117,1.63803631975862,0.566,0.292,1.68405007751976e-112,0.274,
+KLF4,KLF4,2,cDC2-like cells with inflammatory/DC3-like features,FALSE,TRUE,FALSE,NA,70,significant_positive,TRUE,0,2.53798701119783,0.764,0.217,0,0.547,
+CEBPB,CEBPB,2,cDC2-like cells with inflammatory/DC3-like features,FALSE,FALSE,TRUE,NA,32,significant_positive,TRUE,0,3.41411625053783,0.776,0.162,0,0.614,
+NOTCH2,NOTCH2,2,cDC2-like cells with inflammatory/DC3-like features,FALSE,FALSE,TRUE,NA,472,significant_positive,TRUE,2.53745826625166e-44,0.805718571036808,0.587,0.401,5.35987309580338e-40,0.186,
+CD80,CD80,2,cDC2-like cells with inflammatory/DC3-like features,FALSE,FALSE,TRUE,NA,94,significant_positive,TRUE,1.45348283167867e-245,2.18097657732508,0.559,0.142,3.07019178535486e-241,0.417,
+CD86,CD86,2,cDC2-like cells with inflammatory/DC3-like features,FALSE,FALSE,TRUE,NA,558,significant_positive,TRUE,1.84075212706206e-66,0.682682099350604,0.816,0.675,3.88822071799319e-62,0.141,
+HLA-DRA,HLA-DRA,2,cDC2-like cells with inflammatory/DC3-like features,FALSE,FALSE,TRUE,NA,182,significant_positive,TRUE,0,1.6660605567298,0.985,0.639,0,0.346,
+CD74,CD74,2,cDC2-like cells with inflammatory/DC3-like features,FALSE,FALSE,TRUE,NA,264,significant_positive,TRUE,0,1.28585261051015,0.99,0.834,0,0.156,
+XCR1,XCR1,2,cDC2-like cells with inflammatory/DC3-like features,FALSE,FALSE,TRUE,NA,2540,significant_negative,TRUE,6.72210817803141e-38,-2.26690807145241,0.111,0.263,1.41991091044557e-33,-0.152,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+TCF4,TCF4,2,cDC2-like cells with inflammatory/DC3-like features,FALSE,FALSE,TRUE,NA,2585,significant_negative,TRUE,1.43043938324123e-292,-2.5830531579619,0.394,0.802,3.02151710922045e-288,-0.408,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+CD14,CD14,2,cDC2-like cells with inflammatory/DC3-like features,FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+CSF1R,CSF1R,2,cDC2-like cells with inflammatory/DC3-like features,FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+FCN1,ENSSSCG00000029414,2,cDC2-like cells with inflammatory/DC3-like features,FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+MAFB,MAFB,2,cDC2-like cells with inflammatory/DC3-like features,FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.

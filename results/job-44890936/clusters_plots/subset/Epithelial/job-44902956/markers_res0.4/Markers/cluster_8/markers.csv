@@ -1,0 +1,50 @@
+gene,feature_id,cluster,cluster_label,in_top25,in_md_identity,in_md_canonical,top25_rank,significant_rank,de_status,in_object,p_val,avg_log2FC,pct.1,pct.2,p_val_adj,pct_difference,note
+ENSSSCG00000034592,ENSSSCG00000034592,8,Tuft-like epithelial cells (CHAT/NAV2/RGS21; PTPRC flag),TRUE,FALSE,FALSE,1,1,significant_positive,TRUE,0,7.06389245300515,0.531,0.016,0,0.515,
+NAV2,NAV2,8,Tuft-like epithelial cells (CHAT/NAV2/RGS21; PTPRC flag),TRUE,TRUE,FALSE,2,2,significant_positive,TRUE,0,6.44560891205812,0.99,0.121,0,0.869,
+KCNB2,KCNB2,8,Tuft-like epithelial cells (CHAT/NAV2/RGS21; PTPRC flag),TRUE,FALSE,FALSE,3,3,significant_positive,TRUE,1.47437960825803e-164,6.20109246349306,0.29,0.021,3.11433204652344e-160,0.269,
+PLEKHA6,PLEKHA6,8,Tuft-like epithelial cells (CHAT/NAV2/RGS21; PTPRC flag),TRUE,FALSE,FALSE,4,4,significant_positive,TRUE,0,6.06239546119009,0.683,0.037,0,0.646,
+HTR4,HTR4,8,Tuft-like epithelial cells (CHAT/NAV2/RGS21; PTPRC flag),TRUE,FALSE,FALSE,5,5,significant_positive,TRUE,3.94078150423569e-294,6.01049761769481,0.33,0.013,8.32411277139704e-290,0.317,
+CHAT,CHAT,8,Tuft-like epithelial cells (CHAT/NAV2/RGS21; PTPRC flag),TRUE,TRUE,FALSE,6,6,significant_positive,TRUE,0,5.98095467966273,0.419,0.017,0,0.402,
+RGS21,RGS21,8,Tuft-like epithelial cells (CHAT/NAV2/RGS21; PTPRC flag),TRUE,TRUE,FALSE,7,7,significant_positive,TRUE,0,5.97753311110458,0.865,0.057,0,0.808,
+CLSTN2,CLSTN2,8,Tuft-like epithelial cells (CHAT/NAV2/RGS21; PTPRC flag),TRUE,FALSE,FALSE,8,8,significant_positive,TRUE,7.98892918117757e-144,5.92276302580346,0.254,0.017,1.68750151094014e-139,0.237,
+PAQR5,PAQR5,8,Tuft-like epithelial cells (CHAT/NAV2/RGS21; PTPRC flag),TRUE,FALSE,FALSE,9,9,significant_positive,TRUE,5.56186841331842e-286,5.84096979193743,0.436,0.027,1.17483346494525e-281,0.409,
+ENSSSCG00000060851,ENSSSCG00000060851,8,Tuft-like epithelial cells (CHAT/NAV2/RGS21; PTPRC flag),TRUE,FALSE,FALSE,10,10,significant_positive,TRUE,8.32406323688014e-294,5.8159089872111,0.482,0.029,1.75829187752619e-289,0.453,
+RASGRF2,RASGRF2,8,Tuft-like epithelial cells (CHAT/NAV2/RGS21; PTPRC flag),TRUE,FALSE,FALSE,11,11,significant_positive,TRUE,0,5.80069265337904,0.739,0.054,0,0.685,
+SGIP1,SGIP1,8,Tuft-like epithelial cells (CHAT/NAV2/RGS21; PTPRC flag),TRUE,FALSE,FALSE,12,12,significant_positive,TRUE,0,5.76554040524346,0.594,0.03,0,0.564,
+TRPM3,TRPM3,8,Tuft-like epithelial cells (CHAT/NAV2/RGS21; PTPRC flag),TRUE,FALSE,FALSE,13,13,significant_positive,TRUE,4.30563944604136e-309,5.69244817001648,0.518,0.037,9.09480220187317e-305,0.481,
+COL6A6,COL6A6,8,Tuft-like epithelial cells (CHAT/NAV2/RGS21; PTPRC flag),TRUE,FALSE,FALSE,14,14,significant_positive,TRUE,0,5.68866545031901,0.703,0.043,0,0.66,
+MYBPC2,MYBPC2,8,Tuft-like epithelial cells (CHAT/NAV2/RGS21; PTPRC flag),TRUE,FALSE,FALSE,15,15,significant_positive,TRUE,2.60697230946454e-178,5.68419545946052,0.297,0.02,5.50670760928196e-174,0.277,
+ERC2,ERC2,8,Tuft-like epithelial cells (CHAT/NAV2/RGS21; PTPRC flag),TRUE,FALSE,FALSE,16,16,significant_positive,TRUE,2.33938670278083e-316,5.63828522680101,0.488,0.032,4.94148653228395e-312,0.456,
+USH1C,USH1C,8,Tuft-like epithelial cells (CHAT/NAV2/RGS21; PTPRC flag),TRUE,FALSE,FALSE,17,17,significant_positive,TRUE,6.53874162008664e-204,5.56782974344735,0.281,0.015,1.3811783924109e-199,0.266,
+ENSSSCG00000043154,ENSSSCG00000043154,8,Tuft-like epithelial cells (CHAT/NAV2/RGS21; PTPRC flag),TRUE,FALSE,FALSE,18,18,significant_positive,TRUE,6.52351927587338e-254,5.52714378268551,0.426,0.03,1.37796297664273e-249,0.396,
+DCLK2,DCLK2,8,Tuft-like epithelial cells (CHAT/NAV2/RGS21; PTPRC flag),TRUE,FALSE,FALSE,19,19,significant_positive,TRUE,0,5.45358889416625,0.617,0.045,0,0.572,
+PSTPIP2,PSTPIP2,8,Tuft-like epithelial cells (CHAT/NAV2/RGS21; PTPRC flag),TRUE,FALSE,FALSE,20,20,significant_positive,TRUE,5.3910754632228e-280,5.43656932488496,0.446,0.029,1.13875687009655e-275,0.417,
+MUC13,MUC13,8,Tuft-like epithelial cells (CHAT/NAV2/RGS21; PTPRC flag),TRUE,FALSE,FALSE,21,21,significant_positive,TRUE,1.63605425142886e-251,5.43497308517848,0.429,0.031,3.45583739529318e-247,0.398,
+FAM184B,FAM184B,8,Tuft-like epithelial cells (CHAT/NAV2/RGS21; PTPRC flag),TRUE,FALSE,FALSE,22,22,significant_positive,TRUE,0,5.42775841284072,0.71,0.06,0,0.65,
+FSTL4,FSTL4,8,Tuft-like epithelial cells (CHAT/NAV2/RGS21; PTPRC flag),TRUE,FALSE,FALSE,23,23,significant_positive,TRUE,5.56011197735314e-186,5.41550792050712,0.386,0.036,1.1744624529763e-181,0.35,
+DGKB,DGKB,8,Tuft-like epithelial cells (CHAT/NAV2/RGS21; PTPRC flag),TRUE,FALSE,FALSE,24,24,significant_positive,TRUE,4.05228484314229e-241,5.33961959447086,0.436,0.033,8.55964127416945e-237,0.403,
+PRKG1,PRKG1,8,Tuft-like epithelial cells (CHAT/NAV2/RGS21; PTPRC flag),TRUE,FALSE,FALSE,25,25,significant_positive,TRUE,0,5.31250778245884,0.908,0.092,0,0.816,
+POU2F3,POU2F3,8,Tuft-like epithelial cells (CHAT/NAV2/RGS21; PTPRC flag),FALSE,TRUE,FALSE,NA,26,significant_positive,TRUE,0,5.26705079800732,0.947,0.065,0,0.882,
+SH2D7,SH2D7,8,Tuft-like epithelial cells (CHAT/NAV2/RGS21; PTPRC flag),FALSE,TRUE,FALSE,NA,50,significant_positive,TRUE,0,4.8976440569324,0.941,0.063,0,0.878,
+HPGD,HPGD,8,Tuft-like epithelial cells (CHAT/NAV2/RGS21; PTPRC flag),FALSE,TRUE,FALSE,NA,75,significant_positive,TRUE,0,4.35672456652779,0.974,0.073,0,0.901,
+AVIL,AVIL,8,Tuft-like epithelial cells (CHAT/NAV2/RGS21; PTPRC flag),FALSE,TRUE,FALSE,NA,96,significant_positive,TRUE,5.91484435510699e-292,3.9608839206398,0.752,0.098,1.24939257312925e-287,0.654,
+IL17RB,IL17RB,8,Tuft-like epithelial cells (CHAT/NAV2/RGS21; PTPRC flag),FALSE,TRUE,FALSE,NA,159,significant_positive,TRUE,1.47598397469822e-230,3.38208685448761,0.541,0.056,3.11772094975506e-226,0.485,
+GNG13,GNG13,8,Tuft-like epithelial cells (CHAT/NAV2/RGS21; PTPRC flag),FALSE,TRUE,FALSE,NA,134,significant_positive,TRUE,1.80504545654032e-228,3.63206160826973,0.508,0.049,3.81279751785013e-224,0.459,
+EPCAM,EPCAM,8,Tuft-like epithelial cells (CHAT/NAV2/RGS21; PTPRC flag),FALSE,FALSE,TRUE,NA,1963,significant_negative,TRUE,9.65321437016863e-71,-1.61017356677658,0.531,0.887,2.03904847141072e-66,-0.356,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+KRT8,KRT8,8,Tuft-like epithelial cells (CHAT/NAV2/RGS21; PTPRC flag),FALSE,FALSE,TRUE,NA,NA,not_significant,TRUE,0.000111154235666102,0.406043264936213,0.776,0.795,1,-0.019,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+KRT18,KRT18,8,Tuft-like epithelial cells (CHAT/NAV2/RGS21; PTPRC flag),FALSE,FALSE,TRUE,NA,656,significant_positive,TRUE,5.31583921479274e-17,0.999539844237358,0.719,0.659,1.12286471734067e-12,0.0599999999999999,
+TRPM5,TRPM5,8,Tuft-like epithelial cells (CHAT/NAV2/RGS21; PTPRC flag),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+GNAT3,GNAT3,8,Tuft-like epithelial cells (CHAT/NAV2/RGS21; PTPRC flag),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+PTPRC,PTPRC,8,Tuft-like epithelial cells (CHAT/NAV2/RGS21; PTPRC flag),FALSE,FALSE,TRUE,NA,91,significant_positive,TRUE,1.39180316676101e-213,4.07171514641311,0.809,0.123,2.93990582914929e-209,0.686,"Diagnostic enrichment requiring cell-level review, not an automatic doublet call."
+SPIB,SPIB,8,Tuft-like epithelial cells (CHAT/NAV2/RGS21; PTPRC flag),FALSE,FALSE,TRUE,NA,220,significant_positive,TRUE,2.13756326414285e-131,2.87902747936326,0.413,0.056,4.51517488284894e-127,0.357,Diagnostic comparison; not sufficient to assign B-cell identity.
+CD79B,CD79B,8,Tuft-like epithelial cells (CHAT/NAV2/RGS21; PTPRC flag),FALSE,FALSE,TRUE,NA,196,significant_positive,TRUE,5.99730131944562e-96,3.06199294901076,0.33,0.05,1.2668099577065e-91,0.28,Diagnostic comparison; not sufficient to assign B-cell identity.
+HCK,HCK,8,Tuft-like epithelial cells (CHAT/NAV2/RGS21; PTPRC flag),FALSE,FALSE,TRUE,NA,63,significant_positive,TRUE,0,4.57050593169125,0.838,0.076,0,0.762,Diagnostic comparison requiring cell-level review.
+FYB1,FYB1,8,Tuft-like epithelial cells (CHAT/NAV2/RGS21; PTPRC flag),FALSE,FALSE,TRUE,NA,64,significant_positive,TRUE,0,4.49145889416062,0.95,0.107,0,0.843,Diagnostic comparison requiring cell-level review.
+RAC2,RAC2,8,Tuft-like epithelial cells (CHAT/NAV2/RGS21; PTPRC flag),FALSE,FALSE,TRUE,NA,200,significant_positive,TRUE,4.33610865690975e-124,3.04901455502456,0.416,0.061,9.15916231599046e-120,0.355,Diagnostic comparison requiring cell-level review.
+TYROBP,TYROBP,8,Tuft-like epithelial cells (CHAT/NAV2/RGS21; PTPRC flag),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+FCER1G,FCER1G,8,Tuft-like epithelial cells (CHAT/NAV2/RGS21; PTPRC flag),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+ASCL1,NA,8,Tuft-like epithelial cells (CHAT/NAV2/RGS21; PTPRC flag),FALSE,FALSE,TRUE,NA,NA,absent_from_object,FALSE,NA,NA,NA,NA,NA,NA,No exact source RNA feature/recorded alias match; no new mapping inferred. No exported marker row; NA statistics do not imply zero expression.
+CHGA,NA,8,Tuft-like epithelial cells (CHAT/NAV2/RGS21; PTPRC flag),FALSE,FALSE,TRUE,NA,NA,absent_from_object,FALSE,NA,NA,NA,NA,NA,NA,No exact source RNA feature/recorded alias match; no new mapping inferred. No exported marker row; NA statistics do not imply zero expression.
+MKI67,MKI67,8,Tuft-like epithelial cells (CHAT/NAV2/RGS21; PTPRC flag),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+TOP2A,TOP2A,8,Tuft-like epithelial cells (CHAT/NAV2/RGS21; PTPRC flag),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+FOXI1,FOXI1,8,Tuft-like epithelial cells (CHAT/NAV2/RGS21; PTPRC flag),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.

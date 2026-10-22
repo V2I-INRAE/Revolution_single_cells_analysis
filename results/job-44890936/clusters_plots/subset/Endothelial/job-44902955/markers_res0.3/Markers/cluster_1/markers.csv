@@ -1,0 +1,43 @@
+gene,feature_id,cluster,cluster_label,in_top25,in_md_identity,in_md_canonical,top25_rank,significant_rank,de_status,in_object,p_val,avg_log2FC,pct.1,pct.2,p_val_adj,pct_difference,note
+CCL21,CCL21,1,Lymphatic endothelial cells (CCL21/PDPN/FLT4),TRUE,TRUE,FALSE,1,1,significant_positive,TRUE,0,6.41246175339367,0.865,0.062,0,0.803,
+PTX3,PTX3,1,Lymphatic endothelial cells (CCL21/PDPN/FLT4),TRUE,FALSE,FALSE,2,2,significant_positive,TRUE,0,5.20593832790593,0.563,0.028,0,0.535,
+ADAMTS15,ADAMTS15,1,Lymphatic endothelial cells (CCL21/PDPN/FLT4),TRUE,FALSE,FALSE,3,3,significant_positive,TRUE,0,5.20486194630476,0.265,0.012,0,0.253,
+MMRN1,MMRN1,1,Lymphatic endothelial cells (CCL21/PDPN/FLT4),TRUE,TRUE,FALSE,4,4,significant_positive,TRUE,0,5.13298065255919,0.957,0.086,0,0.871,
+RELN,RELN,1,Lymphatic endothelial cells (CCL21/PDPN/FLT4),TRUE,TRUE,FALSE,5,5,significant_positive,TRUE,0,4.9511474637306,0.821,0.043,0,0.778,
+FLNC,FLNC,1,Lymphatic endothelial cells (CCL21/PDPN/FLT4),TRUE,FALSE,FALSE,6,6,significant_positive,TRUE,0,4.80648126330089,0.348,0.02,0,0.328,
+TRPC6,TRPC6,1,Lymphatic endothelial cells (CCL21/PDPN/FLT4),TRUE,FALSE,FALSE,7,7,significant_positive,TRUE,0,4.72407112363808,0.698,0.037,0,0.661,
+NEXN,NEXN,1,Lymphatic endothelial cells (CCL21/PDPN/FLT4),TRUE,FALSE,FALSE,8,8,significant_positive,TRUE,0,4.67832990186982,0.431,0.027,0,0.404,
+OSBPL6,OSBPL6,1,Lymphatic endothelial cells (CCL21/PDPN/FLT4),TRUE,FALSE,FALSE,9,9,significant_positive,TRUE,0,4.4667767166146,0.567,0.036,0,0.531,
+WASF3,WASF3,1,Lymphatic endothelial cells (CCL21/PDPN/FLT4),TRUE,FALSE,FALSE,10,10,significant_positive,TRUE,0,4.43285547744695,0.429,0.025,0,0.404,
+SFRP5,SFRP5,1,Lymphatic endothelial cells (CCL21/PDPN/FLT4),TRUE,FALSE,FALSE,11,11,significant_positive,TRUE,0,4.40803023907129,0.257,0.012,0,0.245,
+VSTM4,VSTM4,1,Lymphatic endothelial cells (CCL21/PDPN/FLT4),TRUE,FALSE,FALSE,12,12,significant_positive,TRUE,0,4.32618920838448,0.329,0.02,0,0.309,
+CHP2,CHP2,1,Lymphatic endothelial cells (CCL21/PDPN/FLT4),TRUE,FALSE,FALSE,13,13,significant_positive,TRUE,0,4.31693068172103,0.653,0.087,0,0.566,
+TNFAIP8L3,TNFAIP8L3,1,Lymphatic endothelial cells (CCL21/PDPN/FLT4),TRUE,FALSE,FALSE,14,14,significant_positive,TRUE,0,4.26653381416512,0.649,0.043,0,0.606,
+NTN1,NTN1,1,Lymphatic endothelial cells (CCL21/PDPN/FLT4),TRUE,FALSE,FALSE,15,15,significant_positive,TRUE,0,4.24104989476718,0.815,0.06,0,0.755,
+SCGB3A1,SCGB3A1,1,Lymphatic endothelial cells (CCL21/PDPN/FLT4),TRUE,FALSE,FALSE,16,16,significant_positive,TRUE,0,4.17571031341504,0.278,0.008,0,0.27,
+ECM2,ECM2,1,Lymphatic endothelial cells (CCL21/PDPN/FLT4),TRUE,FALSE,FALSE,17,17,significant_positive,TRUE,0,4.11263025178256,0.273,0.02,0,0.253,
+PDPN,PDPN,1,Lymphatic endothelial cells (CCL21/PDPN/FLT4),TRUE,TRUE,FALSE,18,18,significant_positive,TRUE,0,4.09191335171721,0.899,0.062,0,0.837,
+FLT4,FLT4,1,Lymphatic endothelial cells (CCL21/PDPN/FLT4),TRUE,TRUE,FALSE,19,19,significant_positive,TRUE,0,4.0831339096615,0.698,0.064,0,0.634,
+TENM3,TENM3,1,Lymphatic endothelial cells (CCL21/PDPN/FLT4),TRUE,FALSE,FALSE,20,20,significant_positive,TRUE,0,4.0513073646669,0.34,0.024,0,0.316,
+ENSSSCG00000005457,ENSSSCG00000005457,1,Lymphatic endothelial cells (CCL21/PDPN/FLT4),TRUE,FALSE,FALSE,21,21,significant_positive,TRUE,0,4.02393516866531,0.277,0.017,0,0.26,
+IGF1,IGF1,1,Lymphatic endothelial cells (CCL21/PDPN/FLT4),TRUE,FALSE,FALSE,22,22,significant_positive,TRUE,0,4.01429799130127,0.404,0.028,0,0.376,
+GJA1,GJA1,1,Lymphatic endothelial cells (CCL21/PDPN/FLT4),TRUE,FALSE,TRUE,23,23,significant_positive,TRUE,0,3.95302048251363,0.879,0.134,0,0.745,
+SLCO2B1,SLCO2B1,1,Lymphatic endothelial cells (CCL21/PDPN/FLT4),TRUE,FALSE,FALSE,24,24,significant_positive,TRUE,0,3.87576874250115,0.318,0.026,0,0.292,
+CDCP1,CDCP1,1,Lymphatic endothelial cells (CCL21/PDPN/FLT4),TRUE,FALSE,FALSE,25,25,significant_positive,TRUE,0,3.87008133022592,0.385,0.031,0,0.354,
+PROX1,PROX1,1,Lymphatic endothelial cells (CCL21/PDPN/FLT4),FALSE,TRUE,FALSE,NA,91,significant_positive,TRUE,0,2.66544663264235,0.516,0.051,0,0.465,
+LYVE1,LYVE1,1,Lymphatic endothelial cells (CCL21/PDPN/FLT4),FALSE,TRUE,FALSE,NA,165,significant_positive,TRUE,0,1.93885465698967,0.809,0.371,0,0.438,
+PECAM1,PECAM1,1,Lymphatic endothelial cells (CCL21/PDPN/FLT4),FALSE,FALSE,TRUE,NA,2006,significant_negative,TRUE,0,-0.916389116485432,0.983,0.986,0,-0.003,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+CDH5,CDH5,1,Lymphatic endothelial cells (CCL21/PDPN/FLT4),FALSE,FALSE,TRUE,NA,1795,significant_negative,TRUE,3.71262095889442e-143,-0.581296077748545,0.843,0.868,7.84216925147269e-139,-0.025,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+CLDN5,CLDN5,1,Lymphatic endothelial cells (CCL21/PDPN/FLT4),FALSE,FALSE,TRUE,NA,2220,significant_negative,TRUE,0,-1.7364985733305,0.726,0.848,0,-0.122,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+VWF,VWF,1,Lymphatic endothelial cells (CCL21/PDPN/FLT4),FALSE,FALSE,TRUE,NA,2197,significant_negative,TRUE,8.34893878568208e-135,-1.60933154699992,0.625,0.641,1.76354633969963e-130,-0.016,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+PTPRB,PTPRB,1,Lymphatic endothelial cells (CCL21/PDPN/FLT4),FALSE,FALSE,TRUE,NA,2338,significant_negative,TRUE,0,-2.85520266886774,0.591,0.734,0,-0.143,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+KDR,KDR,1,Lymphatic endothelial cells (CCL21/PDPN/FLT4),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+NR2F2,NR2F2,1,Lymphatic endothelial cells (CCL21/PDPN/FLT4),FALSE,FALSE,TRUE,NA,167,significant_positive,TRUE,0,1.93424747786639,0.802,0.34,0,0.462,
+SCG3,SCG3,1,Lymphatic endothelial cells (CCL21/PDPN/FLT4),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+ECRG4,ECRG4,1,Lymphatic endothelial cells (CCL21/PDPN/FLT4),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+FOXC2,NA,1,Lymphatic endothelial cells (CCL21/PDPN/FLT4),FALSE,FALSE,TRUE,NA,NA,absent_from_object,FALSE,NA,NA,NA,NA,NA,NA,No exact source RNA feature/recorded alias match; no new mapping inferred. No exported marker row; NA statistics do not imply zero expression.
+ITGA9,ITGA9,1,Lymphatic endothelial cells (CCL21/PDPN/FLT4),FALSE,FALSE,TRUE,NA,105,significant_positive,TRUE,0,2.4435779487649,0.648,0.186,0,0.462,
+ACKR1,ACKR1,1,Lymphatic endothelial cells (CCL21/PDPN/FLT4),FALSE,FALSE,TRUE,NA,2448,significant_negative,TRUE,0,-6.33147040907658,0.005,0.306,0,-0.301,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+SOX17,SOX17,1,Lymphatic endothelial cells (CCL21/PDPN/FLT4),FALSE,FALSE,TRUE,NA,2439,significant_negative,TRUE,0,-5.94302653973016,0.006,0.349,0,-0.343,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+PTPRC,PTPRC,1,Lymphatic endothelial cells (CCL21/PDPN/FLT4),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+EPCAM,EPCAM,1,Lymphatic endothelial cells (CCL21/PDPN/FLT4),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.

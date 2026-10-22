@@ -1,0 +1,36 @@
+gene,feature_id,cluster,cluster_label,in_top25,in_md_identity,in_md_canonical,top25_rank,significant_rank,de_status,in_object,p_val,avg_log2FC,pct.1,pct.2,p_val_adj,pct_difference,note
+ENSSSCG00000017445,ENSSSCG00000017445,7,Basal epithelial cells (KRT5/TP63/COL17A1),TRUE,FALSE,FALSE,1,1,significant_positive,TRUE,0,8.18454733967766,0.338,0.004,0,0.334,
+COL17A1,COL17A1,7,Basal epithelial cells (KRT5/TP63/COL17A1),TRUE,TRUE,FALSE,2,2,significant_positive,TRUE,0,7.72448496393967,0.752,0.011,0,0.741,
+KRT5,KRT5,7,Basal epithelial cells (KRT5/TP63/COL17A1),TRUE,TRUE,FALSE,3,3,significant_positive,TRUE,0,7.63327074680429,0.594,0.023,0,0.571,
+TP63,TP63,7,Basal epithelial cells (KRT5/TP63/COL17A1),TRUE,TRUE,FALSE,4,4,significant_positive,TRUE,0,7.3523011236529,0.59,0.008,0,0.582,
+DLK2,DLK2,7,Basal epithelial cells (KRT5/TP63/COL17A1),TRUE,FALSE,FALSE,5,5,significant_positive,TRUE,0,7.16471285232979,0.327,0.006,0,0.321,
+SNAI2,SNAI2,7,Basal epithelial cells (KRT5/TP63/COL17A1),TRUE,TRUE,FALSE,6,6,significant_positive,TRUE,0,6.84253637695505,0.327,0.004,0,0.323,
+COL15A1,COL15A1,7,Basal epithelial cells (KRT5/TP63/COL17A1),TRUE,FALSE,FALSE,7,7,significant_positive,TRUE,0,6.57858026656584,0.417,0.008,0,0.409,
+ENSSSCG00000011355,ENSSSCG00000011355,7,Basal epithelial cells (KRT5/TP63/COL17A1),TRUE,FALSE,FALSE,8,8,significant_positive,TRUE,0,6.48784827351365,0.486,0.011,0,0.475,
+KCNN4,KCNN4,7,Basal epithelial cells (KRT5/TP63/COL17A1),TRUE,FALSE,FALSE,9,9,significant_positive,TRUE,0,6.17519984881835,0.299,0.005,0,0.294,
+ENSSSCG00000010370,ENSSSCG00000010370,7,Basal epithelial cells (KRT5/TP63/COL17A1),TRUE,FALSE,FALSE,10,10,significant_positive,TRUE,0,5.94957803659908,0.809,0.06,0,0.749,
+PKP1,PKP1,7,Basal epithelial cells (KRT5/TP63/COL17A1),TRUE,FALSE,FALSE,11,11,significant_positive,TRUE,0,5.5852319167217,0.374,0.009,0,0.365,
+ENSSSCG00000008147,ENSSSCG00000008147,7,Basal epithelial cells (KRT5/TP63/COL17A1),TRUE,FALSE,FALSE,12,12,significant_positive,TRUE,0,5.5829215890979,0.741,0.028,0,0.713,
+KRT17,KRT17,7,Basal epithelial cells (KRT5/TP63/COL17A1),TRUE,TRUE,FALSE,13,13,significant_positive,TRUE,0,5.49378540325382,0.522,0.018,0,0.504,
+HAS3,HAS3,7,Basal epithelial cells (KRT5/TP63/COL17A1),TRUE,FALSE,FALSE,14,14,significant_positive,TRUE,0,5.45589166858533,0.55,0.03,0,0.52,
+TNS4,TNS4,7,Basal epithelial cells (KRT5/TP63/COL17A1),TRUE,FALSE,FALSE,15,15,significant_positive,TRUE,0,5.16314676511453,0.421,0.017,0,0.404,
+PLA2G7,PLA2G7,7,Basal epithelial cells (KRT5/TP63/COL17A1),TRUE,FALSE,FALSE,16,16,significant_positive,TRUE,0,4.82908920091927,0.522,0.025,0,0.497,
+CLCA2,CLCA2,7,Basal epithelial cells (KRT5/TP63/COL17A1),TRUE,TRUE,FALSE,17,17,significant_positive,TRUE,8.00035764869823e-257,4.62641550945775,0.525,0.045,1.68991554613453e-252,0.48,
+LTBP1,LTBP1,7,Basal epithelial cells (KRT5/TP63/COL17A1),TRUE,FALSE,FALSE,18,18,significant_positive,TRUE,3.47291504159772e-165,4.44752928933864,0.414,0.041,7.33583844236686e-161,0.373,
+LTBP4,LTBP4,7,Basal epithelial cells (KRT5/TP63/COL17A1),TRUE,FALSE,FALSE,19,19,significant_positive,TRUE,2.10458303130494e-172,4.40760935635535,0.302,0.019,4.44551073702543e-168,0.283,
+SFN,SFN,7,Basal epithelial cells (KRT5/TP63/COL17A1),TRUE,TRUE,FALSE,20,20,significant_positive,TRUE,3.27724924712318e-273,4.31957453721724,0.64,0.065,6.92253358469829e-269,0.575,
+PTPRZ1,PTPRZ1,7,Basal epithelial cells (KRT5/TP63/COL17A1),TRUE,FALSE,FALSE,21,21,significant_positive,TRUE,9.26272554868035e-265,4.29580258501259,0.558,0.05,1.95656551764775e-260,0.508,
+KCNQ5,KCNQ5,7,Basal epithelial cells (KRT5/TP63/COL17A1),TRUE,FALSE,FALSE,22,22,significant_positive,TRUE,4.60217635940278e-241,4.28139275774254,0.464,0.033,9.72117712396649e-237,0.431,
+TRIM29,TRIM29,7,Basal epithelial cells (KRT5/TP63/COL17A1),TRUE,FALSE,FALSE,23,23,significant_positive,TRUE,2.96973675505753e-204,4.17760259296103,0.378,0.028,6.27297494770802e-200,0.35,
+ENSSSCG00000012006,ENSSSCG00000012006,7,Basal epithelial cells (KRT5/TP63/COL17A1),TRUE,FALSE,FALSE,24,24,significant_positive,TRUE,7.5960697054475e-162,4.13658244844386,0.388,0.035,1.60451780388168e-157,0.353,
+HTRA1,HTRA1,7,Basal epithelial cells (KRT5/TP63/COL17A1),TRUE,FALSE,FALSE,25,25,significant_positive,TRUE,1.3003155777354e-169,4.11288244880993,0.353,0.028,2.74665659485048e-165,0.325,
+EPCAM,EPCAM,7,Basal epithelial cells (KRT5/TP63/COL17A1),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+KRT8,KRT8,7,Basal epithelial cells (KRT5/TP63/COL17A1),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+KRT18,KRT18,7,Basal epithelial cells (KRT5/TP63/COL17A1),FALSE,FALSE,TRUE,NA,NA,not_significant,TRUE,0.000471024691341946,-0.524697704929876,0.629,0.662,1,-0.033,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+KRT19,KRT19,7,Basal epithelial cells (KRT5/TP63/COL17A1),FALSE,FALSE,TRUE,NA,136,significant_positive,TRUE,1.16905773424721e-46,1.54896019790857,0.849,0.543,2.46940065205039e-42,0.306,
+KRT14,NA,7,Basal epithelial cells (KRT5/TP63/COL17A1),FALSE,FALSE,TRUE,NA,NA,absent_from_object,FALSE,NA,NA,NA,NA,NA,NA,No exact source RNA feature/recorded alias match; no new mapping inferred. No exported marker row; NA statistics do not imply zero expression.
+NGFR,NGFR,7,Basal epithelial cells (KRT5/TP63/COL17A1),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+SCGB1A1,SCGB1A1,7,Basal epithelial cells (KRT5/TP63/COL17A1),FALSE,FALSE,TRUE,NA,1263,significant_negative,TRUE,1.4270055436298e-12,-3.67200497601336,0.309,0.458,3.01426380980922e-08,-0.149,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+FOXJ1,FOXJ1,7,Basal epithelial cells (KRT5/TP63/COL17A1),FALSE,FALSE,TRUE,NA,1231,significant_negative,TRUE,8.02384513942521e-14,-2.9882349816952,0.086,0.28,1.69487680880079e-09,-0.194,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+SFTPC,SFTPC,7,Basal epithelial cells (KRT5/TP63/COL17A1),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+PTPRC,PTPRC,7,Basal epithelial cells (KRT5/TP63/COL17A1),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.

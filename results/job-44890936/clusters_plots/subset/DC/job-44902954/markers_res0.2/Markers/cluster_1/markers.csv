@@ -1,0 +1,48 @@
+gene,feature_id,cluster,cluster_label,in_top25,in_md_identity,in_md_canonical,top25_rank,significant_rank,de_status,in_object,p_val,avg_log2FC,pct.1,pct.2,p_val_adj,pct_difference,note
+PIGE-108A11.3,ENSSSCG00000025687,1,Plasmacytoid dendritic cells (TCF4/IRF7/NRP1 program),TRUE,FALSE,FALSE,1,1,significant_positive,TRUE,0,6.19342574244713,0.443,0.005,0,0.438,
+VPREB1,VPREB1,1,Plasmacytoid dendritic cells (TCF4/IRF7/NRP1 program),TRUE,FALSE,TRUE,2,2,significant_positive,TRUE,0,5.868181438675,0.768,0.016,0,0.752,Not used alone to assign B/plasma identity.
+IGLL1 (review),ENSSSCG00000010077,1,Plasmacytoid dendritic cells (TCF4/IRF7/NRP1 program),TRUE,FALSE,TRUE,3,3,significant_positive,TRUE,0,5.45108329125775,0.734,0.019,0,0.715,Not used alone to assign B/plasma identity. Feature label retained from this producer's frozen mapping; annotation remains under review.
+LOC100620627,ENSSSCG00000028944,1,Plasmacytoid dendritic cells (TCF4/IRF7/NRP1 program),TRUE,FALSE,FALSE,4,4,significant_positive,TRUE,0,5.25477389880022,0.965,0.039,0,0.926,
+TDRD1,TDRD1,1,Plasmacytoid dendritic cells (TCF4/IRF7/NRP1 program),TRUE,FALSE,FALSE,5,5,significant_positive,TRUE,0,5.24006866921379,0.694,0.015,0,0.679,
+NCR1,NCR1,1,Plasmacytoid dendritic cells (TCF4/IRF7/NRP1 program),TRUE,FALSE,TRUE,6,6,significant_positive,TRUE,0,5.22183664122672,0.605,0.015,0,0.59,Contextual enrichment; not sufficient alone for NK identity.
+ATP13A2,ATP13A2,1,Plasmacytoid dendritic cells (TCF4/IRF7/NRP1 program),TRUE,FALSE,FALSE,7,7,significant_positive,TRUE,0,5.21210484072601,0.949,0.048,0,0.901,
+NEXN,NEXN,1,Plasmacytoid dendritic cells (TCF4/IRF7/NRP1 program),TRUE,FALSE,FALSE,8,8,significant_positive,TRUE,0,5.17616619247579,0.727,0.025,0,0.702,
+NIBAN3,NIBAN3,1,Plasmacytoid dendritic cells (TCF4/IRF7/NRP1 program),TRUE,FALSE,FALSE,9,9,significant_positive,TRUE,0,5.17121327703039,0.533,0.019,0,0.514,
+XKRX,XKRX,1,Plasmacytoid dendritic cells (TCF4/IRF7/NRP1 program),TRUE,FALSE,FALSE,10,10,significant_positive,TRUE,1.11577435813288e-234,5.1498234073267,0.32,0.009,2.35685017668407e-230,0.311,
+SMIM5,SMIM5,1,Plasmacytoid dendritic cells (TCF4/IRF7/NRP1 program),TRUE,FALSE,FALSE,11,11,significant_positive,TRUE,0,5.11955053065621,0.766,0.021,0,0.745,
+EXPH5,EXPH5,1,Plasmacytoid dendritic cells (TCF4/IRF7/NRP1 program),TRUE,FALSE,FALSE,12,12,significant_positive,TRUE,8.64221456626638e-204,5.08363878362948,0.288,0.01,1.82549498283245e-199,0.278,
+CD4,CD4,1,Plasmacytoid dendritic cells (TCF4/IRF7/NRP1 program),TRUE,FALSE,TRUE,13,13,significant_positive,TRUE,0,5.0552344885298,0.88,0.029,0,0.851,
+DPYS,DPYS,1,Plasmacytoid dendritic cells (TCF4/IRF7/NRP1 program),TRUE,FALSE,FALSE,14,14,significant_positive,TRUE,0,5.0212845549616,0.43,0.015,0,0.415,
+MGP,MGP,1,Plasmacytoid dendritic cells (TCF4/IRF7/NRP1 program),TRUE,FALSE,FALSE,15,15,significant_positive,TRUE,0,5.00570495801992,0.902,0.033,0,0.869,
+ENSSSCG00000007644,ENSSSCG00000007644,1,Plasmacytoid dendritic cells (TCF4/IRF7/NRP1 program),TRUE,FALSE,FALSE,16,16,significant_positive,TRUE,0,5.00502538115373,0.68,0.028,0,0.652,
+CD93,CD93,1,Plasmacytoid dendritic cells (TCF4/IRF7/NRP1 program),TRUE,FALSE,FALSE,17,17,significant_positive,TRUE,0,4.9600982338592,0.459,0.018,0,0.441,
+NFASC,NFASC,1,Plasmacytoid dendritic cells (TCF4/IRF7/NRP1 program),TRUE,FALSE,FALSE,18,18,significant_positive,TRUE,2.75863192445949e-309,4.93587855845492,0.412,0.019,5.82705821403579e-305,0.393,
+COBLL1,COBLL1,1,Plasmacytoid dendritic cells (TCF4/IRF7/NRP1 program),TRUE,FALSE,FALSE,19,19,significant_positive,TRUE,0,4.82811919636537,0.801,0.028,0,0.773,
+CD8B,CD8B,1,Plasmacytoid dendritic cells (TCF4/IRF7/NRP1 program),TRUE,FALSE,TRUE,20,20,significant_positive,TRUE,0,4.77602941447398,0.523,0.015,0,0.508,
+ENSSSCG00000061277,ENSSSCG00000061277,1,Plasmacytoid dendritic cells (TCF4/IRF7/NRP1 program),TRUE,FALSE,FALSE,21,21,significant_positive,TRUE,0,4.70636470255387,0.768,0.024,0,0.744,
+BHLHA15,BHLHA15,1,Plasmacytoid dendritic cells (TCF4/IRF7/NRP1 program),TRUE,FALSE,FALSE,22,22,significant_positive,TRUE,9.48033827521857e-251,4.69534474943364,0.341,0.011,2.00253185387442e-246,0.33,
+ENSSSCG00000034524,ENSSSCG00000034524,1,Plasmacytoid dendritic cells (TCF4/IRF7/NRP1 program),TRUE,FALSE,FALSE,23,23,significant_positive,TRUE,2.50499050225977e-251,4.6720449829074,0.347,0.016,5.29129143792331e-247,0.331,
+BLNK,BLNK,1,Plasmacytoid dendritic cells (TCF4/IRF7/NRP1 program),TRUE,TRUE,FALSE,24,24,significant_positive,TRUE,0,4.65907831660398,0.977,0.152,0,0.825,
+NRXN1,NRXN1,1,Plasmacytoid dendritic cells (TCF4/IRF7/NRP1 program),TRUE,FALSE,FALSE,25,25,significant_positive,TRUE,1.70297911278926e-203,4.62832094689915,0.299,0.015,3.59720277994475e-199,0.284,
+TCF4,TCF4,1,Plasmacytoid dendritic cells (TCF4/IRF7/NRP1 program),FALSE,TRUE,FALSE,NA,145,significant_positive,TRUE,0,2.71000259351212,0.948,0.38,0,0.568,
+IRF7,IRF7,1,Plasmacytoid dendritic cells (TCF4/IRF7/NRP1 program),FALSE,TRUE,FALSE,NA,132,significant_positive,TRUE,9.37589866379975e-282,2.83802749709342,0.487,0.087,1.98047107475442e-277,0.4,
+NRP1,NRP1,1,Plasmacytoid dendritic cells (TCF4/IRF7/NRP1 program),FALSE,TRUE,FALSE,NA,447,significant_positive,TRUE,4.41410051632123e-239,1.55707658489773,0.63,0.233,9.32390452062532e-235,0.397,
+BCL11A,BCL11A,1,Plasmacytoid dendritic cells (TCF4/IRF7/NRP1 program),FALSE,TRUE,FALSE,NA,227,significant_positive,TRUE,0,2.18996453311683,0.928,0.475,0,0.453,
+TLR7,TLR7,1,Plasmacytoid dendritic cells (TCF4/IRF7/NRP1 program),FALSE,TRUE,FALSE,NA,324,significant_positive,TRUE,3.90348915138023e-317,1.87566666053254,0.668,0.217,8.24534013446046e-313,0.451,
+TLR9,TLR9,1,Plasmacytoid dendritic cells (TCF4/IRF7/NRP1 program),FALSE,TRUE,FALSE,NA,451,significant_positive,TRUE,8.30430754195606e-83,1.54931251134265,0.309,0.122,1.75411888208738e-78,0.187,
+PLD4,PLD4,1,Plasmacytoid dendritic cells (TCF4/IRF7/NRP1 program),FALSE,TRUE,FALSE,NA,414,significant_positive,TRUE,0,1.62636357780039,0.834,0.446,0,0.388,
+SPIB,SPIB,1,Plasmacytoid dendritic cells (TCF4/IRF7/NRP1 program),FALSE,TRUE,FALSE,NA,110,significant_positive,TRUE,0,2.99376645552441,0.751,0.098,0,0.653,
+CMKLR1,CMKLR1,1,Plasmacytoid dendritic cells (TCF4/IRF7/NRP1 program),FALSE,FALSE,TRUE,NA,34,significant_positive,TRUE,0,4.3242276292649,0.694,0.037,0,0.657,
+IRF8,IRF8,1,Plasmacytoid dendritic cells (TCF4/IRF7/NRP1 program),FALSE,FALSE,TRUE,NA,477,significant_positive,TRUE,0,1.49851035143624,0.989,0.729,0,0.26,
+IRF4,IRF4,1,Plasmacytoid dendritic cells (TCF4/IRF7/NRP1 program),FALSE,FALSE,TRUE,NA,361,significant_positive,TRUE,3.86520486787321e-283,1.742776287944,0.707,0.28,8.16447224240858e-279,0.427,
+RUNX2,RUNX2,1,Plasmacytoid dendritic cells (TCF4/IRF7/NRP1 program),FALSE,FALSE,TRUE,NA,473,significant_positive,TRUE,0,1.50372149528478,0.813,0.343,0,0.47,
+TLR3,TLR3,1,Plasmacytoid dendritic cells (TCF4/IRF7/NRP1 program),FALSE,FALSE,TRUE,NA,180,significant_positive,TRUE,0,2.40721446956818,0.584,0.135,0,0.449,
+CLEC12A,CLEC12A,1,Plasmacytoid dendritic cells (TCF4/IRF7/NRP1 program),FALSE,FALSE,TRUE,NA,213,significant_positive,TRUE,0,2.25979618333905,0.68,0.213,0,0.467,
+PRDM1,PRDM1,1,Plasmacytoid dendritic cells (TCF4/IRF7/NRP1 program),FALSE,FALSE,TRUE,NA,3012,significant_negative,TRUE,1.39675995835448e-240,-3.79568803494541,0.055,0.359,2.95037606003217e-236,-0.304,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+FLT3,FLT3,1,Plasmacytoid dendritic cells (TCF4/IRF7/NRP1 program),FALSE,FALSE,TRUE,NA,2654,significant_negative,TRUE,3.60208926230775e-81,-1.14731464046783,0.679,0.743,7.60869314877266e-77,-0.0639999999999999,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+XCR1,XCR1,1,Plasmacytoid dendritic cells (TCF4/IRF7/NRP1 program),FALSE,FALSE,TRUE,NA,3007,significant_negative,TRUE,2.35988039997573e-185,-3.69849045882987,0.131,0.388,4.98477536886873e-181,-0.257,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+BATF3,BATF3,1,Plasmacytoid dendritic cells (TCF4/IRF7/NRP1 program),FALSE,FALSE,TRUE,NA,3111,significant_negative,TRUE,0,-5.82572806252534,0.008,0.466,0,-0.458,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+CADM1,CADM1,1,Plasmacytoid dendritic cells (TCF4/IRF7/NRP1 program),FALSE,FALSE,TRUE,NA,3083,significant_negative,TRUE,0,-4.98357554473324,0.038,0.474,0,-0.436,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+CD3E,CD3E,1,Plasmacytoid dendritic cells (TCF4/IRF7/NRP1 program),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+MS4A1,MS4A1,1,Plasmacytoid dendritic cells (TCF4/IRF7/NRP1 program),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+CD79A,CD79A,1,Plasmacytoid dendritic cells (TCF4/IRF7/NRP1 program),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.

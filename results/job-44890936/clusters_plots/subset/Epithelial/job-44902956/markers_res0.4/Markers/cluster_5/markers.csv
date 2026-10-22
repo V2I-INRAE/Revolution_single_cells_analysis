@@ -1,0 +1,39 @@
+gene,feature_id,cluster,cluster_label,in_top25,in_md_identity,in_md_canonical,top25_rank,significant_rank,de_status,in_object,p_val,avg_log2FC,pct.1,pct.2,p_val_adj,pct_difference,note
+SLC13A1,SLC13A1,5,Multiciliated epithelial cells (DNAH2/RFX3 program),TRUE,FALSE,FALSE,1,1,significant_positive,TRUE,0,4.41822909753406,0.552,0.059,0,0.493,
+ENSSSCG00000040973,ENSSSCG00000040973,5,Multiciliated epithelial cells (DNAH2/RFX3 program),TRUE,FALSE,FALSE,2,2,significant_positive,TRUE,0,4.24797549587841,0.613,0.075,0,0.538,
+ENSSSCG00000043455,ENSSSCG00000043455,5,Multiciliated epithelial cells (DNAH2/RFX3 program),TRUE,FALSE,FALSE,3,3,significant_positive,TRUE,2.74528198707306e-269,4.15548243813134,0.299,0.029,5.79885914129442e-265,0.27,
+ANKFN1,ANKFN1,5,Multiciliated epithelial cells (DNAH2/RFX3 program),TRUE,FALSE,FALSE,4,4,significant_positive,TRUE,0,4.12149506727973,0.783,0.149,0,0.634,
+HHATL,HHATL,5,Multiciliated epithelial cells (DNAH2/RFX3 program),TRUE,FALSE,FALSE,5,5,significant_positive,TRUE,0,4.08507912300617,0.408,0.042,0,0.366,
+DNAH2,DNAH2,5,Multiciliated epithelial cells (DNAH2/RFX3 program),TRUE,TRUE,FALSE,6,6,significant_positive,TRUE,0,3.98318465427799,0.674,0.106,0,0.568,
+PACRG,PACRG,5,Multiciliated epithelial cells (DNAH2/RFX3 program),TRUE,TRUE,FALSE,7,7,significant_positive,TRUE,0,3.94909080543388,0.826,0.184,0,0.642,
+ENSSSCG00000046734,ENSSSCG00000046734,5,Multiciliated epithelial cells (DNAH2/RFX3 program),TRUE,FALSE,FALSE,8,8,significant_positive,TRUE,0,3.94527306602004,0.408,0.047,0,0.361,
+DNAH3,DNAH3,5,Multiciliated epithelial cells (DNAH2/RFX3 program),TRUE,TRUE,FALSE,9,9,significant_positive,TRUE,0,3.92732882737433,0.609,0.094,0,0.515,
+CFAP77,CFAP77,5,Multiciliated epithelial cells (DNAH2/RFX3 program),TRUE,FALSE,FALSE,10,10,significant_positive,TRUE,0,3.89647813289513,0.534,0.073,0,0.461,
+CFAP54,CFAP54,5,Multiciliated epithelial cells (DNAH2/RFX3 program),TRUE,TRUE,FALSE,11,11,significant_positive,TRUE,0,3.89438813097341,0.86,0.205,0,0.655,
+FRMPD2,FRMPD2,5,Multiciliated epithelial cells (DNAH2/RFX3 program),TRUE,FALSE,FALSE,12,12,significant_positive,TRUE,0,3.88281287729807,0.501,0.066,0,0.435,
+SPATA18,SPATA18,5,Multiciliated epithelial cells (DNAH2/RFX3 program),TRUE,FALSE,FALSE,13,13,significant_positive,TRUE,0,3.84231488933577,0.46,0.06,0,0.4,
+ENSSSCG00000004415,ENSSSCG00000004415,5,Multiciliated epithelial cells (DNAH2/RFX3 program),TRUE,FALSE,FALSE,14,14,significant_positive,TRUE,0,3.82904564382519,0.691,0.123,0,0.568,
+FAM227A,FAM227A,5,Multiciliated epithelial cells (DNAH2/RFX3 program),TRUE,FALSE,FALSE,15,15,significant_positive,TRUE,0,3.81199250900792,0.566,0.074,0,0.492,
+ENSSSCG00000001594,ENSSSCG00000001594,5,Multiciliated epithelial cells (DNAH2/RFX3 program),TRUE,FALSE,FALSE,16,16,significant_positive,TRUE,3.65178036308827e-280,3.75179198622059,0.429,0.071,7.71365566095136e-276,0.358,
+PRKCG,PRKCG,5,Multiciliated epithelial cells (DNAH2/RFX3 program),TRUE,FALSE,FALSE,17,17,significant_positive,TRUE,0,3.6975911654345,0.421,0.053,0,0.368,
+NEK5,NEK5,5,Multiciliated epithelial cells (DNAH2/RFX3 program),TRUE,FALSE,FALSE,18,18,significant_positive,TRUE,0,3.67832462777789,0.601,0.098,0,0.503,
+KATNAL2,KATNAL2,5,Multiciliated epithelial cells (DNAH2/RFX3 program),TRUE,FALSE,FALSE,19,19,significant_positive,TRUE,1.18102775823462e-269,3.63241874397577,0.365,0.05,2.49468493371899e-265,0.315,
+DNAH7,DNAH7,5,Multiciliated epithelial cells (DNAH2/RFX3 program),TRUE,TRUE,FALSE,20,20,significant_positive,TRUE,0,3.62429175248319,0.637,0.1,0,0.537,
+CFAP46,CFAP46,5,Multiciliated epithelial cells (DNAH2/RFX3 program),TRUE,TRUE,FALSE,21,21,significant_positive,TRUE,0,3.62313446503022,0.772,0.167,0,0.605,
+RFX3,RFX3,5,Multiciliated epithelial cells (DNAH2/RFX3 program),TRUE,TRUE,FALSE,22,22,significant_positive,TRUE,0,3.61578528415124,0.673,0.142,0,0.531,
+VWA3A,VWA3A,5,Multiciliated epithelial cells (DNAH2/RFX3 program),TRUE,FALSE,FALSE,23,23,significant_positive,TRUE,0,3.61557757570923,0.64,0.128,0,0.512,
+LRRC9,LRRC9,5,Multiciliated epithelial cells (DNAH2/RFX3 program),TRUE,FALSE,FALSE,24,24,significant_positive,TRUE,0,3.61169066945664,0.46,0.068,0,0.392,
+CACHD1,CACHD1,5,Multiciliated epithelial cells (DNAH2/RFX3 program),TRUE,FALSE,FALSE,25,25,significant_positive,TRUE,0,3.5824425359393,0.717,0.177,0,0.54,
+FOXJ1,FOXJ1,5,Multiciliated epithelial cells (DNAH2/RFX3 program),FALSE,TRUE,FALSE,NA,629,significant_positive,TRUE,1.91924870590514e-152,1.36775169597729,0.623,0.232,4.05402904148344e-148,0.391,
+EPCAM,EPCAM,5,Multiciliated epithelial cells (DNAH2/RFX3 program),FALSE,FALSE,TRUE,NA,1755,significant_negative,TRUE,1.08052504670818e-16,-0.322676902651486,0.858,0.878,2.28239305616168e-12,-0.02,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+KRT8,KRT8,5,Multiciliated epithelial cells (DNAH2/RFX3 program),FALSE,FALSE,TRUE,NA,2119,significant_negative,TRUE,2.23868074898635e-28,-0.61857378912653,0.74,0.801,4.72876534608386e-24,-0.0610000000000001,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+KRT18,KRT18,5,Multiciliated epithelial cells (DNAH2/RFX3 program),FALSE,FALSE,TRUE,NA,1933,significant_negative,TRUE,8.00932372023538e-15,-0.471492182556789,0.586,0.671,1.69180944942532e-10,-0.0850000000000001,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+TPPP3,TPPP3,5,Multiciliated epithelial cells (DNAH2/RFX3 program),FALSE,FALSE,TRUE,NA,1177,significant_positive,TRUE,1.08756668815602e-113,0.735658418590367,0.658,0.267,2.29726711539197e-109,0.391,
+CFAP144,ENSSSCG00000003954,5,Multiciliated epithelial cells (DNAH2/RFX3 program),FALSE,FALSE,TRUE,NA,642,significant_positive,TRUE,6.89983391008841e-57,1.34582346598582,0.286,0.111,1.45745191682798e-52,0.175,
+SNTN,SNTN,5,Multiciliated epithelial cells (DNAH2/RFX3 program),FALSE,FALSE,TRUE,NA,745,significant_positive,TRUE,5.13804989680408e-147,1.18756725916492,0.602,0.208,1.08531027970193e-142,0.394,
+PIFO,NA,5,Multiciliated epithelial cells (DNAH2/RFX3 program),FALSE,FALSE,TRUE,NA,NA,absent_from_object,FALSE,NA,NA,NA,NA,NA,NA,No exact source RNA feature/recorded alias match; no new mapping inferred. No exported marker row; NA statistics do not imply zero expression.
+SCGB1A1,SCGB1A1,5,Multiciliated epithelial cells (DNAH2/RFX3 program),FALSE,FALSE,TRUE,NA,2736,significant_negative,TRUE,3.23471055071777e-28,-2.70001217680626,0.344,0.467,6.83267909628115e-24,-0.123,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+SFTPC,SFTPC,5,Multiciliated epithelial cells (DNAH2/RFX3 program),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+PTPRC,PTPRC,5,Multiciliated epithelial cells (DNAH2/RFX3 program),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+MKI67,MKI67,5,Multiciliated epithelial cells (DNAH2/RFX3 program),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+TOP2A,TOP2A,5,Multiciliated epithelial cells (DNAH2/RFX3 program),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.

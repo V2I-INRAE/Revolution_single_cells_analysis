@@ -1,0 +1,46 @@
+gene,feature_id,cluster,cluster_label,in_top25,in_md_identity,in_md_canonical,top25_rank,significant_rank,de_status,in_object,p_val,avg_log2FC,pct.1,pct.2,p_val_adj,pct_difference,note
+COL4A3,COL4A3,6,Alveolar type 1-like epithelial cells (AGER/PDPN/HOPX; UPK3B flag),TRUE,TRUE,FALSE,1,1,significant_positive,TRUE,0,10.4898556968827,0.725,0.005,0,0.72,
+COL4A4,COL4A4,6,Alveolar type 1-like epithelial cells (AGER/PDPN/HOPX; UPK3B flag),TRUE,TRUE,FALSE,2,2,significant_positive,TRUE,0,10.3534476530404,0.758,0.004,0,0.754,
+ANKRD1,ANKRD1,6,Alveolar type 1-like epithelial cells (AGER/PDPN/HOPX; UPK3B flag),TRUE,FALSE,FALSE,3,3,significant_positive,TRUE,0,9.27628481663839,0.432,0.005,0,0.427,
+LOC100738720,ENSSSCG00000055794,6,Alveolar type 1-like epithelial cells (AGER/PDPN/HOPX; UPK3B flag),TRUE,FALSE,FALSE,4,4,significant_positive,TRUE,0,9.07138330953929,0.417,0.002,0,0.415,
+UPK3B,UPK3B,6,Alveolar type 1-like epithelial cells (AGER/PDPN/HOPX; UPK3B flag),TRUE,FALSE,TRUE,5,5,significant_positive,TRUE,0,9.02162651919532,0.417,0.002,0,0.415,"Positive diagnostic enrichment, not proof of mesothelial identity or a mixed-cell mechanism."
+DAAM2,DAAM2,6,Alveolar type 1-like epithelial cells (AGER/PDPN/HOPX; UPK3B flag),TRUE,FALSE,FALSE,6,6,significant_positive,TRUE,0,8.00407631131471,0.432,0.007,0,0.425,
+CAV1,CAV1,6,Alveolar type 1-like epithelial cells (AGER/PDPN/HOPX; UPK3B flag),TRUE,TRUE,FALSE,7,7,significant_positive,TRUE,0,7.34495757845613,0.584,0.008,0,0.576,
+PXDN,PXDN,6,Alveolar type 1-like epithelial cells (AGER/PDPN/HOPX; UPK3B flag),TRUE,FALSE,FALSE,8,8,significant_positive,TRUE,0,7.33151172924892,0.345,0.004,0,0.341,
+VSIG2,VSIG2,6,Alveolar type 1-like epithelial cells (AGER/PDPN/HOPX; UPK3B flag),TRUE,FALSE,FALSE,9,9,significant_positive,TRUE,0,7.23782358359425,0.693,0.02,0,0.673,
+ARPP21,ARPP21,6,Alveolar type 1-like epithelial cells (AGER/PDPN/HOPX; UPK3B flag),TRUE,FALSE,FALSE,10,10,significant_positive,TRUE,0,7.09168626902872,0.269,0.005,0,0.264,
+COL4A1,COL4A1,6,Alveolar type 1-like epithelial cells (AGER/PDPN/HOPX; UPK3B flag),TRUE,FALSE,FALSE,11,11,significant_positive,TRUE,0,6.82056473292254,0.819,0.046,0,0.773,
+SEMA3G,SEMA3G,6,Alveolar type 1-like epithelial cells (AGER/PDPN/HOPX; UPK3B flag),TRUE,FALSE,FALSE,12,12,significant_positive,TRUE,0,6.65724016154488,0.357,0.01,0,0.347,
+RTKN2,RTKN2,6,Alveolar type 1-like epithelial cells (AGER/PDPN/HOPX; UPK3B flag),TRUE,TRUE,FALSE,13,13,significant_positive,TRUE,0,6.62781572646857,0.83,0.096,0,0.734,
+FLRT3,FLRT3,6,Alveolar type 1-like epithelial cells (AGER/PDPN/HOPX; UPK3B flag),TRUE,FALSE,FALSE,14,14,significant_positive,TRUE,0,6.30864210334918,0.512,0.02,0,0.492,
+PALM2AKAP2,PALM2AKAP2,6,Alveolar type 1-like epithelial cells (AGER/PDPN/HOPX; UPK3B flag),TRUE,FALSE,FALSE,15,15,significant_positive,TRUE,0,6.27699545710654,0.931,0.084,0,0.847,
+COL5A2,COL5A2,6,Alveolar type 1-like epithelial cells (AGER/PDPN/HOPX; UPK3B flag),TRUE,FALSE,FALSE,16,16,significant_positive,TRUE,0,6.16027497244204,0.586,0.034,0,0.552,
+ENSSSCG00000012101,ENSSSCG00000012101,6,Alveolar type 1-like epithelial cells (AGER/PDPN/HOPX; UPK3B flag),TRUE,FALSE,FALSE,17,17,significant_positive,TRUE,0,6.15858879050916,0.62,0.05,0,0.57,
+CNTN3,CNTN3,6,Alveolar type 1-like epithelial cells (AGER/PDPN/HOPX; UPK3B flag),TRUE,FALSE,FALSE,18,18,significant_positive,TRUE,7.57955659965173e-297,6.02959321756256,0.266,0.012,1.60102974054443e-292,0.254,
+ARHGAP28,ARHGAP28,6,Alveolar type 1-like epithelial cells (AGER/PDPN/HOPX; UPK3B flag),TRUE,FALSE,FALSE,19,19,significant_positive,TRUE,0,5.96297520628068,0.385,0.013,0,0.372,
+OMD,OMD,6,Alveolar type 1-like epithelial cells (AGER/PDPN/HOPX; UPK3B flag),TRUE,FALSE,FALSE,20,20,significant_positive,TRUE,0,5.92862766652839,0.276,0.009,0,0.267,
+COL12A1,COL12A1,6,Alveolar type 1-like epithelial cells (AGER/PDPN/HOPX; UPK3B flag),TRUE,FALSE,FALSE,21,21,significant_positive,TRUE,0,5.92795458116116,0.85,0.092,0,0.758,
+CAV2,CAV2,6,Alveolar type 1-like epithelial cells (AGER/PDPN/HOPX; UPK3B flag),TRUE,TRUE,FALSE,22,22,significant_positive,TRUE,0,5.83007288355149,0.554,0.031,0,0.523,
+TGFB2,TGFB2,6,Alveolar type 1-like epithelial cells (AGER/PDPN/HOPX; UPK3B flag),TRUE,FALSE,FALSE,23,23,significant_positive,TRUE,0,5.82114351031482,0.527,0.02,0,0.507,
+ZNF185,ZNF185,6,Alveolar type 1-like epithelial cells (AGER/PDPN/HOPX; UPK3B flag),TRUE,FALSE,FALSE,24,24,significant_positive,TRUE,0,5.66164853159714,0.405,0.025,0,0.38,
+SPOCK2,SPOCK2,6,Alveolar type 1-like epithelial cells (AGER/PDPN/HOPX; UPK3B flag),TRUE,FALSE,FALSE,25,25,significant_positive,TRUE,0,5.49149752890167,0.896,0.127,0,0.769,
+AGER,AGER,6,Alveolar type 1-like epithelial cells (AGER/PDPN/HOPX; UPK3B flag),FALSE,TRUE,FALSE,NA,29,significant_positive,TRUE,0,5.35355253143901,0.978,0.307,0,0.671,
+PDPN,PDPN,6,Alveolar type 1-like epithelial cells (AGER/PDPN/HOPX; UPK3B flag),FALSE,TRUE,FALSE,NA,246,significant_positive,TRUE,4.84746574965472e-252,2.34826171163986,0.903,0.421,1.02393019029957e-247,0.482,
+HOPX,ENSSSCG00000008898,6,Alveolar type 1-like epithelial cells (AGER/PDPN/HOPX; UPK3B flag),FALSE,TRUE,FALSE,NA,116,significant_positive,TRUE,1.48219693752374e-322,3.49101534996572,0.965,0.643,3.1308445911314e-318,0.322,
+AQP5,AQP5,6,Alveolar type 1-like epithelial cells (AGER/PDPN/HOPX; UPK3B flag),FALSE,TRUE,FALSE,NA,122,significant_positive,TRUE,0,3.41573385991453,0.783,0.2,0,0.583,
+EMP2,EMP2,6,Alveolar type 1-like epithelial cells (AGER/PDPN/HOPX; UPK3B flag),FALSE,TRUE,FALSE,NA,67,significant_positive,TRUE,0,4.2304739615739,0.811,0.153,0,0.658,
+EPCAM,EPCAM,6,Alveolar type 1-like epithelial cells (AGER/PDPN/HOPX; UPK3B flag),FALSE,FALSE,TRUE,NA,1427,significant_negative,TRUE,2.8631625258125e-45,-0.609463165810427,0.744,0.886,6.04785820327375e-41,-0.142,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+KRT8,KRT8,6,Alveolar type 1-like epithelial cells (AGER/PDPN/HOPX; UPK3B flag),FALSE,FALSE,TRUE,NA,1936,significant_negative,TRUE,2.39235401507897e-86,-1.24873456379894,0.486,0.818,5.05336938605131e-82,-0.332,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+KRT18,KRT18,6,Alveolar type 1-like epithelial cells (AGER/PDPN/HOPX; UPK3B flag),FALSE,FALSE,TRUE,NA,2268,significant_negative,TRUE,1.80393733591508e-128,-2.21603624833779,0.184,0.699,3.81045683465342e-124,-0.515,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+CLDN18,CLDN18,6,Alveolar type 1-like epithelial cells (AGER/PDPN/HOPX; UPK3B flag),FALSE,FALSE,TRUE,NA,54,significant_positive,TRUE,0,4.43179511586161,0.83,0.131,0,0.699,
+SFTPC,SFTPC,6,Alveolar type 1-like epithelial cells (AGER/PDPN/HOPX; UPK3B flag),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+MSLN,NA,6,Alveolar type 1-like epithelial cells (AGER/PDPN/HOPX; UPK3B flag),FALSE,FALSE,TRUE,NA,NA,absent_from_object,FALSE,NA,NA,NA,NA,NA,NA,No exact source RNA feature/recorded alias match; no new mapping inferred. No exported marker row; NA statistics do not imply zero expression.
+WT1,WT1,6,Alveolar type 1-like epithelial cells (AGER/PDPN/HOPX; UPK3B flag),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+CALB2,CALB2,6,Alveolar type 1-like epithelial cells (AGER/PDPN/HOPX; UPK3B flag),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+CDH1,CDH1,6,Alveolar type 1-like epithelial cells (AGER/PDPN/HOPX; UPK3B flag),FALSE,FALSE,TRUE,NA,633,significant_positive,TRUE,1.43533126365446e-91,1.28857393714868,0.856,0.809,3.03185022821732e-87,0.0469999999999999,
+VIM,VIM,6,Alveolar type 1-like epithelial cells (AGER/PDPN/HOPX; UPK3B flag),FALSE,FALSE,TRUE,NA,1970,significant_negative,TRUE,6.044080476871e-25,-1.31988623284813,0.16,0.342,1.27669111912946e-20,-0.182,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+SPARC,SPARC,6,Alveolar type 1-like epithelial cells (AGER/PDPN/HOPX; UPK3B flag),FALSE,FALSE,TRUE,NA,57,significant_positive,TRUE,0,4.33173415740249,0.778,0.178,0,0.6,
+COL1A1,COL1A1,6,Alveolar type 1-like epithelial cells (AGER/PDPN/HOPX; UPK3B flag),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+PECAM1,PECAM1,6,Alveolar type 1-like epithelial cells (AGER/PDPN/HOPX; UPK3B flag),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+CDH5,CDH5,6,Alveolar type 1-like epithelial cells (AGER/PDPN/HOPX; UPK3B flag),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+PTPRC,PTPRC,6,Alveolar type 1-like epithelial cells (AGER/PDPN/HOPX; UPK3B flag),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.

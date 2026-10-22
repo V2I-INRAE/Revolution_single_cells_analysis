@@ -1,0 +1,39 @@
+gene,feature_id,cluster,cluster_label,in_top25,in_md_identity,in_md_canonical,top25_rank,significant_rank,de_status,in_object,p_val,avg_log2FC,pct.1,pct.2,p_val_adj,pct_difference,note
+HHATL,HHATL,2,Multiciliated epithelial cells (FOXJ1/axonemal program),TRUE,FALSE,FALSE,1,1,significant_positive,TRUE,0,6.36729651655117,0.258,0.005,0,0.253,
+LRRC71,LRRC71,2,Multiciliated epithelial cells (FOXJ1/axonemal program),TRUE,FALSE,FALSE,2,2,significant_positive,TRUE,0,6.09169928448989,0.789,0.033,0,0.756,
+ENSSSCG00000004410,ENSSSCG00000004410,2,Multiciliated epithelial cells (FOXJ1/axonemal program),TRUE,FALSE,FALSE,3,3,significant_positive,TRUE,0,6.03784217208816,0.384,0.01,0,0.374,
+SLC4A5,SLC4A5,2,Multiciliated epithelial cells (FOXJ1/axonemal program),TRUE,FALSE,FALSE,4,4,significant_positive,TRUE,0,5.9860922640122,0.316,0.012,0,0.304,
+SPATA18,SPATA18,2,Multiciliated epithelial cells (FOXJ1/axonemal program),TRUE,FALSE,FALSE,5,5,significant_positive,TRUE,0,5.96493288701719,0.321,0.009,0,0.312,
+B3GNT4,B3GNT4,2,Multiciliated epithelial cells (FOXJ1/axonemal program),TRUE,FALSE,FALSE,6,6,significant_positive,TRUE,0,5.82412619812864,0.382,0.013,0,0.369,
+DNAH2,DNAH2,2,Multiciliated epithelial cells (FOXJ1/axonemal program),TRUE,FALSE,FALSE,7,7,significant_positive,TRUE,0,5.82393125739244,0.514,0.018,0,0.496,
+FRMPD2,FRMPD2,2,Multiciliated epithelial cells (FOXJ1/axonemal program),TRUE,FALSE,FALSE,8,8,significant_positive,TRUE,0,5.78854788994681,0.349,0.01,0,0.339,
+ANKFN1,ANKFN1,2,Multiciliated epithelial cells (FOXJ1/axonemal program),TRUE,FALSE,FALSE,9,9,significant_positive,TRUE,0,5.78155173293091,0.645,0.031,0,0.614,
+CCDC13,CCDC13,2,Multiciliated epithelial cells (FOXJ1/axonemal program),TRUE,FALSE,FALSE,10,10,significant_positive,TRUE,0,5.77812335335876,0.251,0.006,0,0.245,
+ENSSSCG00000033739,ENSSSCG00000033739,2,Multiciliated epithelial cells (FOXJ1/axonemal program),TRUE,FALSE,FALSE,11,11,significant_positive,TRUE,0,5.75661691556782,0.48,0.018,0,0.462,
+ENSSSCG00000032076,ENSSSCG00000032076,2,Multiciliated epithelial cells (FOXJ1/axonemal program),TRUE,FALSE,FALSE,12,12,significant_positive,TRUE,0,5.73972579958639,0.382,0.013,0,0.369,
+CFAP54,CFAP54,2,Multiciliated epithelial cells (FOXJ1/axonemal program),TRUE,TRUE,FALSE,13,13,significant_positive,TRUE,0,5.72967711013085,0.802,0.046,0,0.756,
+TEKT1,TEKT1,2,Multiciliated epithelial cells (FOXJ1/axonemal program),TRUE,TRUE,FALSE,14,14,significant_positive,TRUE,0,5.72801340182612,0.382,0.014,0,0.368,
+DTHD1,DTHD1,2,Multiciliated epithelial cells (FOXJ1/axonemal program),TRUE,FALSE,FALSE,15,15,significant_positive,TRUE,0,5.70245566536906,0.818,0.039,0,0.779,
+RGS22,RGS22,2,Multiciliated epithelial cells (FOXJ1/axonemal program),TRUE,FALSE,FALSE,16,16,significant_positive,TRUE,0,5.67385512685351,0.47,0.016,0,0.454,
+ENSSSCG00000046734,ENSSSCG00000046734,2,Multiciliated epithelial cells (FOXJ1/axonemal program),TRUE,FALSE,FALSE,17,17,significant_positive,TRUE,0,5.6575978786129,0.267,0.007,0,0.26,
+DRC11,DRC11,2,Multiciliated epithelial cells (FOXJ1/axonemal program),TRUE,FALSE,FALSE,18,18,significant_positive,TRUE,0,5.63404529803377,0.758,0.033,0,0.725,
+STK33,STK33,2,Multiciliated epithelial cells (FOXJ1/axonemal program),TRUE,FALSE,FALSE,19,19,significant_positive,TRUE,0,5.63258627717669,0.67,0.034,0,0.636,
+DAW1,DAW1,2,Multiciliated epithelial cells (FOXJ1/axonemal program),TRUE,FALSE,FALSE,20,20,significant_positive,TRUE,0,5.62770066429182,0.404,0.012,0,0.392,
+DNAI1,DNAI1,2,Multiciliated epithelial cells (FOXJ1/axonemal program),TRUE,TRUE,FALSE,21,21,significant_positive,TRUE,0,5.62170609944527,0.42,0.015,0,0.405,
+DNAH5,DNAH5,2,Multiciliated epithelial cells (FOXJ1/axonemal program),TRUE,TRUE,FALSE,22,22,significant_positive,TRUE,0,5.61598512733085,0.693,0.034,0,0.659,
+CCDC175,CCDC175,2,Multiciliated epithelial cells (FOXJ1/axonemal program),TRUE,FALSE,FALSE,23,23,significant_positive,TRUE,0,5.61309864864534,0.544,0.022,0,0.522,
+ARMC3,ARMC3,2,Multiciliated epithelial cells (FOXJ1/axonemal program),TRUE,FALSE,FALSE,24,24,significant_positive,TRUE,0,5.60962727528004,0.614,0.023,0,0.591,
+ENSSSCG00000021448,ENSSSCG00000021448,2,Multiciliated epithelial cells (FOXJ1/axonemal program),TRUE,FALSE,FALSE,25,25,significant_positive,TRUE,0,5.60595207255629,0.34,0.011,0,0.329,
+FOXJ1,FOXJ1,2,Multiciliated epithelial cells (FOXJ1/axonemal program),FALSE,TRUE,FALSE,NA,213,significant_positive,TRUE,0,4.62495051039964,0.753,0.065,0,0.688,
+RFX3,RFX3,2,Multiciliated epithelial cells (FOXJ1/axonemal program),FALSE,TRUE,FALSE,NA,380,significant_positive,TRUE,0,3.17343478456813,0.461,0.086,0,0.375,
+CFAP144,ENSSSCG00000003954,2,Multiciliated epithelial cells (FOXJ1/axonemal program),FALSE,TRUE,FALSE,NA,40,significant_positive,TRUE,0,5.46481827697754,0.394,0.014,0,0.38,
+TPPP3,TPPP3,2,Multiciliated epithelial cells (FOXJ1/axonemal program),FALSE,TRUE,FALSE,NA,217,significant_positive,TRUE,0,4.60326809677018,0.829,0.082,0,0.747,
+EPCAM,EPCAM,2,Multiciliated epithelial cells (FOXJ1/axonemal program),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+KRT8,KRT8,2,Multiciliated epithelial cells (FOXJ1/axonemal program),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+KRT18,KRT18,2,Multiciliated epithelial cells (FOXJ1/axonemal program),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+PIFO,NA,2,Multiciliated epithelial cells (FOXJ1/axonemal program),FALSE,FALSE,TRUE,NA,NA,absent_from_object,FALSE,NA,NA,NA,NA,NA,NA,No exact source RNA feature/recorded alias match; no new mapping inferred. No exported marker row; NA statistics do not imply zero expression.
+SCGB1A1,SCGB1A1,2,Multiciliated epithelial cells (FOXJ1/axonemal program),FALSE,FALSE,TRUE,NA,3122,significant_negative,TRUE,4.16457096762822e-118,-3.75103756020086,0.333,0.507,8.79682325492109e-114,-0.174,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+SFTPC,SFTPC,2,Multiciliated epithelial cells (FOXJ1/axonemal program),FALSE,FALSE,TRUE,NA,3135,significant_negative,TRUE,4.64951259020793e-140,-7.48345487984792,0.029,0.266,9.82116544429621e-136,-0.237,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+POU2F3,POU2F3,2,Multiciliated epithelial cells (FOXJ1/axonemal program),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+FOXI1,FOXI1,2,Multiciliated epithelial cells (FOXJ1/axonemal program),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+PTPRC,PTPRC,2,Multiciliated epithelial cells (FOXJ1/axonemal program),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.

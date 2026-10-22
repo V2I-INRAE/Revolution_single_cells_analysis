@@ -1,0 +1,56 @@
+gene,feature_id,cluster,cluster_label,in_top25,in_md_identity,in_md_canonical,top25_rank,significant_rank,de_status,in_object,p_val,avg_log2FC,pct.1,pct.2,p_val_adj,pct_difference,note
+RNF128,RNF128,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),TRUE,FALSE,FALSE,1,1,significant_positive,TRUE,0,7.78181615463845,0.554,0.007,0,0.547,
+IGF1,IGF1,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),TRUE,FALSE,FALSE,2,2,significant_positive,TRUE,0,7.62928444509724,0.266,0.001,0,0.265,
+DNASE1L3,DNASE1L3,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),TRUE,FALSE,FALSE,3,3,significant_positive,TRUE,0,7.55225354680072,0.362,0.002,0,0.36,
+ABCA9,ABCA9,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),TRUE,FALSE,FALSE,4,4,significant_positive,TRUE,0,7.23052738765444,0.476,0.006,0,0.47,
+PID1,PID1,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),TRUE,FALSE,FALSE,5,5,significant_positive,TRUE,0,6.70227016858847,0.409,0.004,0,0.405,
+ABCA6,ABCA6,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),TRUE,FALSE,FALSE,6,6,significant_positive,TRUE,0,6.49096104733247,0.259,0.004,0,0.255,
+JAML,JAML,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),TRUE,FALSE,FALSE,7,7,significant_positive,TRUE,0,6.14438553884355,0.609,0.018,0,0.591,
+CCL2,CCL2,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),TRUE,FALSE,FALSE,8,8,significant_positive,TRUE,0,6.09983621272769,0.684,0.021,0,0.663,
+RARRES1,RARRES1,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),TRUE,FALSE,FALSE,9,9,significant_positive,TRUE,0,5.58948490161963,0.271,0.006,0,0.265,
+HTRA1,HTRA1,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),TRUE,FALSE,FALSE,10,10,significant_positive,TRUE,0,5.50162333022131,0.623,0.021,0,0.602,
+TTLL7,TTLL7,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),TRUE,FALSE,FALSE,11,11,significant_positive,TRUE,0,5.49701378159136,0.323,0.012,0,0.311,
+ENSSSCG00000018050,ENSSSCG00000018050,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),TRUE,FALSE,FALSE,12,12,significant_positive,TRUE,0,5.28944913090481,0.369,0.011,0,0.358,
+FNBP1L,FNBP1L,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),TRUE,FALSE,FALSE,13,13,significant_positive,TRUE,0,5.17732392821498,0.284,0.012,0,0.272,
+LOC100524972,ENSSSCG00000013100,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),TRUE,FALSE,FALSE,14,14,significant_positive,TRUE,0,5.17114271931516,0.76,0.039,0,0.721,
+ACP5,ACP5,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),TRUE,FALSE,FALSE,15,15,significant_positive,TRUE,0,4.96580557463372,0.501,0.025,0,0.476,
+MAF,MAF,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),TRUE,TRUE,FALSE,16,16,significant_positive,TRUE,0,4.91739303404198,0.784,0.078,0,0.706,
+ENSSSCG00000059852,ENSSSCG00000059852,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),TRUE,FALSE,FALSE,17,17,significant_positive,TRUE,0,4.75539986748076,0.575,0.041,0,0.534,
+ENSSSCG00000013788,ENSSSCG00000013788,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),TRUE,FALSE,FALSE,18,18,significant_positive,TRUE,0,4.73807474847839,0.343,0.009,0,0.334,
+CST3,CST3,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),TRUE,FALSE,FALSE,19,19,significant_positive,TRUE,0,4.64138395306246,0.994,0.822,0,0.172,
+LOC100525275 (review),ENSSSCG00000051873,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),TRUE,FALSE,FALSE,20,20,significant_positive,TRUE,0,4.29597523606715,0.644,0.048,0,0.596,Feature label retained from this producer's frozen mapping; annotation remains under review.
+CCL8,CCL8,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),TRUE,TRUE,FALSE,21,21,significant_positive,TRUE,0,4.28392249648875,0.75,0.112,0,0.638,
+FCGR2B,ENSSSCG00000006350,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),TRUE,TRUE,FALSE,22,22,significant_positive,TRUE,0,4.24005019010587,0.861,0.094,0,0.767,
+CCND2,CCND2,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),TRUE,FALSE,FALSE,23,23,significant_positive,TRUE,0,4.2344667704012,0.436,0.023,0,0.413,
+CADM1,CADM1,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),TRUE,FALSE,FALSE,24,24,significant_positive,TRUE,0,4.19088851049676,0.561,0.047,0,0.514,
+ENSSSCG00000007435,ENSSSCG00000007435,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),TRUE,FALSE,FALSE,25,25,significant_positive,TRUE,0,4.18761336286978,0.42,0.054,0,0.366,
+C1QA,C1QA,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),FALSE,TRUE,FALSE,NA,126,significant_positive,TRUE,0,2.05583257408567,0.935,0.735,0,0.2,
+C1QB,C1QB,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),FALSE,TRUE,FALSE,NA,163,significant_positive,TRUE,0,1.76878499739179,0.923,0.657,0,0.266,
+C1QC,C1QC,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),FALSE,TRUE,FALSE,NA,309,significant_positive,TRUE,0,1.19781320124334,0.928,0.753,0,0.175,
+CCL14,CCL14,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),FALSE,TRUE,FALSE,NA,32,significant_positive,TRUE,0,3.92972473293808,0.851,0.345,0,0.506,
+MS4A7,MS4A7,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),FALSE,TRUE,FALSE,NA,45,significant_positive,TRUE,0,3.40973521492286,0.57,0.058,0,0.512,
+CSF1R,CSF1R,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),FALSE,TRUE,FALSE,NA,217,significant_positive,TRUE,0,1.50447329201816,0.701,0.348,0,0.353,
+CD163,CD163,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),FALSE,TRUE,FALSE,NA,788,significant_positive,TRUE,1.96631922849182e-232,0.63350319289373,0.961,0.929,4.15345610634328e-228,0.0319999999999999,
+MRC1,MRC1,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),FALSE,TRUE,FALSE,NA,385,significant_positive,TRUE,0,1.03727835097123,0.947,0.732,0,0.215,
+PTPRC,PTPRC,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),FALSE,FALSE,TRUE,NA,2666,significant_negative,TRUE,0,-1.36585132659117,0.771,0.937,0,-0.166,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+TYROBP,TYROBP,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),FALSE,FALSE,TRUE,NA,1534,significant_negative,TRUE,4.37926480484226e-151,-0.336382035653171,0.942,0.947,9.25032104726831e-147,-0.005,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+CD68,CD68,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+CD14,CD14,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),FALSE,FALSE,TRUE,NA,420,significant_positive,TRUE,0,0.983832224920355,0.801,0.536,0,0.265,
+FCGR3A,ENSSSCG00000036618,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),FALSE,FALSE,TRUE,NA,140,significant_positive,TRUE,0,1.94190376074499,0.988,0.774,0,0.214,
+LYZ,LYZ,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),FALSE,FALSE,TRUE,NA,2936,significant_negative,TRUE,0,-2.7282228381661,0.29,0.689,0,-0.399,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+CD74,CD74,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),FALSE,FALSE,TRUE,NA,223,significant_positive,TRUE,0,1.47940288171206,0.994,0.933,0,0.0609999999999999,
+HLA-DRA,HLA-DRA,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),FALSE,FALSE,TRUE,NA,285,significant_positive,TRUE,0,1.27838454712322,0.969,0.881,0,0.088,
+PPARG,PPARG,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),FALSE,FALSE,TRUE,NA,2219,significant_negative,TRUE,1.15673575686983e-245,-0.703540759587849,0.539,0.741,2.44337293923613e-241,-0.202,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+FABP4,FABP4,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+SIGLEC1,SIGLEC1,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),FALSE,FALSE,TRUE,NA,2784,significant_negative,TRUE,0,-1.72521443860949,0.216,0.614,0,-0.398,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+FCN2,FCN2,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),FALSE,FALSE,TRUE,NA,3077,significant_negative,TRUE,0,-7.6284734064505,0.014,0.739,0,-0.725,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+MARCO,MARCO,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+TIMD4,TIMD4,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+VSIG4,VSIG4,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+FCN1,ENSSSCG00000029414,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),FALSE,FALSE,TRUE,NA,3028,significant_negative,TRUE,0,-4.46703055875992,0.068,0.817,0,-0.749,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+IL1B,ENSSSCG00000039214,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),FALSE,FALSE,TRUE,NA,1853,significant_negative,TRUE,9.43843131161274e-228,-0.485122357893617,0.44,0.212,1.99367984595196e-223,0.228,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+TCF4,TCF4,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),FALSE,FALSE,TRUE,NA,83,significant_positive,TRUE,0,2.5655080743404,0.412,0.073,0,0.339,
+FLT3,FLT3,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+XCR1,XCR1,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+FCER1A,FCER1A,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+EPCAM,EPCAM,3,C1Q/CCL8/CCL14 macrophage-like cells (location unresolved),FALSE,FALSE,TRUE,NA,3053,significant_negative,TRUE,0,-5.47258143711553,0.041,0.611,0,-0.57,"Context/diagnostic gene, not a positively enriched marker in this comparison."

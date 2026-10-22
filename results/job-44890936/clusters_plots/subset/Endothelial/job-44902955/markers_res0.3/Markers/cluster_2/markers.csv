@@ -1,0 +1,46 @@
+gene,feature_id,cluster,cluster_label,in_top25,in_md_identity,in_md_canonical,top25_rank,significant_rank,de_status,in_object,p_val,avg_log2FC,pct.1,pct.2,p_val_adj,pct_difference,note
+ACKR1,ACKR1,2,ACKR1-positive venous-like endothelium with inflammatory activation,TRUE,TRUE,FALSE,1,1,significant_positive,TRUE,0,6.71738639382801,0.899,0.017,0,0.882,
+IL6,IL6,2,ACKR1-positive venous-like endothelium with inflammatory activation,TRUE,TRUE,FALSE,2,2,significant_positive,TRUE,0,5.13519745048275,0.554,0.052,0,0.502,
+OLR1,OLR1,2,ACKR1-positive venous-like endothelium with inflammatory activation,TRUE,FALSE,FALSE,3,3,significant_positive,TRUE,0,5.00462385775654,0.385,0.044,0,0.341,
+MATN2,MATN2,2,ACKR1-positive venous-like endothelium with inflammatory activation,TRUE,FALSE,FALSE,4,4,significant_positive,TRUE,0,4.86943632419684,0.398,0.011,0,0.387,
+MME,MME,2,ACKR1-positive venous-like endothelium with inflammatory activation,TRUE,FALSE,FALSE,5,5,significant_positive,TRUE,0,3.96660922493602,0.283,0.017,0,0.266,
+LHX6,LHX6,2,ACKR1-positive venous-like endothelium with inflammatory activation,TRUE,FALSE,FALSE,6,6,significant_positive,TRUE,0,3.89344699826218,0.431,0.022,0,0.409,
+CCL2,CCL2,2,ACKR1-positive venous-like endothelium with inflammatory activation,TRUE,TRUE,FALSE,7,7,significant_positive,TRUE,0,3.82512234944404,0.357,0.066,0,0.291,
+ADAMTS4,ADAMTS4,2,ACKR1-positive venous-like endothelium with inflammatory activation,TRUE,FALSE,FALSE,8,8,significant_positive,TRUE,0,3.59692411113492,0.545,0.125,0,0.42,
+TRAF1,TRAF1,2,ACKR1-positive venous-like endothelium with inflammatory activation,TRUE,FALSE,FALSE,9,9,significant_positive,TRUE,0,3.49099526476307,0.468,0.049,0,0.419,
+ART3,ART3,2,ACKR1-positive venous-like endothelium with inflammatory activation,TRUE,FALSE,FALSE,10,10,significant_positive,TRUE,0,3.42143674834024,0.379,0.035,0,0.344,
+CHI3L2,CHI3L2,2,ACKR1-positive venous-like endothelium with inflammatory activation,TRUE,FALSE,FALSE,11,11,significant_positive,TRUE,0,3.39091709455203,0.324,0.042,0,0.282,
+OMD,OMD,2,ACKR1-positive venous-like endothelium with inflammatory activation,TRUE,FALSE,FALSE,12,12,significant_positive,TRUE,0,3.36294795597194,0.601,0.091,0,0.51,
+SELE,ENSSSCG00000006286,2,ACKR1-positive venous-like endothelium with inflammatory activation,TRUE,TRUE,FALSE,13,13,significant_positive,TRUE,0,3.23351197439564,0.589,0.099,0,0.49,
+F3,F3,2,ACKR1-positive venous-like endothelium with inflammatory activation,TRUE,FALSE,FALSE,14,14,significant_positive,TRUE,0,3.2176137327845,0.445,0.062,0,0.383,
+DUSP23,DUSP23,2,ACKR1-positive venous-like endothelium with inflammatory activation,TRUE,FALSE,FALSE,15,15,significant_positive,TRUE,0,3.20294786162148,0.369,0.044,0,0.325,
+ADGRG6,ADGRG6,2,ACKR1-positive venous-like endothelium with inflammatory activation,TRUE,FALSE,FALSE,16,16,significant_positive,TRUE,0,3.14237848279308,0.842,0.13,0,0.712,
+VCAM1,VCAM1,2,ACKR1-positive venous-like endothelium with inflammatory activation,TRUE,TRUE,FALSE,17,17,significant_positive,TRUE,0,3.12558513405939,0.834,0.132,0,0.702,
+CYP1B1,CYP1B1,2,ACKR1-positive venous-like endothelium with inflammatory activation,TRUE,FALSE,FALSE,18,18,significant_positive,TRUE,0,3.08882667312113,0.374,0.074,0,0.3,
+SELP,SELP,2,ACKR1-positive venous-like endothelium with inflammatory activation,TRUE,TRUE,FALSE,19,19,significant_positive,TRUE,0,3.05749445755049,0.65,0.096,0,0.554,
+ENSSSCG00000028341,ENSSSCG00000028341,2,ACKR1-positive venous-like endothelium with inflammatory activation,TRUE,FALSE,FALSE,20,20,significant_positive,TRUE,0,3.03428872443048,0.256,0.034,0,0.222,
+MYLK,MYLK,2,ACKR1-positive venous-like endothelium with inflammatory activation,TRUE,FALSE,FALSE,21,21,significant_positive,TRUE,0,3.01996502392985,0.268,0.027,0,0.241,
+F2R,F2R,2,ACKR1-positive venous-like endothelium with inflammatory activation,TRUE,FALSE,FALSE,22,22,significant_positive,TRUE,0,2.98691376656472,0.31,0.037,0,0.273,
+CCN2,CCN2,2,ACKR1-positive venous-like endothelium with inflammatory activation,TRUE,FALSE,FALSE,23,23,significant_positive,TRUE,2.66795448754273e-322,2.95448161308139,0.66,0.316,5.63552026403651e-318,0.344,
+CXCL9,CXCL9,2,ACKR1-positive venous-like endothelium with inflammatory activation,TRUE,TRUE,FALSE,24,24,significant_positive,TRUE,0,2.94055701882412,0.659,0.12,0,0.539,
+TSPAN11,TSPAN11,2,ACKR1-positive venous-like endothelium with inflammatory activation,TRUE,FALSE,FALSE,25,25,significant_positive,TRUE,0,2.87866741685348,0.482,0.09,0,0.392,
+PTPRB,PTPRB,2,ACKR1-positive venous-like endothelium with inflammatory activation,FALSE,TRUE,FALSE,NA,104,significant_positive,TRUE,0,1.68168630027523,0.986,0.604,0,0.382,
+VWF,VWF,2,ACKR1-positive venous-like endothelium with inflammatory activation,FALSE,TRUE,FALSE,NA,52,significant_positive,TRUE,0,2.19025300951091,0.941,0.563,0,0.378,
+PECAM1,PECAM1,2,ACKR1-positive venous-like endothelium with inflammatory activation,FALSE,FALSE,TRUE,NA,436,significant_positive,TRUE,1.0920202485256e-283,0.593878959428058,0.997,0.982,2.30667437096062e-279,0.015,
+CDH5,CDH5,2,ACKR1-positive venous-like endothelium with inflammatory activation,FALSE,FALSE,TRUE,NA,791,significant_negative,TRUE,1.66658634363021e-12,-0.297757564388113,0.899,0.849,3.5203303336501e-08,0.05,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+CLDN5,CLDN5,2,ACKR1-positive venous-like endothelium with inflammatory activation,FALSE,FALSE,TRUE,NA,518,significant_positive,TRUE,4.73704929067467e-82,0.467739384309049,0.905,0.774,1.00060692166921e-77,0.131,
+EMCN,EMCN,2,ACKR1-positive venous-like endothelium with inflammatory activation,FALSE,FALSE,TRUE,NA,413,significant_positive,TRUE,9.97173828816438e-146,0.625074174482777,0.876,0.668,2.10633027860896e-141,0.208,
+PLVAP,PLVAP,2,ACKR1-positive venous-like endothelium with inflammatory activation,FALSE,FALSE,TRUE,NA,66,significant_positive,TRUE,0,2.02539464798791,0.394,0.083,0,0.311,
+COL15A1,COL15A1,2,ACKR1-positive venous-like endothelium with inflammatory activation,FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+VWA1,VWA1,2,ACKR1-positive venous-like endothelium with inflammatory activation,FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+NR2F2,NR2F2,2,ACKR1-positive venous-like endothelium with inflammatory activation,FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+EPHB4,EPHB4,2,ACKR1-positive venous-like endothelium with inflammatory activation,FALSE,FALSE,TRUE,NA,NA,not_significant,TRUE,0.0733024991593671,-0.361702023006545,0.412,0.396,1,0.016,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+EFNB2,EFNB2,2,ACKR1-positive venous-like endothelium with inflammatory activation,FALSE,FALSE,TRUE,NA,1296,significant_negative,TRUE,2.48614189160071e-53,-1.65830233775711,0.317,0.426,5.25147751762817e-49,-0.109,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+GJA5,GJA5,2,ACKR1-positive venous-like endothelium with inflammatory activation,FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+SOX17,SOX17,2,ACKR1-positive venous-like endothelium with inflammatory activation,FALSE,FALSE,TRUE,NA,217,significant_positive,TRUE,1.30102765369644e-228,1.07252159829065,0.463,0.152,2.74816071290299e-224,0.311,
+CCL21,CCL21,2,ACKR1-positive venous-like endothelium with inflammatory activation,FALSE,FALSE,TRUE,NA,1417,significant_negative,TRUE,0,-8.19596656387821,0.028,0.47,0,-0.442,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+PROX1,PROX1,2,ACKR1-positive venous-like endothelium with inflammatory activation,FALSE,FALSE,TRUE,NA,1411,significant_negative,TRUE,2.20817952032504e-209,-7.65940171260901,0.005,0.293,4.66433760078257e-205,-0.288,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+CXCL10,CXCL10,2,ACKR1-positive venous-like endothelium with inflammatory activation,FALSE,FALSE,TRUE,NA,29,significant_positive,TRUE,0,2.79753507993297,0.803,0.198,0,0.605,
+IFIT1,IFIT1,2,ACKR1-positive venous-like endothelium with inflammatory activation,FALSE,FALSE,TRUE,NA,625,significant_positive,TRUE,5.85493629225348e-22,0.365956290396046,0.458,0.34,1.2367381930127e-17,0.118,
+ISG15,ISG15,2,ACKR1-positive venous-like endothelium with inflammatory activation,FALSE,FALSE,TRUE,NA,142,significant_positive,TRUE,3.62602919899283e-143,1.40971170215451,0.509,0.264,7.65926147703255e-139,0.245,
+PTPRC,PTPRC,2,ACKR1-positive venous-like endothelium with inflammatory activation,FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.

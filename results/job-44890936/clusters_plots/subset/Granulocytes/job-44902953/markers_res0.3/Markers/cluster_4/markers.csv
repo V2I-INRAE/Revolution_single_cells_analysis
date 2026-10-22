@@ -1,0 +1,45 @@
+gene,feature_id,cluster,cluster_label,in_top25,in_md_identity,in_md_canonical,top25_rank,significant_rank,de_status,in_object,p_val,avg_log2FC,pct.1,pct.2,p_val_adj,pct_difference,note
+EPX,EPX,4,Eosinophil-like granulocytes (EPX/CCR3),TRUE,TRUE,FALSE,1,1,significant_positive,TRUE,0,7.24441617208286,0.299,0.003,0,0.296,
+ENSSSCG00000031170,ENSSSCG00000031170,4,Eosinophil-like granulocytes (EPX/CCR3),TRUE,FALSE,FALSE,2,2,significant_positive,TRUE,0,5.26805849038767,0.789,0.101,0,0.688,
+LOC100522787,ENSSSCG00000026402,4,Eosinophil-like granulocytes (EPX/CCR3),TRUE,TRUE,FALSE,3,3,significant_positive,TRUE,0,5.07109066738566,0.259,0.01,0,0.249,
+ZBTB16,ZBTB16,4,Eosinophil-like granulocytes (EPX/CCR3),TRUE,FALSE,FALSE,4,4,significant_positive,TRUE,0,4.83795347195579,0.764,0.065,0,0.699,
+ENSSSCG00000044205,ENSSSCG00000044205,4,Eosinophil-like granulocytes (EPX/CCR3),TRUE,FALSE,FALSE,5,5,significant_positive,TRUE,0,4.74118169016827,0.484,0.025,0,0.459,
+ENSSSCG00000061874,ENSSSCG00000061874,4,Eosinophil-like granulocytes (EPX/CCR3),TRUE,FALSE,FALSE,6,6,significant_positive,TRUE,0,4.6550470478111,0.313,0.015,0,0.298,
+FAR1,FAR1,4,Eosinophil-like granulocytes (EPX/CCR3),TRUE,FALSE,FALSE,7,7,significant_positive,TRUE,0,4.61144886391201,0.477,0.034,0,0.443,
+ENSSSCG00000034853,ENSSSCG00000034853,4,Eosinophil-like granulocytes (EPX/CCR3),TRUE,FALSE,FALSE,8,8,significant_positive,TRUE,0,4.40157362546437,0.514,0.035,0,0.479,
+PPA2,PPA2,4,Eosinophil-like granulocytes (EPX/CCR3),TRUE,FALSE,FALSE,9,9,significant_positive,TRUE,0,4.35026561665553,0.309,0.025,0,0.284,
+IGF1R,IGF1R,4,Eosinophil-like granulocytes (EPX/CCR3),TRUE,TRUE,FALSE,10,10,significant_positive,TRUE,0,4.30261332333821,0.441,0.032,0,0.409,
+ENSSSCG00000059334,ENSSSCG00000059334,4,Eosinophil-like granulocytes (EPX/CCR3),TRUE,FALSE,FALSE,11,11,significant_positive,TRUE,0,4.28166255302348,0.331,0.019,0,0.312,
+LOC100158011,ENSSSCG00000035296,4,Eosinophil-like granulocytes (EPX/CCR3),TRUE,TRUE,FALSE,12,12,significant_positive,TRUE,0,4.28032437566777,0.276,0.012,0,0.264,
+CCR3,CCR3,4,Eosinophil-like granulocytes (EPX/CCR3),TRUE,TRUE,FALSE,13,13,significant_positive,TRUE,0,4.09967620524516,0.31,0.018,0,0.292,
+OR51E1,OR51E1,4,Eosinophil-like granulocytes (EPX/CCR3),TRUE,FALSE,FALSE,14,14,significant_positive,TRUE,0,3.97193408834721,0.499,0.029,0,0.47,
+CLNK,CLNK,4,Eosinophil-like granulocytes (EPX/CCR3),TRUE,TRUE,FALSE,15,15,significant_positive,TRUE,0,3.88695974937894,0.397,0.031,0,0.366,
+STAP1,STAP1,4,Eosinophil-like granulocytes (EPX/CCR3),TRUE,FALSE,FALSE,16,16,significant_positive,TRUE,0,3.76271788399891,0.263,0.03,0,0.233,
+ALDH3A2,ALDH3A2,4,Eosinophil-like granulocytes (EPX/CCR3),TRUE,FALSE,FALSE,17,17,significant_positive,TRUE,0,3.68994072178031,0.517,0.062,0,0.455,
+GRK3,GRK3,4,Eosinophil-like granulocytes (EPX/CCR3),TRUE,FALSE,FALSE,18,18,significant_positive,TRUE,0,3.67469917724282,0.463,0.052,0,0.411,
+ZDHHC9,ZDHHC9,4,Eosinophil-like granulocytes (EPX/CCR3),TRUE,FALSE,FALSE,19,19,significant_positive,TRUE,0,3.62781254058922,0.265,0.022,0,0.243,
+PAFAH2,PAFAH2,4,Eosinophil-like granulocytes (EPX/CCR3),TRUE,FALSE,FALSE,20,20,significant_positive,TRUE,0,3.58762501014184,0.47,0.05,0,0.42,
+MFN2,MFN2,4,Eosinophil-like granulocytes (EPX/CCR3),TRUE,FALSE,FALSE,21,21,significant_positive,TRUE,0,3.57551371180499,0.333,0.032,0,0.301,
+PYGL,PYGL,4,Eosinophil-like granulocytes (EPX/CCR3),TRUE,FALSE,FALSE,22,22,significant_positive,TRUE,0,3.5616337911314,0.659,0.097,0,0.562,
+ST3GAL1,ST3GAL1,4,Eosinophil-like granulocytes (EPX/CCR3),TRUE,FALSE,FALSE,23,23,significant_positive,TRUE,0,3.51620133251917,0.25,0.023,0,0.227,
+TMEM30A,TMEM30A,4,Eosinophil-like granulocytes (EPX/CCR3),TRUE,FALSE,FALSE,24,24,significant_positive,TRUE,0,3.49575586781976,0.604,0.102,0,0.502,
+MIDEAS,MIDEAS,4,Eosinophil-like granulocytes (EPX/CCR3),TRUE,FALSE,FALSE,25,25,significant_positive,TRUE,0,3.45820234372119,0.695,0.125,0,0.57,
+ALOX5,ALOX5,4,Eosinophil-like granulocytes (EPX/CCR3),FALSE,TRUE,FALSE,NA,26,significant_positive,TRUE,0,3.3788777038954,0.666,0.088,0,0.578,
+PTPRC,PTPRC,4,Eosinophil-like granulocytes (EPX/CCR3),FALSE,FALSE,TRUE,NA,549,significant_positive,TRUE,6.05974548536371e-225,0.771556954324449,0.856,0.657,1.28000003887338e-220,0.199,
+PRG2,NA,4,Eosinophil-like granulocytes (EPX/CCR3),FALSE,FALSE,TRUE,NA,NA,absent_from_object,FALSE,NA,NA,NA,NA,NA,NA,No exact source RNA feature/recorded alias match; no new mapping inferred. No exported marker row; NA statistics do not imply zero expression.
+PRG3,NA,4,Eosinophil-like granulocytes (EPX/CCR3),FALSE,FALSE,TRUE,NA,NA,absent_from_object,FALSE,NA,NA,NA,NA,NA,NA,No exact source RNA feature/recorded alias match; no new mapping inferred. No exported marker row; NA statistics do not imply zero expression.
+RNASE2,NA,4,Eosinophil-like granulocytes (EPX/CCR3),FALSE,FALSE,TRUE,NA,NA,absent_from_object,FALSE,NA,NA,NA,NA,NA,NA,No exact source RNA feature/recorded alias match; no new mapping inferred. No exported marker row; NA statistics do not imply zero expression.
+RNASE3,NA,4,Eosinophil-like granulocytes (EPX/CCR3),FALSE,FALSE,TRUE,NA,NA,absent_from_object,FALSE,NA,NA,NA,NA,NA,NA,No exact source RNA feature/recorded alias match; no new mapping inferred. No exported marker row; NA statistics do not imply zero expression.
+CLC,NA,4,Eosinophil-like granulocytes (EPX/CCR3),FALSE,FALSE,TRUE,NA,NA,absent_from_object,FALSE,NA,NA,NA,NA,NA,NA,No exact source RNA feature/recorded alias match; no new mapping inferred. No exported marker row; NA statistics do not imply zero expression.
+IL5RA,IL5RA,4,Eosinophil-like granulocytes (EPX/CCR3),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+SIGLEC8,NA,4,Eosinophil-like granulocytes (EPX/CCR3),FALSE,FALSE,TRUE,NA,NA,absent_from_object,FALSE,NA,NA,NA,NA,NA,NA,No exact source RNA feature/recorded alias match; no new mapping inferred. No exported marker row; NA statistics do not imply zero expression.
+PTGDR2,PTGDR2,4,Eosinophil-like granulocytes (EPX/CCR3),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+GATA1,GATA1,4,Eosinophil-like granulocytes (EPX/CCR3),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+CSF3R,CSF3R,4,Eosinophil-like granulocytes (EPX/CCR3),FALSE,FALSE,TRUE,NA,1029,significant_negative,TRUE,0,-3.82018266818538,0.078,0.854,0,-0.776,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+LTF,LTF,4,Eosinophil-like granulocytes (EPX/CCR3),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+S100A8,S100A8,4,Eosinophil-like granulocytes (EPX/CCR3),FALSE,FALSE,TRUE,NA,1040,significant_negative,TRUE,1.96312836838622e-229,-5.3377562673296,0.022,0.261,4.14671605254222e-225,-0.239,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+MS4A2,MS4A2,4,Eosinophil-like granulocytes (EPX/CCR3),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+KIT,KIT,4,Eosinophil-like granulocytes (EPX/CCR3),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+FCER1A,FCER1A,4,Eosinophil-like granulocytes (EPX/CCR3),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+HDC,HDC,4,Eosinophil-like granulocytes (EPX/CCR3),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+HPGDS,HPGDS,4,Eosinophil-like granulocytes (EPX/CCR3),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.

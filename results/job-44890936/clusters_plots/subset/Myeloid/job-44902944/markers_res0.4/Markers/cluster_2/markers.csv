@@ -1,0 +1,60 @@
+gene,feature_id,cluster,cluster_label,in_top25,in_md_identity,in_md_canonical,top25_rank,significant_rank,de_status,in_object,p_val,avg_log2FC,pct.1,pct.2,p_val_adj,pct_difference,note
+NREP,NREP,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),TRUE,TRUE,FALSE,1,1,significant_positive,TRUE,0,2.87329214749303,0.615,0.135,0,0.48,
+ENSSSCG00000053058,ENSSSCG00000053058,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),TRUE,FALSE,FALSE,2,2,significant_positive,TRUE,0,2.00516277465854,0.521,0.14,0,0.381,
+GPR82,GPR82,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),TRUE,FALSE,FALSE,3,3,significant_positive,TRUE,0,1.95436085959856,0.666,0.186,0,0.48,
+PPBP,PPBP,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),TRUE,FALSE,TRUE,4,4,significant_positive,TRUE,0,1.86052049640132,0.847,0.36,0,0.487,Positive diagnostic: 84.7% vs 36.0%; not proof of platelet admixture or doublets.
+ENSSSCG00000050944,ENSSSCG00000050944,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),TRUE,FALSE,FALSE,5,5,significant_positive,TRUE,0,1.82704038676803,0.306,0.076,0,0.23,
+UPP1,UPP1,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),TRUE,FALSE,FALSE,6,6,significant_positive,TRUE,0,1.73696361437324,0.886,0.368,0,0.518,
+ENSSSCG00000034000,ENSSSCG00000034000,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),TRUE,FALSE,FALSE,7,7,significant_positive,TRUE,0,1.68901750641522,0.564,0.169,0,0.395,
+WDR93,WDR93,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),TRUE,FALSE,FALSE,8,8,significant_positive,TRUE,0,1.68376576306623,0.334,0.089,0,0.245,
+TPPP3,TPPP3,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),TRUE,FALSE,FALSE,9,9,significant_positive,TRUE,0,1.67949160763103,0.401,0.125,0,0.276,
+RSAD2,RSAD2,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),TRUE,TRUE,FALSE,10,10,significant_positive,TRUE,0,1.6451888819694,0.293,0.11,0,0.183,
+GFRA3,GFRA3,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),TRUE,FALSE,FALSE,11,11,significant_positive,TRUE,0,1.62220133484272,0.325,0.098,0,0.227,
+COL15A1,COL15A1,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),TRUE,FALSE,FALSE,12,12,significant_positive,TRUE,0,1.60039686743327,0.547,0.17,0,0.377,
+XDH,XDH,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),TRUE,FALSE,FALSE,13,13,significant_positive,TRUE,0,1.5989490789006,0.647,0.232,0,0.415,
+CYP7A1,CYP7A1,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),TRUE,FALSE,FALSE,14,14,significant_positive,TRUE,0,1.58581353639722,0.909,0.379,0,0.53,
+ALOX5,ALOX5,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),TRUE,FALSE,FALSE,15,15,significant_positive,TRUE,0,1.58043208663908,0.687,0.227,0,0.46,
+NAAA,NAAA,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),TRUE,FALSE,FALSE,16,16,significant_positive,TRUE,0,1.58007669000655,0.941,0.536,0,0.405,
+DOK6,DOK6,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),TRUE,FALSE,FALSE,17,17,significant_positive,TRUE,0,1.57999014247841,0.42,0.124,0,0.296,
+P2RY14,P2RY14,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),TRUE,FALSE,FALSE,18,18,significant_positive,TRUE,0,1.55420982955458,0.695,0.214,0,0.481,
+SLC2A12,SLC2A12,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),TRUE,FALSE,FALSE,19,19,significant_positive,TRUE,0,1.49411966384235,0.522,0.177,0,0.345,
+TMEM236,TMEM236,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),TRUE,FALSE,FALSE,20,20,significant_positive,TRUE,0,1.469237460143,0.715,0.273,0,0.442,
+GSN,GSN,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),TRUE,FALSE,FALSE,21,21,significant_positive,TRUE,0,1.4647231772001,0.98,0.751,0,0.229,
+ENSSSCG00000059404,ENSSSCG00000059404,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),TRUE,FALSE,FALSE,22,22,significant_positive,TRUE,1.55082853955255e-206,1.46371167204957,0.25,0.125,3.27581512409685e-202,0.125,
+PDLIM1,PDLIM1,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),TRUE,FALSE,FALSE,23,23,significant_positive,TRUE,0,1.45533369158521,0.63,0.233,0,0.397,
+SORT1,SORT1,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),TRUE,FALSE,FALSE,24,24,significant_positive,TRUE,0,1.44032531809425,0.554,0.213,0,0.341,
+ASPG,ASPG,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),TRUE,FALSE,FALSE,25,25,significant_positive,TRUE,0,1.42638744480713,0.265,0.087,0,0.178,
+FCN2,FCN2,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),FALSE,TRUE,FALSE,NA,291,significant_positive,TRUE,0,0.697053595962329,0.927,0.556,0,0.371,
+FCGR1A,FCGR1A,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),FALSE,TRUE,FALSE,NA,60,significant_positive,TRUE,0,1.18275822377479,0.916,0.488,0,0.428,
+SIGLEC1,SIGLEC1,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),FALSE,TRUE,FALSE,NA,97,significant_positive,TRUE,0,1.03741918330509,0.872,0.466,0,0.406,
+MRC1,MRC1,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),FALSE,TRUE,FALSE,NA,188,significant_positive,TRUE,0,0.834454923277463,0.96,0.699,0,0.261,
+PPARG,PPARG,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),FALSE,TRUE,FALSE,NA,768,significant_positive,TRUE,0,0.424786186949378,0.942,0.644,0,0.298,
+APOE,APOE,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),FALSE,TRUE,FALSE,NA,618,significant_positive,TRUE,0,0.4789107104043,0.975,0.708,0,0.267,
+LYZ,LYZ,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),FALSE,TRUE,FALSE,NA,48,significant_positive,TRUE,0,1.25416337927456,0.827,0.577,0,0.25,
+S100A12,S100A12,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),FALSE,TRUE,FALSE,NA,52,significant_positive,TRUE,0,1.23252987443148,0.984,0.668,0,0.316,
+OAS1,OAS1,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),FALSE,TRUE,FALSE,NA,32,significant_positive,TRUE,0,1.35607636470097,0.773,0.399,0,0.374,
+PTPRC,PTPRC,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),FALSE,FALSE,TRUE,NA,539,significant_positive,TRUE,0,0.509788196252752,0.983,0.894,0,0.089,
+TYROBP,TYROBP,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+CSF1R,CSF1R,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),FALSE,FALSE,TRUE,NA,2432,significant_negative,TRUE,4.12450596976866e-152,-1.85297987261534,0.337,0.412,8.71219395994234e-148,-0.075,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+CD14,CD14,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),FALSE,FALSE,TRUE,NA,2440,significant_negative,TRUE,3.54264926809386e-271,-1.90311614203047,0.525,0.585,7.48313804899466e-267,-0.0599999999999999,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+FCGR3A,ENSSSCG00000036618,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),FALSE,FALSE,TRUE,NA,2420,significant_negative,TRUE,4.13002211117894e-125,-1.66824968396199,0.883,0.777,8.72384570544328e-121,0.106,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+CD163,CD163,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+CD68,CD68,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+C1QA,C1QA,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),FALSE,FALSE,TRUE,NA,2056,significant_negative,TRUE,1.25961150599324e-17,-0.563708291809637,0.909,0.715,2.66067738410953e-13,0.194,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+C1QB,C1QB,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+C1QC,C1QC,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+MARCO,MARCO,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+TIMD4,TIMD4,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+VSIG4,VSIG4,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),FALSE,FALSE,TRUE,NA,872,significant_positive,TRUE,0,0.395370752751907,0.921,0.608,0,0.313,
+FCN1,ENSSSCG00000029414,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+IL1B,ENSSSCG00000039214,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),FALSE,FALSE,TRUE,NA,2463,significant_negative,TRUE,6.25183349911616e-201,-2.89830617202474,0.137,0.275,1.32057479001831e-196,-0.138,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+IFIT1,IFIT1,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+IFIT2,IFIT2,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+IFIT3,IFIT3,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+ISG15,ISG15,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+MX1,MX1,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+PF4,NA,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),FALSE,FALSE,TRUE,NA,NA,absent_from_object,FALSE,NA,NA,NA,NA,NA,NA,No exact source RNA feature/recorded alias match; no new mapping inferred. No exported marker row; NA statistics do not imply zero expression.
+ITGA2B,ITGA2B,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+GP9,GP9,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+EPCAM,EPCAM,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+SFTPC,SFTPC,2,FCN2/SIGLEC1 macrophage-like state (NREP/RSAD2/OAS1; PPBP flag),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.

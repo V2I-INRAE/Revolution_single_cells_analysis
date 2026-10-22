@@ -1,0 +1,39 @@
+gene,feature_id,cluster,cluster_label,in_top25,in_md_identity,in_md_canonical,top25_rank,significant_rank,de_status,in_object,p_val,avg_log2FC,pct.1,pct.2,p_val_adj,pct_difference,note
+SCGB1A1,SCGB1A1,1,Club/secretory epithelial cells (SCGB1A1/SCGB3A1/BPIFB1),TRUE,TRUE,FALSE,1,1,significant_positive,TRUE,0,5.20352352698543,0.881,0.237,0,0.644,
+ATP13A5,ATP13A5,1,Club/secretory epithelial cells (SCGB1A1/SCGB3A1/BPIFB1),TRUE,FALSE,FALSE,2,2,significant_positive,TRUE,0,5.19675699100658,0.445,0.017,0,0.428,
+SCGB3A1,SCGB3A1,1,Club/secretory epithelial cells (SCGB1A1/SCGB3A1/BPIFB1),TRUE,TRUE,FALSE,3,3,significant_positive,TRUE,0,5.10319155959809,0.588,0.058,0,0.53,
+CRISP3,CRISP3,1,Club/secretory epithelial cells (SCGB1A1/SCGB3A1/BPIFB1),TRUE,FALSE,FALSE,4,4,significant_positive,TRUE,3.14897425966664e-281,5.09429898085093,0.263,0.025,6.65157832869385e-277,0.238,
+BPIFB1,BPIFB1,1,Club/secretory epithelial cells (SCGB1A1/SCGB3A1/BPIFB1),TRUE,TRUE,FALSE,5,5,significant_positive,TRUE,0,4.92548143315688,0.556,0.034,0,0.522,
+C6,C6,1,Club/secretory epithelial cells (SCGB1A1/SCGB3A1/BPIFB1),TRUE,FALSE,FALSE,6,6,significant_positive,TRUE,0,4.62828928960617,0.409,0.024,0,0.385,
+LGALS13,LGALS13,1,Club/secretory epithelial cells (SCGB1A1/SCGB3A1/BPIFB1),TRUE,FALSE,FALSE,7,7,significant_positive,TRUE,0,4.60555021118921,0.292,0.014,0,0.278,
+CXCL12,CXCL12,1,Club/secretory epithelial cells (SCGB1A1/SCGB3A1/BPIFB1),TRUE,FALSE,FALSE,8,8,significant_positive,TRUE,0,4.44122809470037,0.663,0.042,0,0.621,
+TFF3,TFF3,1,Club/secretory epithelial cells (SCGB1A1/SCGB3A1/BPIFB1),TRUE,TRUE,FALSE,9,9,significant_positive,TRUE,0,4.33257808279302,0.959,0.149,0,0.81,
+ST6GALNAC1,ST6GALNAC1,1,Club/secretory epithelial cells (SCGB1A1/SCGB3A1/BPIFB1),TRUE,FALSE,FALSE,10,10,significant_positive,TRUE,9.79316264379968e-277,3.7670519831583,0.254,0.022,2.06860974524981e-272,0.232,
+CRYM,CRYM,1,Club/secretory epithelial cells (SCGB1A1/SCGB3A1/BPIFB1),TRUE,FALSE,FALSE,11,11,significant_positive,TRUE,0,3.64766695602189,0.306,0.03,0,0.276,
+ALPL,ALPL,1,Club/secretory epithelial cells (SCGB1A1/SCGB3A1/BPIFB1),TRUE,FALSE,FALSE,12,12,significant_positive,TRUE,0,3.53802545851915,0.492,0.053,0,0.439,
+ENSSSCG00000013714,ENSSSCG00000013714,1,Club/secretory epithelial cells (SCGB1A1/SCGB3A1/BPIFB1),TRUE,FALSE,FALSE,13,13,significant_positive,TRUE,0,3.48999216867764,0.612,0.081,0,0.531,
+PREX2,PREX2,1,Club/secretory epithelial cells (SCGB1A1/SCGB3A1/BPIFB1),TRUE,FALSE,FALSE,14,14,significant_positive,TRUE,0,3.42582442288024,0.436,0.058,0,0.378,
+LCN2,LCN2,1,Club/secretory epithelial cells (SCGB1A1/SCGB3A1/BPIFB1),TRUE,TRUE,FALSE,15,15,significant_positive,TRUE,0,3.30447534061663,0.77,0.147,0,0.623,
+ENSSSCG00000016548,ENSSSCG00000016548,1,Club/secretory epithelial cells (SCGB1A1/SCGB3A1/BPIFB1),TRUE,FALSE,FALSE,16,16,significant_positive,TRUE,0,3.22769129929813,0.539,0.074,0,0.465,
+PTGFR,PTGFR,1,Club/secretory epithelial cells (SCGB1A1/SCGB3A1/BPIFB1),TRUE,FALSE,FALSE,17,17,significant_positive,TRUE,0,3.20156540858461,0.482,0.095,0,0.387,
+ENSSSCG00000004760,ENSSSCG00000004760,1,Club/secretory epithelial cells (SCGB1A1/SCGB3A1/BPIFB1),TRUE,FALSE,FALSE,18,18,significant_positive,TRUE,0,3.15966957460406,0.334,0.041,0,0.293,
+HSD17B2,HSD17B2,1,Club/secretory epithelial cells (SCGB1A1/SCGB3A1/BPIFB1),TRUE,FALSE,FALSE,19,19,significant_positive,TRUE,0,3.10475412124937,0.734,0.156,0,0.578,
+ENDOD1,ENDOD1,1,Club/secretory epithelial cells (SCGB1A1/SCGB3A1/BPIFB1),TRUE,FALSE,FALSE,20,20,significant_positive,TRUE,0,3.07551715814996,0.594,0.12,0,0.474,
+ADAM28,ADAM28,1,Club/secretory epithelial cells (SCGB1A1/SCGB3A1/BPIFB1),TRUE,FALSE,FALSE,21,21,significant_positive,TRUE,0,2.96367670737122,0.443,0.066,0,0.377,
+C16orf89,C16orf89,1,Club/secretory epithelial cells (SCGB1A1/SCGB3A1/BPIFB1),TRUE,FALSE,FALSE,22,22,significant_positive,TRUE,0,2.84129002244479,0.644,0.153,0,0.491,
+PIGR,PIGR,1,Club/secretory epithelial cells (SCGB1A1/SCGB3A1/BPIFB1),TRUE,TRUE,FALSE,23,23,significant_positive,TRUE,0,2.7627156056167,0.885,0.383,0,0.502,
+SCGB3A2,SCGB3A2,1,Club/secretory epithelial cells (SCGB1A1/SCGB3A1/BPIFB1),TRUE,TRUE,FALSE,24,24,significant_positive,TRUE,0,2.70348332412648,0.879,0.372,0,0.507,
+ENSSSCG00000008001,ENSSSCG00000008001,1,Club/secretory epithelial cells (SCGB1A1/SCGB3A1/BPIFB1),TRUE,FALSE,FALSE,25,25,significant_positive,TRUE,0,2.68923379926207,0.351,0.045,0,0.306,
+EPCAM,EPCAM,1,Club/secretory epithelial cells (SCGB1A1/SCGB3A1/BPIFB1),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+KRT8,KRT8,1,Club/secretory epithelial cells (SCGB1A1/SCGB3A1/BPIFB1),FALSE,FALSE,TRUE,NA,767,significant_negative,TRUE,8.41554276035799e-07,-0.273564627107313,0.797,0.793,0.0177761509727042,0.004,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+KRT18,KRT18,1,Club/secretory epithelial cells (SCGB1A1/SCGB3A1/BPIFB1),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+KRT19,KRT19,1,Club/secretory epithelial cells (SCGB1A1/SCGB3A1/BPIFB1),FALSE,FALSE,TRUE,NA,186,significant_positive,TRUE,7.19149539923788e-245,1.1336662537913,0.757,0.448,1.51905957318102e-240,0.309,
+MUC5AC,NA,1,Club/secretory epithelial cells (SCGB1A1/SCGB3A1/BPIFB1),FALSE,FALSE,TRUE,NA,NA,absent_from_object,FALSE,NA,NA,NA,NA,NA,NA,No exact source RNA feature/recorded alias match; no new mapping inferred. No exported marker row; NA statistics do not imply zero expression.
+MUC5B,NA,1,Club/secretory epithelial cells (SCGB1A1/SCGB3A1/BPIFB1),FALSE,FALSE,TRUE,NA,NA,absent_from_object,FALSE,NA,NA,NA,NA,NA,NA,No exact source RNA feature/recorded alias match; no new mapping inferred. No exported marker row; NA statistics do not imply zero expression.
+AGR2,AGR2,1,Club/secretory epithelial cells (SCGB1A1/SCGB3A1/BPIFB1),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+SFTPC,SFTPC,1,Club/secretory epithelial cells (SCGB1A1/SCGB3A1/BPIFB1),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+SFTPB,SFTPB,1,Club/secretory epithelial cells (SCGB1A1/SCGB3A1/BPIFB1),FALSE,FALSE,TRUE,NA,123,significant_positive,TRUE,0,1.33603779830285,0.748,0.263,0,0.485,
+SFTPA1,SFTPA1,1,Club/secretory epithelial cells (SCGB1A1/SCGB3A1/BPIFB1),FALSE,FALSE,TRUE,NA,288,significant_positive,TRUE,0,0.887206851816972,0.916,0.31,0,0.606,
+NAPSA,NAPSA,1,Club/secretory epithelial cells (SCGB1A1/SCGB3A1/BPIFB1),FALSE,FALSE,TRUE,NA,1579,significant_negative,TRUE,1.22064704834378e-29,-0.943018613089808,0.513,0.315,2.57837276021657e-25,0.198,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+FOXJ1,FOXJ1,1,Club/secretory epithelial cells (SCGB1A1/SCGB3A1/BPIFB1),FALSE,FALSE,TRUE,NA,2180,significant_negative,TRUE,1.81257053282109e-211,-3.15192783520681,0.08,0.373,3.82869273647799e-207,-0.293,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+PTPRC,PTPRC,1,Club/secretory epithelial cells (SCGB1A1/SCGB3A1/BPIFB1),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.

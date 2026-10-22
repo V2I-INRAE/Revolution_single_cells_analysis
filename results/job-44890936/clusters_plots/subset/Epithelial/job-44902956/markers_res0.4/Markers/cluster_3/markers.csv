@@ -1,0 +1,43 @@
+gene,feature_id,cluster,cluster_label,in_top25,in_md_identity,in_md_canonical,top25_rank,significant_rank,de_status,in_object,p_val,avg_log2FC,pct.1,pct.2,p_val_adj,pct_difference,note
+IL13RA2,IL13RA2,3,Alveolar type 2 epithelial cells (SFTPC/ABCA3/NAPSA),TRUE,FALSE,FALSE,1,1,significant_positive,TRUE,0,9.4110294217453,0.397,0.001,0,0.396,
+KCNE5,KCNE5,3,Alveolar type 2 epithelial cells (SFTPC/ABCA3/NAPSA),TRUE,FALSE,FALSE,2,2,significant_positive,TRUE,0,9.35367249186963,0.349,0.001,0,0.348,
+SFTPC,SFTPC,3,Alveolar type 2 epithelial cells (SFTPC/ABCA3/NAPSA),TRUE,TRUE,FALSE,3,3,significant_positive,TRUE,0,8.96708718812804,0.996,0.068,0,0.928,
+LAMP3,LAMP3,3,Alveolar type 2 epithelial cells (SFTPC/ABCA3/NAPSA),TRUE,TRUE,FALSE,4,4,significant_positive,TRUE,0,8.56600076643264,0.961,0.017,0,0.944,
+GJB1,GJB1,3,Alveolar type 2 epithelial cells (SFTPC/ABCA3/NAPSA),TRUE,FALSE,FALSE,5,5,significant_positive,TRUE,0,8.52966613677251,0.459,0.002,0,0.457,
+C5,C5,3,Alveolar type 2 epithelial cells (SFTPC/ABCA3/NAPSA),TRUE,FALSE,FALSE,6,6,significant_positive,TRUE,0,8.01032792396262,0.931,0.033,0,0.898,
+LGI3,LGI3,3,Alveolar type 2 epithelial cells (SFTPC/ABCA3/NAPSA),TRUE,FALSE,FALSE,7,7,significant_positive,TRUE,0,7.72146882149342,0.316,0.002,0,0.314,
+CHIA,CHIA,3,Alveolar type 2 epithelial cells (SFTPC/ABCA3/NAPSA),TRUE,FALSE,FALSE,8,8,significant_positive,TRUE,0,7.51651796781119,0.475,0.008,0,0.467,
+IYD,IYD,3,Alveolar type 2 epithelial cells (SFTPC/ABCA3/NAPSA),TRUE,FALSE,FALSE,9,9,significant_positive,TRUE,0,7.46483144735217,0.657,0.012,0,0.645,
+PAH,PAH,3,Alveolar type 2 epithelial cells (SFTPC/ABCA3/NAPSA),TRUE,FALSE,FALSE,10,10,significant_positive,TRUE,0,7.13117334294247,0.499,0.007,0,0.492,
+SHISA2,SHISA2,3,Alveolar type 2 epithelial cells (SFTPC/ABCA3/NAPSA),TRUE,FALSE,FALSE,11,11,significant_positive,TRUE,0,7.00972606681384,0.683,0.015,0,0.668,
+HHIP,HHIP,3,Alveolar type 2 epithelial cells (SFTPC/ABCA3/NAPSA),TRUE,FALSE,FALSE,12,12,significant_positive,TRUE,0,6.92245008664317,0.409,0.005,0,0.404,
+FABP3,FABP3,3,Alveolar type 2 epithelial cells (SFTPC/ABCA3/NAPSA),TRUE,FALSE,FALSE,13,13,significant_positive,TRUE,0,6.87623977033703,0.817,0.031,0,0.786,
+CSF2,CSF2,3,Alveolar type 2 epithelial cells (SFTPC/ABCA3/NAPSA),TRUE,FALSE,FALSE,14,14,significant_positive,TRUE,0,6.6563374678355,0.285,0.004,0,0.281,
+DEFB1,DEFB1,3,Alveolar type 2 epithelial cells (SFTPC/ABCA3/NAPSA),TRUE,FALSE,FALSE,15,15,significant_positive,TRUE,0,6.1853063038668,0.404,0.006,0,0.398,
+NPC2,NPC2,3,Alveolar type 2 epithelial cells (SFTPC/ABCA3/NAPSA),TRUE,FALSE,FALSE,16,16,significant_positive,TRUE,0,5.72757126112667,0.991,0.298,0,0.693,
+AQP9,AQP9,3,Alveolar type 2 epithelial cells (SFTPC/ABCA3/NAPSA),TRUE,FALSE,FALSE,17,17,significant_positive,TRUE,0,5.66634219048442,0.38,0.008,0,0.372,
+RGS17,RGS17,3,Alveolar type 2 epithelial cells (SFTPC/ABCA3/NAPSA),TRUE,FALSE,FALSE,18,18,significant_positive,TRUE,0,5.40855504158116,0.345,0.008,0,0.337,
+UBE2QL1,UBE2QL1,3,Alveolar type 2 epithelial cells (SFTPC/ABCA3/NAPSA),TRUE,FALSE,FALSE,19,19,significant_positive,TRUE,0,5.20134089924174,0.27,0.011,0,0.259,
+DNASE2,DNASE2,3,Alveolar type 2 epithelial cells (SFTPC/ABCA3/NAPSA),TRUE,FALSE,FALSE,20,20,significant_positive,TRUE,0,5.13300553427948,0.673,0.043,0,0.63,
+FGL2,FGL2,3,Alveolar type 2 epithelial cells (SFTPC/ABCA3/NAPSA),TRUE,FALSE,FALSE,21,21,significant_positive,TRUE,0,5.09387566928384,0.682,0.055,0,0.627,
+LPCAT1,LPCAT1,3,Alveolar type 2 epithelial cells (SFTPC/ABCA3/NAPSA),TRUE,TRUE,FALSE,22,22,significant_positive,TRUE,0,5.08206021014789,0.783,0.11,0,0.673,
+SLC34A2,SLC34A2,3,Alveolar type 2 epithelial cells (SFTPC/ABCA3/NAPSA),TRUE,TRUE,FALSE,23,23,significant_positive,TRUE,0,5.00227181873504,0.902,0.28,0,0.622,
+CCL2,CCL2,3,Alveolar type 2 epithelial cells (SFTPC/ABCA3/NAPSA),TRUE,FALSE,FALSE,24,24,significant_positive,TRUE,1.62005735986689e-262,4.95881534302711,0.316,0.033,3.42204716124684e-258,0.283,
+ISM1,ISM1,3,Alveolar type 2 epithelial cells (SFTPC/ABCA3/NAPSA),TRUE,FALSE,FALSE,25,25,significant_positive,TRUE,0,4.72193892558503,0.37,0.016,0,0.354,
+ABCA3,ABCA3,3,Alveolar type 2 epithelial cells (SFTPC/ABCA3/NAPSA),FALSE,TRUE,FALSE,NA,31,significant_positive,TRUE,0,4.33560518123302,0.63,0.078,0,0.552,
+NAPSA,NAPSA,3,Alveolar type 2 epithelial cells (SFTPC/ABCA3/NAPSA),FALSE,TRUE,FALSE,NA,36,significant_positive,TRUE,0,3.97138595384017,0.93,0.296,0,0.634,
+SFTPA1,SFTPA1,3,Alveolar type 2 epithelial cells (SFTPC/ABCA3/NAPSA),FALSE,TRUE,FALSE,NA,86,significant_positive,TRUE,0,2.49619227068476,0.997,0.438,0,0.559,
+SFTPB,SFTPB,3,Alveolar type 2 epithelial cells (SFTPC/ABCA3/NAPSA),FALSE,TRUE,FALSE,NA,120,significant_positive,TRUE,0,2.02138168375805,0.927,0.348,0,0.579,
+SFTPD,SFTPD,3,Alveolar type 2 epithelial cells (SFTPC/ABCA3/NAPSA),FALSE,TRUE,FALSE,NA,71,significant_positive,TRUE,0,2.88309252188052,0.959,0.374,0,0.585,
+EPCAM,EPCAM,3,Alveolar type 2 epithelial cells (SFTPC/ABCA3/NAPSA),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+KRT8,KRT8,3,Alveolar type 2 epithelial cells (SFTPC/ABCA3/NAPSA),FALSE,FALSE,TRUE,NA,943,significant_negative,TRUE,6.25794565430429e-22,-0.426511607349246,0.756,0.8,1.32186586055869e-17,-0.044,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+KRT18,KRT18,3,Alveolar type 2 epithelial cells (SFTPC/ABCA3/NAPSA),FALSE,FALSE,TRUE,NA,822,significant_negative,TRUE,7.25060485061103e-10,-0.333972307490706,0.618,0.668,1.53154526259457e-05,-0.05,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+ETV5,ETV5,3,Alveolar type 2 epithelial cells (SFTPC/ABCA3/NAPSA),FALSE,FALSE,TRUE,NA,35,significant_positive,TRUE,0,4.21539967380447,0.493,0.05,0,0.443,
+CD74,CD74,3,Alveolar type 2 epithelial cells (SFTPC/ABCA3/NAPSA),FALSE,FALSE,TRUE,NA,53,significant_positive,TRUE,0,3.24768883595889,0.912,0.325,0,0.587,
+HLA-DRA,HLA-DRA,3,Alveolar type 2 epithelial cells (SFTPC/ABCA3/NAPSA),FALSE,FALSE,TRUE,NA,48,significant_positive,TRUE,0,3.30385551742853,0.693,0.121,0,0.572,
+SLA-DRB1 (review),ENSSSCG00000001455,3,Alveolar type 2 epithelial cells (SFTPC/ABCA3/NAPSA),FALSE,FALSE,TRUE,NA,69,significant_positive,TRUE,0,2.93135411460882,0.845,0.238,0,0.607,Feature label retained from this producer's frozen mapping; annotation remains under review.
+AGER,AGER,3,Alveolar type 2 epithelial cells (SFTPC/ABCA3/NAPSA),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+PDPN,PDPN,3,Alveolar type 2 epithelial cells (SFTPC/ABCA3/NAPSA),FALSE,FALSE,TRUE,NA,NA,not_significant,TRUE,0.206004733190317,-0.310282663018601,0.463,0.455,1,0.00800000000000001,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+HOPX,ENSSSCG00000008898,3,Alveolar type 2 epithelial cells (SFTPC/ABCA3/NAPSA),FALSE,FALSE,TRUE,NA,1927,significant_negative,TRUE,2.3388719004256e-90,-2.02426260791398,0.484,0.695,4.94039911526898e-86,-0.211,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+SCGB1A1,SCGB1A1,3,Alveolar type 2 epithelial cells (SFTPC/ABCA3/NAPSA),FALSE,FALSE,TRUE,NA,2189,significant_negative,TRUE,1.14872769063774e-181,-7.19797526650432,0.041,0.519,2.4264575009341e-177,-0.478,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+PTPRC,PTPRC,3,Alveolar type 2 epithelial cells (SFTPC/ABCA3/NAPSA),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.

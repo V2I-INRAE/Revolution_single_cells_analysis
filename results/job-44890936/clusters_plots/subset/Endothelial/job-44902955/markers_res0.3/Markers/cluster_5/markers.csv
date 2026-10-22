@@ -1,0 +1,48 @@
+gene,feature_id,cluster,cluster_label,in_top25,in_md_identity,in_md_canonical,top25_rank,significant_rank,de_status,in_object,p_val,avg_log2FC,pct.1,pct.2,p_val_adj,pct_difference,note
+SLC52A3,SLC52A3,5,Arterial-like endothelial cells (GJA5/BMX/HEY2),TRUE,FALSE,FALSE,1,1,significant_positive,TRUE,0,10.715613520195,0.259,0,0,0.259,
+MFAP5,MFAP5,5,Arterial-like endothelial cells (GJA5/BMX/HEY2),TRUE,FALSE,TRUE,2,2,significant_positive,TRUE,0,8.8847358318689,0.723,0.004,0,0.719,Positive ECM/stromal comparison signal requiring expression review.
+HEY2,HEY2,5,Arterial-like endothelial cells (GJA5/BMX/HEY2),TRUE,TRUE,FALSE,3,3,significant_positive,TRUE,0,7.50086411167813,0.311,0.001,0,0.31,
+MSMB,MSMB,5,Arterial-like endothelial cells (GJA5/BMX/HEY2),TRUE,FALSE,FALSE,4,4,significant_positive,TRUE,0,7.46180398999817,0.412,0.028,0,0.384,
+CPXM2,CPXM2,5,Arterial-like endothelial cells (GJA5/BMX/HEY2),TRUE,FALSE,FALSE,5,5,significant_positive,TRUE,0,7.27211925878007,0.343,0.003,0,0.34,
+BMX,BMX,5,Arterial-like endothelial cells (GJA5/BMX/HEY2),TRUE,TRUE,FALSE,6,6,significant_positive,TRUE,0,6.64192489139606,0.755,0.023,0,0.732,
+FN1,FN1,5,Arterial-like endothelial cells (GJA5/BMX/HEY2),TRUE,FALSE,TRUE,7,7,significant_positive,TRUE,0,5.96405269475464,0.877,0.138,0,0.739,Positive ECM/stromal comparison signal requiring expression review.
+KCNE3,KCNE3,5,Arterial-like endothelial cells (GJA5/BMX/HEY2),TRUE,FALSE,FALSE,8,8,significant_positive,TRUE,0,5.84644346042999,0.263,0.007,0,0.256,
+PI16,PI16,5,Arterial-like endothelial cells (GJA5/BMX/HEY2),TRUE,FALSE,TRUE,9,9,significant_positive,TRUE,0,5.63261446920757,0.319,0.008,0,0.311,Positive ECM/stromal comparison signal; not enough to prove contamination or a mixed-cell mechanism.
+SSTR1,SSTR1,5,Arterial-like endothelial cells (GJA5/BMX/HEY2),TRUE,FALSE,FALSE,10,10,significant_positive,TRUE,0,5.46249136146136,0.368,0.012,0,0.356,
+PDE3A,PDE3A,5,Arterial-like endothelial cells (GJA5/BMX/HEY2),TRUE,FALSE,FALSE,11,11,significant_positive,TRUE,0,5.39435347697354,0.545,0.018,0,0.527,
+GJA5,GJA5,5,Arterial-like endothelial cells (GJA5/BMX/HEY2),TRUE,TRUE,FALSE,12,12,significant_positive,TRUE,0,5.36753864857065,0.851,0.044,0,0.807,
+FBLN1,FBLN1,5,Arterial-like endothelial cells (GJA5/BMX/HEY2),TRUE,FALSE,TRUE,13,13,significant_positive,TRUE,0,5.21121398270736,0.434,0.018,0,0.416,Positive ECM/stromal comparison signal requiring expression review.
+CXCL12,CXCL12,5,Arterial-like endothelial cells (GJA5/BMX/HEY2),TRUE,FALSE,FALSE,14,14,significant_positive,TRUE,0,4.93890961362474,0.343,0.019,0,0.324,
+LSR,LSR,5,Arterial-like endothelial cells (GJA5/BMX/HEY2),TRUE,FALSE,FALSE,15,15,significant_positive,TRUE,0,4.917045698088,0.337,0.011,0,0.326,
+BMPER,BMPER,5,Arterial-like endothelial cells (GJA5/BMX/HEY2),TRUE,FALSE,FALSE,16,16,significant_positive,TRUE,0,4.68039029984565,0.6,0.027,0,0.573,
+ADIRF,ADIRF,5,Arterial-like endothelial cells (GJA5/BMX/HEY2),TRUE,FALSE,FALSE,17,17,significant_positive,TRUE,0,4.63434157647206,0.832,0.076,0,0.756,
+CLU,CLU,5,Arterial-like endothelial cells (GJA5/BMX/HEY2),TRUE,FALSE,FALSE,18,18,significant_positive,TRUE,0,4.54393757709246,0.59,0.069,0,0.521,
+IGFBP2,IGFBP2,5,Arterial-like endothelial cells (GJA5/BMX/HEY2),TRUE,FALSE,FALSE,19,19,significant_positive,TRUE,0,4.38339760759546,0.765,0.09,0,0.675,
+GSN,GSN,5,Arterial-like endothelial cells (GJA5/BMX/HEY2),TRUE,FALSE,FALSE,20,20,significant_positive,TRUE,0,4.22197408023415,0.964,0.455,0,0.509,
+SCARA3,SCARA3,5,Arterial-like endothelial cells (GJA5/BMX/HEY2),TRUE,FALSE,FALSE,21,21,significant_positive,TRUE,0,4.2116962742364,0.502,0.042,0,0.46,
+MSX1,MSX1,5,Arterial-like endothelial cells (GJA5/BMX/HEY2),TRUE,FALSE,FALSE,22,22,significant_positive,TRUE,0,4.18472496394681,0.305,0.013,0,0.292,
+SEMA3G,SEMA3G,5,Arterial-like endothelial cells (GJA5/BMX/HEY2),TRUE,TRUE,FALSE,23,23,significant_positive,TRUE,0,4.15860648503308,0.933,0.154,0,0.779,
+ENSSSCG00000034739,ENSSSCG00000034739,5,Arterial-like endothelial cells (GJA5/BMX/HEY2),TRUE,FALSE,FALSE,24,24,significant_positive,TRUE,0,4.08845498852866,0.374,0.019,0,0.355,
+COL14A1,COL14A1,5,Arterial-like endothelial cells (GJA5/BMX/HEY2),TRUE,FALSE,TRUE,25,25,significant_positive,TRUE,0,3.80511493835867,0.612,0.049,0,0.563,Positive ECM/stromal comparison signal requiring expression review.
+HEY1,HEY1,5,Arterial-like endothelial cells (GJA5/BMX/HEY2),FALSE,TRUE,FALSE,NA,48,significant_positive,TRUE,0,2.84113617934446,0.456,0.068,0,0.388,
+SOX17,SOX17,5,Arterial-like endothelial cells (GJA5/BMX/HEY2),FALSE,TRUE,FALSE,NA,70,significant_positive,TRUE,0,2.30871906064073,0.675,0.158,0,0.517,
+EFNB2,EFNB2,5,Arterial-like endothelial cells (GJA5/BMX/HEY2),FALSE,TRUE,FALSE,NA,85,significant_positive,TRUE,0,2.19129503609957,0.874,0.352,0,0.522,
+GJA4,GJA4,5,Arterial-like endothelial cells (GJA5/BMX/HEY2),FALSE,TRUE,FALSE,NA,307,significant_positive,TRUE,4.81206660265792e-108,1.01384622447653,0.278,0.082,1.01645282847943e-103,0.196,
+DLL4,DLL4,5,Arterial-like endothelial cells (GJA5/BMX/HEY2),FALSE,TRUE,FALSE,NA,335,significant_positive,TRUE,6.62268303759467e-124,0.958063183408882,0.674,0.359,1.39890933803112e-119,0.315,
+PECAM1,PECAM1,5,Arterial-like endothelial cells (GJA5/BMX/HEY2),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+CDH5,CDH5,5,Arterial-like endothelial cells (GJA5/BMX/HEY2),FALSE,FALSE,TRUE,NA,661,significant_positive,TRUE,3.00550396849577e-90,0.485384263300217,0.945,0.848,6.34852603265361e-86,0.097,
+CLDN5,CLDN5,5,Arterial-like endothelial cells (GJA5/BMX/HEY2),FALSE,FALSE,TRUE,NA,260,significant_positive,TRUE,7.18263143911998e-169,1.15186619123172,0.94,0.783,1.51718723888531e-164,0.157,
+PTPRB,PTPRB,5,Arterial-like endothelial cells (GJA5/BMX/HEY2),FALSE,FALSE,TRUE,NA,229,significant_positive,TRUE,7.28138383556282e-304,1.26683252698536,0.974,0.642,1.53804670758593e-299,0.332,
+VWF,VWF,5,Arterial-like endothelial cells (GJA5/BMX/HEY2),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+KDR,KDR,5,Arterial-like endothelial cells (GJA5/BMX/HEY2),FALSE,FALSE,TRUE,NA,1583,significant_negative,TRUE,1.9410582803637e-225,-3.70950748449048,0.126,0.579,4.10009740561224e-221,-0.453,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+ACKR1,ACKR1,5,Arterial-like endothelial cells (GJA5/BMX/HEY2),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+EPHB4,EPHB4,5,Arterial-like endothelial cells (GJA5/BMX/HEY2),FALSE,FALSE,TRUE,NA,1297,significant_negative,TRUE,5.87875418677237e-23,-0.978111267177948,0.311,0.409,1.24176924687193e-18,-0.098,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+NR2F2,NR2F2,5,Arterial-like endothelial cells (GJA5/BMX/HEY2),FALSE,FALSE,TRUE,NA,1594,significant_negative,TRUE,1.24480814920909e-267,-4.93203144855269,0.076,0.578,2.62940825357436e-263,-0.502,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+PROX1,PROX1,5,Arterial-like endothelial cells (GJA5/BMX/HEY2),FALSE,FALSE,TRUE,NA,1608,significant_negative,TRUE,8.98301674819551e-102,-7.0818288280891,0.006,0.265,1.89748262772134e-97,-0.259,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+PDPN,PDPN,5,Arterial-like endothelial cells (GJA5/BMX/HEY2),FALSE,FALSE,TRUE,NA,1604,significant_negative,TRUE,8.51577554461745e-201,-6.18719787665354,0.011,0.444,1.79878726828954e-196,-0.433,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+COL1A1,COL1A1,5,Arterial-like endothelial cells (GJA5/BMX/HEY2),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+DCN,DCN,5,Arterial-like endothelial cells (GJA5/BMX/HEY2),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+DPT,DPT,5,Arterial-like endothelial cells (GJA5/BMX/HEY2),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+ACTA2,ACTA2,5,Arterial-like endothelial cells (GJA5/BMX/HEY2),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+MYH11,MYH11,5,Arterial-like endothelial cells (GJA5/BMX/HEY2),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+PTPRC,PTPRC,5,Arterial-like endothelial cells (GJA5/BMX/HEY2),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.

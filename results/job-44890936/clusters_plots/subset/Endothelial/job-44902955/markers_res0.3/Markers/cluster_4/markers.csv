@@ -1,0 +1,46 @@
+gene,feature_id,cluster,cluster_label,in_top25,in_md_identity,in_md_canonical,top25_rank,significant_rank,de_status,in_object,p_val,avg_log2FC,pct.1,pct.2,p_val_adj,pct_difference,note
+APLN,APLN,4,Aerocyte-like capillary endothelium (APLN/EDNRB/CA4),TRUE,TRUE,FALSE,1,1,significant_positive,TRUE,0,7.29445852088558,0.286,0.006,0,0.28,
+TRNP1,TRNP1,4,Aerocyte-like capillary endothelium (APLN/EDNRB/CA4),TRUE,FALSE,FALSE,2,2,significant_positive,TRUE,0,7.20437888782252,0.728,0.014,0,0.714,
+CCDC68,CCDC68,4,Aerocyte-like capillary endothelium (APLN/EDNRB/CA4),TRUE,FALSE,FALSE,3,3,significant_positive,TRUE,0,6.4442867777903,0.29,0.008,0,0.282,
+PDZRN3,PDZRN3,4,Aerocyte-like capillary endothelium (APLN/EDNRB/CA4),TRUE,FALSE,FALSE,4,4,significant_positive,TRUE,0,4.82160714573755,0.28,0.02,0,0.26,
+ITGA4,ITGA4,4,Aerocyte-like capillary endothelium (APLN/EDNRB/CA4),TRUE,FALSE,FALSE,5,5,significant_positive,TRUE,0,4.6854978234724,0.486,0.058,0,0.428,
+EDNRB,EDNRB,4,Aerocyte-like capillary endothelium (APLN/EDNRB/CA4),TRUE,TRUE,FALSE,6,6,significant_positive,TRUE,0,4.39943925821992,0.979,0.448,0,0.531,
+MFGE8,MFGE8,4,Aerocyte-like capillary endothelium (APLN/EDNRB/CA4),TRUE,FALSE,FALSE,7,7,significant_positive,TRUE,0,4.09884594133048,0.551,0.102,0,0.449,
+SLC16A9,SLC16A9,4,Aerocyte-like capillary endothelium (APLN/EDNRB/CA4),TRUE,FALSE,FALSE,8,8,significant_positive,TRUE,0,3.77581733146206,0.606,0.104,0,0.502,
+SEMA7A,SEMA7A,4,Aerocyte-like capillary endothelium (APLN/EDNRB/CA4),TRUE,FALSE,FALSE,9,9,significant_positive,TRUE,0,3.70389988924166,0.56,0.132,0,0.428,
+RNF150,RNF150,4,Aerocyte-like capillary endothelium (APLN/EDNRB/CA4),TRUE,FALSE,FALSE,10,10,significant_positive,TRUE,1.76771632943632e-310,3.62794566446482,0.285,0.04,3.73394720266834e-306,0.245,
+PCDH1,PCDH1,4,Aerocyte-like capillary endothelium (APLN/EDNRB/CA4),TRUE,FALSE,FALSE,11,11,significant_positive,TRUE,0,3.60880604683783,0.369,0.058,0,0.311,
+DPP4,DPP4,4,Aerocyte-like capillary endothelium (APLN/EDNRB/CA4),TRUE,FALSE,FALSE,12,12,significant_positive,TRUE,0,3.4552912019263,0.572,0.096,0,0.476,
+LMO7,LMO7,4,Aerocyte-like capillary endothelium (APLN/EDNRB/CA4),TRUE,FALSE,FALSE,13,13,significant_positive,TRUE,0,3.36984929578535,0.375,0.064,0,0.311,
+PDGFD,PDGFD,4,Aerocyte-like capillary endothelium (APLN/EDNRB/CA4),TRUE,FALSE,FALSE,14,14,significant_positive,TRUE,0,3.3671380874859,0.454,0.082,0,0.372,
+ITGA3,ITGA3,4,Aerocyte-like capillary endothelium (APLN/EDNRB/CA4),TRUE,FALSE,FALSE,15,15,significant_positive,TRUE,0,3.30585138272208,0.431,0.107,0,0.324,
+CCDC85A,CCDC85A,4,Aerocyte-like capillary endothelium (APLN/EDNRB/CA4),TRUE,FALSE,FALSE,16,16,significant_positive,TRUE,0,3.28811225350416,0.704,0.129,0,0.575,
+PPM1H,PPM1H,4,Aerocyte-like capillary endothelium (APLN/EDNRB/CA4),TRUE,FALSE,FALSE,17,17,significant_positive,TRUE,1.42138944267403e-208,3.27590403854466,0.257,0.046,3.00240091976035e-204,0.211,
+PRX,PRX,4,Aerocyte-like capillary endothelium (APLN/EDNRB/CA4),TRUE,FALSE,FALSE,18,18,significant_positive,TRUE,0,3.17629606842787,0.514,0.094,0,0.42,
+RDH10,RDH10,4,Aerocyte-like capillary endothelium (APLN/EDNRB/CA4),TRUE,FALSE,FALSE,19,19,significant_positive,TRUE,0,3.16450797636103,0.613,0.263,0,0.35,
+NCALD,NCALD,4,Aerocyte-like capillary endothelium (APLN/EDNRB/CA4),TRUE,FALSE,FALSE,20,20,significant_positive,TRUE,0,3.155771337228,0.579,0.121,0,0.458,
+ADGRL2,ADGRL2,4,Aerocyte-like capillary endothelium (APLN/EDNRB/CA4),TRUE,FALSE,FALSE,21,21,significant_positive,TRUE,0,3.15204246288638,0.86,0.265,0,0.595,
+USP54,USP54,4,Aerocyte-like capillary endothelium (APLN/EDNRB/CA4),TRUE,FALSE,FALSE,22,22,significant_positive,TRUE,1.02784768965711e-304,3.11942734705203,0.489,0.156,2.17112267486272e-300,0.333,
+TET3,TET3,4,Aerocyte-like capillary endothelium (APLN/EDNRB/CA4),TRUE,FALSE,FALSE,23,23,significant_positive,TRUE,6.71297176212668e-281,3.11751378923331,0.408,0.107,1.41798102531402e-276,0.301,
+RASSF2,RASSF2,4,Aerocyte-like capillary endothelium (APLN/EDNRB/CA4),TRUE,FALSE,FALSE,24,24,significant_positive,TRUE,3.50742142639159e-318,3.03858006198341,0.373,0.073,7.40872627896696e-314,0.3,
+GJC1,GJC1,4,Aerocyte-like capillary endothelium (APLN/EDNRB/CA4),TRUE,FALSE,FALSE,25,25,significant_positive,TRUE,0,2.99403260105988,0.42,0.094,0,0.326,
+CA4,CA4,4,Aerocyte-like capillary endothelium (APLN/EDNRB/CA4),FALSE,TRUE,FALSE,NA,30,significant_positive,TRUE,2.23490678958133e-139,2.86021648915148,0.27,0.083,4.72079361163264e-135,0.187,
+RGCC,RGCC,4,Aerocyte-like capillary endothelium (APLN/EDNRB/CA4),FALSE,TRUE,FALSE,NA,31,significant_positive,TRUE,0,2.85865867687242,0.892,0.312,0,0.58,
+KDR,KDR,4,Aerocyte-like capillary endothelium (APLN/EDNRB/CA4),FALSE,TRUE,FALSE,NA,73,significant_positive,TRUE,1.98922369734956e-207,2.28643451258125,0.712,0.506,4.20183721591148e-203,0.206,
+ESAM,ESAM,4,Aerocyte-like capillary endothelium (APLN/EDNRB/CA4),FALSE,TRUE,FALSE,NA,96,significant_positive,TRUE,0,2.01451982355394,0.766,0.399,0,0.367,
+EMCN,EMCN,4,Aerocyte-like capillary endothelium (APLN/EDNRB/CA4),FALSE,TRUE,FALSE,NA,288,significant_positive,TRUE,9.3786829139668e-89,1.1620417190687,0.734,0.704,1.98105919191721e-84,0.03,
+PECAM1,PECAM1,4,Aerocyte-like capillary endothelium (APLN/EDNRB/CA4),FALSE,FALSE,TRUE,NA,377,significant_positive,TRUE,0,0.883179136175146,0.992,0.984,0,0.00800000000000001,
+CDH5,CDH5,4,Aerocyte-like capillary endothelium (APLN/EDNRB/CA4),FALSE,FALSE,TRUE,NA,473,significant_positive,TRUE,2.28962881366802e-65,0.561723388498155,0.845,0.86,4.83638294311096e-61,-0.015,
+CLDN5,CLDN5,4,Aerocyte-like capillary endothelium (APLN/EDNRB/CA4),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+VWF,VWF,4,Aerocyte-like capillary endothelium (APLN/EDNRB/CA4),FALSE,FALSE,TRUE,NA,1979,significant_negative,TRUE,0,-5.00375980082737,0.06,0.72,0,-0.66,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+PTPRB,PTPRB,4,Aerocyte-like capillary endothelium (APLN/EDNRB/CA4),FALSE,FALSE,TRUE,NA,1971,significant_negative,TRUE,0,-4.71527129226222,0.082,0.765,0,-0.683,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+FLT1,FLT1,4,Aerocyte-like capillary endothelium (APLN/EDNRB/CA4),FALSE,FALSE,TRUE,NA,185,significant_positive,TRUE,1.35362666138494e-91,1.55354062416848,0.459,0.265,2.85926559684341e-87,0.194,
+TBX2,TBX2,4,Aerocyte-like capillary endothelium (APLN/EDNRB/CA4),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+TBX3,TBX3,4,Aerocyte-like capillary endothelium (APLN/EDNRB/CA4),FALSE,FALSE,TRUE,NA,72,significant_positive,TRUE,0,2.29418758050047,0.675,0.281,0,0.394,
+SOSTDC1,SOSTDC1,4,Aerocyte-like capillary endothelium (APLN/EDNRB/CA4),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+GPIHBP1,GPIHBP1,4,Aerocyte-like capillary endothelium (APLN/EDNRB/CA4),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+APLNR,APLNR,4,Aerocyte-like capillary endothelium (APLN/EDNRB/CA4),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+ACKR1,ACKR1,4,Aerocyte-like capillary endothelium (APLN/EDNRB/CA4),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+PROX1,PROX1,4,Aerocyte-like capillary endothelium (APLN/EDNRB/CA4),FALSE,FALSE,TRUE,NA,1996,significant_negative,TRUE,8.10305996143182e-128,-5.51956529476544,0.012,0.272,1.71160935565324e-123,-0.26,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+PDPN,PDPN,4,Aerocyte-like capillary endothelium (APLN/EDNRB/CA4),FALSE,FALSE,TRUE,NA,1959,significant_negative,TRUE,4.67927469512926e-242,-4.39321217542066,0.027,0.455,9.88403193852154e-238,-0.428,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+PTPRC,PTPRC,4,Aerocyte-like capillary endothelium (APLN/EDNRB/CA4),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.

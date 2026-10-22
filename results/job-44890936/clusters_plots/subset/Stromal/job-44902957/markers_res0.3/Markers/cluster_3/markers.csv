@@ -1,0 +1,57 @@
+gene,feature_id,cluster,cluster_label,in_top25,in_md_identity,in_md_canonical,top25_rank,significant_rank,de_status,in_object,p_val,avg_log2FC,pct.1,pct.2,p_val_adj,pct_difference,note
+ENSSSCG00000015084,ENSSSCG00000015084,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),TRUE,FALSE,FALSE,1,1,significant_positive,TRUE,0,5.2741601128915,0.291,0.009,0,0.282,
+BMPER,BMPER,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),TRUE,TRUE,FALSE,2,2,significant_positive,TRUE,0,4.46508749681708,0.582,0.052,0,0.53,
+A2M,A2M,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),TRUE,TRUE,FALSE,3,3,significant_positive,TRUE,0,4.45980177481601,0.978,0.184,0,0.794,
+ADRA1A,ADRA1A,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),TRUE,FALSE,FALSE,4,4,significant_positive,TRUE,0,4.37710223170971,0.355,0.027,0,0.328,
+TF,TF,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),TRUE,FALSE,FALSE,5,5,significant_positive,TRUE,0,4.33961339802244,0.592,0.059,0,0.533,
+CMKLR1,CMKLR1,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),TRUE,FALSE,FALSE,6,6,significant_positive,TRUE,0,3.83171724703923,0.416,0.042,0,0.374,
+COL8A1,COL8A1,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),TRUE,FALSE,FALSE,7,7,significant_positive,TRUE,0,3.61549373103718,0.632,0.11,0,0.522,
+FMO2,FMO2,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),TRUE,TRUE,FALSE,8,8,significant_positive,TRUE,0,3.61429123844951,0.492,0.088,0,0.404,
+NCKAP5,NCKAP5,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),TRUE,FALSE,FALSE,9,9,significant_positive,TRUE,3.24574040780476e-300,3.48587350572061,0.329,0.043,6.85597746340598e-296,0.286,
+GRIA3,GRIA3,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),TRUE,FALSE,FALSE,10,10,significant_positive,TRUE,1.25038938320903e-232,3.47968112089213,0.318,0.059,2.64119749415244e-228,0.259,
+NPNT,NPNT,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),TRUE,TRUE,FALSE,11,11,significant_positive,TRUE,0,3.46470511478661,0.751,0.147,0,0.604,
+PRR16,PRR16,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),TRUE,FALSE,FALSE,12,12,significant_positive,TRUE,6.74461387525285e-206,3.37953671261038,0.25,0.039,1.42466478886966e-201,0.211,
+COL13A1,COL13A1,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),TRUE,TRUE,FALSE,13,13,significant_positive,TRUE,0,3.37745836199475,0.749,0.094,0,0.655,
+ITGA8,ITGA8,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),TRUE,TRUE,FALSE,14,14,significant_positive,TRUE,0,3.31109712470741,0.67,0.097,0,0.573,
+KIF26B,KIF26B,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),TRUE,FALSE,FALSE,15,15,significant_positive,TRUE,1.05354808687826e-264,3.25921928902707,0.264,0.031,2.22540962391295e-260,0.233,
+RGS6,RGS6,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),TRUE,FALSE,FALSE,16,16,significant_positive,TRUE,5.2615167353545e-192,3.10861224355276,0.295,0.059,1.11139018000893e-187,0.236,
+OLFML2A,OLFML2A,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),TRUE,FALSE,FALSE,17,17,significant_positive,TRUE,2.65251307148662e-279,2.94084928484228,0.497,0.136,5.60290336090119e-275,0.361,
+UNC5C,UNC5C,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),TRUE,FALSE,FALSE,18,18,significant_positive,TRUE,4.13362761759724e-298,2.93991050298524,0.466,0.107,8.73146161665065e-294,0.359,
+LBH,LBH,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),TRUE,FALSE,FALSE,19,19,significant_positive,TRUE,1.1318541053159e-233,2.878777960394,0.439,0.116,2.39081542665876e-229,0.323,
+CXCL14,CXCL14,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),TRUE,FALSE,FALSE,20,20,significant_positive,TRUE,3.8967769772968e-307,2.8485830410058,0.497,0.117,8.23116200914404e-303,0.38,
+NAV2,NAV2,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),TRUE,FALSE,FALSE,21,21,significant_positive,TRUE,1.38735361558069e-305,2.84603836846663,0.522,0.136,2.9305070421911e-301,0.386,
+ENSSSCG00000034853,ENSSSCG00000034853,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),TRUE,FALSE,FALSE,22,22,significant_positive,TRUE,6.78105181855931e-187,2.80546013432632,0.336,0.083,1.43236157563428e-182,0.253,
+LIMCH1,LIMCH1,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),TRUE,FALSE,FALSE,23,23,significant_positive,TRUE,0,2.79028190818894,0.941,0.509,0,0.432,
+GYG1,GYG1,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),TRUE,FALSE,FALSE,24,24,significant_positive,TRUE,0,2.7830997732823,0.784,0.291,0,0.493,
+GRID2,GRID2,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),TRUE,FALSE,FALSE,25,25,significant_positive,TRUE,4.38436854125905e-208,2.74174577580096,0.384,0.097,9.26110166970148e-204,0.287,
+TCF21,TCF21,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),FALSE,TRUE,FALSE,NA,93,significant_positive,TRUE,8.42817805974247e-259,1.52622121495393,0.897,0.581,1.7802840515594e-254,0.316,
+PDPN,PDPN,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),FALSE,TRUE,FALSE,NA,111,significant_positive,TRUE,3.1317692316712e-238,1.4080798497304,0.87,0.488,6.61523614805908e-234,0.382,
+COL15A1,COL15A1,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),FALSE,TRUE,FALSE,NA,66,significant_positive,TRUE,6.20377523157296e-170,1.83303161401286,0.379,0.106,1.31042344216516e-165,0.273,
+FGF10,FGF10,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),FALSE,TRUE,FALSE,NA,47,significant_positive,TRUE,7.66741044081464e-201,2.16520735783985,0.371,0.09,1.61958710741328e-196,0.281,
+DCN,DCN,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),FALSE,FALSE,TRUE,NA,1171,significant_negative,TRUE,1.0559304781664e-236,-1.39214198457934,0.968,0.963,2.23044194903088e-232,0.005,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+LUM,LUM,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),FALSE,FALSE,TRUE,NA,1127,significant_negative,TRUE,2.20517667104969e-48,-1.01203058973675,0.628,0.704,4.65799468225826e-44,-0.076,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+COL1A1,COL1A1,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),FALSE,FALSE,TRUE,NA,1164,significant_negative,TRUE,6.77783973843642e-79,-1.33119575944165,0.987,0.986,1.43168308794993e-74,0.001,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+COL1A2,COL1A2,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),FALSE,FALSE,TRUE,NA,1161,significant_negative,TRUE,5.20984922717922e-64,-1.30010690226055,0.968,0.943,1.10047645225707e-59,0.025,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+COL3A1,COL3A1,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),FALSE,FALSE,TRUE,NA,1140,significant_negative,TRUE,1.88334966310033e-84,-1.090408185348,0.978,0.971,3.97819949336684e-80,0.00700000000000001,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+PDGFRA,PDGFRA,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),FALSE,FALSE,TRUE,NA,993,significant_negative,TRUE,3.63067230566823e-13,-0.537293301193771,0.667,0.725,7.669069111263e-09,-0.0579999999999999,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+PDGFRB,PDGFRB,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),FALSE,FALSE,TRUE,NA,480,significant_positive,TRUE,9.72410928267283e-38,0.473536184758974,0.764,0.618,2.05402360377898e-33,0.146,
+CSPG4,CSPG4,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+RGS5,RGS5,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+ABCC9,ABCC9,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),FALSE,FALSE,TRUE,NA,444,significant_positive,TRUE,3.90201199000665e-15,0.50552497339166,0.287,0.198,8.24221992649104e-11,0.089,
+COL14A1,COL14A1,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),FALSE,FALSE,TRUE,NA,1211,significant_negative,TRUE,2.79428554222597e-180,-2.01636600341357,0.567,0.752,5.90236935084391e-176,-0.185,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+PI16,PI16,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),FALSE,FALSE,TRUE,NA,1244,significant_negative,TRUE,3.85391015647548e-245,-3.99881230770927,0.184,0.626,8.14061442352317e-241,-0.442,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+MFAP5,MFAP5,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),FALSE,FALSE,TRUE,NA,1252,significant_negative,TRUE,7.11493462111931e-299,-6.711564482511,0.044,0.588,1.50288764001903e-294,-0.544,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+DPP4,DPP4,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+LGR5,LGR5,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+SFRP1,SFRP1,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),FALSE,FALSE,TRUE,NA,819,significant_positive,TRUE,2.04260577305025e-23,0.278803149831719,0.463,0.329,4.31459617441404e-19,0.134,
+HGF,HGF,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),FALSE,FALSE,TRUE,NA,160,significant_positive,TRUE,1.1256769559203e-71,1.14235284019122,0.373,0.176,2.37776743399045e-67,0.197,
+ACTA2,ACTA2,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),FALSE,FALSE,TRUE,NA,1102,significant_negative,TRUE,9.47503720285516e-12,-0.878688973678905,0.45,0.308,2.0014121083591e-07,0.142,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+TAGLN,TAGLN,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),FALSE,FALSE,TRUE,NA,NA,not_significant,TRUE,4.81432031912091e-06,-0.956539204747228,0.646,0.653,0.101692888100791,-0.00700000000000001,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+MYH11,MYH11,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),FALSE,FALSE,TRUE,NA,1255,significant_negative,TRUE,4.99724669682719e-95,-7.52779811653204,0.016,0.258,1.05556841977081e-90,-0.242,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+ADIPOQ,ADIPOQ,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+PPARG,PPARG,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+PLIN1,PLIN1,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+PECAM1,PECAM1,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+CDH5,CDH5,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+EPCAM,EPCAM,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+PTPRC,PTPRC,3,COL13A1/NPNT fibroblast-like cells (ITGA8/TCF21),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.

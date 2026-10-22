@@ -1,0 +1,46 @@
+gene,feature_id,cluster,cluster_label,in_top25,in_md_identity,in_md_canonical,top25_rank,significant_rank,de_status,in_object,p_val,avg_log2FC,pct.1,pct.2,p_val_adj,pct_difference,note
+GPIHBP1,GPIHBP1,3,General-capillary-like endothelial cells (GPIHBP1/APLNR),TRUE,TRUE,FALSE,1,1,significant_positive,TRUE,0,4.73941677254757,0.312,0.024,0,0.288,
+ANK3,ANK3,3,General-capillary-like endothelial cells (GPIHBP1/APLNR),TRUE,FALSE,FALSE,2,2,significant_positive,TRUE,0,4.41566194546403,0.354,0.049,0,0.305,
+HPGD,HPGD,3,General-capillary-like endothelial cells (GPIHBP1/APLNR),TRUE,TRUE,FALSE,3,3,significant_positive,TRUE,7.47679361295956e-285,3.39566699538855,0.275,0.042,1.57932311486545e-280,0.233,
+APLNR,APLNR,3,General-capillary-like endothelial cells (GPIHBP1/APLNR),TRUE,TRUE,FALSE,4,4,significant_positive,TRUE,5.85959024580826e-248,3.3054700029461,0.26,0.047,1.23772124762208e-243,0.213,
+CCSER1,CCSER1,3,General-capillary-like endothelial cells (GPIHBP1/APLNR),TRUE,FALSE,FALSE,5,5,significant_positive,TRUE,0,3.11876450531501,0.56,0.195,0,0.365,
+ENSSSCG00000059499,ENSSSCG00000059499,3,General-capillary-like endothelial cells (GPIHBP1/APLNR),TRUE,FALSE,FALSE,6,6,significant_positive,TRUE,1.51963663737979e-172,3.0956391551737,0.284,0.081,3.20992846913734e-168,0.203,
+NCKAP5,NCKAP5,3,General-capillary-like endothelial cells (GPIHBP1/APLNR),TRUE,FALSE,FALSE,7,7,significant_positive,TRUE,0,3.02600496207256,0.446,0.098,0,0.348,
+TSPAN15,TSPAN15,3,General-capillary-like endothelial cells (GPIHBP1/APLNR),TRUE,FALSE,FALSE,8,8,significant_positive,TRUE,1.7174509923211e-204,3.00718664223814,0.317,0.089,3.62777173107986e-200,0.228,
+TNC,TNC,3,General-capillary-like endothelial cells (GPIHBP1/APLNR),TRUE,FALSE,FALSE,9,9,significant_positive,TRUE,1.16391142534442e-302,2.86123060785555,0.309,0.052,2.45853010375503e-298,0.257,
+CLEC1B,CLEC1B,3,General-capillary-like endothelial cells (GPIHBP1/APLNR),TRUE,FALSE,FALSE,10,10,significant_positive,TRUE,0,2.79475114877447,0.551,0.165,0,0.386,
+PLCB1,PLCB1,3,General-capillary-like endothelial cells (GPIHBP1/APLNR),TRUE,FALSE,FALSE,11,11,significant_positive,TRUE,1.82970849899024e-209,2.76611875999633,0.42,0.153,3.86489326241708e-205,0.267,
+CHST9,CHST9,3,General-capillary-like endothelial cells (GPIHBP1/APLNR),TRUE,FALSE,FALSE,12,12,significant_positive,TRUE,4.37651419858261e-109,2.62868532245115,0.284,0.112,9.24451094166605e-105,0.172,
+ARL15,ARL15,3,General-capillary-like endothelial cells (GPIHBP1/APLNR),TRUE,FALSE,FALSE,13,13,significant_positive,TRUE,2.22201883331189e-138,2.60038943735504,0.299,0.102,4.69357038160471e-134,0.197,
+LRMDA,LRMDA,3,General-capillary-like endothelial cells (GPIHBP1/APLNR),TRUE,FALSE,FALSE,14,14,significant_positive,TRUE,1.19808400626411e-97,2.51304576660241,0.299,0.127,2.53071284643167e-93,0.172,
+ST6GALNAC3,ST6GALNAC3,3,General-capillary-like endothelial cells (GPIHBP1/APLNR),TRUE,FALSE,FALSE,15,15,significant_positive,TRUE,7.50980800566326e-175,2.47610852214069,0.518,0.263,1.58629674503625e-170,0.255,
+CDK6,CDK6,3,General-capillary-like endothelial cells (GPIHBP1/APLNR),TRUE,FALSE,FALSE,16,16,significant_positive,TRUE,1.03774362386877e-181,2.47305007364252,0.539,0.29,2.192025856698e-177,0.249,
+MCAM,MCAM,3,General-capillary-like endothelial cells (GPIHBP1/APLNR),TRUE,FALSE,FALSE,17,17,significant_positive,TRUE,0,2.44103400554714,0.634,0.183,0,0.451,
+CD93,CD93,3,General-capillary-like endothelial cells (GPIHBP1/APLNR),TRUE,TRUE,FALSE,18,18,significant_positive,TRUE,0,2.42780963865257,0.705,0.288,0,0.417,
+ARAP2,ARAP2,3,General-capillary-like endothelial cells (GPIHBP1/APLNR),TRUE,FALSE,FALSE,19,19,significant_positive,TRUE,0,2.36567339353012,0.605,0.158,0,0.447,
+PRICKLE2,PRICKLE2,3,General-capillary-like endothelial cells (GPIHBP1/APLNR),TRUE,FALSE,FALSE,20,20,significant_positive,TRUE,6.36563926239837e-237,2.36022423769903,0.378,0.103,1.34461398139641e-232,0.275,
+CCDC175,CCDC175,3,General-capillary-like endothelial cells (GPIHBP1/APLNR),TRUE,FALSE,FALSE,21,21,significant_positive,TRUE,8.42425033218263e-190,2.32089694798634,0.398,0.144,1.77945439766694e-185,0.254,
+PHLPP1,PHLPP1,3,General-capillary-like endothelial cells (GPIHBP1/APLNR),TRUE,FALSE,FALSE,22,22,significant_positive,TRUE,3.14109109236387e-123,2.31593552887901,0.332,0.141,6.6349267144002e-119,0.191,
+CADM1,CADM1,3,General-capillary-like endothelial cells (GPIHBP1/APLNR),TRUE,FALSE,FALSE,23,23,significant_positive,TRUE,3.96788616936933e-110,2.29987229413636,0.275,0.101,8.38136595555884e-106,0.174,
+DGKH,DGKH,3,General-capillary-like endothelial cells (GPIHBP1/APLNR),TRUE,FALSE,FALSE,24,24,significant_positive,TRUE,4.67384871082044e-246,2.23574354499174,0.638,0.352,9.87257063186602e-242,0.286,
+CLEC1A,CLEC1A,3,General-capillary-like endothelial cells (GPIHBP1/APLNR),TRUE,TRUE,FALSE,25,25,significant_positive,TRUE,2.09700820721371e-184,2.23251304632988,0.433,0.176,4.42951043609753e-180,0.257,
+RGCC,RGCC,3,General-capillary-like endothelial cells (GPIHBP1/APLNR),FALSE,TRUE,FALSE,NA,143,significant_positive,TRUE,1.3799335846966e-212,1.31342768572898,0.69,0.338,2.91483371095464e-208,0.352,
+PTPRB,PTPRB,3,General-capillary-like endothelial cells (GPIHBP1/APLNR),FALSE,TRUE,FALSE,NA,208,significant_positive,TRUE,3.50598708515594e-250,1.1136006326837,0.9,0.64,7.4056965199749e-246,0.26,
+ESAM,ESAM,3,General-capillary-like endothelial cells (GPIHBP1/APLNR),FALSE,TRUE,FALSE,NA,155,significant_positive,TRUE,3.44758954192884e-161,1.25217687162341,0.65,0.414,7.28234338941629e-157,0.236,
+PECAM1,PECAM1,3,General-capillary-like endothelial cells (GPIHBP1/APLNR),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+CDH5,CDH5,3,General-capillary-like endothelial cells (GPIHBP1/APLNR),FALSE,FALSE,TRUE,NA,430,significant_positive,TRUE,1.16987417001489e-38,0.464991409623201,0.802,0.867,2.47112520932246e-34,-0.0649999999999999,
+CLDN5,CLDN5,3,General-capillary-like endothelial cells (GPIHBP1/APLNR),FALSE,FALSE,TRUE,NA,380,significant_positive,TRUE,2.10111208797981e-32,0.629293435698038,0.796,0.8,4.43817906343974e-28,-0.004,
+VWF,VWF,3,General-capillary-like endothelial cells (GPIHBP1/APLNR),FALSE,FALSE,TRUE,NA,385,significant_positive,TRUE,3.29222478479518e-63,0.616570359347667,0.722,0.621,6.95416641292286e-59,0.101,
+KDR,KDR,3,General-capillary-like endothelial cells (GPIHBP1/APLNR),FALSE,FALSE,TRUE,NA,1423,significant_negative,TRUE,1.85372982455852e-23,-0.652360129147636,0.399,0.554,3.91563350841496e-19,-0.155,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+FLT1,FLT1,3,General-capillary-like endothelial cells (GPIHBP1/APLNR),FALSE,FALSE,TRUE,NA,369,significant_positive,TRUE,1.68144170483574e-06,0.674077100487911,0.318,0.286,0.0355170931312453,0.032,
+EMCN,EMCN,3,General-capillary-like endothelial cells (GPIHBP1/APLNR),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+CA4,CA4,3,General-capillary-like endothelial cells (GPIHBP1/APLNR),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+EDNRB,EDNRB,3,General-capillary-like endothelial cells (GPIHBP1/APLNR),FALSE,FALSE,TRUE,NA,1928,significant_negative,TRUE,2.90265964601846e-262,-3.48490041018454,0.129,0.58,6.13128797028479e-258,-0.451,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+APLN,APLN,3,General-capillary-like endothelial cells (GPIHBP1/APLNR),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+TBX2,TBX2,3,General-capillary-like endothelial cells (GPIHBP1/APLNR),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+TBX3,TBX3,3,General-capillary-like endothelial cells (GPIHBP1/APLNR),FALSE,FALSE,TRUE,NA,57,significant_positive,TRUE,8.8378469129279e-233,1.8119883012528,0.605,0.287,1.86681840341776e-228,0.318,
+SOSTDC1,SOSTDC1,3,General-capillary-like endothelial cells (GPIHBP1/APLNR),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+ACKR1,ACKR1,3,General-capillary-like endothelial cells (GPIHBP1/APLNR),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+PROX1,PROX1,3,General-capillary-like endothelial cells (GPIHBP1/APLNR),FALSE,FALSE,TRUE,NA,1950,significant_negative,TRUE,6.8134903434557e-143,-5.24853640176109,0.007,0.276,1.43921356524815e-138,-0.269,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+PDPN,PDPN,3,General-capillary-like endothelial cells (GPIHBP1/APLNR),FALSE,FALSE,TRUE,NA,1954,significant_negative,TRUE,6.69351916717732e-284,-5.61366236227667,0.016,0.462,1.41387205368286e-279,-0.446,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+PTPRC,PTPRC,3,General-capillary-like endothelial cells (GPIHBP1/APLNR),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.

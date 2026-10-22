@@ -1,0 +1,59 @@
+gene,feature_id,cluster,cluster_label,in_top25,in_md_identity,in_md_canonical,top25_rank,significant_rank,de_status,in_object,p_val,avg_log2FC,pct.1,pct.2,p_val_adj,pct_difference,note
+TUBA8,TUBA8,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),TRUE,FALSE,FALSE,1,1,significant_positive,TRUE,0,2.28282849565315,0.352,0.048,0,0.304,
+FABP5,FABP5,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),TRUE,TRUE,FALSE,2,2,significant_positive,TRUE,0,2.22315319838363,0.951,0.554,0,0.397,
+S100A2,S100A2,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),TRUE,FALSE,FALSE,3,3,significant_positive,TRUE,0,2.22262991545643,0.376,0.108,0,0.268,
+LPL,LPL,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),TRUE,TRUE,FALSE,4,4,significant_positive,TRUE,0,2.21511212952496,0.52,0.125,0,0.395,
+SLC45A3,SLC45A3,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),TRUE,FALSE,FALSE,5,5,significant_positive,TRUE,0,2.19521658407445,0.891,0.387,0,0.504,
+FABP3,FABP3,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),TRUE,FALSE,FALSE,6,6,significant_positive,TRUE,0,2.18686368341367,0.509,0.205,0,0.304,
+ENSSSCG00000005457,ENSSSCG00000005457,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),TRUE,FALSE,FALSE,7,7,significant_positive,TRUE,0,2.12983485601711,0.288,0.055,0,0.233,
+ENSSSCG00000061957,ENSSSCG00000061957,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),TRUE,FALSE,FALSE,8,8,significant_positive,TRUE,0,2.05727980140607,0.596,0.18,0,0.416,
+GPD1,GPD1,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),TRUE,FALSE,FALSE,9,9,significant_positive,TRUE,0,1.98325822384141,0.496,0.103,0,0.393,
+ENSSSCG00000028674,ENSSSCG00000028674,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),TRUE,FALSE,FALSE,10,10,significant_positive,TRUE,0,1.91124797735186,0.826,0.36,0,0.466,
+SPTBN1,SPTBN1,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),TRUE,FALSE,FALSE,11,11,significant_positive,TRUE,0,1.9033443353653,0.792,0.248,0,0.544,
+ENSSSCG00000008383,ENSSSCG00000008383,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),TRUE,FALSE,FALSE,12,12,significant_positive,TRUE,0,1.87481467092612,0.945,0.441,0,0.504,
+EPCAM,EPCAM,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),TRUE,FALSE,TRUE,13,13,significant_positive,TRUE,0,1.8416077335975,0.901,0.386,0,0.515,"Positive diagnostic: 90.1% vs 38.6%, log2FC +1.84. Cellular source is unresolved; no automatic doublet or epithelial assignment."
+OCSTAMP,OCSTAMP,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),TRUE,FALSE,FALSE,14,14,significant_positive,TRUE,0,1.8391205280731,0.296,0.081,0,0.215,
+DRC12,DRC12,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),TRUE,FALSE,FALSE,15,15,significant_positive,TRUE,0,1.82321845412814,0.335,0.061,0,0.274,
+SPRY2,SPRY2,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),TRUE,FALSE,FALSE,16,16,significant_positive,TRUE,0,1.81083123858746,0.679,0.211,0,0.468,
+PM20D2,PM20D2,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),TRUE,FALSE,FALSE,17,17,significant_positive,TRUE,0,1.79784998632194,0.78,0.234,0,0.546,
+TCN1,TCN1,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),TRUE,FALSE,FALSE,18,18,significant_positive,TRUE,0,1.76012361763058,0.33,0.086,0,0.244,
+VKORC1L1,VKORC1L1,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),TRUE,FALSE,FALSE,19,19,significant_positive,TRUE,0,1.75578283714147,0.94,0.435,0,0.505,
+LIMA1,LIMA1,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),TRUE,FALSE,FALSE,20,20,significant_positive,TRUE,0,1.74257346921393,0.982,0.447,0,0.535,
+CD24,CD24,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),TRUE,FALSE,TRUE,21,21,significant_positive,TRUE,0,1.73954895242044,0.553,0.178,0,0.375,
+SH3BGRL2,SH3BGRL2,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),TRUE,FALSE,FALSE,22,22,significant_positive,TRUE,0,1.7107611369533,0.488,0.101,0,0.387,
+ABHD8,ABHD8,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),TRUE,FALSE,FALSE,23,23,significant_positive,TRUE,0,1.70336156083886,0.287,0.057,0,0.23,
+GCNT1,GCNT1,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),TRUE,FALSE,FALSE,24,24,significant_positive,TRUE,0,1.69609038452142,0.767,0.239,0,0.528,
+LRIG3,LRIG3,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),TRUE,FALSE,FALSE,25,25,significant_positive,TRUE,0,1.65176678622702,0.352,0.09,0,0.262,
+FCN2,FCN2,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),FALSE,TRUE,FALSE,NA,124,significant_positive,TRUE,0,1.10028546445558,0.989,0.502,0,0.487,
+LGALS3,LGALS3,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),FALSE,TRUE,FALSE,NA,26,significant_positive,TRUE,0,1.64304924931928,0.997,0.605,0,0.392,
+APOE,APOE,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),FALSE,TRUE,FALSE,NA,130,significant_positive,TRUE,0,1.08074457903708,0.997,0.679,0,0.318,
+FCGR1A,FCGR1A,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),FALSE,TRUE,FALSE,NA,961,significant_positive,TRUE,0,0.460792119667303,0.912,0.457,0,0.455,
+SIGLEC1,SIGLEC1,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),FALSE,TRUE,FALSE,NA,1806,significant_positive,TRUE,0,0.262917727526191,0.849,0.444,0,0.405,
+PPARG,PPARG,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),FALSE,TRUE,FALSE,NA,1054,significant_positive,TRUE,0,0.435090730370409,0.948,0.619,0,0.329,
+GPNMB,GPNMB,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),FALSE,TRUE,FALSE,NA,224,significant_positive,TRUE,0,0.904362967745547,0.984,0.648,0,0.336,
+PTGR1,PTGR1,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),FALSE,TRUE,FALSE,NA,83,significant_positive,TRUE,0,1.22631153430326,0.993,0.555,0,0.438,
+ACKR4,ACKR4,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),FALSE,TRUE,FALSE,NA,63,significant_positive,TRUE,0,1.27835973325129,0.966,0.452,0,0.514,
+PTPRC,PTPRC,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),FALSE,FALSE,TRUE,NA,2044,significant_negative,TRUE,1.74362327212003e-48,-0.298355879389349,0.986,0.886,3.68305543769914e-44,0.1,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+TYROBP,TYROBP,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),FALSE,FALSE,TRUE,NA,2145,significant_negative,TRUE,5.16665385263907e-259,-0.333635806909936,0.993,0.927,1.09135229329295e-254,0.0659999999999999,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+CSF1R,CSF1R,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),FALSE,FALSE,TRUE,NA,3163,significant_negative,TRUE,0,-2.43650112932471,0.287,0.439,0,-0.152,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+CD14,CD14,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),FALSE,FALSE,TRUE,NA,3123,significant_negative,TRUE,3.17131754848142e-266,-1.77211139060081,0.528,0.588,6.69877405765731e-262,-0.0599999999999999,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+FCGR3A,ENSSSCG00000036618,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),FALSE,FALSE,TRUE,NA,3173,significant_negative,TRUE,0,-2.66944594054361,0.761,0.818,0,-0.0569999999999999,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+CD163,CD163,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),FALSE,FALSE,TRUE,NA,1941,significant_negative,TRUE,4.85000948395378e-10,-0.261182731601499,0.992,0.908,1.02446750329556e-05,0.084,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+CD68,CD68,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),FALSE,FALSE,TRUE,NA,1074,significant_positive,TRUE,0,0.430440459381766,0.952,0.635,0,0.317,
+MRC1,MRC1,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),FALSE,FALSE,TRUE,NA,NA,not_significant,TRUE,2.24156221417251e-05,-0.31759325287019,0.975,0.672,0.47348518649966,0.303,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+LYZ,LYZ,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),FALSE,FALSE,TRUE,NA,1621,significant_positive,TRUE,4.47687613677765e-121,0.300152948786514,0.742,0.593,9.45650546371543e-117,0.149,
+C1QA,C1QA,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),FALSE,FALSE,TRUE,NA,2588,significant_negative,TRUE,8.54329604904624e-74,-0.549318288949642,0.972,0.674,1.80460042444004e-69,0.298,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+C1QB,C1QB,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),FALSE,FALSE,TRUE,NA,NA,not_significant,TRUE,4.1224430369142e-06,-0.580585104132473,0.867,0.62,0.0870783642687386,0.247,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+C1QC,C1QC,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+FABP4,FABP4,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+INHBA,INHBA,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+MARCO,MARCO,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+TIMD4,TIMD4,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+VSIG4,VSIG4,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),FALSE,FALSE,TRUE,NA,1513,significant_positive,TRUE,0,0.319238216897784,0.938,0.577,0,0.361,
+FCN1,ENSSSCG00000029414,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+IL1B,ENSSSCG00000039214,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),FALSE,FALSE,TRUE,NA,3201,significant_negative,TRUE,0,-5.68689053167747,0.051,0.321,0,-0.27,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+KRT8,KRT8,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+KRT18,KRT18,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+SFTPC,SFTPC,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+PPBP,PPBP,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+PF4,NA,1,FCN2/LGALS3/FABP5 macrophage-like cells (EPCAM flag),FALSE,FALSE,TRUE,NA,NA,absent_from_object,FALSE,NA,NA,NA,NA,NA,NA,No exact source RNA feature/recorded alias match; no new mapping inferred. No exported marker row; NA statistics do not imply zero expression.

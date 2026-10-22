@@ -1,0 +1,57 @@
+gene,feature_id,cluster,cluster_label,in_top25,in_md_identity,in_md_canonical,top25_rank,significant_rank,de_status,in_object,p_val,avg_log2FC,pct.1,pct.2,p_val_adj,pct_difference,note
+DNASE1L3,DNASE1L3,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),TRUE,TRUE,FALSE,1,1,significant_positive,TRUE,0,8.57591883775415,0.357,0.002,0,0.355,
+RNF128,RNF128,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),TRUE,FALSE,FALSE,2,2,significant_positive,TRUE,0,7.90992822531697,0.546,0.007,0,0.539,
+IGF1,IGF1,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),TRUE,FALSE,FALSE,3,3,significant_positive,TRUE,0,7.90822803847284,0.262,0.001,0,0.261,
+ABCA9,ABCA9,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),TRUE,FALSE,FALSE,4,4,significant_positive,TRUE,0,7.30311100745737,0.468,0.006,0,0.462,
+PID1,PID1,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),TRUE,FALSE,FALSE,5,5,significant_positive,TRUE,0,6.78559422794201,0.403,0.003,0,0.4,
+ABCA6,ABCA6,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),TRUE,FALSE,FALSE,6,6,significant_positive,TRUE,0,6.51010883318035,0.254,0.004,0,0.25,
+JAML,JAML,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),TRUE,FALSE,FALSE,7,7,significant_positive,TRUE,0,6.27016803112153,0.601,0.018,0,0.583,
+CCL2,CCL2,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),TRUE,FALSE,FALSE,8,8,significant_positive,TRUE,0,6.23317483122101,0.677,0.02,0,0.657,
+RARRES1,RARRES1,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),TRUE,FALSE,FALSE,9,9,significant_positive,TRUE,0,6.1485848255089,0.269,0.006,0,0.263,
+HTRA1,HTRA1,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),TRUE,FALSE,FALSE,10,10,significant_positive,TRUE,0,5.68174081536807,0.617,0.02,0,0.597,
+TTLL7,TTLL7,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),TRUE,FALSE,FALSE,11,11,significant_positive,TRUE,0,5.6317294626828,0.318,0.012,0,0.306,
+ENSSSCG00000018050,ENSSSCG00000018050,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),TRUE,FALSE,FALSE,12,12,significant_positive,TRUE,0,5.33727593376735,0.364,0.011,0,0.353,
+LOC100524972,ENSSSCG00000013100,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),TRUE,FALSE,FALSE,13,13,significant_positive,TRUE,0,5.29596566088122,0.752,0.039,0,0.713,
+FNBP1L,FNBP1L,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),TRUE,FALSE,FALSE,14,14,significant_positive,TRUE,0,5.25113680406699,0.28,0.012,0,0.268,
+ACP5,ACP5,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),TRUE,FALSE,FALSE,15,15,significant_positive,TRUE,0,5.11701401816246,0.498,0.024,0,0.474,
+MAF,MAF,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),TRUE,TRUE,FALSE,16,16,significant_positive,TRUE,0,5.01073821883682,0.776,0.077,0,0.699,
+ENSSSCG00000059852,ENSSSCG00000059852,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),TRUE,FALSE,FALSE,17,17,significant_positive,TRUE,0,4.85105799760063,0.568,0.04,0,0.528,
+ENSSSCG00000013788,ENSSSCG00000013788,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),TRUE,FALSE,FALSE,18,18,significant_positive,TRUE,0,4.80684705686174,0.338,0.009,0,0.329,
+CST3,CST3,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),TRUE,FALSE,FALSE,19,19,significant_positive,TRUE,0,4.68148765423243,0.992,0.822,0,0.17,
+LOC100525275 (review),ENSSSCG00000051873,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),TRUE,FALSE,FALSE,20,20,significant_positive,TRUE,0,4.348452466602,0.636,0.048,0,0.588,Feature label retained from this producer's frozen mapping; annotation remains under review.
+CCL8,CCL8,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),TRUE,TRUE,FALSE,21,21,significant_positive,TRUE,0,4.28918709213399,0.743,0.111,0,0.632,
+FCGR2B,ENSSSCG00000006350,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),TRUE,TRUE,FALSE,22,22,significant_positive,TRUE,0,4.2676359366234,0.852,0.093,0,0.759,
+CCND2,CCND2,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),TRUE,FALSE,FALSE,23,23,significant_positive,TRUE,0,4.25404717567393,0.429,0.023,0,0.406,
+ENSSSCG00000007435,ENSSSCG00000007435,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),TRUE,FALSE,FALSE,24,24,significant_positive,TRUE,0,4.23994799262858,0.415,0.053,0,0.362,
+CADM1,CADM1,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),TRUE,FALSE,FALSE,25,25,significant_positive,TRUE,0,4.20003279605656,0.553,0.047,0,0.506,
+C1QA,C1QA,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),FALSE,TRUE,FALSE,NA,125,significant_positive,TRUE,0,2.05359178642559,0.932,0.735,0,0.197,
+C1QB,C1QB,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),FALSE,TRUE,FALSE,NA,162,significant_positive,TRUE,0,1.76605001922871,0.92,0.657,0,0.263,
+C1QC,C1QC,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),FALSE,TRUE,FALSE,NA,306,significant_positive,TRUE,0,1.1911206297812,0.924,0.753,0,0.171,
+CCL14,CCL14,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),FALSE,TRUE,FALSE,NA,31,significant_positive,TRUE,0,3.94929814601421,0.843,0.345,0,0.498,
+MS4A7,MS4A7,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),FALSE,TRUE,FALSE,NA,44,significant_positive,TRUE,0,3.45069419343314,0.566,0.058,0,0.508,
+CSF1R,CSF1R,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),FALSE,TRUE,FALSE,NA,219,significant_positive,TRUE,0,1.48496950239797,0.69,0.349,0,0.341,
+CD163,CD163,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),FALSE,TRUE,FALSE,NA,784,significant_positive,TRUE,7.91169860317264e-227,0.623939827633508,0.958,0.929,1.67118809594816e-222,0.0289999999999999,
+MRC1,MRC1,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),FALSE,TRUE,FALSE,NA,387,significant_positive,TRUE,0,1.02282138553434,0.941,0.733,0,0.208,
+PTPRC,PTPRC,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),FALSE,FALSE,TRUE,NA,2627,significant_negative,TRUE,0,-1.36089916818852,0.766,0.938,0,-0.172,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+TYROBP,TYROBP,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),FALSE,FALSE,TRUE,NA,1502,significant_negative,TRUE,1.23615215934726e-155,-0.337602703832931,0.936,0.948,2.61112420618922e-151,-0.0119999999999999,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+CD68,CD68,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+CD14,CD14,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),FALSE,FALSE,TRUE,NA,426,significant_positive,TRUE,0,0.967679857220762,0.79,0.537,0,0.253,
+FCGR3A,ENSSSCG00000036618,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),FALSE,FALSE,TRUE,NA,138,significant_positive,TRUE,0,1.93438358523602,0.984,0.774,0,0.21,
+LYZ,LYZ,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),FALSE,FALSE,TRUE,NA,2890,significant_negative,TRUE,0,-2.68713091430598,0.29,0.69,0,-0.4,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+CD74,CD74,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),FALSE,FALSE,TRUE,NA,222,significant_positive,TRUE,0,1.4717026560333,0.991,0.933,0,0.0579999999999999,
+HLA-DRA,HLA-DRA,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),FALSE,FALSE,TRUE,NA,281,significant_positive,TRUE,0,1.27005327224755,0.966,0.882,0,0.084,
+PPARG,PPARG,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),FALSE,FALSE,TRUE,NA,2187,significant_negative,TRUE,5.49079096792754e-254,-0.703035332582949,0.535,0.743,1.15981977615533e-249,-0.208,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+FABP4,FABP4,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+SIGLEC1,SIGLEC1,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),FALSE,FALSE,TRUE,NA,2747,significant_negative,TRUE,0,-1.73461098703483,0.214,0.616,0,-0.402,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+FCN2,FCN2,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),FALSE,FALSE,TRUE,NA,3033,significant_negative,TRUE,0,-7.27431572667041,0.017,0.741,0,-0.724,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+MARCO,MARCO,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+TIMD4,TIMD4,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+VSIG4,VSIG4,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+FCN1,ENSSSCG00000029414,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),FALSE,FALSE,TRUE,NA,2987,significant_negative,TRUE,0,-4.46989168397662,0.067,0.819,0,-0.752,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+IL1B,ENSSSCG00000039214,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),FALSE,FALSE,TRUE,NA,1859,significant_negative,TRUE,1.30740904814139e-214,-0.510027375025487,0.433,0.213,2.76164013238906e-210,0.22,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+TCF4,TCF4,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),FALSE,FALSE,TRUE,NA,80,significant_positive,TRUE,0,2.57958337997381,0.406,0.073,0,0.333,
+FLT3,FLT3,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+XCR1,XCR1,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+FCER1A,FCER1A,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+MS4A2,MS4A2,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),FALSE,FALSE,TRUE,NA,97,significant_positive,TRUE,0,2.31128237690025,0.388,0.079,0,0.309,
+EPCAM,EPCAM,4,C1Q/CCL8/CCL14 macrophage-like cells (DNASE1L3/MAF),FALSE,FALSE,TRUE,NA,3011,significant_negative,TRUE,0,-5.47483967329501,0.041,0.612,0,-0.571,"Context/diagnostic gene, not a positively enriched marker in this comparison."

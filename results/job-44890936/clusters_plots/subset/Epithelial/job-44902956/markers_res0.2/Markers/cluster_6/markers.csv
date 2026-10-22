@@ -1,0 +1,42 @@
+gene,feature_id,cluster,cluster_label,in_top25,in_md_identity,in_md_canonical,top25_rank,significant_rank,de_status,in_object,p_val,avg_log2FC,pct.1,pct.2,p_val_adj,pct_difference,note
+ENSSSCG00000026345,ENSSSCG00000026345,6,Pulmonary ionocyte-like epithelial cells (FOXI1/ATP6V1G3/CFTR),TRUE,FALSE,FALSE,1,1,significant_positive,TRUE,0,10.2555520471002,0.802,0.003,0,0.799,
+FOXI1,FOXI1,6,Pulmonary ionocyte-like epithelial cells (FOXI1/ATP6V1G3/CFTR),TRUE,TRUE,FALSE,2,2,significant_positive,TRUE,0,10.0978450062925,0.918,0.002,0,0.916,
+PGF,PGF,6,Pulmonary ionocyte-like epithelial cells (FOXI1/ATP6V1G3/CFTR),TRUE,FALSE,FALSE,3,3,significant_positive,TRUE,0,10.0235186095986,0.775,0.002,0,0.773,
+TMEM61,TMEM61,6,Pulmonary ionocyte-like epithelial cells (FOXI1/ATP6V1G3/CFTR),TRUE,FALSE,FALSE,4,4,significant_positive,TRUE,0,9.29607679451364,0.567,0.001,0,0.566,
+ATP6V1G3,ATP6V1G3,6,Pulmonary ionocyte-like epithelial cells (FOXI1/ATP6V1G3/CFTR),TRUE,TRUE,FALSE,5,5,significant_positive,TRUE,0,9.24269972273369,0.894,0.005,0,0.889,
+ZACN,ZACN,6,Pulmonary ionocyte-like epithelial cells (FOXI1/ATP6V1G3/CFTR),TRUE,FALSE,FALSE,6,6,significant_positive,TRUE,0,9.18480366014788,0.461,0.002,0,0.459,
+SLC9A2,SLC9A2,6,Pulmonary ionocyte-like epithelial cells (FOXI1/ATP6V1G3/CFTR),TRUE,TRUE,FALSE,7,7,significant_positive,TRUE,0,9.06172677007721,0.696,0.003,0,0.693,
+ADGRF1,ADGRF1,6,Pulmonary ionocyte-like epithelial cells (FOXI1/ATP6V1G3/CFTR),TRUE,TRUE,FALSE,8,8,significant_positive,TRUE,0,8.22019615955396,0.922,0.008,0,0.914,
+TGFB3,TGFB3,6,Pulmonary ionocyte-like epithelial cells (FOXI1/ATP6V1G3/CFTR),TRUE,FALSE,FALSE,9,9,significant_positive,TRUE,0,8.04655678461793,0.597,0.006,0,0.591,
+PDE1C,PDE1C,6,Pulmonary ionocyte-like epithelial cells (FOXI1/ATP6V1G3/CFTR),TRUE,FALSE,FALSE,10,10,significant_positive,TRUE,0,7.63953812925733,0.942,0.035,0,0.907,
+NEB,NEB,6,Pulmonary ionocyte-like epithelial cells (FOXI1/ATP6V1G3/CFTR),TRUE,FALSE,FALSE,11,11,significant_positive,TRUE,0,7.59307012173639,0.532,0.012,0,0.52,
+ATP7B,ATP7B,6,Pulmonary ionocyte-like epithelial cells (FOXI1/ATP6V1G3/CFTR),TRUE,FALSE,FALSE,12,12,significant_positive,TRUE,0,7.51597209719733,0.638,0.007,0,0.631,
+STAP1,STAP1,6,Pulmonary ionocyte-like epithelial cells (FOXI1/ATP6V1G3/CFTR),TRUE,FALSE,FALSE,13,13,significant_positive,TRUE,0,7.43879589104176,0.898,0.015,0,0.883,
+SLC4A11,SLC4A11,6,Pulmonary ionocyte-like epithelial cells (FOXI1/ATP6V1G3/CFTR),TRUE,TRUE,FALSE,14,14,significant_positive,TRUE,0,7.08424081196094,0.689,0.009,0,0.68,
+GRIK1,GRIK1,6,Pulmonary ionocyte-like epithelial cells (FOXI1/ATP6V1G3/CFTR),TRUE,FALSE,FALSE,15,15,significant_positive,TRUE,3.69978374040051e-250,6.91548378743478,0.273,0.009,7.815053194848e-246,0.264,
+HSD11B2,HSD11B2,6,Pulmonary ionocyte-like epithelial cells (FOXI1/ATP6V1G3/CFTR),TRUE,FALSE,FALSE,16,16,significant_positive,TRUE,0,6.7713992635707,0.392,0.008,0,0.384,
+ACHE,ACHE,6,Pulmonary ionocyte-like epithelial cells (FOXI1/ATP6V1G3/CFTR),TRUE,FALSE,FALSE,17,17,significant_positive,TRUE,0,6.66605055468504,0.259,0.002,0,0.257,
+SLC35F3,SLC35F3,6,Pulmonary ionocyte-like epithelial cells (FOXI1/ATP6V1G3/CFTR),TRUE,FALSE,FALSE,18,18,significant_positive,TRUE,0,6.61279134469347,0.652,0.016,0,0.636,
+CLNK,CLNK,6,Pulmonary ionocyte-like epithelial cells (FOXI1/ATP6V1G3/CFTR),TRUE,FALSE,FALSE,19,19,significant_positive,TRUE,0,6.5991822270844,0.451,0.005,0,0.446,
+ENSSSCG00000011851,ENSSSCG00000011851,6,Pulmonary ionocyte-like epithelial cells (FOXI1/ATP6V1G3/CFTR),TRUE,FALSE,FALSE,20,20,significant_positive,TRUE,0,6.59559657629952,0.782,0.023,0,0.759,
+POPDC2,POPDC2,6,Pulmonary ionocyte-like epithelial cells (FOXI1/ATP6V1G3/CFTR),TRUE,FALSE,FALSE,21,21,significant_positive,TRUE,0,6.54125400030996,0.256,0.003,0,0.253,
+SLC31A2,SLC31A2,6,Pulmonary ionocyte-like epithelial cells (FOXI1/ATP6V1G3/CFTR),TRUE,FALSE,FALSE,22,22,significant_positive,TRUE,0,6.30786127848577,0.836,0.051,0,0.785,
+VEGFC,VEGFC,6,Pulmonary ionocyte-like epithelial cells (FOXI1/ATP6V1G3/CFTR),TRUE,FALSE,FALSE,23,23,significant_positive,TRUE,0,6.2594603693973,0.498,0.013,0,0.485,
+PTGER3,PTGER3,6,Pulmonary ionocyte-like epithelial cells (FOXI1/ATP6V1G3/CFTR),TRUE,FALSE,FALSE,24,24,significant_positive,TRUE,0,6.18255771672792,0.628,0.024,0,0.604,
+ENSSSCG00000057673,ENSSSCG00000057673,6,Pulmonary ionocyte-like epithelial cells (FOXI1/ATP6V1G3/CFTR),TRUE,FALSE,FALSE,25,25,significant_positive,TRUE,0,5.9503180090386,0.768,0.024,0,0.744,
+CFTR,CFTR,6,Pulmonary ionocyte-like epithelial cells (FOXI1/ATP6V1G3/CFTR),FALSE,TRUE,FALSE,NA,103,significant_positive,TRUE,3.38043920234445e-133,3.27396866425912,0.799,0.267,7.14050172711218e-129,0.532,
+EPCAM,EPCAM,6,Pulmonary ionocyte-like epithelial cells (FOXI1/ATP6V1G3/CFTR),FALSE,FALSE,TRUE,NA,1427,significant_positive,TRUE,2.71933074349216e-24,0.47057437843634,0.98,0.872,5.74404232947848e-20,0.108,
+KRT8,KRT8,6,Pulmonary ionocyte-like epithelial cells (FOXI1/ATP6V1G3/CFTR),FALSE,FALSE,TRUE,NA,1079,significant_positive,TRUE,6.65449769547344e-27,0.686198753529467,0.932,0.79,1.40562954821485e-22,0.142,
+KRT19,KRT19,6,Pulmonary ionocyte-like epithelial cells (FOXI1/ATP6V1G3/CFTR),FALSE,FALSE,TRUE,NA,257,significant_positive,TRUE,3.53156553048453e-99,1.94555528068641,0.925,0.54,7.45972587004247e-95,0.385,
+ASCL3,NA,6,Pulmonary ionocyte-like epithelial cells (FOXI1/ATP6V1G3/CFTR),FALSE,FALSE,TRUE,NA,NA,absent_from_object,FALSE,NA,NA,NA,NA,NA,NA,No exact source RNA feature/recorded alias match; no new mapping inferred. No exported marker row; NA statistics do not imply zero expression.
+ATP6V1B1,ATP6V1B1,6,Pulmonary ionocyte-like epithelial cells (FOXI1/ATP6V1G3/CFTR),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+ATP6V0D2,ATP6V0D2,6,Pulmonary ionocyte-like epithelial cells (FOXI1/ATP6V1G3/CFTR),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+ATP6V1C2,ATP6V1C2,6,Pulmonary ionocyte-like epithelial cells (FOXI1/ATP6V1G3/CFTR),FALSE,FALSE,TRUE,NA,39,significant_positive,TRUE,0,5.1238869265267,0.904,0.079,0,0.825,
+ATP6V1A,ATP6V1A,6,Pulmonary ionocyte-like epithelial cells (FOXI1/ATP6V1G3/CFTR),FALSE,FALSE,TRUE,NA,129,significant_positive,TRUE,1.68139829106935e-150,2.8859127551509,0.85,0.269,3.5516176102258e-146,0.581,
+ATP6V1H,ATP6V1H,6,Pulmonary ionocyte-like epithelial cells (FOXI1/ATP6V1G3/CFTR),FALSE,FALSE,TRUE,NA,126,significant_positive,TRUE,1.49192966834896e-137,2.92775105886986,0.788,0.239,3.15140303845351e-133,0.549,
+SCNN1G,SCNN1G,6,Pulmonary ionocyte-like epithelial cells (FOXI1/ATP6V1G3/CFTR),FALSE,FALSE,TRUE,NA,79,significant_positive,TRUE,2.48977127927791e-252,3.64959496659201,0.945,0.222,5.25914387321874e-248,0.723,
+POU2F3,POU2F3,6,Pulmonary ionocyte-like epithelial cells (FOXI1/ATP6V1G3/CFTR),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+MKI67,MKI67,6,Pulmonary ionocyte-like epithelial cells (FOXI1/ATP6V1G3/CFTR),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+TOP2A,TOP2A,6,Pulmonary ionocyte-like epithelial cells (FOXI1/ATP6V1G3/CFTR),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+SCGB1A1,SCGB1A1,6,Pulmonary ionocyte-like epithelial cells (FOXI1/ATP6V1G3/CFTR),FALSE,FALSE,TRUE,NA,2040,significant_negative,TRUE,5.84626966058992e-17,-4.54949981916488,0.28,0.459,1.23490754040641e-12,-0.179,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+PTPRC,PTPRC,6,Pulmonary ionocyte-like epithelial cells (FOXI1/ATP6V1G3/CFTR),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.

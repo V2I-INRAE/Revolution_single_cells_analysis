@@ -1,0 +1,38 @@
+gene,feature_id,cluster,cluster_label,in_top25,in_md_identity,in_md_canonical,top25_rank,significant_rank,de_status,in_object,p_val,avg_log2FC,pct.1,pct.2,p_val_adj,pct_difference,note
+CFAP126,CFAP126,1,Multiciliated epithelial cells (TPPP3/CFAP126 program),TRUE,TRUE,FALSE,1,1,significant_positive,TRUE,0,3.58296305739156,0.828,0.114,0,0.714,
+TPPP3,TPPP3,1,Multiciliated epithelial cells (TPPP3/CFAP126 program),TRUE,TRUE,FALSE,2,2,significant_positive,TRUE,0,3.56119922625742,0.916,0.162,0,0.754,
+CIMIP1,CIMIP1,1,Multiciliated epithelial cells (TPPP3/CFAP126 program),TRUE,FALSE,FALSE,3,3,significant_positive,TRUE,0,3.55413139934806,0.956,0.154,0,0.802,
+TMEM212,TMEM212,1,Multiciliated epithelial cells (TPPP3/CFAP126 program),TRUE,FALSE,FALSE,4,4,significant_positive,TRUE,5.9916960544295e-271,3.50379409363018,0.269,0.029,1.26562595757714e-266,0.24,
+SNTN,SNTN,1,Multiciliated epithelial cells (TPPP3/CFAP126 program),TRUE,TRUE,FALSE,5,5,significant_positive,TRUE,0,3.41736758785757,0.807,0.116,0,0.691,
+ENSSSCG00000050990,ENSSSCG00000050990,1,Multiciliated epithelial cells (TPPP3/CFAP126 program),TRUE,FALSE,FALSE,6,6,significant_positive,TRUE,4.72839840363003e-281,3.41468034622677,0.282,0.031,9.98779594798771e-277,0.251,
+ENSSSCG00000028717,ENSSSCG00000028717,1,Multiciliated epithelial cells (TPPP3/CFAP126 program),TRUE,FALSE,FALSE,7,7,significant_positive,TRUE,0,3.40712553069497,0.65,0.084,0,0.566,
+CFAP90,CFAP90,1,Multiciliated epithelial cells (TPPP3/CFAP126 program),TRUE,FALSE,FALSE,8,8,significant_positive,TRUE,0,3.40350725419691,0.658,0.085,0,0.573,
+DCDC2B,DCDC2B,1,Multiciliated epithelial cells (TPPP3/CFAP126 program),TRUE,FALSE,FALSE,9,9,significant_positive,TRUE,0,3.40333296930321,0.351,0.04,0,0.311,
+C2orf81,C2orf81,1,Multiciliated epithelial cells (TPPP3/CFAP126 program),TRUE,FALSE,FALSE,10,10,significant_positive,TRUE,0,3.40161946222,0.32,0.034,0,0.286,
+ENSSSCG00000034743,ENSSSCG00000034743,1,Multiciliated epithelial cells (TPPP3/CFAP126 program),TRUE,FALSE,FALSE,11,11,significant_positive,TRUE,0,3.38060398729511,0.803,0.114,0,0.689,
+ENSSSCG00000017814,ENSSSCG00000017814,1,Multiciliated epithelial cells (TPPP3/CFAP126 program),TRUE,FALSE,FALSE,12,12,significant_positive,TRUE,0,3.37263225357742,0.848,0.135,0,0.713,
+CAPS,CAPS,1,Multiciliated epithelial cells (TPPP3/CFAP126 program),TRUE,TRUE,FALSE,13,13,significant_positive,TRUE,0,3.36737660235104,0.817,0.117,0,0.7,
+ITM2A,ITM2A,1,Multiciliated epithelial cells (TPPP3/CFAP126 program),TRUE,FALSE,FALSE,14,14,significant_positive,TRUE,0,3.36437121280529,0.35,0.041,0,0.309,
+MORN3,MORN3,1,Multiciliated epithelial cells (TPPP3/CFAP126 program),TRUE,FALSE,FALSE,15,15,significant_positive,TRUE,0,3.31774341487557,0.383,0.045,0,0.338,
+PIERCE1,PIERCE1,1,Multiciliated epithelial cells (TPPP3/CFAP126 program),TRUE,FALSE,FALSE,16,16,significant_positive,TRUE,0,3.30963700832491,0.821,0.122,0,0.699,
+RSPH14,RSPH14,1,Multiciliated epithelial cells (TPPP3/CFAP126 program),TRUE,FALSE,FALSE,17,17,significant_positive,TRUE,0,3.30793825036053,0.588,0.074,0,0.514,
+CFAP144,ENSSSCG00000003954,1,Multiciliated epithelial cells (TPPP3/CFAP126 program),TRUE,TRUE,FALSE,18,18,significant_positive,TRUE,0,3.30307076898537,0.45,0.052,0,0.398,
+C11orf97,C11orf97,1,Multiciliated epithelial cells (TPPP3/CFAP126 program),TRUE,FALSE,FALSE,19,19,significant_positive,TRUE,0,3.29878333132868,0.702,0.097,0,0.605,
+CIMIP2B,CIMIP2B,1,Multiciliated epithelial cells (TPPP3/CFAP126 program),TRUE,FALSE,FALSE,20,20,significant_positive,TRUE,0,3.29775986970021,0.587,0.073,0,0.514,
+ENSSSCG00000032076,ENSSSCG00000032076,1,Multiciliated epithelial cells (TPPP3/CFAP126 program),TRUE,FALSE,FALSE,21,21,significant_positive,TRUE,0,3.27836032274005,0.427,0.052,0,0.375,
+DNAJB13,DNAJB13,1,Multiciliated epithelial cells (TPPP3/CFAP126 program),TRUE,FALSE,FALSE,22,22,significant_positive,TRUE,1.6469323920206e-291,3.27490313745839,0.306,0.037,3.47881529166511e-287,0.269,
+DPEP2,DPEP2,1,Multiciliated epithelial cells (TPPP3/CFAP126 program),TRUE,FALSE,FALSE,23,23,significant_positive,TRUE,0,3.26125359994663,0.778,0.111,0,0.667,
+DNALI1,DNALI1,1,Multiciliated epithelial cells (TPPP3/CFAP126 program),TRUE,TRUE,FALSE,24,24,significant_positive,TRUE,0,3.24270615906166,0.562,0.072,0,0.49,
+CETN2,CETN2,1,Multiciliated epithelial cells (TPPP3/CFAP126 program),TRUE,TRUE,FALSE,25,25,significant_positive,TRUE,0,3.23561740728984,0.951,0.271,0,0.68,
+FOXJ1,FOXJ1,1,Multiciliated epithelial cells (TPPP3/CFAP126 program),FALSE,TRUE,FALSE,NA,67,significant_positive,TRUE,0,3.03722877992215,0.814,0.143,0,0.671,
+EPCAM,EPCAM,1,Multiciliated epithelial cells (TPPP3/CFAP126 program),FALSE,FALSE,TRUE,NA,1835,significant_positive,TRUE,8.43899588358936e-74,0.46377123476899,0.952,0.857,1.78256910049058e-69,0.095,
+KRT8,KRT8,1,Multiciliated epithelial cells (TPPP3/CFAP126 program),FALSE,FALSE,TRUE,NA,2207,significant_positive,TRUE,2.01881633521798e-35,0.305958001667656,0.887,0.772,4.26434574488094e-31,0.115,
+KRT18,KRT18,1,Multiciliated epithelial cells (TPPP3/CFAP126 program),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+RFX2,RFX2,1,Multiciliated epithelial cells (TPPP3/CFAP126 program),FALSE,FALSE,TRUE,NA,1035,significant_positive,TRUE,5.87096106814949e-262,0.892608833026736,0.601,0.17,1.24012310642522e-257,0.431,
+RFX3,RFX3,1,Multiciliated epithelial cells (TPPP3/CFAP126 program),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+DNAH5,DNAH5,1,Multiciliated epithelial cells (TPPP3/CFAP126 program),FALSE,FALSE,TRUE,NA,375,significant_positive,TRUE,0,1.87207755842854,0.672,0.128,0,0.544,
+DNAI1,DNAI1,1,Multiciliated epithelial cells (TPPP3/CFAP126 program),FALSE,FALSE,TRUE,NA,582,significant_positive,TRUE,2.78275393073739e-218,1.45540263412933,0.374,0.081,5.87801112789659e-214,0.293,
+PIFO,NA,1,Multiciliated epithelial cells (TPPP3/CFAP126 program),FALSE,FALSE,TRUE,NA,NA,absent_from_object,FALSE,NA,NA,NA,NA,NA,NA,No exact source RNA feature/recorded alias match; no new mapping inferred. No exported marker row; NA statistics do not imply zero expression.
+SCGB1A1,SCGB1A1,1,Multiciliated epithelial cells (TPPP3/CFAP126 program),FALSE,FALSE,TRUE,NA,3053,significant_negative,TRUE,4.69395820107355e-69,-4.618437737722,0.333,0.483,9.91504790812765e-65,-0.15,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+SFTPC,SFTPC,1,Multiciliated epithelial cells (TPPP3/CFAP126 program),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+PTPRC,PTPRC,1,Multiciliated epithelial cells (TPPP3/CFAP126 program),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.

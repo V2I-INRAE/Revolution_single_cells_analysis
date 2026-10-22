@@ -1,0 +1,54 @@
+gene,feature_id,cluster,cluster_label,in_top25,in_md_identity,in_md_canonical,top25_rank,significant_rank,de_status,in_object,p_val,avg_log2FC,pct.1,pct.2,p_val_adj,pct_difference,note
+GREM1,GREM1,2,Smooth-muscle-like cells (MYH11/CNN1/ACTG2; GREM1/WIF1),TRUE,TRUE,FALSE,1,1,significant_positive,TRUE,0,8.76704399887587,0.533,0.003,0,0.53,
+TRPC4,TRPC4,2,Smooth-muscle-like cells (MYH11/CNN1/ACTG2; GREM1/WIF1),TRUE,FALSE,FALSE,2,2,significant_positive,TRUE,0,8.4731570771942,0.402,0.003,0,0.399,
+CLDN11,CLDN11,2,Smooth-muscle-like cells (MYH11/CNN1/ACTG2; GREM1/WIF1),TRUE,TRUE,FALSE,3,3,significant_positive,TRUE,0,7.81420542010836,0.57,0.007,0,0.563,
+WIF1,WIF1,2,Smooth-muscle-like cells (MYH11/CNN1/ACTG2; GREM1/WIF1),TRUE,TRUE,FALSE,4,4,significant_positive,TRUE,0,7.57821883868895,0.81,0.03,0,0.78,
+BDNF,BDNF,2,Smooth-muscle-like cells (MYH11/CNN1/ACTG2; GREM1/WIF1),TRUE,FALSE,FALSE,5,5,significant_positive,TRUE,0,6.90368560948603,0.353,0.009,0,0.344,
+ENSSSCG00000058753,ENSSSCG00000058753,2,Smooth-muscle-like cells (MYH11/CNN1/ACTG2; GREM1/WIF1),TRUE,FALSE,FALSE,6,6,significant_positive,TRUE,0,6.2622177970562,0.769,0.06,0,0.709,
+PCDH17,PCDH17,2,Smooth-muscle-like cells (MYH11/CNN1/ACTG2; GREM1/WIF1),TRUE,FALSE,FALSE,7,7,significant_positive,TRUE,0,5.94459632541009,0.464,0.021,0,0.443,
+NDNF,NDNF,2,Smooth-muscle-like cells (MYH11/CNN1/ACTG2; GREM1/WIF1),TRUE,TRUE,FALSE,8,8,significant_positive,TRUE,0,5.84264746494881,0.856,0.114,0,0.742,
+MET,MET,2,Smooth-muscle-like cells (MYH11/CNN1/ACTG2; GREM1/WIF1),TRUE,FALSE,FALSE,9,9,significant_positive,TRUE,0,5.20018227973496,0.303,0.024,0,0.279,
+WNT11,WNT11,2,Smooth-muscle-like cells (MYH11/CNN1/ACTG2; GREM1/WIF1),TRUE,FALSE,FALSE,10,10,significant_positive,TRUE,0,5.04264819207269,0.34,0.04,0,0.3,
+ADGRG6,ADGRG6,2,Smooth-muscle-like cells (MYH11/CNN1/ACTG2; GREM1/WIF1),TRUE,FALSE,FALSE,11,11,significant_positive,TRUE,0,4.95047805853925,0.517,0.054,0,0.463,
+P3H2,P3H2,2,Smooth-muscle-like cells (MYH11/CNN1/ACTG2; GREM1/WIF1),TRUE,FALSE,FALSE,12,12,significant_positive,TRUE,0,4.47689788634775,0.425,0.046,0,0.379,
+CADM1,CADM1,2,Smooth-muscle-like cells (MYH11/CNN1/ACTG2; GREM1/WIF1),TRUE,FALSE,FALSE,13,13,significant_positive,TRUE,0,4.46126549070902,0.635,0.11,0,0.525,
+LRP4,LRP4,2,Smooth-muscle-like cells (MYH11/CNN1/ACTG2; GREM1/WIF1),TRUE,FALSE,FALSE,14,14,significant_positive,TRUE,0,4.36622543694063,0.58,0.099,0,0.481,
+GPX3,GPX3,2,Smooth-muscle-like cells (MYH11/CNN1/ACTG2; GREM1/WIF1),TRUE,FALSE,FALSE,15,15,significant_positive,TRUE,0,4.32127388554648,0.83,0.159,0,0.671,
+MYH11,MYH11,2,Smooth-muscle-like cells (MYH11/CNN1/ACTG2; GREM1/WIF1),TRUE,TRUE,FALSE,16,16,significant_positive,TRUE,0,4.31975385700999,0.8,0.037,0,0.763,
+ANK3,ANK3,2,Smooth-muscle-like cells (MYH11/CNN1/ACTG2; GREM1/WIF1),TRUE,FALSE,FALSE,17,17,significant_positive,TRUE,4.8080428367217e-303,4.2662883452686,0.311,0.043,1.01560288840072e-298,0.268,
+RGS7BP,RGS7BP,2,Smooth-muscle-like cells (MYH11/CNN1/ACTG2; GREM1/WIF1),TRUE,FALSE,FALSE,18,18,significant_positive,TRUE,0,4.08985657787218,0.303,0.044,0,0.259,
+CNN1,CNN1,2,Smooth-muscle-like cells (MYH11/CNN1/ACTG2; GREM1/WIF1),TRUE,TRUE,FALSE,19,19,significant_positive,TRUE,0,4.01653797774342,0.41,0.026,0,0.384,
+ENSSSCG00000061235,ENSSSCG00000061235,2,Smooth-muscle-like cells (MYH11/CNN1/ACTG2; GREM1/WIF1),TRUE,FALSE,FALSE,20,20,significant_positive,TRUE,9.66350592479353e-282,4.00218563172636,0.272,0.043,2.04122235649414e-277,0.229,
+BDKRB2,BDKRB2,2,Smooth-muscle-like cells (MYH11/CNN1/ACTG2; GREM1/WIF1),TRUE,FALSE,FALSE,21,21,significant_positive,TRUE,1.09979012764261e-320,3.96509246242095,0.323,0.057,2.3230866866195e-316,0.266,
+LMOD1,LMOD1,2,Smooth-muscle-like cells (MYH11/CNN1/ACTG2; GREM1/WIF1),TRUE,TRUE,FALSE,22,22,significant_positive,TRUE,0,3.96180729985999,0.364,0.043,0,0.321,
+PDE5A,PDE5A,2,Smooth-muscle-like cells (MYH11/CNN1/ACTG2; GREM1/WIF1),TRUE,FALSE,FALSE,23,23,significant_positive,TRUE,0,3.93215056986565,0.645,0.187,0,0.458,
+COL4A6,COL4A6,2,Smooth-muscle-like cells (MYH11/CNN1/ACTG2; GREM1/WIF1),TRUE,FALSE,FALSE,24,24,significant_positive,TRUE,0,3.92342390890708,0.324,0.048,0,0.276,
+CHODL,CHODL,2,Smooth-muscle-like cells (MYH11/CNN1/ACTG2; GREM1/WIF1),TRUE,FALSE,FALSE,25,25,significant_positive,TRUE,2.03455339299358e-225,3.9096174282986,0.29,0.07,4.29758713202034e-221,0.22,
+ACTG2,ACTG2,2,Smooth-muscle-like cells (MYH11/CNN1/ACTG2; GREM1/WIF1),FALSE,TRUE,FALSE,NA,33,significant_positive,TRUE,0,3.61987204202346,0.366,0.019,0,0.347,
+ACTA2,ACTA2,2,Smooth-muscle-like cells (MYH11/CNN1/ACTG2; GREM1/WIF1),FALSE,TRUE,FALSE,NA,39,significant_positive,TRUE,0,3.46159491434436,0.737,0.191,0,0.546,
+TAGLN,TAGLN,2,Smooth-muscle-like cells (MYH11/CNN1/ACTG2; GREM1/WIF1),FALSE,TRUE,FALSE,NA,90,significant_positive,TRUE,0,2.36335589398969,0.88,0.577,0,0.303,
+MYLK,MYLK,2,Smooth-muscle-like cells (MYH11/CNN1/ACTG2; GREM1/WIF1),FALSE,TRUE,FALSE,NA,107,significant_positive,TRUE,0,2.09101428366421,0.69,0.349,0,0.341,
+DCN,DCN,2,Smooth-muscle-like cells (MYH11/CNN1/ACTG2; GREM1/WIF1),FALSE,FALSE,TRUE,NA,1763,significant_negative,TRUE,0,-1.39921391806585,0.932,0.974,0,-0.0419999999999999,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+LUM,LUM,2,Smooth-muscle-like cells (MYH11/CNN1/ACTG2; GREM1/WIF1),FALSE,FALSE,TRUE,NA,1935,significant_negative,TRUE,0,-3.45286970894407,0.194,0.859,0,-0.665,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+COL1A1,COL1A1,2,Smooth-muscle-like cells (MYH11/CNN1/ACTG2; GREM1/WIF1),FALSE,FALSE,TRUE,NA,1893,significant_negative,TRUE,0,-2.59838238500242,0.961,0.994,0,-0.033,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+COL1A2,COL1A2,2,Smooth-muscle-like cells (MYH11/CNN1/ACTG2; GREM1/WIF1),FALSE,FALSE,TRUE,NA,1896,significant_negative,TRUE,0,-2.67364556741624,0.823,0.987,0,-0.164,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+COL3A1,COL3A1,2,Smooth-muscle-like cells (MYH11/CNN1/ACTG2; GREM1/WIF1),FALSE,FALSE,TRUE,NA,1829,significant_negative,TRUE,0,-1.88526056741209,0.923,0.988,0,-0.0649999999999999,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+PDGFRA,PDGFRA,2,Smooth-muscle-like cells (MYH11/CNN1/ACTG2; GREM1/WIF1),FALSE,FALSE,TRUE,NA,246,significant_positive,TRUE,5.63008203622634e-179,1.33436586979331,0.755,0.705,1.18924222851209e-174,0.05,
+PDGFRB,PDGFRB,2,Smooth-muscle-like cells (MYH11/CNN1/ACTG2; GREM1/WIF1),FALSE,FALSE,TRUE,NA,1554,significant_negative,TRUE,9.6576619718133e-131,-0.804965334874519,0.378,0.723,2.03998793830612e-126,-0.345,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+RGS5,RGS5,2,Smooth-muscle-like cells (MYH11/CNN1/ACTG2; GREM1/WIF1),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+CSPG4,CSPG4,2,Smooth-muscle-like cells (MYH11/CNN1/ACTG2; GREM1/WIF1),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+MCAM,MCAM,2,Smooth-muscle-like cells (MYH11/CNN1/ACTG2; GREM1/WIF1),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+NOTCH3,NOTCH3,2,Smooth-muscle-like cells (MYH11/CNN1/ACTG2; GREM1/WIF1),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+KCNJ8,KCNJ8,2,Smooth-muscle-like cells (MYH11/CNN1/ACTG2; GREM1/WIF1),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+ABCC9,ABCC9,2,Smooth-muscle-like cells (MYH11/CNN1/ACTG2; GREM1/WIF1),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+DES,DES,2,Smooth-muscle-like cells (MYH11/CNN1/ACTG2; GREM1/WIF1),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+TCF21,TCF21,2,Smooth-muscle-like cells (MYH11/CNN1/ACTG2; GREM1/WIF1),FALSE,FALSE,TRUE,NA,1911,significant_negative,TRUE,0,-3.01089648229994,0.157,0.777,0,-0.62,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+COL14A1,COL14A1,2,Smooth-muscle-like cells (MYH11/CNN1/ACTG2; GREM1/WIF1),FALSE,FALSE,TRUE,NA,1942,significant_negative,TRUE,0,-3.6287025678958,0.227,0.893,0,-0.666,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+COL13A1,COL13A1,2,Smooth-muscle-like cells (MYH11/CNN1/ACTG2; GREM1/WIF1),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+NPNT,NPNT,2,Smooth-muscle-like cells (MYH11/CNN1/ACTG2; GREM1/WIF1),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+FGF10,FGF10,2,Smooth-muscle-like cells (MYH11/CNN1/ACTG2; GREM1/WIF1),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+LGR5,LGR5,2,Smooth-muscle-like cells (MYH11/CNN1/ACTG2; GREM1/WIF1),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+PECAM1,PECAM1,2,Smooth-muscle-like cells (MYH11/CNN1/ACTG2; GREM1/WIF1),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+CDH5,CDH5,2,Smooth-muscle-like cells (MYH11/CNN1/ACTG2; GREM1/WIF1),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+EPCAM,EPCAM,2,Smooth-muscle-like cells (MYH11/CNN1/ACTG2; GREM1/WIF1),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+PTPRC,PTPRC,2,Smooth-muscle-like cells (MYH11/CNN1/ACTG2; GREM1/WIF1),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.

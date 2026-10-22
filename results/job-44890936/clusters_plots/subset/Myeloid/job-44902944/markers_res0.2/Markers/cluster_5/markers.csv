@@ -1,0 +1,52 @@
+gene,feature_id,cluster,cluster_label,in_top25,in_md_identity,in_md_canonical,top25_rank,significant_rank,de_status,in_object,p_val,avg_log2FC,pct.1,pct.2,p_val_adj,pct_difference,note
+IGFBP2,IGFBP2,5,MARCO/TIMD4 macrophage-like cells (CDH5/PLVAP flag),TRUE,FALSE,FALSE,1,1,significant_positive,TRUE,0,11.0699564791733,0.747,0.003,0,0.744,
+MARCO,MARCO,5,MARCO/TIMD4 macrophage-like cells (CDH5/PLVAP flag),TRUE,TRUE,FALSE,2,2,significant_positive,TRUE,0,9.9323004712069,0.89,0.017,0,0.873,
+CDH5,CDH5,5,MARCO/TIMD4 macrophage-like cells (CDH5/PLVAP flag),TRUE,FALSE,TRUE,3,3,significant_positive,TRUE,0,8.57369871127693,0.407,0.003,0,0.404,"Positive endothelial-associated diagnostic detected in 40.7%; not proof of doublets, endothelial conversion or vascular location."
+CCL19,CCL19,5,MARCO/TIMD4 macrophage-like cells (CDH5/PLVAP flag),TRUE,FALSE,TRUE,4,4,significant_positive,TRUE,0,8.33429742504203,0.481,0.01,0,0.471,
+TRPC6,TRPC6,5,MARCO/TIMD4 macrophage-like cells (CDH5/PLVAP flag),TRUE,FALSE,FALSE,5,5,significant_positive,TRUE,0,8.08710439821005,0.347,0.001,0,0.346,
+KIAA1217,KIAA1217,5,MARCO/TIMD4 macrophage-like cells (CDH5/PLVAP flag),TRUE,FALSE,FALSE,6,6,significant_positive,TRUE,0,8.03788695277317,0.453,0.015,0,0.438,
+KANK1,KANK1,5,MARCO/TIMD4 macrophage-like cells (CDH5/PLVAP flag),TRUE,FALSE,FALSE,7,7,significant_positive,TRUE,0,7.62414606541675,0.282,0.003,0,0.279,
+IDO1,IDO1,5,MARCO/TIMD4 macrophage-like cells (CDH5/PLVAP flag),TRUE,FALSE,TRUE,8,8,significant_positive,TRUE,0,6.94691128248717,0.547,0.013,0,0.534,"State diagnostic, not proof of suppressive function."
+PLVAP,PLVAP,5,MARCO/TIMD4 macrophage-like cells (CDH5/PLVAP flag),TRUE,FALSE,TRUE,9,9,significant_positive,TRUE,0,6.67795476381302,0.838,0.094,0,0.744,Positive endothelial-associated diagnostic requiring cell-level review.
+DYSF,DYSF,5,MARCO/TIMD4 macrophage-like cells (CDH5/PLVAP flag),TRUE,FALSE,FALSE,10,10,significant_positive,TRUE,0,6.21421921477448,0.356,0.014,0,0.342,
+TIMD4,TIMD4,5,MARCO/TIMD4 macrophage-like cells (CDH5/PLVAP flag),TRUE,TRUE,FALSE,11,11,significant_positive,TRUE,0,5.96530109094763,0.49,0.022,0,0.468,
+ADGRG1,ADGRG1,5,MARCO/TIMD4 macrophage-like cells (CDH5/PLVAP flag),TRUE,FALSE,FALSE,12,12,significant_positive,TRUE,0,5.91159057500364,0.417,0.018,0,0.399,
+HPGD,HPGD,5,MARCO/TIMD4 macrophage-like cells (CDH5/PLVAP flag),TRUE,FALSE,FALSE,13,13,significant_positive,TRUE,0,5.81785600239261,0.498,0.041,0,0.457,
+ENSSSCG00000041163,ENSSSCG00000041163,5,MARCO/TIMD4 macrophage-like cells (CDH5/PLVAP flag),TRUE,FALSE,FALSE,14,14,significant_positive,TRUE,0,5.50104941212416,0.335,0.047,0,0.288,
+ENSSSCG00000023014,ENSSSCG00000023014,5,MARCO/TIMD4 macrophage-like cells (CDH5/PLVAP flag),TRUE,FALSE,FALSE,15,15,significant_positive,TRUE,0,5.33514418756772,0.339,0.026,0,0.313,
+ACER2,ACER2,5,MARCO/TIMD4 macrophage-like cells (CDH5/PLVAP flag),TRUE,FALSE,FALSE,16,16,significant_positive,TRUE,0,5.08319384403339,0.332,0.046,0,0.286,
+GPRIN3,GPRIN3,5,MARCO/TIMD4 macrophage-like cells (CDH5/PLVAP flag),TRUE,FALSE,FALSE,17,17,significant_positive,TRUE,0,5.06988142817402,0.535,0.092,0,0.443,
+SDC3,SDC3,5,MARCO/TIMD4 macrophage-like cells (CDH5/PLVAP flag),TRUE,FALSE,FALSE,18,18,significant_positive,TRUE,1.06202019718625e-271,4.94867816100337,0.385,0.089,2.24330526251651e-267,0.296,
+C4BPA,C4BPA,5,MARCO/TIMD4 macrophage-like cells (CDH5/PLVAP flag),TRUE,TRUE,FALSE,19,19,significant_positive,TRUE,0,4.81033056031199,0.925,0.062,0,0.863,
+PTGS1,PTGS1,5,MARCO/TIMD4 macrophage-like cells (CDH5/PLVAP flag),TRUE,FALSE,FALSE,20,20,significant_positive,TRUE,0,4.76615621386734,0.31,0.031,0,0.279,
+DSE,DSE,5,MARCO/TIMD4 macrophage-like cells (CDH5/PLVAP flag),TRUE,FALSE,FALSE,21,21,significant_positive,TRUE,0,4.6488763398757,0.721,0.091,0,0.63,
+GHSR,GHSR,5,MARCO/TIMD4 macrophage-like cells (CDH5/PLVAP flag),TRUE,FALSE,FALSE,22,22,significant_positive,TRUE,0,4.63426613997451,0.719,0.229,0,0.49,
+ENSSSCG00000009239,ENSSSCG00000009239,5,MARCO/TIMD4 macrophage-like cells (CDH5/PLVAP flag),TRUE,FALSE,FALSE,23,23,significant_positive,TRUE,0,4.6205337825154,0.422,0.034,0,0.388,
+LOC100624077,ENSSSCG00000031640,5,MARCO/TIMD4 macrophage-like cells (CDH5/PLVAP flag),TRUE,FALSE,FALSE,24,24,significant_positive,TRUE,0,4.36394293096382,0.783,0.1,0,0.683,
+CD180,CD180,5,MARCO/TIMD4 macrophage-like cells (CDH5/PLVAP flag),TRUE,TRUE,FALSE,25,25,significant_positive,TRUE,0,4.36379397366501,0.376,0.054,0,0.322,
+C1QA,C1QA,5,MARCO/TIMD4 macrophage-like cells (CDH5/PLVAP flag),FALSE,TRUE,FALSE,NA,116,significant_positive,TRUE,3.61585560446826e-255,2.38721441786761,0.921,0.757,7.63777179331831e-251,0.164,
+C1QB,C1QB,5,MARCO/TIMD4 macrophage-like cells (CDH5/PLVAP flag),FALSE,TRUE,FALSE,NA,136,significant_positive,TRUE,7.31389090689798e-318,2.2494648997445,0.934,0.686,1.54491317626406e-313,0.248,
+C1QC,C1QC,5,MARCO/TIMD4 macrophage-like cells (CDH5/PLVAP flag),FALSE,TRUE,FALSE,NA,211,significant_positive,TRUE,5.02571531378282e-235,1.74642410671043,0.943,0.772,1.06158184573035e-230,0.171,
+CSF1R,CSF1R,5,MARCO/TIMD4 macrophage-like cells (CDH5/PLVAP flag),FALSE,TRUE,FALSE,NA,303,significant_positive,TRUE,4.78287613747632e-32,1.28670232928545,0.486,0.392,1.01028692651912e-27,0.094,
+GPNMB,GPNMB,5,MARCO/TIMD4 macrophage-like cells (CDH5/PLVAP flag),FALSE,TRUE,FALSE,NA,361,significant_positive,TRUE,6.90103981838506e-36,0.871047232406845,0.779,0.745,1.45770664083748e-31,0.034,
+PTPRC,PTPRC,5,MARCO/TIMD4 macrophage-like cells (CDH5/PLVAP flag),FALSE,FALSE,TRUE,NA,2642,significant_negative,TRUE,5.44313608708307e-173,-1.14984380371261,0.545,0.925,1.14975363567456e-168,-0.38,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+TYROBP,TYROBP,5,MARCO/TIMD4 macrophage-like cells (CDH5/PLVAP flag),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+CD163,CD163,5,MARCO/TIMD4 macrophage-like cells (CDH5/PLVAP flag),FALSE,FALSE,TRUE,NA,1255,significant_negative,TRUE,2.86860132230386e-31,-0.336107526189787,0.856,0.935,6.05934657310245e-27,-0.0790000000000001,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+MRC1,MRC1,5,MARCO/TIMD4 macrophage-like cells (CDH5/PLVAP flag),FALSE,FALSE,TRUE,NA,3195,significant_negative,TRUE,0,-4.04404741158562,0.101,0.777,0,-0.676,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+PPARG,PPARG,5,MARCO/TIMD4 macrophage-like cells (CDH5/PLVAP flag),FALSE,FALSE,TRUE,NA,3078,significant_negative,TRUE,3.05351118150906e-300,-2.56671354830704,0.08,0.731,6.44993166870159e-296,-0.651,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+FABP4,FABP4,5,MARCO/TIMD4 macrophage-like cells (CDH5/PLVAP flag),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+SIGLEC1,SIGLEC1,5,MARCO/TIMD4 macrophage-like cells (CDH5/PLVAP flag),FALSE,FALSE,TRUE,NA,NA,not_significant,TRUE,0.633047929884685,1.11298116629522,0.402,0.566,1,-0.164,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+FCN2,FCN2,5,MARCO/TIMD4 macrophage-like cells (CDH5/PLVAP flag),FALSE,FALSE,TRUE,NA,3298,significant_negative,TRUE,7.68018091153646e-302,-8.25253543324899,0.011,0.66,1.62228461394385e-297,-0.649,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+FCN1,ENSSSCG00000029414,5,MARCO/TIMD4 macrophage-like cells (CDH5/PLVAP flag),FALSE,FALSE,TRUE,NA,3281,significant_negative,TRUE,0,-5.86640730229481,0.024,0.737,0,-0.713,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+CD14,CD14,5,MARCO/TIMD4 macrophage-like cells (CDH5/PLVAP flag),FALSE,FALSE,TRUE,NA,334,significant_positive,TRUE,1.09301678344012e-31,1.03237955876551,0.605,0.57,2.30877935166056e-27,0.035,
+FCGR3A,ENSSSCG00000036618,5,MARCO/TIMD4 macrophage-like cells (CDH5/PLVAP flag),FALSE,FALSE,TRUE,NA,349,significant_positive,TRUE,4.64321218558412e-96,0.920096295585481,0.852,0.8,9.80785709960935e-92,0.0519999999999999,
+PECAM1,PECAM1,5,MARCO/TIMD4 macrophage-like cells (CDH5/PLVAP flag),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+VWF,VWF,5,MARCO/TIMD4 macrophage-like cells (CDH5/PLVAP flag),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+KDR,KDR,5,MARCO/TIMD4 macrophage-like cells (CDH5/PLVAP flag),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+CLDN5,CLDN5,5,MARCO/TIMD4 macrophage-like cells (CDH5/PLVAP flag),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+PTPRB,PTPRB,5,MARCO/TIMD4 macrophage-like cells (CDH5/PLVAP flag),FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+EPCAM,EPCAM,5,MARCO/TIMD4 macrophage-like cells (CDH5/PLVAP flag),FALSE,FALSE,TRUE,NA,3253,significant_negative,TRUE,1.34573854412607e-206,-4.90666683761269,0.023,0.549,2.84260352675749e-202,-0.526,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+IFIT2,IFIT2,5,MARCO/TIMD4 macrophage-like cells (CDH5/PLVAP flag),FALSE,FALSE,TRUE,NA,47,significant_positive,TRUE,3.23746256167156e-228,3.54461294601827,0.417,0.112,6.83849216901884e-224,0.305,
+ISG15,ISG15,5,MARCO/TIMD4 macrophage-like cells (CDH5/PLVAP flag),FALSE,FALSE,TRUE,NA,131,significant_positive,TRUE,1.35964782282903e-39,2.27338444385514,0.379,0.234,2.87198409616175e-35,0.145,
+VSIG4,VSIG4,5,MARCO/TIMD4 macrophage-like cells (CDH5/PLVAP flag),FALSE,FALSE,TRUE,NA,289,significant_positive,TRUE,2.79798030027286e-39,1.3938675292099,0.643,0.683,5.91017378826637e-35,-0.04,Positive avg_log2FC with lower detection than pooled rest (64.3% vs 68.3%).
+CD68,CD68,5,MARCO/TIMD4 macrophage-like cells (CDH5/PLVAP flag),FALSE,FALSE,TRUE,NA,363,significant_positive,TRUE,3.46311849890272e-11,0.863282058123235,0.618,0.73,7.31514520523222e-07,-0.112,Positive avg_log2FC with lower detection than pooled rest (61.8% vs 73.0%).

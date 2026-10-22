@@ -1,0 +1,47 @@
+gene,feature_id,cluster,cluster_label,in_top25,in_md_identity,in_md_canonical,top25_rank,significant_rank,de_status,in_object,p_val,avg_log2FC,pct.1,pct.2,p_val_adj,pct_difference,note
+LTF,LTF,4,LTF/MMP8/S100-high neutrophil-like granulocytes,TRUE,TRUE,FALSE,1,1,significant_positive,TRUE,0,8.21968355560533,0.312,0.01,0,0.302,
+S100A12,S100A12,4,LTF/MMP8/S100-high neutrophil-like granulocytes,TRUE,TRUE,FALSE,2,2,significant_positive,TRUE,0,5.64717095568959,0.732,0.178,0,0.554,
+LCN2,LCN2,4,LTF/MMP8/S100-high neutrophil-like granulocytes,TRUE,TRUE,FALSE,3,3,significant_positive,TRUE,0,5.44425551306191,0.386,0.026,0,0.36,
+S100A8,S100A8,4,LTF/MMP8/S100-high neutrophil-like granulocytes,TRUE,TRUE,FALSE,4,4,significant_positive,TRUE,0,5.13243880933702,0.807,0.202,0,0.605,
+MMP8,MMP8,4,LTF/MMP8/S100-high neutrophil-like granulocytes,TRUE,TRUE,FALSE,5,5,significant_positive,TRUE,0,5.12578416688917,0.291,0.013,0,0.278,
+ENSSSCG00000022258,ENSSSCG00000022258,4,LTF/MMP8/S100-high neutrophil-like granulocytes,TRUE,FALSE,FALSE,6,6,significant_positive,TRUE,0,4.41537502107101,0.348,0.034,0,0.314,
+CD52,CD52,4,LTF/MMP8/S100-high neutrophil-like granulocytes,TRUE,FALSE,FALSE,7,7,significant_positive,TRUE,1.00325947667644e-295,4.3059261019824,0.303,0.029,2.11918499258365e-291,0.274,
+S100A11,S100A11,4,LTF/MMP8/S100-high neutrophil-like granulocytes,TRUE,FALSE,FALSE,8,8,significant_positive,TRUE,6.65759675103322e-284,3.98732312290014,0.498,0.087,1.40628416172075e-279,0.411,
+MMP9,MMP9,4,LTF/MMP8/S100-high neutrophil-like granulocytes,TRUE,TRUE,FALSE,9,9,significant_positive,TRUE,0,3.84418101658408,0.399,0.03,0,0.369,
+FCN1,ENSSSCG00000029414,4,LTF/MMP8/S100-high neutrophil-like granulocytes,TRUE,TRUE,FALSE,10,10,significant_positive,TRUE,0,3.71493291413868,0.474,0.055,0,0.419,
+S100A9,ENSSSCG00000006588,4,LTF/MMP8/S100-high neutrophil-like granulocytes,TRUE,TRUE,FALSE,11,11,significant_positive,TRUE,2.3705269687463e-320,3.64110525324767,0.691,0.163,5.00726411608281e-316,0.528,
+ENSSSCG00000028871,ENSSSCG00000028871,4,LTF/MMP8/S100-high neutrophil-like granulocytes,TRUE,FALSE,FALSE,12,12,significant_positive,TRUE,3.59239469713672e-204,2.99778788284184,0.26,0.032,7.5882153187619e-200,0.228,
+ANXA1,ANXA1,4,LTF/MMP8/S100-high neutrophil-like granulocytes,TRUE,FALSE,FALSE,13,13,significant_positive,TRUE,1.50806050071663e-80,2.63031888746271,0.541,0.245,3.18547619566374e-76,0.296,
+FBXO9,FBXO9,4,LTF/MMP8/S100-high neutrophil-like granulocytes,TRUE,FALSE,FALSE,14,14,significant_positive,TRUE,5.44004051552148e-148,2.3831161391309,0.477,0.139,1.1490997580936e-143,0.338,
+MEGF9,MEGF9,4,LTF/MMP8/S100-high neutrophil-like granulocytes,TRUE,FALSE,FALSE,15,15,significant_positive,TRUE,4.56726027297278e-170,2.18134407239098,0.43,0.096,9.6474238746004e-166,0.334,
+CDK2AP2,CDK2AP2,4,LTF/MMP8/S100-high neutrophil-like granulocytes,TRUE,FALSE,FALSE,16,16,significant_positive,TRUE,4.24539788308309e-82,2.17829068086873,0.284,0.077,8.96755394843641e-78,0.207,
+NRG1,NRG1,4,LTF/MMP8/S100-high neutrophil-like granulocytes,TRUE,FALSE,FALSE,17,17,significant_positive,TRUE,2.78856095152818e-101,2.06017705101183,0.407,0.126,5.89027729791298e-97,0.281,
+UGP2,UGP2,4,LTF/MMP8/S100-high neutrophil-like granulocytes,TRUE,FALSE,FALSE,18,18,significant_positive,TRUE,3.88144743996913e-59,2.03500578834049,0.278,0.093,8.19878142744679e-55,0.185,
+CYBB,CYBB,4,LTF/MMP8/S100-high neutrophil-like granulocytes,TRUE,TRUE,FALSE,19,19,significant_positive,TRUE,4.23391848796909e-46,2.02216885405243,0.269,0.095,8.9433060221371e-42,0.174,
+ENSSSCG00000013556,ENSSSCG00000013556,4,LTF/MMP8/S100-high neutrophil-like granulocytes,TRUE,FALSE,FALSE,20,20,significant_positive,TRUE,9.67148993508378e-74,2.01354199314763,0.284,0.083,2.04290881898775e-69,0.201,
+SERPINB1,SERPINB1,4,LTF/MMP8/S100-high neutrophil-like granulocytes,TRUE,TRUE,FALSE,21,21,significant_positive,TRUE,5.077468691462e-70,2.00561726416508,0.679,0.463,1.07251371169752e-65,0.216,
+GAPDH,GAPDH,4,LTF/MMP8/S100-high neutrophil-like granulocytes,TRUE,FALSE,FALSE,22,22,significant_positive,TRUE,8.12992975256618e-73,1.88187406664868,0.547,0.291,1.71728506163455e-68,0.256,
+CST3,CST3,4,LTF/MMP8/S100-high neutrophil-like granulocytes,TRUE,FALSE,FALSE,23,23,significant_positive,TRUE,3.22665069600933e-55,1.86765299714141,0.256,0.086,6.8156542651805e-51,0.17,
+ACTG1,ACTG1,4,LTF/MMP8/S100-high neutrophil-like granulocytes,TRUE,FALSE,FALSE,24,24,significant_positive,TRUE,1.33300445067558e-50,1.79683784485691,0.547,0.311,2.81570530116203e-46,0.236,
+PKM,PKM,4,LTF/MMP8/S100-high neutrophil-like granulocytes,TRUE,FALSE,FALSE,25,25,significant_positive,TRUE,1.94457098543841e-67,1.73521406730597,0.344,0.119,4.10751729254154e-63,0.225,
+PTPRC,PTPRC,4,LTF/MMP8/S100-high neutrophil-like granulocytes,FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+TYROBP,TYROBP,4,LTF/MMP8/S100-high neutrophil-like granulocytes,FALSE,FALSE,TRUE,NA,214,significant_positive,TRUE,1.28533241986017e-13,0.390724462446718,0.738,0.653,2.71500767047063e-09,0.085,
+CSF3R,CSF3R,4,LTF/MMP8/S100-high neutrophil-like granulocytes,FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+CXCL8,CXCL8,4,LTF/MMP8/S100-high neutrophil-like granulocytes,FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+FCGR3A,ENSSSCG00000036618,4,LTF/MMP8/S100-high neutrophil-like granulocytes,FALSE,FALSE,TRUE,NA,308,significant_negative,TRUE,3.32032955812401e-07,-0.96168379998432,0.399,0.467,0.00701353212562534,-0.068,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+MPO,NA,4,LTF/MMP8/S100-high neutrophil-like granulocytes,FALSE,FALSE,TRUE,NA,NA,absent_from_object,FALSE,NA,NA,NA,NA,NA,NA,No exact source RNA feature/recorded alias match; no new mapping inferred. No exported marker row; NA statistics do not imply zero expression.
+ELANE,NA,4,LTF/MMP8/S100-high neutrophil-like granulocytes,FALSE,FALSE,TRUE,NA,NA,absent_from_object,FALSE,NA,NA,NA,NA,NA,NA,No exact source RNA feature/recorded alias match; no new mapping inferred. No exported marker row; NA statistics do not imply zero expression.
+PRTN3,NA,4,LTF/MMP8/S100-high neutrophil-like granulocytes,FALSE,FALSE,TRUE,NA,NA,absent_from_object,FALSE,NA,NA,NA,NA,NA,NA,No exact source RNA feature/recorded alias match; no new mapping inferred. No exported marker row; NA statistics do not imply zero expression.
+CTSG,NA,4,LTF/MMP8/S100-high neutrophil-like granulocytes,FALSE,FALSE,TRUE,NA,NA,absent_from_object,FALSE,NA,NA,NA,NA,NA,NA,No exact source RNA feature/recorded alias match; no new mapping inferred. No exported marker row; NA statistics do not imply zero expression.
+CEBPE,CEBPE,4,LTF/MMP8/S100-high neutrophil-like granulocytes,FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+CXCR2,NA,4,LTF/MMP8/S100-high neutrophil-like granulocytes,FALSE,FALSE,TRUE,NA,NA,absent_from_object,FALSE,NA,NA,NA,NA,NA,NA,No exact source RNA feature/recorded alias match; no new mapping inferred. No exported marker row; NA statistics do not imply zero expression.
+FPR1,NA,4,LTF/MMP8/S100-high neutrophil-like granulocytes,FALSE,FALSE,TRUE,NA,NA,absent_from_object,FALSE,NA,NA,NA,NA,NA,NA,No exact source RNA feature/recorded alias match; no new mapping inferred. No exported marker row; NA statistics do not imply zero expression.
+CD14,CD14,4,LTF/MMP8/S100-high neutrophil-like granulocytes,FALSE,FALSE,TRUE,NA,163,significant_positive,TRUE,1.20223842890755e-28,0.517825642094565,0.698,0.44,2.53948823338141e-24,0.258,
+CSF1R,CSF1R,4,LTF/MMP8/S100-high neutrophil-like granulocytes,FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+IL1B,ENSSSCG00000039214,4,LTF/MMP8/S100-high neutrophil-like granulocytes,FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+IFIT1,IFIT1,4,LTF/MMP8/S100-high neutrophil-like granulocytes,FALSE,FALSE,TRUE,NA,317,significant_negative,TRUE,4.72700956648712e-10,-1.28235973628489,0.297,0.389,9.98486230729073e-06,-0.092,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+ISG15,ISG15,4,LTF/MMP8/S100-high neutrophil-like granulocytes,FALSE,FALSE,TRUE,NA,NA,not_significant,TRUE,0.00302080586029579,-0.973527071506814,0.262,0.296,1,-0.034,"Context/diagnostic gene, not a positively enriched marker in this comparison."
+EPX,EPX,4,LTF/MMP8/S100-high neutrophil-like granulocytes,FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+CCR3,CCR3,4,LTF/MMP8/S100-high neutrophil-like granulocytes,FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+KIT,KIT,4,LTF/MMP8/S100-high neutrophil-like granulocytes,FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
+MS4A2,MS4A2,4,LTF/MMP8/S100-high neutrophil-like granulocytes,FALSE,FALSE,TRUE,NA,NA,not_in_prefiltered,TRUE,NA,NA,NA,NA,NA,NA,No exported marker row; NA statistics do not imply zero expression.
