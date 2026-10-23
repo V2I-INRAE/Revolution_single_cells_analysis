@@ -1,0 +1,49 @@
+# Granulocytes paired pseudobulk pipeline
+Status: all supported DE/diagnostics/plots/Hallmark completed; basic saved-output review PASS. Intentional contrast skips remain recorded.
+Started: 2026-10-22 20:26:15.749266
+Producer allocation: local
+Script: R/DEG/run_pseudobulk.R; count/DE, diagnostics, DE plotting and Hallmark modules.
+Input (read-only): data/job-44542861/subsets/Granulocytes/job-44831033/subclustered.rds
+Source producer: job-44831033
+Population: Granulocytes ; cluster column: harmony_snn_res.0.2 ; clusters: 1
+Groups (ordered): Control/T0H, P4/T4H positive, N4/T4H negative, P10/T10H positive, N10/T10H negative airway-pressure ventilation.
+Observed panel before cluster selection: 23 original specimens; Control/P4/N4=5 each, P10/N10=4 each; REVO29 has no late specimens.
+T8H becomes T10H character-safely in memory only; time_point_original and original sample IDs (including REVO31-N8) retained for audit.
+Exclude only individual observed-panel aggregates with <10 cells (including absent cluster populations); sample_audit.csv retains exact original IDs, n_cells and exclusion reasons. No zero-expression libraries.
+Retain ALL passing specimens in one joint model, including late groups with only 1 or 2 replicates. No imputation, additional deletion or downsampling.
+Test each requested contrast only with >=3 DIRECTLY MATCHED PIGS after sample filtering; missing groups or fewer pairs are explicitly skipped. All six requests/counts/pairs/reasons appear in contrast_status.csv and run summaries.
+No eligible contrasts => no fit. Rank-deficient design or residual df<=0 => blocked, no fit; no model simplification or further sample removal.
+Candidates: intersection of ALL original RNA counts.* layers, before sample/time/cluster selection.
+Filtering per cluster: filterByExpr(group=condition), default min.count=10/min.total.count=15/large.n=10/min.prop=0.7. Observed retained groups only; a retained singleton reduces minimum group size to 1. This consequence is retained, not silently changed.
+Normalization: recalculate filtered library sizes, then TMM. No integrated or normalized cell counts used.
+Model: ~ pig + condition; edgeR glmQLFit(legacy=FALSE), dispersion=NULL, robust=FALSE; glmQLFTest.
+Requested contrasts (ordered, first-minus-second; intercept/pig coefficients zero): P4_vs_Control, N4_vs_Control, P4_vs_N4, P4_vs_P10, N4_vs_N10, P10_vs_N10. One joint fit on observed condition levels per eligible cluster; full rank and positive residual df required. BH separately per cluster/tested contrast.
+DE exports: full statistics and FDR<=0.05 tables, without an effect-size cutoff.
+Volcano/heatmap selection: FDR<=0.05 AND abs(log2FC)>=0.5 within the same tested contrast; heatmap union across tested members of the six requested contrasts.
+MDS: same filtered TMM DGEList as DE; top500 pairwise leading-logFC distances, prior.count=2; no pig-effect removal.
+Heatmap: TMM log2 CPM prior.count=2, row z-scores over all samples, Euclidean/complete row clustering, fixed Control/P4/N4/P10/N10 then pig order; RdBu blue-low/white-zero/red-high saturated at +/-2.5; pig effects retained.
+Volcano: exact logFC and -log10(BH FDR), four classes, +/-0.5 and FDR0.05 dashed guides; five labels per direction.
+Pig display-name mapping: results/misc/Ensembl_ID/gene-mapping/pig_to_human_orthologues_annotated.csv ; pig_safe_name only when pig_rename_status=rename. Original feature IDs retained; no human rename.
+References: results/job-44542861/clusters_plots/subset/Endothelial/job-44831031/DEG/references ; MSigDB2026.1.Hs Hallmark pig projection, taxon9823. Reactome used only for consistent pig aliases, not enrichment tests.
+GSEA exclusions: eight previously approved features B2M/ENSSSCG00000004687, LDHB/ENSSSCG00000000576, ARFIP2/TRIM3, GNA12/ENSSSCG00000032549; absent/filtered members need no exclusion.
+Additional approved GSEA exclusions by cluster: 1=ENSSSCG00000027349,ENSSSCG00000032894
+GSEA mapping: exact unambiguous pig symbol/Ensembl aliases, then existing safe pig name; NCBI canonical ID or Ensembl fallback; unmatched/ambiguous features remain SOURCE:<feature> nonhits. Additional tested-ID collisions block GSEA for that cluster pending owner decision.
+GSEA ranks: all tested features minus approved exclusions; sign(logFC)*sqrt(pmax(F,0)), decreasing with gene-ID tie-breaker. Numerical negative F values receive zero rank, matching edgeR P=1; original DE statistics unchanged. No gene FDR/fold-change filtering.
+GSEA: fgseaMultilevel(minSize=15,maxSize=500,gseaParam=1,scoreType=std,eps=0,nproc=1); seed1234 reset per contrast. BH separately per cluster/contrast; pathway reporting FDR<0.01.
+GSEA direction: positive NES favours first phenotype; negative favours second. Display up to eight terms/direction, including nonsignificant terms; stars mark FDR<0.01. Lowest-FDR running score in each direction.
+Interpretation: baseline contrasts combine time/perfusion and pressure effects; no claim of exclusive induction or pathway activation.
+No ORA/GO/Reactome analysis in this run. Source RDS and input references are read-only.
+Verification: one basic reopening of saved results and figure inspection after execution; no repeated audits or reruns.
+Evidence: logs/granulocytes-all-clusters-pseudobulk-20261022.log
+R: 4.6.1 ; Seurat: 5.5.1 ; edgeR: 4.10.5 ; fgsea: 1.38.0 ; plotthis: 0.14.1.1
+Finished: 2026-10-22 20:26:34.275467
+Original count layers: 23 ; candidate genes: 15902
+Summary: cluster_summary.csv
+
+Basic saved-output review completed for produced results. Overall completion and unresolved GSEA blocks: logs/deg-t10h-full-run-20261022.INFO. Original result directories untouched; no repeated tests or scientific reruns.
+
+ 2026-10-22 20:57:39 USER APPROVED GSEA-only completion; exclude BOTH rows of new pairs; full additional exclusions: ENSSSCG00000027349,ENSSSCG00000032894,C4BPA,ENSSSCG00000015662 input: results/job-44542861/clusters_plots/subset/Granulocytes/job-44831033/DEG_T10H/cluster_01/pseudobulk_fit.rds mapping: results/misc/Ensembl_ID/gene-mapping/pig_to_human_orthologues_annotated.csv references: results/job-44542861/clusters_plots/subset/Endothelial/job-44831031/DEG/references fgseaMultilevel minSize=15 maxSize=500 gseaParam=1 scoreType=std eps=0 nproc=1 pathway_fdr=0.01 seed=1234; producer PID 28400 
+2026-10-22 20:57:47 GSEA-only completed; contrasts 6 missing_pvalues 0 saved RDS taxon/seed/names/unique ranks/exclusions PASS; aggregate DE fields and untouched rows PASS; PID 28400 
+2026-10-22 20:58:01 Protected output MD5 PASS: 1611 files byte-identical across all five DEG_T10H roots; PID 28400 
+
+Final batch completion: all supported DE and Hallmark contrasts complete; zero remaining GSEA collision blocks/missing pathway P-values. Final inventory across5subsets:111DE+111Hallmark,3intentional DC C1 late skips,390PDF/PNG pairs. GSEA-only completion used approved exclusions without DE refitting; protected1611files unchanged. Current methods/outcomes: logs/deg-t10h-full-run-20261022.INFO.

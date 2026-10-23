@@ -1,0 +1,14 @@
+# Stromal cluster 6
+Status: no_eligible_contrasts ; no fit, diagnostics, DE plots or GSEA.
+Started: 2026-10-22 21:17:54.519035
+Run settings: results/job-44542861/clusters_plots/subset/Stromal/job-44831036/DEG_T10H/.INFO
+Input: data/job-44542861/subsets/Stromal/job-44831036/subclustered.rds
+Cluster column: harmony_snn_res.0.3
+Producer allocation: local
+Seed: 1234 for GSEA and label placement; DE/MDS/heatmap deterministic.
+Evidence: logs/stromal-all-clusters-pseudobulk-20261022.log
+Reason: No requested contrast has at least 3 directly matched pigs after sample filtering.
+Finished: 2026-10-22 21:17:54.523507
+Retained/excluded specimens: 7 / 16
+Joint design rank: NA ; residual df: NA
+Audits: sample_audit.csv, group_counts.csv and contrast_status.csv; no zero-expression libraries created.

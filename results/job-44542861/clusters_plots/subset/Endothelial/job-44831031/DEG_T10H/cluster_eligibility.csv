@@ -1,0 +1,6 @@
+"cluster","status","reason","cells","observed_cells","panel_samples","samples","pigs","min_cells","excluded_samples","absent_samples","below_10_samples","candidate_genes","design_rank","residual_df","filter_min_group_size","requested_contrasts","eligible_contrasts","tested_contrasts"
+"1","completed","",6154,6154,23,23,5,114,0,0,0,15902,9,14,4,6,6,6
+"2","completed","",2634,2634,23,23,5,33,0,0,0,15902,9,14,4,6,6,6
+"3","completed","",1919,1919,23,23,5,28,0,0,0,15902,9,14,4,6,6,6
+"4","completed","",1746,1746,23,23,5,30,0,0,0,15902,9,14,4,6,6,6
+"5","completed","",1383,1383,23,23,5,22,0,0,0,15902,9,14,4,6,6,6

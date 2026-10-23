@@ -1,0 +1,6 @@
+"condition","panel_samples","observed_samples","retained_samples","retained_pigs","excluded_samples","absent_samples","below_10_samples","observed_cells","retained_cells"
+"Control",5,5,5,5,0,0,0,531,531
+"P4",5,5,5,5,0,0,0,855,855
+"N4",5,5,5,5,0,0,0,724,724
+"P10",4,4,4,4,0,0,0,434,434
+"N10",4,4,4,4,0,0,0,627,627

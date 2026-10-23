@@ -1,0 +1,23 @@
+# Stromal cluster 1
+Status: DE/diagnostics/plots and supported Hallmark contrasts completed; owner-approved GSEA-only collision exclusions applied. Basic saved-output review PASS.
+Started: 2026-10-22 21:15:45.237373
+Run settings: results/job-44542861/clusters_plots/subset/Stromal/job-44831036/DEG_T10H/.INFO
+Input: data/job-44542861/subsets/Stromal/job-44831036/subclustered.rds
+Cluster column: harmony_snn_res.0.3
+Producer allocation: local
+Seed: 1234 for GSEA and label placement; DE/MDS/heatmap deterministic.
+Evidence: logs/stromal-all-clusters-pseudobulk-20261022.log
+Finished: 2026-10-22 21:16:15.211373
+Cells: 4770 ; samples: 23 ; pigs: 5 ; min cells per sample: 49
+Candidate genes: 15902 ; low-expression genes removed: 5182 ; tested: 10720 ; genes outside original common-layer intersection: 5221
+Excluded specimens: 0 ; requested/tested contrasts: 6 / 6
+Joint design rank: 9 ; residual df: 14 ; filterByExpr minimum retained group size: 4
+Heatmap genes: 8221
+Validation: one saved-output review and figure inspection pending.
+
+Basic saved-output review PASS: fit/MDS sample IDs/counts, supported contrast names/pairing, heatmap dimensions and produced figure files reopened. GSEA remains blocked by recorded identifier collisions; no additional exclusions authorized yet.
+Evidence: logs/deg-t10h-nk-stromal-20261022.INFO.
+
+ GSEA-only completion 2026-10-22 21:28:45.978948 PID 29908 saved input results/job-44542861/clusters_plots/subset/Stromal/job-44831036/DEG_T10H/cluster_01/pseudobulk_fit.rds mapping results/misc/Ensembl_ID/gene-mapping/pig_to_human_orthologues_annotated.csv references results/job-44542861/clusters_plots/subset/Endothelial/job-44831031/DEG/references additional approved exclusions C4BPA,ENSSSCG00000015662,TNFSF15,ENSSSCG00000034087 method existing fgseaMultilevel minSize15 maxSize500 gseaParam1 scoreType std eps0 nproc1 seed1234; global8 retained; no DE refit Status: started
+
+ GSEA-only completion 2026-10-22 21:28:45.978948 PID 29908 saved input results/job-44542861/clusters_plots/subset/Stromal/job-44831036/DEG_T10H/cluster_01/pseudobulk_fit.rds mapping results/misc/Ensembl_ID/gene-mapping/pig_to_human_orthologues_annotated.csv references results/job-44542861/clusters_plots/subset/Endothelial/job-44831031/DEG/references additional approved exclusions C4BPA,ENSSSCG00000015662,TNFSF15,ENSSSCG00000034087 method existing fgseaMultilevel minSize15 maxSize500 gseaParam1 scoreType std eps0 nproc1 seed1234; global8 retained; no DE refit Status: completed; six contrasts; missing pvalues 0 Finished: 2026-10-22 21:28:56 

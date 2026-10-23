@@ -1,0 +1,23 @@
+# Macrophage_Monocytes cluster 1
+Status: DE/diagnostics/plots and supported Hallmark contrasts completed; owner-approved GSEA-only collision exclusions applied. Basic saved-output review PASS.
+Started: 2026-10-22 20:26:40.347403
+Run settings: results/job-44542861/clusters_plots/subset/Macrophage_Monocytes/job-44831034/DEG_T10H/.INFO
+Input: data/job-44542861/subsets/Macrophage_Monocytes/job-44831034/subclustered.rds
+Cluster column: harmony_snn_res.0.2
+Producer allocation: local
+Seed: 1234 for GSEA and label placement; DE/MDS/heatmap deterministic.
+Evidence: logs/macrophage_monocytes-all-clusters-pseudobulk-20261022.log
+Finished: 2026-10-22 20:27:12.793157
+Cells: 22898 ; samples: 23 ; pigs: 5 ; min cells per sample: 447
+Candidate genes: 15902 ; low-expression genes removed: 3315 ; tested: 12587 ; genes outside original common-layer intersection: 5221
+Excluded specimens: 0 ; requested/tested contrasts: 6 / 6
+Joint design rank: 9 ; residual df: 14 ; filterByExpr minimum retained group size: 4
+Heatmap genes: 7884
+Validation: one saved-output review and figure inspection pending.
+
+Basic saved-output review PASS: retained sample IDs/counts, fit/MDS and supported contrast names, heatmap IDs/dimensions and nonempty expected PDF/PNG files reopened. Hallmark remains BLOCKED by identifier collisions; see unresolved_collisions.csv. No extra exclusions authorized.
+Review evidence: logs/deg-t10h-full-run-20261022.INFO; canonical original execution log retained.
+
+ 2026-10-22 20:57:47 USER APPROVED GSEA-only completion; exclude BOTH rows of new pairs; full additional exclusions: ENSSSCG00000012102,ENSSSCG00000016026,ENSSSCG00000027349,ENSSSCG00000032894,ENSSSCG00000038226,ZC3H15,C4BPA,ENSSSCG00000015662,TNFSF15,ENSSSCG00000034087 input: results/job-44542861/clusters_plots/subset/Macrophage_Monocytes/job-44831034/DEG_T10H/cluster_01/pseudobulk_fit.rds mapping: results/misc/Ensembl_ID/gene-mapping/pig_to_human_orthologues_annotated.csv references: results/job-44542861/clusters_plots/subset/Endothelial/job-44831031/DEG/references fgseaMultilevel minSize=15 maxSize=500 gseaParam=1 scoreType=std eps=0 nproc=1 pathway_fdr=0.01 seed=1234; producer PID 28400 
+2026-10-22 20:57:55 GSEA-only completed; contrasts 6 missing_pvalues 0 saved RDS taxon/seed/names/unique ranks/exclusions PASS; aggregate DE fields and untouched rows PASS; PID 28400 
+2026-10-22 20:58:01 Protected output MD5 PASS: 1611 files byte-identical across all five DEG_T10H roots; PID 28400 

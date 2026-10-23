@@ -1,0 +1,19 @@
+# NK_cells cluster 3
+Status: DE/diagnostics/plots completed; Hallmark completed
+Started: 2026-10-22 21:15:24.267005
+Run settings: results/job-44542861/clusters_plots/subset/NK_cells/job-44831035/DEG_T10H/.INFO
+Input: data/job-44542861/subsets/NK_cells/job-44831035/subclustered.rds
+Cluster column: harmony_snn_res.0.2
+Producer allocation: local
+Seed: 1234 for GSEA and label placement; DE/MDS/heatmap deterministic.
+Evidence: logs/nk_cells-all-clusters-pseudobulk-20261022.log
+Finished: 2026-10-22 21:15:43.915494
+Cells: 1131 ; samples: 23 ; pigs: 5 ; min cells per sample: 15
+Candidate genes: 15902 ; low-expression genes removed: 11969 ; tested: 3933 ; genes outside original common-layer intersection: 5221
+Excluded specimens: 0 ; requested/tested contrasts: 6 / 6
+Joint design rank: 9 ; residual df: 14 ; filterByExpr minimum retained group size: 4
+Heatmap genes: 959
+Validation: one saved-output review and figure inspection pending.
+
+Basic saved-output review PASS: fit/MDS sample IDs/counts, supported contrast names/pairing, heatmap dimensions and produced figure files reopened. Saved GSEA objects agree on taxon9823/MSigDB2026.1.Hs/seed1234; zero missing pathway P-values.
+Evidence: logs/deg-t10h-nk-stromal-20261022.INFO.

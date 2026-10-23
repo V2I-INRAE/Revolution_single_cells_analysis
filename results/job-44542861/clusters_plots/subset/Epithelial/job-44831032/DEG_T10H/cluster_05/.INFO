@@ -1,0 +1,19 @@
+# Epithelial cluster 5
+Status: DE/diagnostics/plots completed; Hallmark completed
+Started: 2026-10-22 20:25:54.544116
+Run settings: results/job-44542861/clusters_plots/subset/Epithelial/job-44831032/DEG_T10H/.INFO
+Input: data/job-44542861/subsets/Epithelial/job-44831032/subclustered.rds
+Cluster column: harmony_snn_res.0.3
+Producer allocation: local
+Seed: 1234 for GSEA and label placement; DE/MDS/heatmap deterministic.
+Evidence: logs/epithelial-all-clusters-pseudobulk-20261022.log
+Finished: 2026-10-22 20:26:14.691491
+Cells: 663 ; samples: 23 ; pigs: 5 ; min cells per sample: 14
+Candidate genes: 15902 ; low-expression genes removed: 12404 ; tested: 3498 ; genes outside original common-layer intersection: 5221
+Excluded specimens: 0 ; requested/tested contrasts: 6 / 6
+Joint design rank: 9 ; residual df: 14 ; filterByExpr minimum retained group size: 4
+Heatmap genes: 1279
+Validation: one saved-output review and figure inspection pending.
+
+Basic saved-output review PASS: retained sample IDs/counts, fit/MDS and supported contrast names, heatmap IDs/dimensions and nonempty expected PDF/PNG files reopened. Saved Hallmark object/result names, taxon9823/MSigDB2026.1.Hs and seed1234 agree; zero missing pathway P-values.
+Review evidence: logs/deg-t10h-full-run-20261022.INFO; canonical original execution log retained.

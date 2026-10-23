@@ -1,0 +1,19 @@
+# Stromal cluster 2
+Status: DE/diagnostics/plots completed; Hallmark completed
+Started: 2026-10-22 21:16:15.213231
+Run settings: results/job-44542861/clusters_plots/subset/Stromal/job-44831036/DEG_T10H/.INFO
+Input: data/job-44542861/subsets/Stromal/job-44831036/subclustered.rds
+Cluster column: harmony_snn_res.0.3
+Producer allocation: local
+Seed: 1234 for GSEA and label placement; DE/MDS/heatmap deterministic.
+Evidence: logs/stromal-all-clusters-pseudobulk-20261022.log
+Finished: 2026-10-22 21:16:42.431824
+Cells: 2764 ; samples: 23 ; pigs: 5 ; min cells per sample: 30
+Candidate genes: 15902 ; low-expression genes removed: 8090 ; tested: 7812 ; genes outside original common-layer intersection: 5221
+Excluded specimens: 0 ; requested/tested contrasts: 6 / 6
+Joint design rank: 9 ; residual df: 14 ; filterByExpr minimum retained group size: 4
+Heatmap genes: 3931
+Validation: one saved-output review and figure inspection pending.
+
+Basic saved-output review PASS: fit/MDS sample IDs/counts, supported contrast names/pairing, heatmap dimensions and produced figure files reopened. Saved GSEA objects agree on taxon9823/MSigDB2026.1.Hs/seed1234; zero missing pathway P-values.
+Evidence: logs/deg-t10h-nk-stromal-20261022.INFO.

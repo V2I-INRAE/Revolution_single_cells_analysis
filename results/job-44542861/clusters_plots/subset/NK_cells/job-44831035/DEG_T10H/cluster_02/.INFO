@@ -1,0 +1,23 @@
+# NK_cells cluster 2
+Status: DE/diagnostics/plots and supported Hallmark contrasts completed; owner-approved GSEA-only collision exclusions applied. Basic saved-output review PASS.
+Started: 2026-10-22 21:15:03.042227
+Run settings: results/job-44542861/clusters_plots/subset/NK_cells/job-44831035/DEG_T10H/.INFO
+Input: data/job-44542861/subsets/NK_cells/job-44831035/subclustered.rds
+Cluster column: harmony_snn_res.0.2
+Producer allocation: local
+Seed: 1234 for GSEA and label placement; DE/MDS/heatmap deterministic.
+Evidence: logs/nk_cells-all-clusters-pseudobulk-20261022.log
+Finished: 2026-10-22 21:15:24.265201
+Cells: 8252 ; samples: 23 ; pigs: 5 ; min cells per sample: 112
+Candidate genes: 15902 ; low-expression genes removed: 6811 ; tested: 9091 ; genes outside original common-layer intersection: 5221
+Excluded specimens: 0 ; requested/tested contrasts: 6 / 6
+Joint design rank: 9 ; residual df: 14 ; filterByExpr minimum retained group size: 4
+Heatmap genes: 4837
+Validation: one saved-output review and figure inspection pending.
+
+Basic saved-output review PASS: fit/MDS sample IDs/counts, supported contrast names/pairing, heatmap dimensions and produced figure files reopened. GSEA remains blocked by recorded identifier collisions; no additional exclusions authorized yet.
+Evidence: logs/deg-t10h-nk-stromal-20261022.INFO.
+
+ GSEA-only completion 2026-10-22 21:28:37.524866 PID 29908 saved input results/job-44542861/clusters_plots/subset/NK_cells/job-44831035/DEG_T10H/cluster_02/pseudobulk_fit.rds mapping results/misc/Ensembl_ID/gene-mapping/pig_to_human_orthologues_annotated.csv references results/job-44542861/clusters_plots/subset/Endothelial/job-44831031/DEG/references additional approved exclusions ENSSSCG00000027349,ENSSSCG00000032894 method existing fgseaMultilevel minSize15 maxSize500 gseaParam1 scoreType std eps0 nproc1 seed1234; global8 retained; no DE refit Status: started
+
+ GSEA-only completion 2026-10-22 21:28:37.524866 PID 29908 saved input results/job-44542861/clusters_plots/subset/NK_cells/job-44831035/DEG_T10H/cluster_02/pseudobulk_fit.rds mapping results/misc/Ensembl_ID/gene-mapping/pig_to_human_orthologues_annotated.csv references results/job-44542861/clusters_plots/subset/Endothelial/job-44831031/DEG/references additional approved exclusions ENSSSCG00000027349,ENSSSCG00000032894 method existing fgseaMultilevel minSize15 maxSize500 gseaParam1 scoreType std eps0 nproc1 seed1234; global8 retained; no DE refit Status: completed; six contrasts; missing pvalues 0 Finished: 2026-10-22 21:28:45 

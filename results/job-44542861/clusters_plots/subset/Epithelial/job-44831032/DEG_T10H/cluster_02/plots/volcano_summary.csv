@@ -1,0 +1,25 @@
+"contrast","class","n_genes"
+"N4_vs_Control","Not significant",7281
+"N4_vs_N10","Not significant",7668
+"P10_vs_N10","Not significant",9571
+"P4_vs_Control","Not significant",7590
+"P4_vs_N4","Not significant",9270
+"P4_vs_P10","Not significant",8994
+"N4_vs_Control","Significant, small effect",228
+"N4_vs_N10","Significant, small effect",208
+"P10_vs_N10","Significant, small effect",11
+"P4_vs_Control","Significant, small effect",258
+"P4_vs_N4","Significant, small effect",47
+"P4_vs_P10","Significant, small effect",75
+"N4_vs_Control","Down",1159
+"N4_vs_N10","Down",1005
+"P10_vs_N10","Down",128
+"P4_vs_Control","Down",1099
+"P4_vs_N4","Down",455
+"P4_vs_P10","Down",551
+"N4_vs_Control","Up",1405
+"N4_vs_N10","Up",1192
+"P10_vs_N10","Up",363
+"P4_vs_Control","Up",1126
+"P4_vs_N4","Up",301
+"P4_vs_P10","Up",453
