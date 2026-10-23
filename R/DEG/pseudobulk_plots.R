@@ -4,7 +4,9 @@ plot_pseudobulk_de <- function(pb, output_dir, label, mapping,
                               fdr_cutoff = 0.05, logfc_cutoff = 0.5, seed = 1234) {
   dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
   sample_info <- pb$sample_info
-  sample_info$condition <- factor(sample_info$condition, levels = c("Control", "P4", "N4"))
+  condition_levels <- c("Control", "P4", "N4", "P10", "N10")
+  sample_info$condition <- factor(sample_info$condition,
+    levels = condition_levels[condition_levels %in% sample_info$condition])
   sample_info <- sample_info[order(sample_info$condition, sample_info$pig), ]
   log2_cpm <- edgeR::cpm(pb$dge, log = TRUE, prior.count = 2)
   passes <- vapply(pb$results, function(tab) {
@@ -12,9 +14,13 @@ plot_pseudobulk_de <- function(pb, output_dir, label, mapping,
     rownames(log2_cpm) %in% genes
   }, logical(nrow(log2_cpm)))
   rownames(passes) <- rownames(log2_cpm)
+  # Union of genes passing both thresholds within at least one contrast.
   selected <- rownames(log2_cpm)[rowSums(passes) > 0]
   z_scores <- log2_cpm[selected, sample_info$sample, drop = FALSE]
   if (length(selected)) z_scores <- t(scale(t(z_scores)))
+  if (any(!is.finite(z_scores))) {
+    stop("Heatmap row z-scores are undefined for some selected genes; review constant rows before plotting.")
+  }
   row_hc <- if (length(selected) > 1) {
     stats::hclust(stats::dist(z_scores, method = "euclidean"), method = "complete")
   } else FALSE
@@ -65,19 +71,26 @@ plot_pseudobulk_de <- function(pb, output_dir, label, mapping,
 render_pseudobulk_heatmap <- function(z_scores, row_hc, sample_info, output_dir, label,
                                       fdr_cutoff = 0.05, logfc_cutoff = 0.5) {
   dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
+  condition_levels <- c("Control", "P4", "N4", "P10", "N10")
+  condition_colors <- setNames(viz_palette[seq_along(condition_levels)], condition_levels)
+  sample_info$condition <- factor(sample_info$condition,
+    levels = condition_levels[condition_levels %in% sample_info$condition])
+  sample_info <- sample_info[order(sample_info$condition, sample_info$pig), ]
+  z_scores <- z_scores[, sample_info$sample, drop = FALSE]
   selected <- rownames(z_scores)
-  rd_bu <- rev(RColorBrewer::brewer.pal(11, "RdBu"))
+  if (length(selected) < 2) row_hc <- FALSE
+  heatmap_colors <- rev(RColorBrewer::brewer.pal(11, "RdBu"))
   if (length(selected)) {
     annotation <- ComplexHeatmap::HeatmapAnnotation(
       Condition = sample_info$condition, Pig = sample_info$pig,
-      col = list(Condition = setNames(viz_palette[1:3], levels(sample_info$condition)),
+      col = list(Condition = condition_colors[levels(sample_info$condition)],
         Pig = setNames(viz_palette[seq_along(levels(sample_info$pig))], levels(sample_info$pig))),
       annotation_name_gp = grid::gpar(fontsize = 9),
       annotation_legend_param = list(
         Condition = list(title_gp = grid::gpar(fontsize = 9, fontface = "bold"), labels_gp = grid::gpar(fontsize = 9)),
         Pig = list(title_gp = grid::gpar(fontsize = 9, fontface = "bold"), labels_gp = grid::gpar(fontsize = 9))))
     heatmap <- ComplexHeatmap::Heatmap(z_scores, name = "Log2 CPM\nrow z-score",
-      col = circlize::colorRamp2(seq(-2.5, 2.5, length.out = 11), rd_bu),
+      col = circlize::colorRamp2(seq(-2.5, 2.5, length.out = 11), heatmap_colors),
       cluster_rows = row_hc, row_dend_reorder = FALSE,
       cluster_columns = FALSE, cluster_column_slices = FALSE,
       column_split = sample_info$condition, column_gap = grid::unit(3, "mm"),
@@ -106,10 +119,10 @@ render_pseudobulk_heatmap <- function(z_scores, row_hc, sample_info, output_dir,
     } else {
       grid::grid.newpage()
       grid::grid.text(title, y = 0.9, gp = grid::gpar(fontsize = 11))
-      grid::grid.text("No genes pass the joint FDR and absolute log2 fold-change thresholds.",
+      grid::grid.text("No genes pass both thresholds within any contrast.",
         gp = grid::gpar(fontsize = 12))
     }
-    grid::grid.text(sprintf("FDR <= %g and |log2 FC| >= %g in at least one contrast. Pig effects retained.",
+    grid::grid.text(sprintf("FDR <= %g and |log2 FC| >= %g within at least one contrast. Pig effects retained.",
       fdr_cutoff, logfc_cutoff), x = 0.5, y = grid::unit(4, "mm"), gp = grid::gpar(fontsize = 9))
     grDevices::dev.off()
   }
@@ -122,8 +135,10 @@ render_pseudobulk_volcano <- function(plot_data, output_dir, label,
     "Down" = "#88699B", "Up" = "#44AA99")
   plot_data$class <- factor(plot_data$class, levels = names(class_colors))
   volcano_data <- split(plot_data, plot_data$contrast)
-  titles <- c(P4_vs_Control = "P4 vs Control", N4_vs_Control = "N4 vs Control", P4_vs_N4 = "P4 vs N4")
-  ratios <- c(P4_vs_Control = "P4 / Control", N4_vs_Control = "N4 / Control", P4_vs_N4 = "P4 / N4")
+  titles <- c(P4_vs_Control = "P4 vs Control", N4_vs_Control = "N4 vs Control", P4_vs_N4 = "P4 vs N4",
+    P4_vs_P10 = "P4 vs P10", N4_vs_N10 = "N4 vs N10", P10_vs_N10 = "P10 vs N10")
+  ratios <- c(P4_vs_Control = "P4 / Control", N4_vs_Control = "N4 / Control", P4_vs_N4 = "P4 / N4",
+    P4_vs_P10 = "P4 / P10", N4_vs_N10 = "N4 / N10", P10_vs_N10 = "P10 / N10")
   for (comparison in names(volcano_data)) {
     tab <- volcano_data[[comparison]]
     # Grey background first; preserve all coordinates while drawing significant genes last.

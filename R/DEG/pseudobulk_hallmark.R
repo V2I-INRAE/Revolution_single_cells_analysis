@@ -95,7 +95,7 @@ run_pseudobulk_hallmark <- function(pb, reference, output_dir, label,
     write.csv(display[, setdiff(names(display), "leadingEdge")],
       file.path(output_dir, paste0(contrast, "_displayed_pathways.csv")), row.names = FALSE)
     render_pseudobulk_hallmark(result, display, ranks[[contrast]], pathways,
-      reference$database_version, nlevels(pb$sample_info$pig), contrast, output_dir,
+      reference$database_version, pb$sample_info, contrast, output_dir,
       label, pathway_fdr, seed)
   }
   summary <- do.call(rbind, lapply(names(results), function(contrast) {
@@ -121,16 +121,20 @@ run_pseudobulk_hallmark <- function(pb, reference, output_dir, label,
 
 # Plot existing enrichment results; this function never runs fgseaMultilevel.
 render_pseudobulk_hallmark <- function(result, display, ranks, pathways,
-    database_version, n_pigs, contrast, output_dir, label, pathway_fdr = 0.01, seed = 1234) {
+    database_version, sample_info, contrast, output_dir, label, pathway_fdr = 0.01, seed = 1234) {
   groups <- strsplit(contrast, "_vs_", fixed = TRUE)[[1]]
+  n_samples <- vapply(groups, function(group) sum(sample_info$condition == group), integer(1))
+  paired_pigs <- intersect(as.character(sample_info$pig[sample_info$condition == groups[1]]),
+    as.character(sample_info$pig[sample_info$condition == groups[2]]))
+  n_model_pigs <- length(unique(sample_info$pig))
   figure <- plotthis::ScatterPlot(display, x = "NES", y = "label", size_by = "size",
     size_name = "Matched genes", color_by = "neg_log10_fdr", color_name = "-log10(BH FDR)",
     palette = "viridis", lower_cutoff = 0, upper_cutoff = max(display$neg_log10_fdr),
     shape = 21, alpha = 1, border_size = 0.3, aspect.ratio = NULL,
     theme = "theme_classic", theme_args = list(base_size = 10),
     title = paste(label, "Hallmark GSEA"),
-    subtitle = paste(groups[1], "minus", groups[2], "|", n_pigs,
-      "paired pigs | * pathway FDR <", pathway_fdr),
+    subtitle = sprintf("%s (n=%d samples) minus %s (n=%d samples) | %d directly paired pigs\n%d pigs in joint model | * pathway FDR < %g",
+      groups[1], n_samples[1], groups[2], n_samples[2], length(paired_pigs), n_model_pigs, pathway_fdr),
     xlab = paste("NES: negative favours", groups[2], "; positive favours", groups[1]),
     ylab = "", combine = FALSE, seed = seed)[[1]] +
     ggplot2::scale_y_discrete(labels = function(x) vapply(x, function(z)

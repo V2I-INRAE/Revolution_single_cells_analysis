@@ -22,22 +22,33 @@ plot_pseudobulk_diagnostics <- function(pb, output_dir, label, seed = 1234) {
 
 # Rendering is separate so saved coordinates can be restyled without rerunning MDS.
 render_pseudobulk_diagnostics <- function(mds_data, mds, n_genes, output_dir, label, seed = 1234) {
+  condition_levels <- c("Control", "P4", "N4", "P10", "N10")
+  condition_colors <- setNames(viz_palette[seq_along(condition_levels)], condition_levels)
+  mds_data$condition <- factor(mds_data$condition,
+    levels = condition_levels[condition_levels %in% mds_data$condition])
   sample_info <- mds_data
-  condition_colors <- setNames(viz_palette[seq_along(levels(sample_info$condition))],
-    levels(sample_info$condition))
+  condition_colors <- condition_colors[levels(sample_info$condition)]
   pig_colors <- setNames(viz_palette[seq_along(levels(sample_info$pig))], levels(sample_info$pig))
   axis_labels <- sprintf("Leading logFC\ndimension %d (%.1f%%)",
     1:2, 100 * mds$var.explained[1:2])
-  # Label-only starting offsets for the four residual collisions observed at
-  # final print size. Points, distances, sample identities and axes are untouched.
-  label_offsets <- switch(label,
+  # Label-only starts; points, distances, identities and axes are untouched.
+  joint_macrophage_pilot <- label == "Macrophage_Monocytes cluster 6" &&
+    nrow(sample_info) == 23 && length(levels(sample_info$condition)) == 5
+  # Historical offsets apply only to the original 15-sample panel.
+  label_offsets <- if (nrow(sample_info) == 15 &&
+    identical(levels(sample_info$condition), c("Control", "P4", "N4"))) switch(label,
     "Endothelial cluster 4" = c("REVO29-P4" = 0.4, "REVO26-N4" = -0.3),
     "Epithelial cluster 5" = c("REVO31-N4" = 0.35, "REVO31-P4" = -0.2),
     "Granulocytes cluster 1" = c("REVO30-N4" = 0.35, "REVO26-P4" = -0.25),
     "Macrophage_Monocytes cluster 3" = c("REVO27-P4" = 0.7, "REVO31-N4" = -0.3),
-    numeric())
+    numeric()) else if (joint_macrophage_pilot) {
+    # Starting offsets for the dense joint-five-group pilot, labels only.
+    c("REVO26-P4" = -0.2, "REVO26-C" = 0.2, "REVO30-P4" = -0.3,
+      "REVO26-N10" = 0.15, "REVO31-N4" = 0.3, "REVO30-P10" = 0.15)
+  } else numeric()
   nudge_y <- unname(label_offsets[match(mds_data$sample, names(label_offsets))])
   nudge_y[is.na(nudge_y)] <- 0
+  nudge_x <- ifelse(joint_macrophage_pilot & mds_data$sample == "REVO30-P4", 0.9, 0)
   mds_plots <- lapply(c("condition", "pig"), function(group) {
     colors <- if (group == "condition") condition_colors else pig_colors
     plotthis::ScatterPlot(mds_data, x = "MDS1", y = "MDS2", color_by = group,
@@ -50,8 +61,8 @@ render_pseudobulk_diagnostics <- function(mds_data, mds, n_genes, output_dir, la
       ggrepel::geom_text_repel(data = mds_data,
         ggplot2::aes(MDS1, MDS2, label = sub("^REVO", "", sample)), inherit.aes = FALSE,
         size = 9 / ggplot2::.pt, segment.size = 0.25, seed = seed, max.overlaps = Inf, min.segment.length = 0,
-        point.size = 3.2, point.padding = 0.2, nudge_y = nudge_y,
-        box.padding = 0.25, force = 5, force_pull = 0.1, max.iter = 1000000, max.time = Inf) +
+        point.size = 3.2, point.padding = 0.2, nudge_x = nudge_x, nudge_y = nudge_y,
+        box.padding = 0.35, force = 5, force_pull = 0.1, max.iter = 1000000, max.time = Inf) +
       ggplot2::scale_x_continuous(expand = ggplot2::expansion(mult = 0.25)) +
       ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = 0.25)) +
       ggplot2::guides(color = ggplot2::guide_legend(nrow = 2, byrow = TRUE),
@@ -92,7 +103,7 @@ render_pseudobulk_diagnostics <- function(mds_data, mds, n_genes, output_dir, la
   qc_figure <- (patchwork::wrap_plots(metric_plots, ncol = 2, guides = "collect") +
     patchwork::plot_annotation(
       title = paste0(label, ": sample QC"),
-      subtitle = paste("All", nrow(sample_info), "samples retained. Libraries use the",
+      subtitle = paste("Model includes", nrow(sample_info), "samples. Libraries use the",
         format(n_genes, big.mark = ","), "genes retained by filterByExpr."),
       caption = deg_wrap("Effective library size = filtered library size x TMM factor. Dashed line marks TMM factor 1, not an exclusion cutoff."),
       tag_levels = "A", theme = deg_theme())) & ggplot2::theme(legend.position = "bottom")
