@@ -48,3 +48,10 @@ Input consistency PASS: samples 15; genes 4238
 Scientific files unchanged: 31 CSV/RDS files byte-identical by MD5.
 
 Final publication validation:12 PDFs and matching PNGs delivered at170mm width; embedded fonts >=9pt, captions/labels present, no page-edge clipping. Scientific CSV/RDS files unchanged; no DE/GSEA tests. Full-scope evidence and limitations: logs/deg-publication-rollout.INFO.
+
+## Local volcano style replacement2026-10-22
+Status: rendering locally; saved volcano CSV only.
+Style: opaque circular dots; grey/purple/teal/black; independent full linear axes;170x200mm square-panel publication layout.
+Run record: logs/deg-volcano-local-rollout.INFO; seed 1234; original FDR 0.05 and abs(log2FC) 0.5 retained. No statistical reruns; other figures read-only.
+Rendering complete; protected scientific/other-figure hashes PASS. Saved-output/visual validation pending; see central run record.
+Status: COMPLETED and saved-output validated locally2026-10-22; all57 production PDFs/PNGs reopened, minimum9pt text, no outer-page-edge ink;906 protected files unchanged. Representative visual checks PASS; see logs/deg-volcano-local-rollout.INFO.
