@@ -54,13 +54,17 @@ for (directory in directories) {
     stopifnot(is.finite(fdr_cutoff), is.finite(logfc_cutoff))
   }
   pb <- readRDS(file.path(directory, "pseudobulk_fit.rds"))
-  hallmark_contrasts <- character()
+  hallmark_contrasts <- reactome_contrasts <- character()
   if (!diagnostics_only) {
     # Missing/blocked GSEA stops a full request before this cluster's figures/record are replaced.
     gsea <- read_saved_pseudobulk_gsea(directory, names(pb$results))
     hallmark_contrasts <- names(gsea$results)
+    if ("reactome" %in% saved_pseudobulk_collections(directory)) {
+      reactome <- read_saved_pseudobulk_gsea(directory, names(pb$results), "reactome")
+      reactome_contrasts <- names(reactome$results)
+    }
   }
-  pdfs <- saved_pseudobulk_figure_paths(directory, names(pb$results), hallmark_contrasts, diagnostics_only)
+  pdfs <- saved_pseudobulk_figure_paths(directory, names(pb$results), hallmark_contrasts, diagnostics_only, reactome_contrasts)
   targets <- c(pdfs, sub("\\.pdf$", ".png", pdfs))
   scope <- if (diagnostics_only) {
     hallmark_state <- if (file.exists(file.path(directory, "gsea", "hallmark", "unresolved_collisions.csv"))) {
@@ -68,8 +72,8 @@ for (directory in directories) {
     } else if (file.exists(file.path(directory, "gsea", "hallmark", "gsea_results.rds"))) {
       "saved results present but not read or verified"
     } else "missing saved results"
-    paste("Partial scope: diagnostics only; DE/heatmap/Hallmark figures not regenerated. Hallmark:", hallmark_state)
-  } else "Full production figure scope; completed saved Hallmark results required."
+    paste("Partial scope: diagnostics only; DE/heatmap/GSEA figures not regenerated. Hallmark:", hallmark_state)
+  } else "Full production figure scope; completed saved Hallmark and, when present, Reactome results required."
   info_path <- file.path(directory, ".INFO")
   note <- c("", paste("## Publication-size figure replacement", Sys.Date()),
     "Status: running", paste("Started:", Sys.time()),

@@ -2,8 +2,20 @@ source("R/DEG/publication_style.R")
 
 # Pig identifiers only. Human orthologue names are not pig feature renames.
 prepare_hallmark <- function(common_genes, mapping_file, reference_dir) {
-  hallmark <- readRDS(file.path(reference_dir, "hallmark_pig.rds"))
-  reference <- dplyr::bind_rows(hallmark, readRDS(file.path(reference_dir, "reactome_pig.rds")))
+  prepare_pseudobulk_gsea(common_genes, mapping_file, reference_dir, "hallmark")
+}
+
+# Both collections use the SAME union of pig aliases and approved exclusions.
+prepare_pseudobulk_gsea <- function(common_genes, mapping_file, reference_dir,
+    collection = c("hallmark", "reactome")) {
+  collection <- match.arg(collection)
+  paths <- file.path(reference_dir, c("hallmark_pig.rds", "reactome_pig.rds"))
+  hallmark <- readRDS(paths[1])
+  reactome <- readRDS(paths[2])
+  stopifnot(all(hallmark$gs_collection == "H"),
+    all(reactome$gs_collection == "C2"), all(reactome$gs_subcollection == "CP:REACTOME"),
+    identical(unique(hallmark$db_version), unique(reactome$db_version)))
+  reference <- dplyr::bind_rows(hallmark, reactome)
   stopifnot(all(reference$ortholog_taxon_id == 9823))
   reference$pig_gene <- ifelse(!is.na(reference$ncbi_gene),
     paste0("NCBI:", reference$ncbi_gene), reference$ensembl_gene)
@@ -31,15 +43,27 @@ prepare_hallmark <- function(common_genes, mapping_file, reference_dir) {
     "ENSSSCG00000000576", "ARFIP2", "TRIM3", "GNA12", "ENSSSCG00000032549")
   mapping$rank_id <- ifelse(!is.na(mapping$pig_gene), mapping$pig_gene,
     paste0("SOURCE:", mapping$gene))
-  hallmark$pig_gene <- ifelse(!is.na(hallmark$ncbi_gene),
-    paste0("NCBI:", hallmark$ncbi_gene), hallmark$ensembl_gene)
-  members <- unique(hallmark[, c("gs_name", "pig_gene")])
+  selected <- if (collection == "hallmark") hallmark else reactome
+  selected$pig_gene <- ifelse(!is.na(selected$ncbi_gene),
+    paste0("NCBI:", selected$ncbi_gene), selected$ensembl_gene)
+  members <- unique(selected[, c("gs_name", "pig_gene")])
+  stopifnot(!anyNA(members), all(nzchar(members$pig_gene)))
   list(mapping = mapping, pathways = split(members$pig_gene, members$gs_name),
-    database_version = unique(hallmark$db_version))
+    database_version = unique(selected$db_version), collection = collection,
+    collection_id = if (collection == "hallmark") "H" else "C2:CP:REACTOME",
+    reference_files = tools::md5sum(paths))
 }
 
+# Retain the historical entry point for existing scripts and frozen analyses.
 run_pseudobulk_hallmark <- function(pb, reference, output_dir, label,
     pathway_fdr = 0.01, seed = 1234, excluded_features = character()) {
+  run_pseudobulk_gsea(pb, reference, output_dir, label, pathway_fdr, seed, excluded_features)
+}
+
+run_pseudobulk_gsea <- function(pb, reference, output_dir, label,
+    pathway_fdr = 0.01, seed = 1234, excluded_features = character()) {
+  collection <- if (is.null(reference$collection)) "hallmark" else reference$collection
+  collection_label <- if (collection == "hallmark") "Hallmark" else "Reactome"
   dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
   mapping <- reference$mapping[match(rownames(pb$dge), reference$mapping$gene), ]
   mapping$excluded <- mapping$excluded | mapping$gene %in% excluded_features
@@ -87,16 +111,16 @@ run_pseudobulk_hallmark <- function(pb, reference, output_dir, label,
     display <- dplyr::slice_head(dplyr::group_by(display, direction), n = 8)
     display <- as.data.frame(dplyr::ungroup(display))
     display <- display[order(display$NES), ]
-    display$label <- factor(paste0(gsub("_", " ", sub("^HALLMARK_", "", display$pathway)),
+    display$label <- factor(paste0(gsub("_", " ", sub(paste0("^", toupper(collection), "_"), "", display$pathway)),
       ifelse(display$padj < pathway_fdr, " *", "")))
     display$label <- factor(display$label, levels = as.character(display$label))
     display$neg_log10_fdr <- -log10(display$padj)
     plot_tables[[contrast]] <- display
     write.csv(display[, setdiff(names(display), "leadingEdge")],
       file.path(output_dir, paste0(contrast, "_displayed_pathways.csv")), row.names = FALSE)
-    render_pseudobulk_hallmark(result, display, ranks[[contrast]], pathways,
+    render_pseudobulk_gsea(result, display, ranks[[contrast]], pathways,
       reference$database_version, pb$sample_info, contrast, output_dir,
-      label, pathway_fdr, seed)
+      label, pathway_fdr, seed, collection_label)
   }
   summary <- do.call(rbind, lapply(names(results), function(contrast) {
     x <- results[[contrast]]
@@ -112,6 +136,9 @@ run_pseudobulk_hallmark <- function(pb, reference, output_dir, label,
   saveRDS(list(results = results, ranks = ranks, rank_tables = rank_tables, mapping = mapping,
     pathways = pathways, coverage = coverage, summary = summary, plot_tables = plot_tables,
     database_version = reference$database_version, taxon = 9823L,
+    collection = collection, collection_id = reference$collection_id,
+    reference_files = reference$reference_files,
+    fdr_scope = "BH within collection/cluster/contrast; not across collections, clusters or contrasts",
     parameters = list(minSize = 15L, maxSize = 500L, gseaParam = 1, scoreType = "std",
       eps = 0, nproc = 1L, seed = seed, pathway_fdr = pathway_fdr,
       excluded_features = excluded_features)),
@@ -122,6 +149,13 @@ run_pseudobulk_hallmark <- function(pb, reference, output_dir, label,
 # Plot existing enrichment results; this function never runs fgseaMultilevel.
 render_pseudobulk_hallmark <- function(result, display, ranks, pathways,
     database_version, sample_info, contrast, output_dir, label, pathway_fdr = 0.01, seed = 1234) {
+  render_pseudobulk_gsea(result, display, ranks, pathways, database_version, sample_info,
+    contrast, output_dir, label, pathway_fdr, seed, "Hallmark")
+}
+
+render_pseudobulk_gsea <- function(result, display, ranks, pathways,
+    database_version, sample_info, contrast, output_dir, label, pathway_fdr = 0.01, seed = 1234,
+    collection_label = "Hallmark") {
   groups <- strsplit(contrast, "_vs_", fixed = TRUE)[[1]]
   n_samples <- vapply(groups, function(group) sum(sample_info$condition == group), integer(1))
   paired_pigs <- intersect(as.character(sample_info$pig[sample_info$condition == groups[1]]),
@@ -132,7 +166,7 @@ render_pseudobulk_hallmark <- function(result, display, ranks, pathways,
     palette = "viridis", lower_cutoff = 0, upper_cutoff = max(display$neg_log10_fdr),
     shape = 21, alpha = 1, border_size = 0.3, aspect.ratio = NULL,
     theme = "theme_classic", theme_args = list(base_size = 10),
-    title = paste(label, "Hallmark GSEA"),
+    title = paste(label, collection_label, "GSEA"),
     subtitle = sprintf("%s (n=%d samples) minus %s (n=%d samples) | %d directly paired pigs\n%d pigs in joint model | * pathway FDR < %g",
       groups[1], n_samples[1], groups[2], n_samples[2], length(paired_pigs), n_model_pigs, pathway_fdr),
     xlab = paste("NES: negative favours", groups[2], "; positive favours", groups[1]),
@@ -145,9 +179,15 @@ render_pseudobulk_hallmark <- function(result, display, ranks, pathways,
     ggplot2::scale_size_continuous(range = c(2, 5)) +
     ggplot2::labs(caption = deg_wrap(paste0("Up to eight terms per direction by FDR; unstarred terms may not be significant.\n",
       "Pig orthologue projection of MSigDB ", database_version,
-      ". BH across ", nrow(result), " pathways in this cluster/contrast.\n",
+      ". BH across ", nrow(result), " pathways in this collection/cluster/contrast.\n",
       length(ranks), " ranked features; no gene FDR/logFC filtering.")))
-  save_deg_figure(figure, output_dir, paste0(contrast, "_gsea_dotplot"), height = 170)
+  # Reactome names can span several lines; keep the historical Hallmark dimensions.
+  dotplot_height <- 170
+  if (collection_label == "Reactome" && nrow(display)) {
+    label_lines <- vapply(as.character(display$label), function(x) length(strwrap(x, width = 32)), integer(1))
+    dotplot_height <- max(dotplot_height, 90 + 4 * nrow(display) * max(label_lines))
+  }
+  save_deg_figure(figure, output_dir, paste0(contrast, "_gsea_dotplot"), height = dotplot_height)
   top <- as.data.frame(dplyr::ungroup(dplyr::slice_head(dplyr::group_by(
     result[is.finite(result$NES) & !is.na(result$padj), ], direction), n = 1)))
   running <- lapply(seq_len(nrow(top)), function(i) {
@@ -159,7 +199,7 @@ render_pseudobulk_hallmark <- function(result, display, ranks, pathways,
         y = "Running enrichment score") + deg_theme()
   })
   figure <- patchwork::wrap_plots(running, ncol = 2) +
-    patchwork::plot_annotation(title = paste(label, "Hallmark:", groups[1], "minus", groups[2]),
+    patchwork::plot_annotation(title = paste(label, paste0(collection_label, ":"), groups[1], "minus", groups[2]),
       caption = deg_wrap("Lowest-FDR pathway in each direction, regardless of significance. Pig orthologue projection; no claim of pathway activation."), theme = deg_theme())
   save_deg_figure(figure, output_dir, paste0(contrast, "_running_scores"), height = 110)
 }

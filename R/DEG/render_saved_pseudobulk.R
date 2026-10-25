@@ -6,7 +6,7 @@ source("R/DEG/pseudobulk_hallmark.R")
 
 # Construct only production targets: previews are never discovered recursively.
 saved_pseudobulk_figure_paths <- function(directory, contrasts, hallmark_contrasts = character(),
-                                          diagnostics_only = FALSE) {
+                                          diagnostics_only = FALSE, reactome_contrasts = character()) {
   stems <- file.path("diagnostics", c("sample_mds", "sample_qc"))
   if (!diagnostics_only) {
     stems <- c(stems, file.path("plots", c("heatmap_groups", paste0("volcano_", contrasts))))
@@ -15,26 +15,39 @@ saved_pseudobulk_figure_paths <- function(directory, contrasts, hallmark_contras
         file.path("gsea", "hallmark", paste0(hallmark_contrasts, "_gsea_dotplot")),
         file.path("gsea", "hallmark", paste0(hallmark_contrasts, "_running_scores")))
     }
+    if (length(reactome_contrasts)) {
+      stems <- c(stems,
+        file.path("gsea", "reactome", paste0(reactome_contrasts, "_gsea_dotplot")),
+        file.path("gsea", "reactome", paste0(reactome_contrasts, "_running_scores")))
+    }
   }
   file.path(directory, paste0(stems, ".pdf"))
 }
 
-read_saved_pseudobulk_gsea <- function(input_dir, contrasts) {
-  directory <- file.path(input_dir, "gsea", "hallmark")
+# Historical roots contain Hallmark only; a present Reactome directory must be complete.
+saved_pseudobulk_collections <- function(input_dir) {
+  c("hallmark", if (dir.exists(file.path(input_dir, "gsea", "reactome"))) "reactome")
+}
+
+read_saved_pseudobulk_gsea <- function(input_dir, contrasts, collection = "hallmark") {
+  directory <- file.path(input_dir, "gsea", collection)
   path <- file.path(directory, "gsea_results.rds")
   if (file.exists(file.path(directory, "unresolved_collisions.csv")) || !file.exists(path)) {
     status <- if (file.exists(file.path(directory, "unresolved_collisions.csv"))) "blocked by identifier collisions" else "missing saved results"
-    stop("Hallmark GSEA ", status, " in ", input_dir,
+    stop(collection, " GSEA ", status, " in ", input_dir,
       "; full regeneration unavailable. Use --diagnostics-only for an explicitly partial replacement.")
   }
   gsea <- readRDS(path)
   if (!is.null(gsea$status) && !identical(gsea$status, "completed")) {
-    stop("Hallmark GSEA status: ", gsea$status, "; use --diagnostics-only for a partial replacement.")
+    stop(collection, " GSEA status: ", gsea$status, "; use --diagnostics-only for a partial replacement.")
   }
   if (!identical(names(gsea$results), contrasts) ||
       !identical(names(gsea$plot_tables), contrasts) || !identical(names(gsea$ranks), contrasts)) {
-    stop("Hallmark saved results are incomplete or contrasts differ from the frozen fit in ", input_dir,
+    stop(collection, " saved results are incomplete or contrasts differ from the frozen fit in ", input_dir,
       "; full regeneration unavailable. Use --diagnostics-only for a partial replacement.")
+  }
+  if (!is.null(gsea$collection) && !identical(gsea$collection, collection)) {
+    stop("Saved GSEA collection does not match directory: ", directory)
   }
   gsea
 }
@@ -106,19 +119,21 @@ render_saved_pseudobulk <- function(input_dir, output_dir, label, fdr_cutoff, lo
   }
 
 
-  gsea <- read_saved_pseudobulk_gsea(input_dir, names(pb$results))
-  stopifnot(identical(names(gsea$results), names(pb$results)),
-    identical(names(gsea$plot_tables), names(pb$results)),
-    identical(gsea$parameters$seed, seed))
-  for (contrast in names(gsea$results)) {
-    display <- read.csv(file.path(input_dir, "gsea", "hallmark",
-      paste0(contrast, "_displayed_pathways.csv")))
-    original <- gsea$plot_tables[[contrast]]
-    stopifnot(identical(display$pathway, original$pathway))
-    for (column in c("NES", "padj", "size", "neg_log10_fdr")) {
-      stopifnot(isTRUE(all.equal(display[[column]], original[[column]], tolerance = 1e-12)))
+  collections <- saved_pseudobulk_collections(input_dir)
+  gsea_by_collection <- setNames(lapply(collections, function(collection) {
+    gsea <- read_saved_pseudobulk_gsea(input_dir, names(pb$results), collection)
+    stopifnot(identical(gsea$parameters$seed, seed))
+    for (contrast in names(gsea$results)) {
+      display <- read.csv(file.path(input_dir, "gsea", collection,
+        paste0(contrast, "_displayed_pathways.csv")))
+      original <- gsea$plot_tables[[contrast]]
+      stopifnot(identical(display$pathway, original$pathway))
+      for (column in c("NES", "padj", "size", "neg_log10_fdr")) {
+        stopifnot(isTRUE(all.equal(display[[column]], original[[column]], tolerance = 1e-12)))
+      }
     }
-  }
+    gsea
+  }), collections)
   cat(label, ": inputs verified;", nrow(pb$dge), "genes;", nrow(z_scores), "heatmap genes\n")
   render_pseudobulk_diagnostics(mds_data, mds$mds, nrow(pb$dge),
     file.path(output_dir, "diagnostics"), label, seed)
@@ -126,11 +141,15 @@ render_saved_pseudobulk <- function(input_dir, output_dir, label, fdr_cutoff, lo
     label, fdr_cutoff, logfc_cutoff)
   render_pseudobulk_volcano(volcano, file.path(output_dir, "plots"), label,
     fdr_cutoff, logfc_cutoff, seed)
-  for (contrast in names(gsea$results)) {
-    render_pseudobulk_hallmark(gsea$results[[contrast]], gsea$plot_tables[[contrast]],
-      gsea$ranks[[contrast]], gsea$pathways, gsea$database_version,
-      pb$sample_info, contrast, file.path(output_dir, "gsea", "hallmark"),
-      label, gsea$parameters$pathway_fdr, seed)
+  for (collection in collections) {
+    gsea <- gsea_by_collection[[collection]]
+    for (contrast in names(gsea$results)) {
+      render_pseudobulk_gsea(gsea$results[[contrast]], gsea$plot_tables[[contrast]],
+        gsea$ranks[[contrast]], gsea$pathways, gsea$database_version,
+        pb$sample_info, contrast, file.path(output_dir, "gsea", collection),
+        label, gsea$parameters$pathway_fdr, seed,
+        collection_label = if (collection == "hallmark") "Hallmark" else "Reactome")
+    }
   }
   invisible(c(samples = nrow(sample_info), genes = nrow(pb$dge), heatmap_genes = nrow(z_scores)))
 }
