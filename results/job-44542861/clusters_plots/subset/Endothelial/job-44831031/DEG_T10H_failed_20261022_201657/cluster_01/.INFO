@@ -1,0 +1,9 @@
+# Endothelial cluster 1
+Status: running
+Started: 2026-10-22 20:16:55.86511
+Run settings: results/job-44542861/clusters_plots/subset/Endothelial/job-44831031/DEG_T10H/.INFO
+Input: data/job-44542861/subsets/Endothelial/job-44831031/subclustered.rds
+Cluster column: harmony_snn_res.0.3
+Producer allocation: local
+Seed: 1234 for GSEA and label placement; DE/MDS/heatmap deterministic.
+Evidence: logs/endothelial-all-clusters-pseudobulk-20261022.log
