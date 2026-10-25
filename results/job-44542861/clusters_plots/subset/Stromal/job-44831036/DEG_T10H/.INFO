@@ -47,3 +47,11 @@ Produced outputs passed one basic saved-output reopening; representative complet
  GSEA-only completion 2026-10-22 21:28:45.978948 PID 29908 saved input results/job-44542861/clusters_plots/subset/Stromal/job-44831036/DEG_T10H/cluster_01/pseudobulk_fit.rds mapping results/misc/Ensembl_ID/gene-mapping/pig_to_human_orthologues_annotated.csv references results/job-44542861/clusters_plots/subset/Endothelial/job-44831031/DEG/references additional approved exclusions C4BPA,ENSSSCG00000015662,TNFSF15,ENSSSCG00000034087 method existing fgseaMultilevel minSize15 maxSize500 gseaParam1 scoreType std eps0 nproc1 seed1234; global8 retained; no DE refit Status: completed; six contrasts; missing pvalues 0 Finished: 2026-10-22 21:28:56 
 
 Final completion review: all supported DE and Hallmark contrasts complete; zero remaining GSEA blocks/missing pathway P-values. Owner-approved GSEA-only completion PID29908 ended21:28:56; DE/core figures and other completed analyses unchanged. NK18DE/18GSEA, Stromal30DE/30GSEA; StromalC6 six intentional skips/no fit. Inventory168nonempty PDF/PNG pairs; normal saved objects reopened and representative figure inspected. Evidence: logs/deg-t10h-nk-stromal-20261022.INFO.
+
+## Reactome addition 2026-10-23
+- Status: COMPLETED and validated; all supported Reactome results/figures verified.
+- Saved-fit enrichment only; original DE and Hallmark unchanged. Run settings/evidence: logs/reactome-full-20261023.INFO and .log.
+- BH within Reactome/cluster/contrast; original candidate universe, exclusions, ranks and settings retained. No legacy DEG rerun.
+- Initial block (resolved by approved retry below): StromalC1 P4_vs_P10 Reactome RHO/MIRO/RHOBTB3 pathway(size499), fgsea unbalanced-statistics NA; original failure retained in logs/reactome-full-20261023.INFO.
+- Final verification 2026-10-23 14:46:52: 30completed/6original skips; all result tables/RDS and PDF/PNG files reopened. Representative seven-population plots visually checked; global evidence in logs/reactome-full-20261023.INFO.
+- Approved exception resolved: C1 P4_vs_P10 nPermSimple10000 (other158cohort contrasts1000), recorded per contrast in saved parameters; no missing pathway estimates remain.

@@ -1,0 +1,10 @@
+# Stromal cluster 2 Reactome GSEA
+- Status: COMPLETED and validated; numerical and file-reopening checks PASS.
+- Started: 2026-10-23 14:42:56.303148 ; PID: 14566
+- Read-only fit: results/job-44542861/clusters_plots/subset/Stromal/job-44831036/DEG_T10H/cluster_02/pseudobulk_fit.rds
+- Producer44831036 <- cleanup44827588 <- pipeline44542861; original candidate universe and approved frozen Hallmark mapping/exclusions/ranks.
+- MSigDB2026.1.Hs C2:CP:REACTOME pig taxon9823. Original settings: minSize15/maxSize500/nPermSimple default1000/seed1234; BH within collection/cluster/contrast; reporting padj<0.01.
+- No DE refit/Hallmark changes. Full input/method records and original log: logs/reactome-full-20261023.INFO and .log.
+- Completed: 2026-10-23 14:43:22.670725 ;6contrasts; tested pathways: 817–817
+- Reopened results/ranks/mapping/exclusions/coverage/BH/sign/leading edges PASS; zero missing P-values. No unapproved parameter changes.
+- Final image check: all expected PDFs parsed and PNGs decoded; representative cohort plots visually inspected. Completed 2026-10-23 14:46:52.

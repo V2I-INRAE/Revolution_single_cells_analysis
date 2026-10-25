@@ -21,3 +21,8 @@ Review evidence: logs/deg-t10h-full-run-20261022.INFO; canonical original execut
  2026-10-22 20:57:39 USER APPROVED GSEA-only completion; exclude BOTH rows of new pairs; full additional exclusions: ENSSSCG00000027349,ENSSSCG00000032894,C4BPA,ENSSSCG00000015662 input: results/job-44542861/clusters_plots/subset/Granulocytes/job-44831033/DEG_T10H/cluster_01/pseudobulk_fit.rds mapping: results/misc/Ensembl_ID/gene-mapping/pig_to_human_orthologues_annotated.csv references: results/job-44542861/clusters_plots/subset/Endothelial/job-44831031/DEG/references fgseaMultilevel minSize=15 maxSize=500 gseaParam=1 scoreType=std eps=0 nproc=1 pathway_fdr=0.01 seed=1234; producer PID 28400 
 2026-10-22 20:57:47 GSEA-only completed; contrasts 6 missing_pvalues 0 saved RDS taxon/seed/names/unique ranks/exclusions PASS; aggregate DE fields and untouched rows PASS; PID 28400 
 2026-10-22 20:58:01 Protected output MD5 PASS: 1611 files byte-identical across all five DEG_T10H roots; PID 28400 
+
+## Reactome GSEA addition 2026-10-23
+- Status: COMPLETED and validated;6completed/0original skips.
+- Saved DE fit/Hallmark unchanged; exact original ranks/exclusions/settings, MSigDB2026.1.Hs C2:CP:REACTOME pig projection; BH separately per collection/cluster/contrast, reporting FDR<0.01.
+- Output: gsea/reactome/ for fitted clusters. Evidence and numerical exception: logs/reactome-full-20261023.INFO and .log; all output reopen/figure checks complete.

@@ -1,0 +1,12 @@
+# Endothelial cluster 2 Reactome GSEA
+- Status: COMPLETED and validated; numerical and file-reopening checks PASS.
+- Started: 2026-10-23 14:16:38.539592 ; PID: 13221
+- Input (read-only): results/job-44542861/clusters_plots/subset/Endothelial/job-44831031/DEG_T10H/cluster_02/pseudobulk_fit.rds
+- Original producer: 44831031 ; contrasts: P4_vs_Control,N4_vs_Control,P4_vs_N4,P4_vs_P10,N4_vs_N10,P10_vs_N10
+- Frozen settings/exclusions: results/job-44542861/clusters_plots/subset/Endothelial/job-44831031/DEG_T10H/cluster_02/gsea/hallmark/gsea_results.rds
+- Same original ranks; MSigDB2026.1.Hs C2:CP:REACTOME pig projection, taxon9823; minSize15/maxSize500/seed1234; BH within collection/cluster/contrast, reporting padj<0.01.
+- Full methods/inputs and original log: logs/reactome-full-20261023.INFO; logs/reactome-full-20261023.log.
+- No DE refit, normalization, sample or gene-policy changes; original outputs read-only.
+- Finished: 2026-10-23 14:17:04.671963 ; contrasts: 6 ; tested pathways: 854–854
+- Reopened RDS/CSV: exact original ranks/mapping/exclusions; coverage sizes, BH, leading-edge membership and contrast direction PASS; zero missing pathway P-values.
+- Final image check: all expected PDFs parsed and PNGs decoded; representative cohort plots visually inspected. Completed 2026-10-23 14:46:52.

@@ -47,3 +47,11 @@ Basic saved-output review completed for produced results. Overall completion and
 2026-10-22 20:58:01 Protected output MD5 PASS: 1611 files byte-identical across all five DEG_T10H roots; PID 28400 
 
 Final batch completion: all supported DE and Hallmark contrasts complete; zero remaining GSEA collision blocks/missing pathway P-values. Final inventory across5subsets:111DE+111Hallmark,3intentional DC C1 late skips,390PDF/PNG pairs. GSEA-only completion used approved exclusions without DE refitting; protected1611files unchanged. Current methods/outcomes: logs/deg-t10h-full-run-20261022.INFO.
+
+## Reactome addition 2026-10-23
+- Status: COMPLETED and validated; all supported Reactome results/figures verified.
+- Saved-fit enrichment only; original DE and Hallmark unchanged. Run settings/evidence: logs/reactome-full-20261023.INFO and .log.
+- BH within Reactome/cluster/contrast; original candidate universe, exclusions, ranks and settings retained. No legacy DEG rerun.
+- Completed/skipped: 15 / 3
+- Original summary columns/rows reopened and preserved exactly; reactome_status and reactome_* coverage columns added.
+- Final verification 2026-10-23 14:46:52: 15completed/3original skips; all result tables/RDS and PDF/PNG files reopened. Representative seven-population plots visually checked; global evidence in logs/reactome-full-20261023.INFO.

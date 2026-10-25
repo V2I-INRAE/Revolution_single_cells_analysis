@@ -21,3 +21,8 @@ Evidence: logs/deg-t10h-nk-stromal-20261022.INFO.
  GSEA-only completion 2026-10-22 21:28:37.524866 PID 29908 saved input results/job-44542861/clusters_plots/subset/NK_cells/job-44831035/DEG_T10H/cluster_02/pseudobulk_fit.rds mapping results/misc/Ensembl_ID/gene-mapping/pig_to_human_orthologues_annotated.csv references results/job-44542861/clusters_plots/subset/Endothelial/job-44831031/DEG/references additional approved exclusions ENSSSCG00000027349,ENSSSCG00000032894 method existing fgseaMultilevel minSize15 maxSize500 gseaParam1 scoreType std eps0 nproc1 seed1234; global8 retained; no DE refit Status: started
 
  GSEA-only completion 2026-10-22 21:28:37.524866 PID 29908 saved input results/job-44542861/clusters_plots/subset/NK_cells/job-44831035/DEG_T10H/cluster_02/pseudobulk_fit.rds mapping results/misc/Ensembl_ID/gene-mapping/pig_to_human_orthologues_annotated.csv references results/job-44542861/clusters_plots/subset/Endothelial/job-44831031/DEG/references additional approved exclusions ENSSSCG00000027349,ENSSSCG00000032894 method existing fgseaMultilevel minSize15 maxSize500 gseaParam1 scoreType std eps0 nproc1 seed1234; global8 retained; no DE refit Status: completed; six contrasts; missing pvalues 0 Finished: 2026-10-22 21:28:45 
+
+## Reactome GSEA addition 2026-10-23
+- Status: COMPLETED and validated;6completed/0original skips.
+- Saved DE fit/Hallmark unchanged; exact original ranks/exclusions/settings, MSigDB2026.1.Hs C2:CP:REACTOME pig projection; BH separately per collection/cluster/contrast, reporting FDR<0.01.
+- Output: gsea/reactome/ for fitted clusters. Evidence and numerical exception: logs/reactome-full-20261023.INFO and .log; all output reopen/figure checks complete.

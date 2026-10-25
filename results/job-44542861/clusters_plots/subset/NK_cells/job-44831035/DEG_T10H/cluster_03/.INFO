@@ -17,3 +17,8 @@ Validation: one saved-output review and figure inspection pending.
 
 Basic saved-output review PASS: fit/MDS sample IDs/counts, supported contrast names/pairing, heatmap dimensions and produced figure files reopened. Saved GSEA objects agree on taxon9823/MSigDB2026.1.Hs/seed1234; zero missing pathway P-values.
 Evidence: logs/deg-t10h-nk-stromal-20261022.INFO.
+
+## Reactome GSEA addition 2026-10-23
+- Status: COMPLETED and validated;6completed/0original skips.
+- Saved DE fit/Hallmark unchanged; exact original ranks/exclusions/settings, MSigDB2026.1.Hs C2:CP:REACTOME pig projection; BH separately per collection/cluster/contrast, reporting FDR<0.01.
+- Output: gsea/reactome/ for fitted clusters. Evidence and numerical exception: logs/reactome-full-20261023.INFO and .log; all output reopen/figure checks complete.
