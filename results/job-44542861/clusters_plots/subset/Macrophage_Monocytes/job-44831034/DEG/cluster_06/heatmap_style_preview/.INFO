@@ -1,0 +1,65 @@
+# Heatmap palette approval preview
+- Current status: COMPLETED and validated locally2026-10-22; RdBu restored for3292 tested genes x15samples. Approval preview only; no production replacement. No further SSH, rsync, agents or cluster execution.
+- Latest authorization: all3292 genes retained for testing, including nonsignificant genes; remove FDR/logFC display filtering. Retain TMM log2CPM(prior.count=2), row z-scores and +/-2.5 colour limits; latest owner request restores RdBu (blue-low/white-zero/red-high). Row clustering is recomputed over the expanded matrix.
+
+## Previous screenshot preview44973391 (superseded)
+- Status: completed and visually validated2026-10-22; approval preview only, no production figure replacement.
+- Authorization: change expression heatmap palette to the owner's screenshot, retaining values, gene/sample order, clustering, scale and annotations.
+- Inputs (read-only): cluster_06/pseudobulk_fit.rds and plots/heatmap_zscores.csv; paired pseudobulk44922357, subcluster44831034, source pipeline44542861. Display settings from original DEG/.INFO and cluster_06/.INFO: FDR<=0.05 and abs(log2FC)>=0.5, union across three contrasts; recorded seed1234, heatmap deterministic.
+- Renderer: existing render_pseudobulk_heatmap() in R/DEG/pseudobulk_plots.R. Reconstruct display-only TMM log2CPM(prior.count=2) row z-scores from retained DGEList and verify against saved matrix/order before rendering; no normalization refit, DE/GSEA tests or object writes.
+- Matrix/layout retained:767 genes x15 samples; Euclidean/complete row clustering, row_dend_reorder=FALSE; Control/P4/N4 then pig sample order; no column clustering; existing condition/pig annotations unchanged; +/-2.5 colour saturation and zero midpoint.
+- Palette source: owner screenshot2026-10-22 at18.01.23; SHA256 bcee124080b1ccb6a5e820f7e64ce0c2ea9ca97111ef10bcabc921bb649c75b6. Parent sampled11 stops using RGB medians over3 columns x17 rows at equally spaced x24..333,y26..42 in354x76 image. Not attributed to an unverified named palette.
+- Palette stops at seq(-2.5,2.5,length.out=11): #251D81,#4F68A8,#7FABC3,#B6DDDF,#E5F3F2,#FAFDB2,#F9E678,#FFAC47,#FF5525,#ED1909,#AD0106. Zero=pale yellow#FAFDB2. Existing circlize Lab interpolation retained.
+- Outputs: heatmap_groups.pdf and heatmap_groups.png in this directory,170x160mm with approved fonts; existing rasterized heatmap matrix retained.
+- Evidence: logs/deg-heatmap-style-preview.log (single canonical execution log).
+- Validation PASS:767x15 display matrix matches original saved CSV to1e-12; drawn matrix/sample/gene order and dendrogram heights retained. Actual colour mapping matches all11 sampled stops, zero#FAFDB2, and unchanged +/-2.5 legend/clamping. All85 original CSV/RDS/PDF/PNG files, including volcano previews, production and prior publication_preview figures, byte-identical by MD5.
+- Saved-output checks PASS: PDF reopened and rendered by PDFKit, one169.686x159.808mm page (Cairo rounding),9/10/11pt text and embedded font streams;3 raster matrix slices retained. All15 sample labels, title, annotations and0/+/-2.5 legend text present; rendered page-edge ink0. PDF render and actual PNG visually inspected; no observed clipping or missing labels, blue-low/pale-yellow-zero/red-high direction preserved. PNG2007x1889 at300dpi. Both files SHA256-identical locally/remotely.
+- Plotting job44973391 COMPLETED exit0/24s/713872KiB peakRSS. All9 DEG scripts parse; git diff --check PASS. No production replacement, pig mapping, score computation, DE/GSEA tests, dependency installation, commits or pushes. Owner approval still required before19 heatmaps and57 volcano production rollout.
+- Plotting allocation: 44973391
+- Execution started: 2026-10-22 18:07:26.031327
+- Execution status: PDF/PNG pair rendered, reopened and visually validated; approval pending.
+- Matrix/palette checks PASS:767x15 display matrix, all identifiers/values/order and actual row dendrogram heights unchanged; all11 palette stops and legend/clamping verified.
+- Original-file hashes PASS: 85 CSV/RDS/PDF/PNG files unchanged.
+- Execution finished: 2026-10-22 18:07:37.121539
+
+## Viridis follow-up (2026-10-22)
+- Status: started; source input/producers/selection and recorded seed unchanged from above, no statistical runs.
+- Palette: viridisLite::viridis(11) at seq(-2.5,2.5,length.out=11), using existing circlize Lab interpolation; defaultD/direction1/alpha1. Expected low#440154FF,zero#21908CFF,high#FDE725FF. Local documented API check viridisLite0.4.3 passed; compute environment version recorded at execution.
+- Replace only this directory's heatmap_groups.pdf and heatmap_groups.png; previous palette is superseded, not retained as an extra figure. Other previews and all production figures read-only.
+- Validation PASS, job44973582 exit0/22s/728932KiB peakRSS: viridisLite0.4.3 standardD/direction1/alpha1; actual colour function matches all11 package stops, low#440154FF/zero#21908CFF/high#FDE725FF and unchanged +/-2.5 legend/clamping.
+- Exact767x15 matrix/identities/gene and sample order/dendrogram heights retained; saved matrix matches to1e-12. All85 original CSV/RDS/PDF/PNG files outside this intentionally replaced heatmap preview, including volcano/earlier publication previews and production figures, byte-identical by MD5.
+- Saved-output checks PASS: PDF reopened/rendered by PDFKit, one169.686x159.808mm page,9/10/11pt text with embedded fonts,3 raster matrix slices; all15 sample labels, title/annotation and0/+/-2.5 legend text present; rendered page-edge ink0. PDF render and actual PNG visually inspected with dark-purple-low/teal-zero/yellow-high direction, no observed clipping/missing labels. PNG2007x1889 at300dpi. Both files SHA256-identical local/remote; all9 DEG scripts parse and git diff --check PASS.
+- Only previous heatmap_style_preview PDF/PNG replaced; no new permanent runner, statistical analyses, mapping/scoring, installations, commits or pushes. Full production rollout remains pending owner approval.
+- Plotting allocation: 44973582
+- Execution started: 2026-10-22 18:16:56.120095
+- Execution status: viridis PDF/PNG pair rendered, reopened and visually validated; approval pending.
+- Matrix/palette checks PASS:767x15 display matrix, all identifiers/values/order and actual row dendrogram heights unchanged; all11 standard viridis stops and legend/clamping verified. viridisLite version: 0.4.3
+- Palette:low#440154FF,zero#21908CFF,high#FDE725FF;standard D/direction1,opaque; +/-2.5 saturation unchanged.
+- Original-file hashes PASS: 85 CSV/RDS/PDF/PNG files unchanged.
+- Execution finished: 2026-10-22 18:17:09.46826
+
+## All-tested-gene follow-up (2026-10-22)
+- Status: started; performed directly by the main assistant at owner request, no coder/other agents.
+- Input: original cluster_06/pseudobulk_fit.rds (paired DE44922357) and original plots/heatmap_zscores.csv for subset-value validation; mapping from parent DEG/candidate_gene_mapping.csv. Original count filtering, TMM factors, DE and GSEA results remain read-only.
+- Display selection: all3292 retained/tested genes, not all pre-filter candidate genes. Original767 significant genes remain included. No FDR/logFC filter for heatmap; volcano selection unchanged.
+- Computation: original retained TMM DGEList -> log2CPM(prior.count=2) -> per-gene z-scores across15 samples -> Euclidean distance/complete-linkage row clustering. Check finite/nonconstant rows before plotting; no silent removal.
+- Output: replace only this heatmap_style_preview PDF/PNG pair;170x160mm, viridis low-purple/mid-teal/high-yellow, saturation+/-2.5. No production rollout, statistical tests or source-object writes.
+- Validation pending: actual pipeline plot preparation on saved real input; all3292 identities/values, original767-row subset comparison, sample order, saved-output reopening and visual review. Temporary test CSVs/runner outside project only; no extra validation bundle.
+- Evidence: logs/deg-heatmap-style-preview.log.
+- Initial submission44975128 failed before loading inputs because the runner was placed in login-node /tmp, unavailable on the compute node. No figures/data changed. Corrected to shared /work/user/fbraza/deg-all-tested-heatmap-preview.R and resubmitted; original failure retained in canonical log.
+- All-gene plotting allocation: 44975300
+- All-gene execution started: 2026-10-22 18:40:39.327495
+- All-gene execution PASS:3292x15 tested-gene matrix; zero constant/nonfinite rows. Actual pipeline preparation/table IDs and drawn values/order/tree/viridis limits verified; original767-row subset agrees to1e-12.
+- All-gene original-file hashes PASS: 85 CSV/RDS/PDF/PNG files unchanged; all3contrast logFC/FDR unchanged.
+- All-gene outputs: PDF/PNG pair replaced in approval preview only. Temporary test tables removed; reopening/visual validation pending.
+
+## Local-only continuation (2026-10-22)
+- User explicitly authorized local dependency installation and prohibited further remote access/syncing; no agents used. Required packages restored to local project renv library from existing lockfile; see logs/local-deg-dependencies-20261022.INFO.
+- Local input: data/job-44542861/subsets/Macrophage_Monocytes/job-44831034/subclustered.rds (23 original RNA count layers), original cluster_06/gene_filter.csv and sample_metadata.csv; no saved fit RDS was downloaded.
+- Reconstruct only display input by summing original cluster6 T0H/T4H counts for exactly3292 saved tested IDs and15 saved specimens; verify barcodes/metadata/n_cells and filtered library sums. Reuse saved TMM factors; no filterByExpr, normLibSizes, DE or GSEA fitting. Check original767-gene matrix to1e-12 before local rendering.
+- Previous temporary helpers/checkpoints removed at owner's request. Final RdBu example now runs directly through existing render_pseudobulk_heatmap(), using the documented Seurat AggregateExpression raw-count API and saved tested IDs/TMM factors in memory; no helper scripts or new temporary files. Replace preview PDF/PNG only.
+- Final local render completed2026-10-22 18:55:25 through existing code. All3292 tested genes retained; sample IDs/n_cells checked; filtered library sums equal saved values exactly; saved TMM factors reused without normalization/model refitting. Original767-row matrix agrees to1e-12; all3292 rows finite; drawn matrix and complete-linkage order verified.
+- Palette PASS: reversed RColorBrewer RdBu11 at +/-2.5; all11 actual colour stops verified (blue-low/white-zero/red-high). All82 original CSV/RDS/PDF/PNG files present locally outside this preview byte-identical by MD5.
+- Saved-output PASS: actual PNG reopened and visually inspected; title, all15 sample labels, annotations, dendrogram, legend and caption visible without observed clipping. PDF reopened with PDFKit: one481x453pt page; extracted title confirms3292 genes/15samples. All DEG R files parse; git diff --check PASS.
+- Earlier inline attempts failed on command quoting and a missing driver source (viz_palette); corrected by sourcing existing R/utils/save_plots.R, then rerun successfully. Failures retained in canonical log. No helper scripts or temporary output files created in final run; prior temporary helpers/checkpoints were removed at owner request. No statistical results or production figures replaced; no commits/pushes.
+- All-gene execution finished: 2026-10-22 18:41:00.521879
