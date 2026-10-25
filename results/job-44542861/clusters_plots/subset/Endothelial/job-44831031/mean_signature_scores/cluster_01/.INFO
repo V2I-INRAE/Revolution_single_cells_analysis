@@ -1,0 +1,21 @@
+# Mean log-expression signature scoring
+Status: RUNNING
+Started: 2026-10-23 17:48:30.421617
+Read-only input: data/job-44542861/subsets/Endothelial/job-44831031/subclustered.rds
+Input producer: job-44831031
+Mapping: results/misc/Ensembl_ID/signature-scoring-v2/pig_mapping.csv
+Frozen universe: results/misc/Ensembl_ID/signature-scoring/common_count_universe.rds
+Selection: All cells in harmony_snn_res.0.3 clusters 1; verify full original sample-layer universe first; no cell/sample subsampling.
+Computational batch_size: 1000 ; no stochastic score operation/seed.
+Arithmetic per-cell mean of existing RNA data.* LogNormalize values INCLUDING zeros.
+Fixed denominator per arm: number of unique retained pig features, not detected genes per cell.
+No transformation, ranking, cutoff, controls, subtraction, cell filtering or source-object write-back.
+Original human lists unchanged; reviewed mapping exclusions retained; Rooney arms separate.
+
+Status: COMPLETED; exact saved-RDS reopen PASS; source size/mtime/signature hash unchanged.
+Cells: 6154; arms: 17; fixed universe: 15902; data-layer intersection: 15902
+Saved NormalizeData.RNA: LogNormalize; scale.factor=10000; timestamp=2026-10-13 22:28:47.130158. Existing values used unchanged.
+Mean score range: 0 to 1.90012861950972; not constrained to [0,1].
+No stochastic scoring, ranks, cutoff, reference/control-gene subtraction or cell filtering.
+
+External validation PASS after mandatory tech-oracle inspection PASS: all104618mean values independently matched sums/fixed denominators exactly (max error0); exact6154C1cells/23samples/source metadata; all49source/frozen/prior-AUCell files unchanged by MD5. No other population or AUCell scoring. See logs/mean-signature-endothelial-cluster1-20261023.INFO and .log.

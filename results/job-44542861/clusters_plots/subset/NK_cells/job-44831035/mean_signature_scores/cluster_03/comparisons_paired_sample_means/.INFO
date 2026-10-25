@@ -1,0 +1,16 @@
+# Paired sample-mean signature comparisons
+Status: RUNNING
+Started: 2026-10-23 19:55:49.72234
+Read-only saved scores: results/job-44542861/clusters_plots/subset/NK_cells/job-44831035/mean_signature_scores/cluster_03/signature_scores.rds
+Cluster: harmony_snn_res.0.2 3
+Predeclared family:17arms x4contrasts=P4-N4,P10-N10,P4-Control,N4-Control; exactly68tests.
+Two-sided paired t-tests on arithmetic per-sample means, matched by pig; equal pig weights, not cell tests.
+Global BH across all68; FDR<0.05. Ordinary paired95%CI is NOT multiplicity-adjusted.
+One sample per pig-condition; require complete5/4/5/5pairs; no pair deletion, outlier filtering or normality gates.
+REVO31-N8 originalT8H/negative displayedN10; preserved source identities. Separate arms, no composite.
+Degenerate paired differences stop the entire family; no fabricated p-values or reduced-family correction.
+
+Status: COMPLETED;68finite tests; global BH; exact RDS reopen and score-file hash unchanged.
+ Plots may only reuse this family; repeated brackets do not create new tests.
+
+FINAL ROLLOUT STATUS: PASS. Numerical validation, all68PDF/PNG reopen/everyPDF render and mandatory final tech-oracle review PASS. Reviewer inspected code/numerical evidence/rendered contact sheets; no fresh independent RDS execution claimed. Implementer visually inspected32representative rendered figures across7subsets/fourlayouts plusStromalC6; not every figure manually viewed. No scientific rerun at closeout. Earlier RENDER_PENDING records describe earlier checkpoints only. Per-cluster68BH,no study-wide FDR;ordinary95%CIs unadjusted;pooled-cell bars descriptive,paired sample means inferential. See logs/mean-signature-rollout-20261023.INFO.

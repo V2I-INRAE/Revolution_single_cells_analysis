@@ -1,0 +1,26 @@
+# Mean log-expression signature scoring
+Status: RUNNING
+Started: 2026-10-23 19:48:04.060705
+Read-only input: data/job-44542861/subsets/Epithelial/job-44831032/subclustered.rds
+Input producer: job-44831032
+Mapping: results/misc/Ensembl_ID/signature-scoring-v2/pig_mapping.csv
+Frozen universe: results/misc/Ensembl_ID/signature-scoring/common_count_universe.rds
+Selection: All cells in harmony_snn_res.0.3 clusters 5; verify full original sample-layer universe first; no cell/sample subsampling.
+Computational batch_size: 1000 ; no stochastic score operation/seed.
+Arithmetic per-cell mean of existing RNA data.* LogNormalize values INCLUDING zeros.
+Fixed denominator per arm: number of unique retained pig features, not detected genes per cell.
+No transformation, ranking, cutoff, controls, subtraction, cell filtering or source-object write-back.
+Original human lists unchanged; reviewed mapping exclusions retained; Rooney arms separate.
+
+Status: COMPLETED; exact saved-RDS reopen PASS; source size/mtime/signature hash unchanged.
+Cells: 663; arms: 17; fixed universe: 15902; data-layer intersection: 15902
+Saved NormalizeData.RNA: LogNormalize; scale.factor=10000; timestamp=2026-10-13 22:28:47.130158. Existing values used unchanged.
+Mean score range: 0 to 1.09116822415782; not constrained to [0,1].
+No stochastic scoring, ranks, cutoff, reference/control-gene subtraction or cell filtering.
+
+Rollout numerical/built-plot validation PASS: 11271score values; max arithmetic error0; stats error8.88178419700125e-16; BH error1.11022302462516e-16. Every selected cell/bar/bracket verified; saved scores/tests unchanged through plotting.
+Figure reopen/render review pending. Per-cluster68BH only; no study-wide FDR guarantee. Sparse samples retained without filtering.
+
+External render validation PASS: all68PDF+PNG pairs reopened and every PDF rendered; all cell/bar/bracket records and numeric labels verified. Representative visual review covers every subset/layout, including sparse StromalC6; not every figure manually viewed. Final rollout tech-oracle inspection pending. See logs/mean-signature-rollout-pdf-20261023.log and master INFO.
+
+FINAL ROLLOUT STATUS: PASS. Numerical validation, all68PDF/PNG reopen/everyPDF render and mandatory final tech-oracle review PASS. Reviewer inspected code/numerical evidence/rendered contact sheets; no fresh independent RDS execution claimed. Implementer visually inspected32representative rendered figures across7subsets/fourlayouts plusStromalC6; not every figure manually viewed. No scientific rerun at closeout. Earlier RENDER_PENDING records describe earlier checkpoints only. Per-cluster68BH,no study-wide FDR;ordinary95%CIs unadjusted;pooled-cell bars descriptive,paired sample means inferential. See logs/mean-signature-rollout-20261023.INFO.

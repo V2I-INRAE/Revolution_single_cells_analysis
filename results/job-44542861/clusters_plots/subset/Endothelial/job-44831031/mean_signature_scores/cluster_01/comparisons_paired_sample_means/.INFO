@@ -1,0 +1,17 @@
+# Paired sample-mean signature comparisons
+Status: RUNNING
+Started: 2026-10-23 18:35:28.067635
+Read-only saved scores: results/job-44542861/clusters_plots/subset/Endothelial/job-44831031/mean_signature_scores/cluster_01/signature_scores.rds
+Cluster: harmony_snn_res.0.3 1
+Predeclared family:17arms x4contrasts=P4-N4,P10-N10,P4-Control,N4-Control; exactly68tests.
+Two-sided paired t-tests on arithmetic per-sample means, matched by pig; equal pig weights, not cell tests.
+Global BH across all68; FDR<0.05. Ordinary paired95%CI is NOT multiplicity-adjusted.
+One sample per pig-condition; require complete5/4/5/5pairs; no pair deletion, outlier filtering or normality gates.
+REVO31-N8 originalT8H/negative displayedN10; preserved source identities. Separate arms, no composite.
+Degenerate paired differences stop the entire family; no fabricated p-values or reduced-family correction.
+
+Status: COMPLETED;68finite tests; global BH; exact RDS reopen and score-file hash unchanged.
+ Plots may only reuse this family; repeated brackets do not create new tests.
+Independent numerical validation PASS:391sample means,68manual paired t/ordinary95%CI/globalBH checks; exact RDS reopen. Mandatory tech-oracle review pending before final51comparison figures. Pooled-cell mean bars are descriptive only; sample means are the inferential unit. See logs/mean-signature-comparisons-20261023.INFO.
+
+Final status: COMPLETED/VALIDATED after mandatory tech-oracle inspection PASS.51PDF+PNG produced in P4_N4/,P10_N10/,Control_P4_N4/ from original68saved tests ONLY; all statisticalRDS/CSV bytes unchanged. All51PDF/PNG reopened/PDFs rendered; representative visual inspection. GlobalBH FDR counts1/1/13/13. Ordinary95%CIs unadjusted; baseline=time+condition,not isolated pressure;lateN10 includesoriginalN8/T8H. Full commands/checks: logs/mean-signature-comparisons-20261023.INFO.

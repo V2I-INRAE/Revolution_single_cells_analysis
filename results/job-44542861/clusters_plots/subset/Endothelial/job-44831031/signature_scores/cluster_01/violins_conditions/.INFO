@@ -1,0 +1,19 @@
+# Saved AUCell violin plots
+Status: RUNNING
+Started: 2026-10-23 15:40:37.275088
+Scores: results/job-44542861/clusters_plots/subset/Endothelial/job-44831031/signature_scores/cluster_01/signature_scores.rds
+Cluster column: harmony_snn_res.0.3
+Clusters: 1
+View: condition ; group order: Control,P4,N4,P10,N10
+Matched scored cells before cluster selection: 6154 ; plotted cells: 6154
+Source score cells outside supplied metadata: 0
+Supplied metadata cells not scored: 0
+Scores unchanged; no z-scaling, statistics, activity calls or expression recomputation.
+Violin pools cells descriptively (larger specimens contribute more); points are sample medians.
+Black line/range: pooled-cell median/IQR. No density drawn for singleton or constant groups.
+Owner-approved DEG-five display: Control/P4/N4/P10/N10; REVO31-N8/T8H negative displayed as N10. Original sample/time/pressure preserved; no score recomputation.
+
+Status: COMPLETED; summary tables reopened. Saved figures require visual review.
+
+Postrun validation PASS: all17PDFs one-page with condition labels and N8 note; all17PNGs decoded; full PDF renders produced, representative PDF/PNG viewed without clipping. All85group rows/391sample medians independently agree with saved scores and original specimen metadata.
+Original T8H remains exported for268REVO31-N8 cells, displayed N10 by explicit owner approval. No other specimens merged. Full record: logs/aucell-endothelial-cluster1-20261023.INFO.

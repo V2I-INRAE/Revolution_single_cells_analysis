@@ -1,0 +1,20 @@
+# Saved signature violin plots
+Status: RUNNING
+Started: 2026-10-23 17:48:36.112419
+Score method: mean_log_expression ; y-axis: Mean log-normalized expression
+Scores: results/job-44542861/clusters_plots/subset/Endothelial/job-44831031/mean_signature_scores/cluster_01/signature_scores.rds
+Cluster column: harmony_snn_res.0.3
+Clusters: 1
+View: condition ; group order: Control,P4,N4,P10,N10
+Matched scored cells before cluster selection: 6154 ; plotted cells: 6154
+Source score cells outside supplied metadata: 0
+Supplied metadata cells not scored: 0
+Scores unchanged; no z-scaling, statistics, activity calls or expression recomputation.
+Violin pools cells descriptively (larger specimens contribute more). No density for singleton or constant groups.
+Every dot is one cell; no downsampling, sample-median or pooled-median overlay. Per-plot count equals selected panel cell count. Display-only seed 1234 ; horizontal jitter Uniform[-0.06,0.06], no vertical jitter; size0.2,alpha0.35,black; ggrastr raster.dpi300,vector text/violins.
+Mean = arithmetic average of fixed retained RNA LogNormalize features, zeros included; no [0,1] cap.
+Owner-approved DEG-five display: Control/P4/N4/P10/N10; REVO31-N8/T8H negative displayed as N10. Original sample/time/pressure preserved; no score recomputation.
+
+Status: COMPLETED; summary tables reopened. Saved figures require visual review.
+
+External final checks PASS: all17plots each6154unique original cell IDs and6154built points/exact original score y values/no drops, one cell point layer/no summary overlays; Control/P4/N4/P10/N10 cells937/1287/1557/867/1506,samples5/5/5/4/4;268N8/T8H cells retained in displayN10. All17PDF+PNG reopened,allPDFs rendered; representative Huang/Singh PDF and Rooney-negative PNG visually inspected, unclipped mean>1 axes and N8 caption. See logs/mean-signature-endothelial-cluster1-pdf-20261023.log.

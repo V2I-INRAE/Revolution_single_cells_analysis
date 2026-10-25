@@ -1,0 +1,22 @@
+# Saved signature violin plots
+Status: RUNNING
+Started: 2026-10-23 19:44:37.051076
+Score method: mean_log_expression ; y-axis: Mean log-normalized expression
+Scores: results/job-44542861/clusters_plots/subset/Endothelial/job-44831031/mean_signature_scores/cluster_03/signature_scores.rds
+Cluster column: harmony_snn_res.0.3
+Clusters: 3
+View: condition ; group order: P4,N4
+Matched scored cells before cluster selection: 1919 ; plotted cells: 953
+Source score cells outside supplied metadata: 0
+Supplied metadata cells not scored: 0
+Explicit display groups: P4,N4 ; selected cell IDs exported; no within-group downsampling.
+Saved comparisons: results/job-44542861/clusters_plots/subset/Endothelial/job-44831031/mean_signature_scores/cluster_03/comparisons_paired_sample_means/comparisons.rds ; paired two-sided t-tests of sample means; global BH family68; no tests recomputed for this view.
+Horizontal bar: pooled-cell mean (cell-weighted, descriptive), NOT the equal-pig sample-mean inferential estimand.
+Violin pools cells descriptively (larger specimens contribute more). No density for singleton or constant groups.
+Every dot is one cell; no downsampling, sample-median or pooled-median overlay. Per-plot count equals selected panel cell count. Display-only seed 1234 ; horizontal jitter Uniform[-0.06,0.06], no vertical jitter; size0.2,alpha0.35,black; ggrastr raster.dpi300,vector text/violins.
+Mean = arithmetic average of fixed retained RNA LogNormalize features, zeros included; no [0,1] cap.
+Owner-approved DEG-five display: Control/P4/N4/P10/N10; REVO31-N8/T8H negative displayed as N10. Original sample/time/pressure preserved; no score recomputation.
+
+Status: COMPLETED; summary tables reopened. Saved figures require visual review.
+
+Final rollout render/review status: PASS; all17PDF/PNG pairs reopened,everyPDF rendered; numerical figure records checked; final tech-oracle inspection PASS. Representative visual checks are documented in master INFO,not a claim that every individual figure was manually viewed.

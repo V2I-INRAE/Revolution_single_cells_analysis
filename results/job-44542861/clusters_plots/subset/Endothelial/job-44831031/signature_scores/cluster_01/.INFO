@@ -1,0 +1,25 @@
+# AUCell signature scoring
+Status: RUNNING
+Started: 2026-10-23 15:40:26.768634
+Input (read-only): data/job-44542861/subsets/Endothelial/job-44831031/subclustered.rds
+Input producer: job-44831031
+Mapping: results/misc/Ensembl_ID/signature-scoring-v2/pig_mapping.csv
+Fixed count universe: results/misc/Ensembl_ID/signature-scoring/common_count_universe.rds
+Seed: 1234 ; batch_size: 1000
+Selection: All cells in harmony_snn_res.0.3 clusters 1; frozen universe verified from all original subset count layers before selection; no cell/sample subsampling.
+Original RNA counts; no normalization, integration, scaling, cell filtering or object write-back.
+Fixed common-layer universe; top5%; separate signed arms; all nonempty approved sets.
+Random ties, including zeros: installed AUCell default keepZeroesAsNA=FALSE; serial backend.
+Source lists unchanged; derived mapping excludes unresolved cases; unique pig features per arm.
+
+Status: COMPLETED; saved RDS reopened and exact equality PASS.
+Source size/mtime and signature hash unchanged.
+Scored cells: 6154; gene-set arms: 17; features: 15902; aucMaxRank: 796
+Cells below cutoff (retained): 82
+AUCell: 1.34.0; recorded seed/order/backend/batch plan required for reproduction.
+No activity thresholds, statistical tests, composite signed score or cell filtering.
+
+Postrun independent validation PASS: original source reopened, exact17x6154C1matrix/barcodes/metadata/all23samples;23batch cell counts sum6154. Every cell's detection depth agrees with original count layers. Manual recovery AUC checked all17arms for first265cell batch only.
+Five-condition plots: Control937/P4=1287/N4=1557/P10=867/N10=1506; samples5/5/5/4/4. N10 includes268REVO31-N8 cells with original T8H retained.82low-depth cells retained.
+All17PDF/PNG pairs reopened; allPDFs rendered; representative PDF/PNG inspected. Source RDS/signatures/mapping/universe/adjudication MD5 unchanged.
+Mandatory tech-oracle inspection PASS before actual run (no independent reviewer execution). Full run record: logs/aucell-endothelial-cluster1-20261023.INFO.
