@@ -1,7 +1,9 @@
 # The driver validates the original observed specimen panel before cluster selection.
 # Zero cell counts below are audit metadata only: absent populations never become libraries.
-prepare_pseudobulk <- function(object, common_genes, cluster_col, cluster, sample_panel) {
-  cells <- colnames(object)[as.character(object[[cluster_col, drop = TRUE]]) == cluster]
+prepare_pseudobulk <- function(object, common_genes, cluster_col, cluster, sample_panel,
+    min_matched_pigs = 3L) {
+  cells <- colnames(object)[as.character(object[[cluster_col, drop = TRUE]]) == cluster &
+    object$sample %in% sample_panel$sample]
   sample_audit <- sample_panel
   sample_audit$n_cells <- as.integer(table(factor(object$sample[match(cells, colnames(object))],
     levels = sample_audit$sample)))
@@ -22,6 +24,7 @@ prepare_pseudobulk <- function(object, common_genes, cluster_col, cluster, sampl
     group1 = c("P4", "N4", "P4", "P4", "N4", "P10"),
     group2 = c("Control", "Control", "N4", "P10", "N10", "N10"),
     group1_samples = 0L, group2_samples = 0L, matched_pigs = 0L, matched_pig_ids = "",
+    min_matched_pigs = min_matched_pigs,
     eligible = FALSE, contrast_status = "skipped", skip_reason = "")
   for (i in seq_len(nrow(contrast_status))) {
     first <- as.character(sample_info$pig[sample_info$condition == contrast_status$group1[i]])
@@ -31,20 +34,24 @@ prepare_pseudobulk <- function(object, common_genes, cluster_col, cluster, sampl
     contrast_status$group2_samples[i] <- length(second)
     contrast_status$matched_pigs[i] <- length(paired)
     contrast_status$matched_pig_ids[i] <- paste(paired, collapse = ";")
-    contrast_status$eligible[i] <- length(paired) >= 3L
-    contrast_status$contrast_status[i] <- if (length(paired) >= 3L) "pending" else "skipped"
+    contrast_status$eligible[i] <- length(paired) >= min_matched_pigs
+    contrast_status$contrast_status[i] <- if (contrast_status$eligible[i]) "pending" else "skipped"
     contrast_status$skip_reason[i] <- if (!length(first) || !length(second)) {
       "missing_group_after_sample_filter"
-    } else if (length(paired) < 3L) "fewer_than_3_directly_matched_pigs" else ""
+    } else if (length(paired) < min_matched_pigs) {
+      paste0("fewer_than_", min_matched_pigs, "_directly_matched_pigs")
+    } else ""
   }
-  pb <- list(status = "eligible", reason = "", sample_audit = sample_audit,
+  pb <- list(status = "eligible", reason = "", min_matched_pigs = min_matched_pigs,
+    sample_audit = sample_audit,
     sample_info = sample_info, group_counts = group_counts, contrast_status = contrast_status,
     contrasts = matrix(numeric(), nrow = 0L, ncol = 0L, dimnames = list(NULL, character())),
     results = list(), design_rank = NA_integer_, residual_df = NA_integer_,
     filter_min_group_size = if (nrow(sample_info)) min(as.integer(table(sample_info$condition))) else NA_integer_)
   if (!any(contrast_status$eligible)) {
     pb$status <- "no_eligible_contrasts"
-    pb$reason <- "No requested contrast has at least 3 directly matched pigs after sample filtering."
+    pb$reason <- paste("No requested contrast has at least", min_matched_pigs,
+      "directly matched pigs after sample filtering.")
     return(pb)
   }
   # Only observed levels enter the joint model; all passing specimens remain, including sparse late groups.

@@ -1,4 +1,7 @@
-# From the project root, source this file and call run_pseudobulk() explicitly.
+# From the project root, source this file and call run_pseudobulk(), or run:
+# Rscript R/DEG/run_pseudobulk.R --pigs=REVO26,REVO30 --min-matched-pigs=2 \
+#   --output-name=DEG_T10H_TWO_SUCCESS_PIGS
+# Use --all instead of --pigs for all observed pigs; the default pair minimum is 3.
 # output_root must be a NEW directory, never an existing historical DEG directory.
 # Supply reference_dir pointing to the existing frozen Hallmark/Reactome inputs;
 # the default references location is not populated or downloaded by this driver.
@@ -23,7 +26,15 @@ source("R/DEG/pseudobulk_hallmark.R")
 
 run_pseudobulk <- function(input, subset_label, cluster_col, clusters, output_root,
     mapping_file = "results/misc/Ensembl_ID/gene-mapping/pig_to_human_orthologues_annotated.csv",
-    reference_dir = file.path(output_root, "references"), gsea_exclusions = list()) {
+    reference_dir = file.path(output_root, "references"), gsea_exclusions = list(),
+    pigs = NULL, min_matched_pigs = 3L, log_path = NULL) {
+  if (length(min_matched_pigs) != 1L || !is.finite(min_matched_pigs) ||
+      min_matched_pigs < 2L || min_matched_pigs %% 1 != 0) {
+    stop("min_matched_pigs must be an integer >=2; single-pig inference is not supported.")
+  }
+  if (!is.null(pigs) && (!length(pigs) || anyNA(pigs) || any(!nzchar(pigs)) || anyDuplicated(pigs))) {
+    stop("Supply a nonempty, unique pig list, or NULL for all pigs.")
+  }
   if (missing(output_root) || length(output_root) != 1L || is.na(output_root) || !nzchar(output_root)) {
     stop("Supply an explicit new output_root; historical analysis outputs must not be overwritten.")
   }
@@ -62,12 +73,6 @@ run_pseudobulk <- function(input, subset_label, cluster_col, clusters, output_ro
     stop("Multiple original samples map to one pig-condition; no collisions may be merged.")
   }
   sample_panel$pig <- factor(sample_panel$pig)
-  if (nrow(sample_panel) != 23L || !identical(as.integer(table(sample_panel$condition)), c(5L, 5L, 5L, 4L, 4L)) ||
-      !identical(levels(sample_panel$pig), c("REVO26", "REVO27", "REVO29", "REVO30", "REVO31")) ||
-      any(sample_panel$pig == "REVO29" & sample_panel$condition %in% c("P10", "N10")) ||
-      !identical(sample_panel$sample[sample_panel$pig == "REVO31" & sample_panel$condition == "N10"], "REVO31-N8")) {
-    stop("Observed panel must contain the original 23 specimens (5/5/5/4/4), no REVO29 late specimens, and REVO31-N8 unchanged.")
-  }
   rownames(sample_panel) <- sample_panel$sample
   if (anyNA(match(as.character(metadata$sample), sample_panel$sample))) stop("Cell-to-sample metadata join failed.")
   object$time_point_original <- metadata$time_point_original
@@ -93,21 +98,38 @@ run_pseudobulk <- function(input, subset_label, cluster_col, clusters, output_ro
   common_genes <- Reduce(intersect, lapply(count_layers, function(layer)
     SeuratObject::Features(object[["RNA"]], layer = layer)))
   if (!length(common_genes) || anyDuplicated(common_genes)) stop("Invalid original common-layer gene intersection.")
+  if (!is.null(pigs) && !all(pigs %in% as.character(sample_panel$pig))) {
+    stop("Unknown pigs: ", paste(setdiff(pigs, as.character(sample_panel$pig)), collapse = ", "))
+  }
+  # Select specimens only AFTER validating all source layers and fixing the gene universe.
+  cohort_audit <- sample_panel
+  cohort_audit$selected <- if (is.null(pigs)) TRUE else as.character(sample_panel$pig) %in% pigs
+  cohort_audit$exclusion_reason <- ifelse(cohort_audit$selected, "", "pig_not_selected")
+  sample_panel <- sample_panel[cohort_audit$selected, , drop = FALSE]
+  sample_panel$pig <- droplevels(sample_panel$pig)
+  if (nlevels(sample_panel$pig) < min_matched_pigs) {
+    stop("Selected cohort has fewer pigs than min_matched_pigs; choose the intended pair minimum explicitly.")
+  }
   if (!dir.create(output_root, recursive = TRUE, showWarnings = FALSE)) stop("Could not create a new output_root.")
   info_path <- file.path(output_root, ".INFO")
-  log_path <- paste0("logs/", tolower(subset_label), "-all-clusters-pseudobulk-",
-    format(Sys.Date(), "%Y%m%d"), ".log")
+  if (is.null(log_path)) log_path <- paste0("logs/", tolower(subset_label), "-",
+    tolower(basename(output_root)), "-", format(Sys.Date(), "%Y%m%d"), ".log")
   info <- c(paste("#", subset_label, "paired pseudobulk pipeline"), "Status: running",
     paste("Started:", Sys.time()), paste("Producer allocation:", Sys.getenv("SLURM_JOB_ID", unset = "local")),
     "Script: R/DEG/run_pseudobulk.R; count/DE, diagnostics, DE plotting and Hallmark/Reactome GSEA modules.",
     paste("Input (read-only):", input), paste("Source producer:", basename(dirname(input))),
     paste("Population:", subset_label, "; cluster column:", cluster_col, "; clusters:", paste(clusters, collapse = ", ")),
     "Groups (ordered): Control/T0H, P4/T4H positive, N4/T4H negative, P10/T10H positive, N10/T10H negative airway-pressure ventilation.",
-    "Observed panel before cluster selection: 23 original specimens; Control/P4/N4=5 each, P10/N10=4 each; REVO29 has no late specimens.",
+    paste("Cohort:", paste(levels(sample_panel$pig), collapse = ", "), "; selected/source specimens:",
+      nrow(sample_panel), "/", nrow(cohort_audit), "; Control/P4/N4/P10/N10:",
+      paste(as.integer(table(sample_panel$condition)), collapse = "/")),
+    "Cohort exclusions: cohort_audit.csv records every source specimen and pig_not_selected reasons.",
+    if (min_matched_pigs == 2L) "Interpretation: owner-approved post-hoc exploratory testing with >=2 matched pigs; biological replication remains limited.",
     "T8H becomes T10H character-safely in memory only; time_point_original and original sample IDs (including REVO31-N8) retained for audit.",
     "Exclude only individual observed-panel aggregates with <10 cells (including absent cluster populations); sample_audit.csv retains exact original IDs, n_cells and exclusion reasons. No zero-expression libraries.",
     "Retain ALL passing specimens in one joint model, including late groups with only 1 or 2 replicates. No imputation, additional deletion or downsampling.",
-    "Test each requested contrast only with >=3 DIRECTLY MATCHED PIGS after sample filtering; missing groups or fewer pairs are explicitly skipped. All six requests/counts/pairs/reasons appear in contrast_status.csv and run summaries.",
+    paste0("Test each requested contrast only with >=", min_matched_pigs,
+      " DIRECTLY MATCHED PIGS after sample filtering; missing groups or fewer pairs are explicitly skipped. All six requests/counts/pairs/reasons appear in contrast_status.csv and run summaries."),
     "No eligible contrasts => no fit. Rank-deficient design or residual df<=0 => blocked, no fit; no model simplification or further sample removal.",
     "Candidates: intersection of ALL original RNA counts.* layers, before sample/time/cluster selection.",
     "Filtering per cluster: filterByExpr(group=condition), default min.count=10/min.total.count=15/large.n=10/min.prop=0.7. Observed retained groups only; a retained singleton reduces minimum group size to 1. This consequence is retained, not silently changed.",
@@ -128,7 +150,7 @@ run_pseudobulk <- function(input, subset_label, cluster_col, clusters, output_ro
     "GSEA ranks: all tested features minus approved exclusions; sign(logFC)*sqrt(pmax(F,0)), decreasing with gene-ID tie-breaker. Numerical negative F values receive zero rank, matching edgeR P=1; original DE statistics unchanged. No gene FDR/fold-change filtering.",
     "GSEA: fgseaMultilevel(minSize=15,maxSize=500,gseaParam=1,scoreType=std,eps=0,nproc=1); seed1234 reset per contrast. BH separately per collection/cluster/contrast, not across collections/clusters/contrasts; pathway reporting FDR<0.01.",
     "GSEA direction: positive NES favours first phenotype; negative favours second. Display up to eight terms/direction, including nonsignificant terms; stars mark FDR<0.01. Lowest-FDR running score in each direction.",
-    "Interpretation: baseline contrasts combine time/perfusion and pressure effects; no claim of exclusive induction or pathway activation.",
+    "Interpretation: pressure is confounded with left/right lung, and Control is azygo lung at T0H. Baseline contrasts also combine time/perfusion effects; no claim of isolated pressure effects or pathway activation.",
     "Hallmark and Reactome use identical ranks/exclusions; separate gsea/hallmark and gsea/reactome outputs. No ORA/GO analysis in this run. Source RDS and input references are read-only.",
     "Verification: one basic reopening of saved results and figure inspection after execution; no repeated audits or reruns.",
     paste("Evidence:", log_path),
@@ -138,6 +160,7 @@ run_pseudobulk <- function(input, subset_label, cluster_col, clusters, output_ro
   finished <- FALSE
   on.exit(if (!finished) writeLines(c(info, "Status: failed; see execution log."), info_path))
   write.csv(sample_panel, file.path(output_root, "sample_panel.csv"), row.names = FALSE)
+  write.csv(cohort_audit, file.path(output_root, "cohort_audit.csv"), row.names = FALSE)
   reference <- reactome_reference <- NULL
   summaries <- eligibility <- list()
   for (cluster in as.character(clusters)) {
@@ -150,7 +173,8 @@ run_pseudobulk <- function(input, subset_label, cluster_col, clusters, output_ro
       "Seed: 1234 for GSEA and label placement; DE/MDS/heatmap deterministic.", paste("Evidence:", log_path))
     writeLines(cluster_info, file.path(directory, ".INFO"))
     cat("\n", label, "started", format(Sys.time()), "\n")
-    pb <- prepare_pseudobulk(object, common_genes, cluster_col, cluster, sample_panel)
+    pb <- prepare_pseudobulk(object, common_genes, cluster_col, cluster, sample_panel,
+      min_matched_pigs = min_matched_pigs)
     write.csv(pb$sample_info, file.path(directory, "sample_metadata.csv"), row.names = FALSE)
     write.csv(pb$sample_audit, file.path(directory, "sample_audit.csv"), row.names = FALSE)
     write.csv(pb$group_counts, file.path(directory, "group_counts.csv"), row.names = FALSE)
@@ -248,7 +272,93 @@ run_pseudobulk <- function(input, subset_label, cluster_col, clusters, output_ro
   invisible(summary)
 }
 
-if (sys.nframe() == 0L) stop(paste(
-  "Source R/DEG/run_pseudobulk.R and call run_pseudobulk() with an explicit NEW output_root,",
-  "the original input/cluster settings, existing reference_dir, and approved gsea_exclusions.",
-  "No default production destination or automatic analysis is permitted."))
+parse_pseudobulk_args <- function(args) {
+  usage <- paste("Usage: Rscript R/DEG/run_pseudobulk.R",
+    "(--all | --pigs=REVO26,REVO30) [--min-matched-pigs=3] --output-name=<NEW folder name>")
+  if (identical(args, "--help")) return(list(help = usage))
+  if (any(!grepl("^(--all|--pigs=REVO[0-9]+(,REVO[0-9]+)*|--min-matched-pigs=[0-9]+|--output-name=[A-Za-z0-9_-]+)$", args)) ||
+      anyDuplicated(sub("=.*$", "", args)) ||
+      sum(c("--all" %in% args, any(startsWith(args, "--pigs=")))) != 1L ||
+      sum(startsWith(args, "--output-name=")) != 1L) stop(usage)
+  pigs <- if ("--all" %in% args) NULL else strsplit(sub("^--pigs=", "",
+    args[startsWith(args, "--pigs=")]), ",", fixed = TRUE)[[1L]]
+  minimum <- args[startsWith(args, "--min-matched-pigs=")]
+  minimum <- if (length(minimum)) as.integer(sub("^--min-matched-pigs=", "", minimum)) else 3L
+  if (anyDuplicated(pigs) || is.na(minimum) || minimum < 2L) stop(usage)
+  list(pigs = pigs, min_matched_pigs = minimum,
+    output_name = sub("^--output-name=", "", args[startsWith(args, "--output-name=")]))
+}
+
+run_pseudobulk_cli <- function(args) {
+  options <- parse_pseudobulk_args(args)
+  if (!is.null(options$help)) return(cat(options$help, "\n"))
+  # Frozen scope of the seven existing DEG_T10H analyses, not the newest subset jobs.
+  cases <- list(
+    Endothelial = list(job = "44831031", resolution = "0.3", clusters = 1:5),
+    Epithelial = list(job = "44831032", resolution = "0.3", clusters = 1:5),
+    Granulocytes = list(job = "44831033", resolution = "0.2", clusters = 1),
+    Macrophage_Monocytes = list(job = "44831034", resolution = "0.2", clusters = c(1:4, 6)),
+    NK_cells = list(job = "44831035", resolution = "0.2", clusters = 1:3),
+    Stromal = list(job = "44831036", resolution = "0.3", clusters = 1:6),
+    DC = list(job = "44831038", resolution = "0.2", clusters = 1:3))
+  roots <- file.path("results/job-44542861/clusters_plots/subset", names(cases),
+    paste0("job-", vapply(cases, `[[`, character(1), "job")))
+  inputs <- file.path("data/job-44542861/subsets", names(cases), basename(roots), "subclustered.rds")
+  outputs <- file.path(roots, options$output_name)
+  reference_dir <- file.path(roots[1], "DEG", "references")
+  mapping_file <- "results/misc/Ensembl_ID/gene-mapping/pig_to_human_orthologues_annotated.csv"
+  if (any(file.exists(outputs))) stop("A requested output directory already exists; nothing started.")
+  if (!all(file.exists(c(inputs, mapping_file, file.path(reference_dir,
+      c("hallmark_pig.rds", "reactome_pig.rds")))))) stop("Required source objects/references are missing.")
+  dir.create("logs", showWarnings = FALSE)
+  stem <- file.path("logs", paste0(tolower(options$output_name), "-", format(Sys.time(), "%Y%m%d-%H%M%S")))
+  log_path <- paste0(stem, ".log")
+  info_path <- paste0(stem, ".INFO")
+  info <- c("# Cohort-selected paired pseudobulk run", "Status: running",
+    paste("Started:", Sys.time()), paste("Local PID:", Sys.getpid()),
+    paste("Command:", paste(commandArgs(), collapse = " ")),
+    paste("Pigs:", if (is.null(options$pigs)) "all observed pigs" else paste(options$pigs, collapse = ", ")),
+    paste("Minimum directly matched pigs:", options$min_matched_pigs),
+    "Methods: original RNA sums; full-source gene intersection; >=10 cells; filterByExpr; TMM; paired ~pig+condition edgeR QL; original six contrasts; Hallmark+Reactome; seed1234.",
+    "FDR: BH per cluster/contrast (DE<=0.05); per collection/cluster/contrast (GSEA<0.01). Heatmap/volcano additionally require abs(log2FC)>=0.5.",
+    paste("Input:", inputs), paste("Output:", outputs), paste("References:", reference_dir),
+    paste("Mapping:", mapping_file), paste("Evidence:", log_path), "Validation: pending.")
+  writeLines(info, info_path)
+  cat("Run record:", info_path, "\nLog:", log_path, "\n")
+  log <- file(log_path, open = "wt")
+  warning_options <- options(warn = 1)
+  sink(log)
+  sink(log, type = "message")
+  finished <- FALSE
+  on.exit({
+    info[info == "Status: running"] <- if (finished) "Status: analyses finished; validation pending." else "Status: failed/incomplete; see log."
+    writeLines(c(info, paste("Finished:", Sys.time())), info_path)
+    sink(type = "message")
+    sink()
+    close(log)
+    options(warning_options)
+  })
+  for (i in seq_along(cases)) {
+    case <- cases[[i]]
+    # Carry forward the FINAL approved GSEA exclusions, including later completions.
+    mapping <- read.csv(file.path(roots[i], "DEG_T10H", "candidate_gene_mapping.csv"))
+    global_exclusions <- mapping$gene[mapping$excluded]
+    exclusions <- setNames(lapply(case$clusters, function(cluster) {
+      directory <- file.path(roots[i], "DEG_T10H", sprintf("cluster_%02d", cluster))
+      path <- file.path(directory, "gsea", "hallmark", "excluded_features.csv")
+      if (file.exists(file.path(directory, "pseudobulk_fit.rds")) && !file.exists(path)) {
+        stop("Missing historical approved GSEA exclusions: ", path)
+      }
+      if (file.exists(path)) setdiff(as.character(read.csv(path)$gene), global_exclusions) else character()
+    }), as.character(case$clusters))
+    cat("\nPopulation:", names(cases)[i], "\n")
+    run_pseudobulk(inputs[i], names(cases)[i], paste0("harmony_snn_res.", case$resolution),
+      case$clusters, outputs[i], mapping_file = mapping_file, reference_dir = reference_dir,
+      gsea_exclusions = exclusions, pigs = options$pigs,
+      min_matched_pigs = options$min_matched_pigs, log_path = log_path)
+    gc()
+  }
+  finished <- TRUE
+}
+
+if (sys.nframe() == 0L) run_pseudobulk_cli(commandArgs(trailingOnly = TRUE))

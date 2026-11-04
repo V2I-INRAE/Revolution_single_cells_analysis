@@ -56,6 +56,42 @@ open, then visit **http://127.0.0.1:3838** in your local browser.
 The app listens only on the compute node's loopback address, not publicly.
 See [app/README.md](app/README.md) for navigation and data preparation.
 
+## Cohort-selected pseudobulk analysis
+
+From the project root, run the seven existing `DEG_T10H` populations with either
+all observed pigs or an explicit animal list:
+
+```bash
+Rscript R/DEG/run_pseudobulk.R --all --output-name=DEG_T10H_ALL_RERUN
+Rscript R/DEG/run_pseudobulk.R --pigs=REVO26,REVO30 --min-matched-pigs=2 \
+  --output-name=DEG_T10H_TWO_SUCCESS_PIGS
+```
+
+`--all` and `--pigs` are mutually exclusive. The default minimum is three directly
+matched pigs per contrast; setting it to two enables exploratory testing, never
+single-pig inference. The paired `~ pig + condition` design is rebuilt after
+cohort selection and the unchanged 10-cell aggregate filter. All passing
+specimens remain in the joint model; unsupported contrasts are recorded as skips.
+
+This reuses the original cleaned subset objects and cluster definitions for
+Endothelial, Epithelial, Granulocytes, Macrophage_Monocytes, NK_cells, Stromal and
+DC. It does not repeat QC, cell normalization, integration or clustering. The
+original full-source gene intersection, frozen references and final approved
+GSEA exclusions are retained. Counts, filtering, TMM normalization, edgeR tests,
+diagnostics, heatmaps, volcanoes and both GSEA collections are recalculated.
+The six first-minus-second contrasts remain P4/Control, N4/Control, P4/N4,
+P4/P10, N4/N10 and P10/N10. Original sample/time labels are audited; the existing
+REVO31-N8 display grouping applies only when that specimen is selected.
+
+Each population writes a new sibling folder named by `--output-name`; existing
+folders are never overwritten. `cohort_audit.csv` records excluded animals and
+`sample_audit.csv` records absent/low-cell aggregates. Timestamped `.INFO` and
+execution logs are written to `logs/`; saved-output validation is required before
+calling the run complete. Source objects, historical outputs and references
+remain read-only. `--help` prints the command syntax. Sourcing the file and
+calling `run_pseudobulk()` directly remains supported (all pigs, three-pair
+minimum by default).
+
 ## Pseudobulk pathway enrichment
 
 `R/DEG/run_pseudobulk.R` runs **Hallmark and Reactome GSEA** for each eligible
