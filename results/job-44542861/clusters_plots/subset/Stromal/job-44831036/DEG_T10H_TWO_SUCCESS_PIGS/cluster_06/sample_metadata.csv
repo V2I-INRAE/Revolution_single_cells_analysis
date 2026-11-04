@@ -1,0 +1,5 @@
+"sample","pig","pressure","time_point","time_point_original","condition","n_cells","retained","exclusion_reason"
+"REVO26-P4","REVO26","positive","T4H","T4H","P4",17,TRUE,""
+"REVO26-P10","REVO26","positive","T10H","T10H","P10",10,TRUE,""
+"REVO30-N10","REVO30","negative","T10H","T10H","N10",12,TRUE,""
+"REVO30-P10","REVO30","positive","T10H","T10H","P10",13,TRUE,""

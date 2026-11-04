@@ -1,0 +1,7 @@
+"contrast","input_features","excluded_features","ranked_features","pathway_matched_features","reference_pathways","tested_pathways","positive_FDR_lt_0.01","negative_FDR_lt_0.01","missing_pvalues"
+"P4_vs_Control",10054,14,10040,6081,1839,910,82,3,0
+"N4_vs_Control",10054,14,10040,6081,1839,910,53,7,0
+"P4_vs_N4",10054,14,10040,6081,1839,910,1,28,0
+"P4_vs_P10",10054,14,10040,6081,1839,910,26,18,0
+"N4_vs_N10",10054,14,10040,6081,1839,910,77,131,0
+"P10_vs_N10",10054,14,10040,6081,1839,910,16,100,0

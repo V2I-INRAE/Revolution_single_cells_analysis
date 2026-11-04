@@ -1,0 +1,7 @@
+"gene","safe_name","pig_gene","match_method","display_gene","excluded","rank_id"
+"B2M",NA,"NCBI:110255236","exact_pig_identifier","B2M",TRUE,"NCBI:110255236"
+"ENSSSCG00000000576",NA,"NCBI:102161427","exact_pig_identifier","ENSSSCG00000000576",TRUE,"NCBI:102161427"
+"ENSSSCG00000004687",NA,"NCBI:110255236","exact_pig_identifier","ENSSSCG00000004687",TRUE,"NCBI:110255236"
+"ENSSSCG00000032549",NA,"NCBI:100525156","exact_pig_identifier","ENSSSCG00000032549",TRUE,"NCBI:100525156"
+"GNA12",NA,"NCBI:100525156","exact_pig_identifier","GNA12",TRUE,"NCBI:100525156"
+"TRIM3",NA,"NCBI:100518621","exact_pig_identifier","TRIM3",TRUE,"NCBI:100518621"

@@ -1,0 +1,19 @@
+# DC cluster 1
+Status: COMPLETED/VALIDATED; DE, diagnostics, plots, Hallmark and Reactome.
+Started: 2026-10-29 11:11:57.211875
+Run settings: results/job-44542861/clusters_plots/subset/DC/job-44831038/DEG_T10H_TWO_SUCCESS_PIGS/.INFO
+Input: data/job-44542861/subsets/DC/job-44831038/subclustered.rds
+Cluster column: harmony_snn_res.0.2
+Producer allocation: local
+Seed: 1234 for GSEA and label placement; DE/MDS/heatmap deterministic.
+Evidence: logs/deg_t10h_two_success_pigs-20261029-110123.log
+Finished: 2026-10-29 11:12:36.742273
+Cells: 2294 ; samples: 9 ; pigs: 2 ; min cells per sample: 19
+Candidate genes: 15902 ; low-expression genes removed: 4326 ; tested: 11576 ; genes outside original common-layer intersection: 5221
+Excluded specimens: 1 ; requested/tested contrasts: 6 / 4
+Joint design rank: 6 ; residual df: 3 ; filterByExpr minimum retained group size: 1
+Heatmap genes: 3355
+Validation: PASS; saved-output checks completed; approved GSEA-only completion and numerical retry recorded separately.
+Owner-approved numerical retry: ONLY DC C1 Reactome N4_vs_N10 nPermSimple=10000; same ranks/seed1234/other settings, full-contrast BH; all other319 collection/contrasts remain1000. Stored nPermSimple_by_contrast. Evidence: logs/deg_t10h_two_success_pigs-20261029-110123.log.
+Final saved-output validation: PASS (2026-10-29T11:56:13+01:00); count sums/IDs, paired design, DE/BH, heatmap values, GSEA ranks/exclusions/results and PDF/PNG files checked. See the root record and canonical execution log.
+
