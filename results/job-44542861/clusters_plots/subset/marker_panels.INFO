@@ -1,0 +1,16 @@
+# Cluster marker panels
+
+- Date: 2026-11-05; status: COMPLETED / VALIDATED.
+- Parent: job-44542861. Inputs: current `markers_top5.csv`, `markers_significant.csv`, and matching cluster identity reports for Endothelial job-44831031 res0.3; Epithelial job-44831032 res0.3; Macrophage_Monocytes job-44831034 res0.2 and res0.4; DC job-44831030 res0.3 and job-44831038 res0.2 and res0.3; Stromal job-44831036 res0.3.
+- Additional candidate signatures: `sig_simplified.xlsx` and `sig_detailed.xlsx` in this directory. Workbook markers were matched by reported cell program, not by transferring cluster numbers. For macrophage res0.2 C4, LGALS3, FCN2 and FABP5 were included as workbook-derived candidates in a weakly differentiated state whose identity report says it is marker-compatible with a basal alveolar program; this does not establish its identity. Monocyte res0.2 C6 IL1B is also workbook-derived.
+
+## Selection
+
+- Each `markers_top5_plus_canonical.csv` is beside its input file; original top-five rows and their order are retained. Five additional distinct candidates were manually prioritized from matched reports and applicable workbook signatures. Canonical ranks are curation order, not an established quantitative ranking. Each candidate has positive log2 fold change, positive detection-fraction difference and adjusted p-value < 0.05 in its matching cluster-versus-rest significant-marker export. No new differential-expression tests; no random sampling or seed.
+- Candidate source and the existing identity/QC label are recorded per row; fold changes, detection fractions and adjusted p-values are copied from source tables. Workbook negative/low qualifiers were not treated as positive markers. The selected genes indicate enrichment versus the combined rest, not necessarily discrimination from every individual cluster, nor proof of cell identity.
+
+## Validation and caveats
+
+- Reopened all 8 CSVs: 45 clusters, 450 rows; five unchanged top genes and five distinct additional candidates in every cluster; canonical ranks 1–5; no duplicated gene within any cluster; cluster coverage matches inputs. All statistics exactly match corresponding significant-marker rows; all 225 added markers pass the selection checks above. Identity-report-sourced genes occur in the named reports.
+- Macrophage res0.2 C4 is a low-signal basal state: LPL has a detection difference of only 0.017. Its five original top genes all have positive mean log2 fold changes but *lower* detection fractions than the rest. At res0.4 C3, three original top genes likewise have lower detection fractions. Original top-five entries were deliberately preserved, not represented as uniformly more frequently detected.
+- Stromal res0.3 C2 PDGFRA has only a 0.046 detection difference and is broadly detected, as noted in its source report. DC res0.3 job-44831038 C1/C2 share a pDC program; their canonical markers need not distinguish these two states from one another. Other provisional identities and contamination caveats remain in the matching source reports.

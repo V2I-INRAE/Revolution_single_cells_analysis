@@ -1,0 +1,17 @@
+# Publication marker-panel dot plots
+
+- Date: 2026-11-05; status: COMPLETED / VALIDATED locally.
+- Inputs: eight `markers_top5_plus_canonical.csv` tables documented in `marker_panels.INFO` and matching `data/job-44542861/subsets/*/job-*/subclustered.rds` objects: Endothelial 44831031 res0.3; Epithelial 44831032 res0.3; Macrophage_Monocytes 44831034 res0.2 and 0.4; DC 44831030 res0.3 and 44831038 res0.2 and 0.3; Stromal 44831036 res0.3.
+- Script: `R/clusters/plot_top_pub.R`; original subset plotting convention in `R/plots/marker_cluster_plots.R`. Its scCustomize dependency was unavailable locally and its function hard-codes top-five filenames and layout, so the script uses Seurat DotPlot with the same RNA/unscaled/red convention; no marker discovery or input overwrite. Per-panel feature translations and actual object counts are recorded in [original execution log](../../../../logs/marker-dotplots-20261105.log).
+
+## Method and layout
+
+- One landscape `dotplot_top5_plus_canonical_pub.pdf` beside each panel. All clusters and all distinct genes; repeated genes appear once, plotted for every cluster. All cells; joined stored RNA LogNormalize data, no new normalization or z-scoring. Colour: log1p(mean(expm1(log-normalized RNA))) per Seurat DotPlot, red ramp from zero to each plot's own maximum. Dot area: percent cells expressing, shared 0–100% scale. Expression colours are not necessarily directly comparable between figures because maxima differ. Seed: not applicable.
+- Output width 33.46–47.6 inches and height 18 inches; designed for fivefold reduction to 170–242 mm wide by 91 mm high. Gene labels 40 pt at source (8 pt at one-fifth size), maximum dot diameter 12 mm at source (2.4 mm after reduction); vector colour bar, points and text. Wider gene panels exceed a typical 170 mm page width at fivefold reduction.
+- Existing marker-producer name translations are applied only where necessary and in memory; each plotted panel row's cluster detection fraction is checked against its saved `pct.1` to within 0.0011. No input RDS or table was modified.
+
+## Validation
+
+- Eight PDF files reopened: one landscape page each; all 40–70 distinct gene labels and both legend labels recoverable as text; no raster image objects. Cluster/feature combinations complete, and every source table cluster matches the object. Maximum discrepancy from source rounded detection fractions across runs was 0.000499.
+- Actual saved DC and epithelial PDFs were rendered and visually inspected, including the smallest and largest gene panels; labels, axes and legends remained within page. Intermediate macrophage 70-gene render also inspected. Visual inspection does not certify every journal's final sizing requirements.
+- RenV reported that some lockfile packages were not installed and an already-loaded BiocManager was unmanaged; required Seurat 5.5.1, SeuratObject 5.4.0 and ggplot2 4.0.3 were available. No package was installed and no stochastic computation was run. The original exploratory-marker limitations in `marker_panels.INFO` remain applicable.

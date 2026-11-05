@@ -1,0 +1,51 @@
+cluster,cluster_identity,identity_qc,category,rank,gene,p_val,avg_log2FC,pct.1,pct.2,p_val_adj,pct_difference,candidate_sources
+1,"Lymphatic Endothelial Cells (LEC, CCL21^{hi} MMRN1^{hi} PROX1⁺ PDPN^{hi} FLT4⁺ LYVE1⁺)",Keep (Clean),top5,1,SCG3,0,9.10625025394163,0.254,0.004,0,0.25,markers_top5.csv
+1,"Lymphatic Endothelial Cells (LEC, CCL21^{hi} MMRN1^{hi} PROX1⁺ PDPN^{hi} FLT4⁺ LYVE1⁺)",Keep (Clean),top5,2,CCL21,0,8.79678411613134,0.843,0.02,0,0.823,markers_top5.csv
+1,"Lymphatic Endothelial Cells (LEC, CCL21^{hi} MMRN1^{hi} PROX1⁺ PDPN^{hi} FLT4⁺ LYVE1⁺)",Keep (Clean),top5,3,HOXD9,0,7.97173621730772,0.293,0.002,0,0.291,markers_top5.csv
+1,"Lymphatic Endothelial Cells (LEC, CCL21^{hi} MMRN1^{hi} PROX1⁺ PDPN^{hi} FLT4⁺ LYVE1⁺)",Keep (Clean),top5,4,SEMA3D,0,7.90119217576924,0.788,0.006,0,0.782,markers_top5.csv
+1,"Lymphatic Endothelial Cells (LEC, CCL21^{hi} MMRN1^{hi} PROX1⁺ PDPN^{hi} FLT4⁺ LYVE1⁺)",Keep (Clean),top5,5,TNFAIP8L3,0,7.81969035508514,0.639,0.005,0,0.634,markers_top5.csv
+1,"Lymphatic Endothelial Cells (LEC, CCL21^{hi} MMRN1^{hi} PROX1⁺ PDPN^{hi} FLT4⁺ LYVE1⁺)",Keep (Clean),canonical,1,PROX1,0,7.4029998229479,0.53,0.005,0,0.525,cluster_identities_res0.3.md
+1,"Lymphatic Endothelial Cells (LEC, CCL21^{hi} MMRN1^{hi} PROX1⁺ PDPN^{hi} FLT4⁺ LYVE1⁺)",Keep (Clean),canonical,2,PDPN,0,7.22248486378888,0.884,0.012,0,0.872,cluster_identities_res0.3.md
+1,"Lymphatic Endothelial Cells (LEC, CCL21^{hi} MMRN1^{hi} PROX1⁺ PDPN^{hi} FLT4⁺ LYVE1⁺)",Keep (Clean),canonical,3,MMRN1,0,7.32511072869442,0.935,0.038,0,0.897,cluster_identities_res0.3.md
+1,"Lymphatic Endothelial Cells (LEC, CCL21^{hi} MMRN1^{hi} PROX1⁺ PDPN^{hi} FLT4⁺ LYVE1⁺)",Keep (Clean),canonical,4,FLT4,0,4.99700868462375,0.677,0.034,0,0.643,cluster_identities_res0.3.md
+1,"Lymphatic Endothelial Cells (LEC, CCL21^{hi} MMRN1^{hi} PROX1⁺ PDPN^{hi} FLT4⁺ LYVE1⁺)",Keep (Clean),canonical,5,LYVE1,0,1.80014590029213,0.764,0.374,0,0.39,cluster_identities_res0.3.md
+2,Activated Venous / Post-Capillary Venular EC (ACKR1^{hi} VCAM1^{hi} SELE⁺ SELP⁺ VWF^{hi}),Keep (Clean),top5,1,ACKR1,0,6.87556226582862,0.902,0.016,0,0.886,markers_top5.csv
+2,Activated Venous / Post-Capillary Venular EC (ACKR1^{hi} VCAM1^{hi} SELE⁺ SELP⁺ VWF^{hi}),Keep (Clean),top5,2,IL6,0,5.20692154107838,0.555,0.052,0,0.503,markers_top5.csv
+2,Activated Venous / Post-Capillary Venular EC (ACKR1^{hi} VCAM1^{hi} SELE⁺ SELP⁺ VWF^{hi}),Keep (Clean),top5,3,MATN2,0,4.98678329798159,0.398,0.011,0,0.387,markers_top5.csv
+2,Activated Venous / Post-Capillary Venular EC (ACKR1^{hi} VCAM1^{hi} SELE⁺ SELP⁺ VWF^{hi}),Keep (Clean),top5,4,OLR1,0,4.96236413832191,0.383,0.044,0,0.339,markers_top5.csv
+2,Activated Venous / Post-Capillary Venular EC (ACKR1^{hi} VCAM1^{hi} SELE⁺ SELP⁺ VWF^{hi}),Keep (Clean),top5,5,MME,0,4.05571259473267,0.283,0.017,0,0.266,markers_top5.csv
+2,Activated Venous / Post-Capillary Venular EC (ACKR1^{hi} VCAM1^{hi} SELE⁺ SELP⁺ VWF^{hi}),Keep (Clean),canonical,1,SELE,0,3.26109136898617,0.592,0.098,0,0.494,cluster_identities_res0.3.md
+2,Activated Venous / Post-Capillary Venular EC (ACKR1^{hi} VCAM1^{hi} SELE⁺ SELP⁺ VWF^{hi}),Keep (Clean),canonical,2,SELP,0,3.11346292541852,0.651,0.096,0,0.555,cluster_identities_res0.3.md
+2,Activated Venous / Post-Capillary Venular EC (ACKR1^{hi} VCAM1^{hi} SELE⁺ SELP⁺ VWF^{hi}),Keep (Clean),canonical,3,VCAM1,0,3.13815866559239,0.835,0.131,0,0.704,cluster_identities_res0.3.md
+2,Activated Venous / Post-Capillary Venular EC (ACKR1^{hi} VCAM1^{hi} SELE⁺ SELP⁺ VWF^{hi}),Keep (Clean),canonical,4,VWF,0,2.19415938895603,0.94,0.563,0,0.377,cluster_identities_res0.3.md
+2,Activated Venous / Post-Capillary Venular EC (ACKR1^{hi} VCAM1^{hi} SELE⁺ SELP⁺ VWF^{hi}),Keep (Clean),canonical,5,CXCL10,0,2.79920623949538,0.803,0.198,0,0.605,cluster_identities_res0.3.md
+3,"Alveolar General Capillary EC (gCap / CAP1, GPIHBP1^{hi} APLNR^{hi} HPGD^{hi} MCAM⁺ KIT⁺)",Keep (Clean),top5,1,GPIHBP1,0,4.76972071920834,0.318,0.023,0,0.295,markers_top5.csv
+3,"Alveolar General Capillary EC (gCap / CAP1, GPIHBP1^{hi} APLNR^{hi} HPGD^{hi} MCAM⁺ KIT⁺)",Keep (Clean),top5,2,ANK3,0,4.36739779017793,0.357,0.049,0,0.308,markers_top5.csv
+3,"Alveolar General Capillary EC (gCap / CAP1, GPIHBP1^{hi} APLNR^{hi} HPGD^{hi} MCAM⁺ KIT⁺)",Keep (Clean),top5,3,HPGD,5.29919394288176e-301,3.42693969479113,0.281,0.041,1.11934873655491e-296,0.24,markers_top5.csv
+3,"Alveolar General Capillary EC (gCap / CAP1, GPIHBP1^{hi} APLNR^{hi} HPGD^{hi} MCAM⁺ KIT⁺)",Keep (Clean),top5,4,APLNR,3.44334743371748e-247,3.29045736645865,0.261,0.047,7.27338278424143e-243,0.214,markers_top5.csv
+3,"Alveolar General Capillary EC (gCap / CAP1, GPIHBP1^{hi} APLNR^{hi} HPGD^{hi} MCAM⁺ KIT⁺)",Keep (Clean),top5,5,CCSER1,0,3.11461711009838,0.558,0.196,0,0.362,markers_top5.csv
+3,"Alveolar General Capillary EC (gCap / CAP1, GPIHBP1^{hi} APLNR^{hi} HPGD^{hi} MCAM⁺ KIT⁺)",Keep (Clean),canonical,1,MCAM,0,2.45695847479334,0.64,0.183,0,0.457,cluster_identities_res0.3.md
+3,"Alveolar General Capillary EC (gCap / CAP1, GPIHBP1^{hi} APLNR^{hi} HPGD^{hi} MCAM⁺ KIT⁺)",Keep (Clean),canonical,2,KIT,3.48867410643095e-93,2.11832985353439,0.4,0.226,7.3691263150141e-89,0.174,cluster_identities_res0.3.md
+3,"Alveolar General Capillary EC (gCap / CAP1, GPIHBP1^{hi} APLNR^{hi} HPGD^{hi} MCAM⁺ KIT⁺)",Keep (Clean),canonical,3,CD93,0,2.4602258697957,0.713,0.287,0,0.426,cluster_identities_res0.3.md
+3,"Alveolar General Capillary EC (gCap / CAP1, GPIHBP1^{hi} APLNR^{hi} HPGD^{hi} MCAM⁺ KIT⁺)",Keep (Clean),canonical,4,ITGA1,0,2.05591612932674,0.809,0.465,0,0.344,cluster_identities_res0.3.md
+3,"Alveolar General Capillary EC (gCap / CAP1, GPIHBP1^{hi} APLNR^{hi} HPGD^{hi} MCAM⁺ KIT⁺)",Keep (Clean),canonical,5,TMEM100,1.89652276723949e-132,1.82318790553801,0.523,0.298,4.00602504123997e-128,0.225,cluster_identities_res0.3.md
+4,"Alveolar Aerocytes / Gas-Exchange Capillary EC (aCap / CAP2, APLN^{hi} EDNRB^{hi} PRX⁺ DPP4⁺ KITLG⁺ CA4⁺)",Keep (Clean),top5,1,APLN,0,7.2766724815745,0.293,0.006,0,0.287,markers_top5.csv
+4,"Alveolar Aerocytes / Gas-Exchange Capillary EC (aCap / CAP2, APLN^{hi} EDNRB^{hi} PRX⁺ DPP4⁺ KITLG⁺ CA4⁺)",Keep (Clean),top5,2,TRNP1,0,7.07546209357584,0.742,0.014,0,0.728,markers_top5.csv
+4,"Alveolar Aerocytes / Gas-Exchange Capillary EC (aCap / CAP2, APLN^{hi} EDNRB^{hi} PRX⁺ DPP4⁺ KITLG⁺ CA4⁺)",Keep (Clean),top5,3,CCDC68,0,6.4630267877118,0.298,0.008,0,0.29,markers_top5.csv
+4,"Alveolar Aerocytes / Gas-Exchange Capillary EC (aCap / CAP2, APLN^{hi} EDNRB^{hi} PRX⁺ DPP4⁺ KITLG⁺ CA4⁺)",Keep (Clean),top5,4,PDZRN3,0,4.76829598682056,0.284,0.021,0,0.263,markers_top5.csv
+4,"Alveolar Aerocytes / Gas-Exchange Capillary EC (aCap / CAP2, APLN^{hi} EDNRB^{hi} PRX⁺ DPP4⁺ KITLG⁺ CA4⁺)",Keep (Clean),top5,5,ITGA4,0,4.71462271546674,0.497,0.058,0,0.439,markers_top5.csv
+4,"Alveolar Aerocytes / Gas-Exchange Capillary EC (aCap / CAP2, APLN^{hi} EDNRB^{hi} PRX⁺ DPP4⁺ KITLG⁺ CA4⁺)",Keep (Clean),canonical,1,DPP4,0,3.4559603756892,0.58,0.097,0,0.483,cluster_identities_res0.3.md
+4,"Alveolar Aerocytes / Gas-Exchange Capillary EC (aCap / CAP2, APLN^{hi} EDNRB^{hi} PRX⁺ DPP4⁺ KITLG⁺ CA4⁺)",Keep (Clean),canonical,2,PRX,0,3.17280389811345,0.523,0.095,0,0.428,cluster_identities_res0.3.md
+4,"Alveolar Aerocytes / Gas-Exchange Capillary EC (aCap / CAP2, APLN^{hi} EDNRB^{hi} PRX⁺ DPP4⁺ KITLG⁺ CA4⁺)",Keep (Clean),canonical,3,KITLG,3.00978253733698e-312,3.00006648342187,0.483,0.145,6.35756365361691e-308,0.338,cluster_identities_res0.3.md
+4,"Alveolar Aerocytes / Gas-Exchange Capillary EC (aCap / CAP2, APLN^{hi} EDNRB^{hi} PRX⁺ DPP4⁺ KITLG⁺ CA4⁺)",Keep (Clean),canonical,4,CA4,1.08486458708057e-142,2.89200581465988,0.275,0.083,2.29155946729029e-138,0.192,cluster_identities_res0.3.md
+4,"Alveolar Aerocytes / Gas-Exchange Capillary EC (aCap / CAP2, APLN^{hi} EDNRB^{hi} PRX⁺ DPP4⁺ KITLG⁺ CA4⁺)",Keep (Clean),canonical,5,RGCC,0,2.87997704515192,0.904,0.313,0,0.591,cluster_identities_res0.3.md
+5,Pulmonary Arterial EC (GJA5/Cx40^{hi} BMX^{hi} HEY2⁺ SEMA3G^{hi} CXCL12⁺ SOX17⁺),Keep (Clean),top5,1,SLC52A3,0,8.85056222010325,0.263,0,0,0.263,markers_top5.csv
+5,Pulmonary Arterial EC (GJA5/Cx40^{hi} BMX^{hi} HEY2⁺ SEMA3G^{hi} CXCL12⁺ SOX17⁺),Keep (Clean),top5,2,MFAP5,0,8.44606090668666,0.734,0.005,0,0.729,markers_top5.csv
+5,Pulmonary Arterial EC (GJA5/Cx40^{hi} BMX^{hi} HEY2⁺ SEMA3G^{hi} CXCL12⁺ SOX17⁺),Keep (Clean),top5,3,MSMB,0,7.39016148660105,0.416,0.029,0,0.387,markers_top5.csv
+5,Pulmonary Arterial EC (GJA5/Cx40^{hi} BMX^{hi} HEY2⁺ SEMA3G^{hi} CXCL12⁺ SOX17⁺),Keep (Clean),top5,4,HEY2,0,7.0382782651612,0.316,0.001,0,0.315,markers_top5.csv
+5,Pulmonary Arterial EC (GJA5/Cx40^{hi} BMX^{hi} HEY2⁺ SEMA3G^{hi} CXCL12⁺ SOX17⁺),Keep (Clean),top5,5,CPXM2,0,7.01720417667811,0.349,0.003,0,0.346,markers_top5.csv
+5,Pulmonary Arterial EC (GJA5/Cx40^{hi} BMX^{hi} HEY2⁺ SEMA3G^{hi} CXCL12⁺ SOX17⁺),Keep (Clean),canonical,1,GJA5,0,5.24053587377604,0.857,0.045,0,0.812,cluster_identities_res0.3.md
+5,Pulmonary Arterial EC (GJA5/Cx40^{hi} BMX^{hi} HEY2⁺ SEMA3G^{hi} CXCL12⁺ SOX17⁺),Keep (Clean),canonical,2,BMX,0,6.58939207884376,0.768,0.023,0,0.745,cluster_identities_res0.3.md
+5,Pulmonary Arterial EC (GJA5/Cx40^{hi} BMX^{hi} HEY2⁺ SEMA3G^{hi} CXCL12⁺ SOX17⁺),Keep (Clean),canonical,3,SEMA3G,0,4.11580334320571,0.936,0.155,0,0.781,cluster_identities_res0.3.md
+5,Pulmonary Arterial EC (GJA5/Cx40^{hi} BMX^{hi} HEY2⁺ SEMA3G^{hi} CXCL12⁺ SOX17⁺),Keep (Clean),canonical,4,SOX17,0,2.3192301653613,0.685,0.158,0,0.527,cluster_identities_res0.3.md
+5,Pulmonary Arterial EC (GJA5/Cx40^{hi} BMX^{hi} HEY2⁺ SEMA3G^{hi} CXCL12⁺ SOX17⁺),Keep (Clean),canonical,5,EFNB2,0,2.18334870980142,0.876,0.353,0,0.523,cluster_identities_res0.3.md

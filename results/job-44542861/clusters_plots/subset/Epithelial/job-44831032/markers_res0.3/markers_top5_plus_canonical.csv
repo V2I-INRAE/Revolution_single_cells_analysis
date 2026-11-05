@@ -1,0 +1,71 @@
+cluster,cluster_identity,identity_qc,category,rank,gene,p_val,avg_log2FC,pct.1,pct.2,p_val_adj,pct_difference,candidate_sources
+1,Airway Secretory / Club Cells (SCGB1A1^{hi} SCGB3A1^{hi} BPIFB1⁺ TFF3⁺),Keep (Clean),top5,1,SCGB1A1,0,5.19439416639352,0.879,0.238,0,0.641,markers_top5.csv
+1,Airway Secretory / Club Cells (SCGB1A1^{hi} SCGB3A1^{hi} BPIFB1⁺ TFF3⁺),Keep (Clean),top5,2,SCGB3A1,0,5.14043296121534,0.591,0.057,0,0.534,markers_top5.csv
+1,Airway Secretory / Club Cells (SCGB1A1^{hi} SCGB3A1^{hi} BPIFB1⁺ TFF3⁺),Keep (Clean),top5,3,CRISP3,1.1015065256707e-282,5.08490544499385,0.263,0.025,2.32671223417422e-278,0.238,markers_top5.csv
+1,Airway Secretory / Club Cells (SCGB1A1^{hi} SCGB3A1^{hi} BPIFB1⁺ TFF3⁺),Keep (Clean),top5,4,BPIFB1,0,4.84947046839791,0.555,0.034,0,0.521,markers_top5.csv
+1,Airway Secretory / Club Cells (SCGB1A1^{hi} SCGB3A1^{hi} BPIFB1⁺ TFF3⁺),Keep (Clean),top5,5,ATP13A5,0,4.72371765513984,0.443,0.019,0,0.424,markers_top5.csv
+1,Airway Secretory / Club Cells (SCGB1A1^{hi} SCGB3A1^{hi} BPIFB1⁺ TFF3⁺),Keep (Clean),canonical,1,SCGB3A2,0,2.67117845680929,0.877,0.373,0,0.504,cluster_identities_res0.3.md;sig_detailed.xlsx
+1,Airway Secretory / Club Cells (SCGB1A1^{hi} SCGB3A1^{hi} BPIFB1⁺ TFF3⁺),Keep (Clean),canonical,2,PIGR,0,2.79944015012177,0.886,0.381,0,0.505,cluster_identities_res0.3.md
+1,Airway Secretory / Club Cells (SCGB1A1^{hi} SCGB3A1^{hi} BPIFB1⁺ TFF3⁺),Keep (Clean),canonical,3,TFF3,0,4.36054338510791,0.96,0.148,0,0.812,cluster_identities_res0.3.md
+1,Airway Secretory / Club Cells (SCGB1A1^{hi} SCGB3A1^{hi} BPIFB1⁺ TFF3⁺),Keep (Clean),canonical,4,WFDC2,0,2.34867758379243,0.906,0.415,0,0.491,cluster_identities_res0.3.md
+1,Airway Secretory / Club Cells (SCGB1A1^{hi} SCGB3A1^{hi} BPIFB1⁺ TFF3⁺),Keep (Clean),canonical,5,ALPL,0,3.54474960203297,0.493,0.052,0,0.441,cluster_identities_res0.3.md
+2,Airway Multiciliated Cells (FOXJ1⁺ CFAP⁺ DNAH⁺ RFX⁺),Keep (Clean),top5,1,ENSSSCG00000004410,0,6.34054181039475,0.375,0.008,0,0.367,markers_top5.csv
+2,Airway Multiciliated Cells (FOXJ1⁺ CFAP⁺ DNAH⁺ RFX⁺),Keep (Clean),top5,2,LRRC71,0,6.32640460017178,0.773,0.027,0,0.746,markers_top5.csv
+2,Airway Multiciliated Cells (FOXJ1⁺ CFAP⁺ DNAH⁺ RFX⁺),Keep (Clean),top5,3,HHATL,0,6.27286048356461,0.251,0.004,0,0.247,markers_top5.csv
+2,Airway Multiciliated Cells (FOXJ1⁺ CFAP⁺ DNAH⁺ RFX⁺),Keep (Clean),top5,4,B3GNT4,0,6.20345457455875,0.374,0.011,0,0.363,markers_top5.csv
+2,Airway Multiciliated Cells (FOXJ1⁺ CFAP⁺ DNAH⁺ RFX⁺),Keep (Clean),top5,5,ENSSSCG00000032076,0,6.19300989953814,0.375,0.01,0,0.365,markers_top5.csv
+2,Airway Multiciliated Cells (FOXJ1⁺ CFAP⁺ DNAH⁺ RFX⁺),Keep (Clean),canonical,1,FOXJ1,0,4.83529462582386,0.74,0.059,0,0.681,cluster_identities_res0.3.md
+2,Airway Multiciliated Cells (FOXJ1⁺ CFAP⁺ DNAH⁺ RFX⁺),Keep (Clean),canonical,2,CAPS,0,5.44142451841539,0.735,0.032,0,0.703,cluster_identities_res0.3.md;sig_detailed.xlsx
+2,Airway Multiciliated Cells (FOXJ1⁺ CFAP⁺ DNAH⁺ RFX⁺),Keep (Clean),canonical,3,TPPP3,0,4.82415497135387,0.813,0.077,0,0.736,cluster_identities_res0.3.md
+2,Airway Multiciliated Cells (FOXJ1⁺ CFAP⁺ DNAH⁺ RFX⁺),Keep (Clean),canonical,4,DNAH2,0,6.03030505777059,0.503,0.015,0,0.488,cluster_identities_res0.3.md
+2,Airway Multiciliated Cells (FOXJ1⁺ CFAP⁺ DNAH⁺ RFX⁺),Keep (Clean),canonical,5,CFAP54,0,5.97392893574175,0.788,0.04,0,0.748,cluster_identities_res0.3.md
+3,Alveolar Type 2 (AT2) Pneumocytes (SFTPC^{hi} LAMP3^{hi} ABCA3⁺ NAPSA^{hi}),Keep (Clean),top5,1,IL13RA2,0,9.49218559940567,0.395,0.001,0,0.394,markers_top5.csv
+3,Alveolar Type 2 (AT2) Pneumocytes (SFTPC^{hi} LAMP3^{hi} ABCA3⁺ NAPSA^{hi}),Keep (Clean),top5,2,KCNE5,0,9.3459815164656,0.347,0.001,0,0.346,markers_top5.csv
+3,Alveolar Type 2 (AT2) Pneumocytes (SFTPC^{hi} LAMP3^{hi} ABCA3⁺ NAPSA^{hi}),Keep (Clean),top5,3,SFTPC,0,9.17316073792799,0.995,0.067,0,0.928,markers_top5.csv
+3,Alveolar Type 2 (AT2) Pneumocytes (SFTPC^{hi} LAMP3^{hi} ABCA3⁺ NAPSA^{hi}),Keep (Clean),top5,4,LAMP3,0,8.60329022405911,0.959,0.017,0,0.942,markers_top5.csv
+3,Alveolar Type 2 (AT2) Pneumocytes (SFTPC^{hi} LAMP3^{hi} ABCA3⁺ NAPSA^{hi}),Keep (Clean),top5,5,GJB1,0,8.52197516136848,0.456,0.002,0,0.454,markers_top5.csv
+3,Alveolar Type 2 (AT2) Pneumocytes (SFTPC^{hi} LAMP3^{hi} ABCA3⁺ NAPSA^{hi}),Keep (Clean),canonical,1,ABCA3,0,4.32853845799941,0.629,0.078,0,0.551,cluster_identities_res0.3.md;sig_detailed.xlsx
+3,Alveolar Type 2 (AT2) Pneumocytes (SFTPC^{hi} LAMP3^{hi} ABCA3⁺ NAPSA^{hi}),Keep (Clean),canonical,2,NAPSA,0,3.98321541618832,0.931,0.295,0,0.636,cluster_identities_res0.3.md;sig_detailed.xlsx
+3,Alveolar Type 2 (AT2) Pneumocytes (SFTPC^{hi} LAMP3^{hi} ABCA3⁺ NAPSA^{hi}),Keep (Clean),canonical,3,SFTPD,0,2.88052692905054,0.959,0.374,0,0.585,cluster_identities_res0.3.md;sig_detailed.xlsx
+3,Alveolar Type 2 (AT2) Pneumocytes (SFTPC^{hi} LAMP3^{hi} ABCA3⁺ NAPSA^{hi}),Keep (Clean),canonical,4,SFTPB,0,2.02319032958878,0.927,0.347,0,0.58,cluster_identities_res0.3.md;sig_detailed.xlsx
+3,Alveolar Type 2 (AT2) Pneumocytes (SFTPC^{hi} LAMP3^{hi} ABCA3⁺ NAPSA^{hi}),Keep (Clean),canonical,5,SFTPA1,0,2.49293997477566,0.998,0.438,0,0.56,cluster_identities_res0.3.md
+4,"Tuft (Brush) Cells, merged Tuft-1/Tuft-2 (POU2F3^{hi} POU2AF2⁺ PTPRC/CD45⁺)",Keep (Clean),top5,1,HMX3,0,9.07335648151915,0.522,0.002,0,0.52,markers_top5.csv
+4,"Tuft (Brush) Cells, merged Tuft-1/Tuft-2 (POU2F3^{hi} POU2AF2⁺ PTPRC/CD45⁺)",Keep (Clean),top5,2,HMX2,0,9.01988380162521,0.366,0.002,0,0.364,markers_top5.csv
+4,"Tuft (Brush) Cells, merged Tuft-1/Tuft-2 (POU2F3^{hi} POU2AF2⁺ PTPRC/CD45⁺)",Keep (Clean),top5,3,POU2AF2,0,8.86776219158711,0.491,0.003,0,0.488,markers_top5.csv
+4,"Tuft (Brush) Cells, merged Tuft-1/Tuft-2 (POU2F3^{hi} POU2AF2⁺ PTPRC/CD45⁺)",Keep (Clean),top5,4,GNG13,0,8.75154073434127,0.72,0.005,0,0.715,markers_top5.csv
+4,"Tuft (Brush) Cells, merged Tuft-1/Tuft-2 (POU2F3^{hi} POU2AF2⁺ PTPRC/CD45⁺)",Keep (Clean),top5,5,CHAT,0,8.71623629460918,0.336,0.003,0,0.333,markers_top5.csv
+4,"Tuft (Brush) Cells, merged Tuft-1/Tuft-2 (POU2F3^{hi} POU2AF2⁺ PTPRC/CD45⁺)",Keep (Clean),canonical,1,POU2F3,0,7.96157832139808,0.95,0.016,0,0.934,cluster_identities_res0.3.md
+4,"Tuft (Brush) Cells, merged Tuft-1/Tuft-2 (POU2F3^{hi} POU2AF2⁺ PTPRC/CD45⁺)",Keep (Clean),canonical,2,SUCNR1,0,8.37888600261232,0.29,0.002,0,0.288,cluster_identities_res0.3.md
+4,"Tuft (Brush) Cells, merged Tuft-1/Tuft-2 (POU2F3^{hi} POU2AF2⁺ PTPRC/CD45⁺)",Keep (Clean),canonical,3,IL17RB,0,8.27282822144405,0.759,0.009,0,0.75,cluster_identities_res0.3.md
+4,"Tuft (Brush) Cells, merged Tuft-1/Tuft-2 (POU2F3^{hi} POU2AF2⁺ PTPRC/CD45⁺)",Keep (Clean),canonical,4,RGS21,0,7.8934437748179,0.867,0.013,0,0.854,cluster_identities_res0.3.md
+4,"Tuft (Brush) Cells, merged Tuft-1/Tuft-2 (POU2F3^{hi} POU2AF2⁺ PTPRC/CD45⁺)",Keep (Clean),canonical,5,ALOX5,0,7.98965721984042,0.941,0.016,0,0.925,cluster_identities_res0.3.md
+5,Alveolar Type 1 (AT1) Pneumocytes (COL4A3/4^{hi} AGER^{hi} RTKN2^{hi} CAV1⁺),Keep (Clean),top5,1,COL4A3,0,10.5289311462974,0.744,0.005,0,0.739,markers_top5.csv
+5,Alveolar Type 1 (AT1) Pneumocytes (COL4A3/4^{hi} AGER^{hi} RTKN2^{hi} CAV1⁺),Keep (Clean),top5,2,COL4A4,0,10.201706527356,0.777,0.004,0,0.773,markers_top5.csv
+5,Alveolar Type 1 (AT1) Pneumocytes (COL4A3/4^{hi} AGER^{hi} RTKN2^{hi} CAV1⁺),Keep (Clean),top5,3,LOC100738720,0,9.11431610585733,0.428,0.002,0,0.426,markers_top5.csv
+5,Alveolar Type 1 (AT1) Pneumocytes (COL4A3/4^{hi} AGER^{hi} RTKN2^{hi} CAV1⁺),Keep (Clean),top5,4,UPK3B,0,9.06455931551336,0.428,0.002,0,0.426,markers_top5.csv
+5,Alveolar Type 1 (AT1) Pneumocytes (COL4A3/4^{hi} AGER^{hi} RTKN2^{hi} CAV1⁺),Keep (Clean),top5,5,ANKRD1,0,8.97654342127235,0.442,0.005,0,0.437,markers_top5.csv
+5,Alveolar Type 1 (AT1) Pneumocytes (COL4A3/4^{hi} AGER^{hi} RTKN2^{hi} CAV1⁺),Keep (Clean),canonical,1,AGER,0,5.34005968699031,0.977,0.308,0,0.669,cluster_identities_res0.3.md;sig_detailed.xlsx
+5,Alveolar Type 1 (AT1) Pneumocytes (COL4A3/4^{hi} AGER^{hi} RTKN2^{hi} CAV1⁺),Keep (Clean),canonical,2,HOPX,0,3.52122710824598,0.97,0.643,0,0.327,cluster_identities_res0.3.md;sig_detailed.xlsx
+5,Alveolar Type 1 (AT1) Pneumocytes (COL4A3/4^{hi} AGER^{hi} RTKN2^{hi} CAV1⁺),Keep (Clean),canonical,3,AQP5,0,3.432955971601,0.781,0.201,0,0.58,cluster_identities_res0.3.md
+5,Alveolar Type 1 (AT1) Pneumocytes (COL4A3/4^{hi} AGER^{hi} RTKN2^{hi} CAV1⁺),Keep (Clean),canonical,4,PDPN,4.70789638249408e-248,2.35101512461936,0.905,0.422,9.94448952874224e-244,0.483,cluster_identities_res0.3.md
+5,Alveolar Type 1 (AT1) Pneumocytes (COL4A3/4^{hi} AGER^{hi} RTKN2^{hi} CAV1⁺),Keep (Clean),canonical,5,RTKN2,0,6.6429657808851,0.843,0.097,0,0.746,cluster_identities_res0.3.md
+6,Pulmonary Ionocytes (FOXI1^{hi} ATP6V1G3^{hi} ATP6V1C2^{hi} CFTR⁺ PDE1C⁺),Keep (Clean),top5,1,ENSSSCG00000026345,0,10.2619065734787,0.805,0.003,0,0.802,markers_top5.csv
+6,Pulmonary Ionocytes (FOXI1^{hi} ATP6V1G3^{hi} ATP6V1C2^{hi} CFTR⁺ PDE1C⁺),Keep (Clean),top5,2,PGF,0,10.029873135977,0.777,0.002,0,0.775,markers_top5.csv
+6,Pulmonary Ionocytes (FOXI1^{hi} ATP6V1G3^{hi} ATP6V1C2^{hi} CFTR⁺ PDE1C⁺),Keep (Clean),top5,3,FOXI1,0,9.65270284112417,0.918,0.002,0,0.916,markers_top5.csv
+6,Pulmonary Ionocytes (FOXI1^{hi} ATP6V1G3^{hi} ATP6V1C2^{hi} CFTR⁺ PDE1C⁺),Keep (Clean),top5,4,ATP6V1G3,0,9.20706586143671,0.897,0.005,0,0.892,markers_top5.csv
+6,Pulmonary Ionocytes (FOXI1^{hi} ATP6V1G3^{hi} ATP6V1C2^{hi} CFTR⁺ PDE1C⁺),Keep (Clean),top5,5,SLC9A2,0,9.06808129645569,0.699,0.003,0,0.696,markers_top5.csv
+6,Pulmonary Ionocytes (FOXI1^{hi} ATP6V1G3^{hi} ATP6V1C2^{hi} CFTR⁺ PDE1C⁺),Keep (Clean),canonical,1,PDE1C,0,7.64589265563581,0.945,0.035,0,0.91,cluster_identities_res0.3.md
+6,Pulmonary Ionocytes (FOXI1^{hi} ATP6V1G3^{hi} ATP6V1C2^{hi} CFTR⁺ PDE1C⁺),Keep (Clean),canonical,2,ATP6V1C2,0,5.13024145290518,0.908,0.079,0,0.829,cluster_identities_res0.3.md
+6,Pulmonary Ionocytes (FOXI1^{hi} ATP6V1G3^{hi} ATP6V1C2^{hi} CFTR⁺ PDE1C⁺),Keep (Clean),canonical,3,CFTR,1.71854209019942e-132,3.27538577444031,0.798,0.267,3.63007645712823e-128,0.531,cluster_identities_res0.3.md
+6,Pulmonary Ionocytes (FOXI1^{hi} ATP6V1G3^{hi} ATP6V1C2^{hi} CFTR⁺ PDE1C⁺),Keep (Clean),canonical,4,ADGRF1,0,8.22655068593244,0.925,0.008,0,0.917,cluster_identities_res0.3.md
+6,Pulmonary Ionocytes (FOXI1^{hi} ATP6V1G3^{hi} ATP6V1C2^{hi} CFTR⁺ PDE1C⁺),Keep (Clean),canonical,5,ATP7B,0,7.52232662357582,0.64,0.007,0,0.633,cluster_identities_res0.3.md
+7,Airway Basal Progenitor Cells (TP63⁺ KRT5⁺ KRT17⁺ COL17A1^{hi}),Keep (Clean),top5,1,ENSSSCG00000017445,0,7.64448133525347,0.337,0.005,0,0.332,markers_top5.csv
+7,Airway Basal Progenitor Cells (TP63⁺ KRT5⁺ KRT17⁺ COL17A1^{hi}),Keep (Clean),top5,2,COL17A1,0,7.38359037108773,0.78,0.013,0,0.767,markers_top5.csv
+7,Airway Basal Progenitor Cells (TP63⁺ KRT5⁺ KRT17⁺ COL17A1^{hi}),Keep (Clean),top5,3,KRT5,0,7.2628683081429,0.62,0.023,0,0.597,markers_top5.csv
+7,Airway Basal Progenitor Cells (TP63⁺ KRT5⁺ KRT17⁺ COL17A1^{hi}),Keep (Clean),top5,4,TP63,0,7.15172811457279,0.624,0.009,0,0.615,markers_top5.csv
+7,Airway Basal Progenitor Cells (TP63⁺ KRT5⁺ KRT17⁺ COL17A1^{hi}),Keep (Clean),top5,5,DLK2,0,7.02318946464281,0.345,0.007,0,0.338,markers_top5.csv
+7,Airway Basal Progenitor Cells (TP63⁺ KRT5⁺ KRT17⁺ COL17A1^{hi}),Keep (Clean),canonical,1,KRT17,0,5.35628054672181,0.522,0.019,0,0.503,cluster_identities_res0.3.md
+7,Airway Basal Progenitor Cells (TP63⁺ KRT5⁺ KRT17⁺ COL17A1^{hi}),Keep (Clean),canonical,2,ITGA2,2.17421146840473e-171,3.62024580547067,0.659,0.11,4.59258688471132e-167,0.549,cluster_identities_res0.3.md
+7,Airway Basal Progenitor Cells (TP63⁺ KRT5⁺ KRT17⁺ COL17A1^{hi}),Keep (Clean),canonical,3,SFN,1.30842052330138e-259,4.35003164646287,0.651,0.067,2.76377667136951e-255,0.584,cluster_identities_res0.3.md
+7,Airway Basal Progenitor Cells (TP63⁺ KRT5⁺ KRT17⁺ COL17A1^{hi}),Keep (Clean),canonical,4,KRT19,2.37484477214147e-42,1.48345685112264,0.855,0.543,5.01638461219443e-38,0.312,cluster_identities_res0.3.md
+7,Airway Basal Progenitor Cells (TP63⁺ KRT5⁺ KRT17⁺ COL17A1^{hi}),Keep (Clean),canonical,5,PKP1,0,5.60601262336199,0.392,0.009,0,0.383,cluster_identities_res0.3.md
