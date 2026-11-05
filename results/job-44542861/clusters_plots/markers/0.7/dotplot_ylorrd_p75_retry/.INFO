@@ -1,0 +1,12 @@
+# Marker dotplot replot
+Status: completed
+Started: 2026-11-05 15:52:39.22623
+Input object (read-only): data/job-44542861/clustered.rds
+Saved marker panel (read-only): results/job-44542861/clusters_plots/markers/0.7/markers_top5.csv
+Cluster column: harmony_snn_res.0.7
+Plot kind: parent
+RNA LogNormalize; Seurat DotPlot; gene-wise scaling: TRUE
+YlOrRd; per-plot 75th percentile cap; dots at or above the cap share the maximum colour.
+See execution log for distribution and cap. No marker discovery or object writes.
+Validation: PDF header and PNG reopened; inputs unchanged; detection agrees with marker table; 238627 cells; 24 clusters; 117 marker genes.
+Finished: 2026-11-05 15:53:33.658135

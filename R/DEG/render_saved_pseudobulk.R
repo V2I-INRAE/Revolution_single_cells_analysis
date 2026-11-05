@@ -2,7 +2,7 @@
 source("R/utils/save_plots.R")
 source("R/DEG/pseudobulk_diagnostics.R")
 source("R/DEG/pseudobulk_plots.R")
-source("R/DEG/pseudobulk_hallmark.R")
+source("R/DEG/pseudobulk_gsea.R")
 
 # Construct only production targets: previews are never discovered recursively.
 saved_pseudobulk_figure_paths <- function(directory, contrasts, hallmark_contrasts = character(),

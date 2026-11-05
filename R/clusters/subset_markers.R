@@ -48,7 +48,7 @@ run_subset_markers <- function(input, resolution) {
     paste("Significance: adjusted p <", cfg$adjusted_p_cutoff,
       "; ranking: descending avg_log2FC, adjusted p, gene."),
     "Reuse normalized/scaled RNA; join layers and translate existing feature IDs in memory only.",
-    "Dotplot: RNA data slot; scale=FALSE (no gene-wise scaling); red colour scale, limits 0 to plot maximum.",
+    "Dotplot: RNA data slot; scale=FALSE (no gene-wise scaling); YlOrRd colour, capped at the 75th percentile of plotted values.",
     "No normalization, QC, reclustering or source RDS writes. Exploratory cluster markers, not condition DE.",
     paste("Heatmap: display scaling recomputed over exactly the plotted top25 genes;",
       "at most", cluster_heatmap_max_cells_per_ident,

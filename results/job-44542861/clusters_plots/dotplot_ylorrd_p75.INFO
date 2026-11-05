@@ -1,0 +1,13 @@
+# Local marker dotplot colour revision
+- Status: completed locally; automated validation passed. Started 2026-11-05.
+- Inputs: `data/job-44542861` saved Seurat objects and `results/job-44542861` saved marker tables; specific paths recorded in each output `.INFO` and execution log.
+- Method: local Seurat DotPlot on stored RNA LogNormalize data; preserve parent gene-wise scaling and subset/publication unscaled averages. YlOrRd palette; cap colours at the 75th percentile of plotted values per plot. Existing figures and input objects are not overwritten.
+- Scope: current marker outputs; `old` and `xxx_NOT_USED_xxx` archived outputs are not regenerated. No new normalization, clustering or marker discovery; no random seed required.
+- Execution log: `logs/dotplot-ylorrd-job44542861.log` records each input, distribution, cap and plot counts. One full-object attempt was interrupted while loading; its `.INFO` is retained and the retry completed.
+
+## Outputs and checks
+- Fourteen top-five marker plots (one parent, 13 subset resolutions): each new `dotplot_ylorrd_p75/` directory contains PDF, PNG and `.INFO`; the parent retry is in `markers/0.7/dotplot_ylorrd_p75_retry/`.
+- Eight publication PDFs are beside their input panels, named `dotplot_top5_plus_canonical_pub_ylorrd_p75.pdf`; original PDFs were not overwritten.
+- All 22 PDFs reopened as one-page PDFs and their extracted text includes the cap caption; all 14 PNGs reopened. Marker rows' detection percentages agree with their saved tables within 0.0011. Input file sizes and modification times remained unchanged.
+- For the parent, gene-wise scaling gives a 75th percentile of -0.2003 (range -0.8857 to 2.5; 702/2808 dots at or above cap). Thus its darkest colour is not evidence of positive or high absolute expression. The subset and publication caps are calculated independently per plot, so colours are not directly comparable across plots.
+- Local scCustomize is unavailable; the subset top-five plots use Seurat DotPlot with RNA unscaled averages, matching the previously recorded publication plotting convention. Plot appearances may differ from earlier scCustomize figures beyond the colour scale. No visual review performed.

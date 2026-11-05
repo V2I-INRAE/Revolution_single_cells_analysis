@@ -3,6 +3,8 @@ suppressPackageStartupMessages({
   library(patchwork)
 })
 
+source("R/plots/dotplot_colour.R")
+
 # Paginated per-panel PDF layout: square 12 x 12 in pages,
 # 2 columns x 2 rows = 4 gene tiles per page. Titles stay selectable.
 panel_pdf_ncol <- 2L
@@ -26,10 +28,10 @@ plot_markers_dotplot <- function(alldata, top5, sel.clust, directory) {
     features = rev(as.character(unique(top5$gene))),
     group.by = sel.clust, assay = "RNA", cols = c("#FFF7EC", "#B2182B")
   ) + coord_flip()
-  dots <- dots + labs(
+  dots <- dots + dotplot_colour_scale(dots) + labs(
     title = paste(sel.clust, "| top 5 markers per cluster"),
     subtitle = "Dot size: detection; colour: scaled average expression",
-    caption = "All cells; RNA LogNormalize expression. Exploratory cluster markers, not condition DE.",
+    caption = "RNA LogNormalize expression; gene-wise scaled. Colour capped at plot 75th percentile. Exploratory cluster markers, not condition DE.",
     x = NULL, y = "Cluster"
   ) + theme(
     axis.text.y = element_text(size = 9), axis.text.x = element_text(size = 9)

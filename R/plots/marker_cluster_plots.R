@@ -7,11 +7,13 @@ suppressPackageStartupMessages({
 # One implementation, one visual language; callers differ only in object
 # preparation and the level_label ("Cluster" vs "Subcluster") in titles.
 #
-# Dotplot: normalized display (scale = FALSE) with a red colour scale on RNA
-# normalized data, colour limits 0 to plot maximum. Heatmap: uniformly display-scaled
+# Dotplot: normalized display (scale = FALSE) with a YlOrRd colour scale on RNA
+# normalized data, capped at the 75th percentile of displayed values. Heatmap: uniformly display-scaled
 # top genes (ScaleData over exactly the plotted gene set, caller-supplied
 # covariates) with an RdBu palette anchored at fixed symmetric limits.
 # Both exports: PNG (300 dpi) and PDF. Heatmap cells capped per identity.
+
+source("R/plots/dotplot_colour.R")
 
 cluster_heatmap_max_cells_per_ident <- 500L
 cluster_heatmap_disp_limits <- c(-2.5, 2.5)
@@ -25,13 +27,11 @@ plot_cluster_dotplot <- function(alldata, top5, sel.clust, directory,
     assay = "RNA",
     scale = FALSE,
     flip_axes = TRUE
-  ) + ggplot2::scale_colour_gradientn(
-    colours = c("#FFF5F0", "#FCBBA1", "#CB181D", "#67000D"),
-    limits = c(0, NA)
-  ) + ggplot2::labs(
+  )
+  dots <- dots + dotplot_colour_scale(dots) + ggplot2::labs(
     title = paste(sel.clust, "| top 5 markers per", tolower(level_label)),
     subtitle = "Dot size: detection; colour: normalized average expression",
-    caption = "RNA LogNormalize data, no gene-wise scaling. Colour: 0 to plot maximum.\nExploratory cluster markers, not condition DE.",
+    caption = "RNA LogNormalize data, no gene-wise scaling. Colour capped at plot 75th percentile.\nExploratory cluster markers, not condition DE.",
     x = NULL, y = level_label
   ) + ggplot2::theme(
     axis.text.y = ggplot2::element_text(size = 9),

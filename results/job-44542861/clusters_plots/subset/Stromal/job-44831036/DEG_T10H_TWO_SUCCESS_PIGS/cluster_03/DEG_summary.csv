@@ -1,7 +1,0 @@
-"contrast","group1","group2","group1_samples","group2_samples","matched_pigs","matched_pig_ids","min_matched_pigs","eligible","contrast_status","skip_reason","tested","up","down"
-"P4_vs_Control","P4","Control",2,2,2,"REVO26;REVO30",2,TRUE,"tested","",6410,675,711
-"N4_vs_Control","N4","Control",2,2,2,"REVO26;REVO30",2,TRUE,"tested","",6410,467,262
-"P4_vs_N4","P4","N4",2,2,2,"REVO26;REVO30",2,TRUE,"tested","",6410,43,86
-"P4_vs_P10","P4","P10",2,2,2,"REVO26;REVO30",2,TRUE,"tested","",6410,40,67
-"N4_vs_N10","N4","N10",2,2,2,"REVO26;REVO30",2,TRUE,"tested","",6410,426,255
-"P10_vs_N10","P10","N10",2,2,2,"REVO26;REVO30",2,TRUE,"tested","",6410,10,8

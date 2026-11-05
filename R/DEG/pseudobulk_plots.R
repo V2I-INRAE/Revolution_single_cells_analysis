@@ -1,5 +1,5 @@
 # The driver sources R/utils/save_plots.R before calling this module.
-source("R/DEG/publication_style.R")
+source("R/plots/publications/publication_style.R")
 plot_pseudobulk_de <- function(pb, output_dir, label, mapping,
                               fdr_cutoff = 0.05, logfc_cutoff = 0.5, seed = 1234) {
   dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
