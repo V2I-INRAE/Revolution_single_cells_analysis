@@ -1,0 +1,42 @@
+# Publication cluster/marker UMAP
+Parent acceptance: saved PDF reopened and independently visually inspected; 41524 cells, 8 requested marker titles, plain cluster text; exactly one 600-dpi image per UMAP; source integrity checks PASS. Evidence: for_pub/plot-publication.log.
+Status: completed and validated
+Date: 2026-11-04 19:54:50.820186
+Script: R/clusters/plot_for_pub.R; input (read-only): data/job-44542861/subsets/Macrophage_Monocytes/job-44831034/subclustered.rds
+Cluster column: harmony_snn_res.0.4
+Markers: 1=CYP7A1, 2=FABP5, 3=ENPP1, 4=ENSSSCG00000014812, 5=ENSSSCG00000029414, 6=CD14, 7=MARCO, 8=LRMDA
+Display aliases: ENSSSCG00000014812=FOLR2, ENSSSCG00000029414=FCN1
+Expression: stored RNA log-normalized data; one viridis scale over all markers; no clipping.
+Colours: viz_palette; cells rasterized at 600 dpi (one image per UMAP); seed 1234; plain text labels.
+Output: results/job-44542861/clusters_plots/subset/Macrophage_Monocytes/job-44831034/for_pub/clusters_and_markers.pdf
+Reduction: umap_harmony ; cells: 41524
+Clusters plotted: 1, 2, 3, 4, 5, 6, 7, 8
+Producer: local publication-only run; source producer job-44831034; started 2026-11-04 19:54:38.125718
+Original shared console log: results/job-44542861/clusters_plots/subset/Macrophage_Monocytes/job-44831034/for_pub/plot-publication.log
+Partition limitation: UMAP uses harmony_snn_res.0.4 (all 41524 cells, clusters 1-8); saved DEG uses harmony_snn_res.0.2, clusters 1,2,3,4,6 only. Their numbered clusters are NOT interchangeable; no label remapping or DE computation.
+
+Validation: all 41524 cells, exact metadata/embedding/RNA data cell-ID order, unique IDs and all eight markers PASS. Shared normalized RNA range: 0 to 6.19999321383.
+Cluster 0.4 counts: 1=16244; 2=5933; 3=5559; 4=5420; 5=4416; 6=1827; 7=1137; 8=988 
+Native pig mapping verified against rename_map.csv and ensembl_to_symbol_full.csv (sus_scrofa, Sscrofa11.1); no human orthologues.
+
+Source integrity: RDS and all saved volcano CSV sizes/mtimes unchanged before/after. Frozen plotting scripts MD5 unchanged.
+                                                                                                                    path
+                                            data/job-44542861/subsets/Macrophage_Monocytes/job-44831034/subclustered.rds
+ results/job-44542861/clusters_plots/subset/Macrophage_Monocytes/job-44831034/DEG_T10H/cluster_01/plots/volcano_data.csv
+ results/job-44542861/clusters_plots/subset/Macrophage_Monocytes/job-44831034/DEG_T10H/cluster_02/plots/volcano_data.csv
+ results/job-44542861/clusters_plots/subset/Macrophage_Monocytes/job-44831034/DEG_T10H/cluster_03/plots/volcano_data.csv
+ results/job-44542861/clusters_plots/subset/Macrophage_Monocytes/job-44831034/DEG_T10H/cluster_04/plots/volcano_data.csv
+ results/job-44542861/clusters_plots/subset/Macrophage_Monocytes/job-44831034/DEG_T10H/cluster_06/plots/volcano_data.csv
+       size      mtime
+ 1356848964 1792414329
+   12809604 1792693617
+    9690045 1792693647
+   10282839 1792693682
+    7586975 1792693717
+    3954523 1792693742
+PDF reopening and visual validation: PASS. One page; all marker titles including FOLR2/FCN1; 41,524 cells; eight clusters; no raw feature IDs. Nine UMAP cell raster images (3000x3000 main, eight 1000x1000 tiles), generated at 600dpi; vector text. qlmanage 1800px rendering inspected: no clipping or label-label overlap; labels intentionally overlay cell points.
+
+Final UMAP validation: 2026-11-04 19:57:35.770923; no shared scripts or source data edited. Initial missing-library launch was corrected with existing project renv library.
+
+PDF effective raster dpi: all nine UMAP images exactly 600x600dpi from saved PDF transformation matrices. Source input byte sizes/mtime seconds still match first-run log after final DEG rerun.
+DEG formatting was subsequently fixed by supervisor-owned shared-script updates; UMAP and source data unchanged.

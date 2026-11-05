@@ -1,0 +1,393 @@
+RUN START: 2026-11-04 19:51:39 
+                                           data/job-44542861/subsets/Epithelial/job-44831032/subclustered.rds 
+                                                                           "e5a7847fceea605193cc228d31042522" 
+results/job-44542861/clusters_plots/subset/Epithelial/job-44831032/DEG_T10H/cluster_01/plots/volcano_data.csv 
+                                                                           "2556b9e1da86e1a4265172c45696eb2a" 
+results/job-44542861/clusters_plots/subset/Epithelial/job-44831032/DEG_T10H/cluster_02/plots/volcano_data.csv 
+                                                                           "4f9933ee671295673b3840f8c8de6ba0" 
+results/job-44542861/clusters_plots/subset/Epithelial/job-44831032/DEG_T10H/cluster_03/plots/volcano_data.csv 
+                                                                           "1e8c3b5e109b782fd875b0f292134440" 
+results/job-44542861/clusters_plots/subset/Epithelial/job-44831032/DEG_T10H/cluster_04/plots/volcano_data.csv 
+                                                                           "136796d99c8a369c08ef4474884ab112" 
+results/job-44542861/clusters_plots/subset/Epithelial/job-44831032/DEG_T10H/cluster_05/plots/volcano_data.csv 
+                                                                           "ac28b41d50b1d2d56ca6a70b7e7ca2e1" 
+Error in library(Seurat) : there is no package called ‘Seurat’
+Calls: source ... suppressPackageStartupMessages -> withCallingHandlers -> library
+Execution halted
+
+RETRY: launch from project root to activate existing project renv library (initial invocation lacked Seurat). No plotting occurred on first attempt.
+The following package(s) were loaded before renv activated this project:
+- BiocManager [~/Library/Caches/org.R-project.R/R/renv/cache/v5/macos/R-4.6/aarch64-apple-darwin23/BiocManager/1.30.27/594af2c6021b55271b6759d004a25ca2/BiocManager]
+These packages are not managed by renv and may cause `renv::status()`
+and `renv::snapshot()` to report inconsistencies. Restart R in a clean
+session to recover. The paths above may help identify where each
+package was loaded from.
+Set `RENV_CONFIG_NAMESPACES_CHECK=FALSE` to silence this check.
+
+- One or more packages recorded in the lockfile are not installed.
+- Use `renv::status()` for more details.
+RUN START: 2026-11-04 19:52:23 
+                                           data/job-44542861/subsets/Epithelial/job-44831032/subclustered.rds 
+                                                                           "e5a7847fceea605193cc228d31042522" 
+results/job-44542861/clusters_plots/subset/Epithelial/job-44831032/DEG_T10H/cluster_01/plots/volcano_data.csv 
+                                                                           "2556b9e1da86e1a4265172c45696eb2a" 
+results/job-44542861/clusters_plots/subset/Epithelial/job-44831032/DEG_T10H/cluster_02/plots/volcano_data.csv 
+                                                                           "4f9933ee671295673b3840f8c8de6ba0" 
+results/job-44542861/clusters_plots/subset/Epithelial/job-44831032/DEG_T10H/cluster_03/plots/volcano_data.csv 
+                                                                           "1e8c3b5e109b782fd875b0f292134440" 
+results/job-44542861/clusters_plots/subset/Epithelial/job-44831032/DEG_T10H/cluster_04/plots/volcano_data.csv 
+                                                                           "136796d99c8a369c08ef4474884ab112" 
+results/job-44542861/clusters_plots/subset/Epithelial/job-44831032/DEG_T10H/cluster_05/plots/volcano_data.csv 
+                                                                           "ac28b41d50b1d2d56ca6a70b7e7ca2e1" 
+
+   1    2    3    4    5    6    7 
+3171 2982 1287  776  663  292  255 
+[1] 0.000000 8.559851
+PASS: marker IDs and metadata/embedding/RNA-data cell-ID alignment; all 9426 cells and clusters 1-7.
+          used  (Mb) gc trigger   (Mb) limit (Mb)  max used   (Mb)
+Ncells 3774722 201.6    7031870  375.6         NA   7031870  375.6
+Vcells 6584010  50.3  206486040 1575.4      65536 258106228 1969.2
+Scale for x is already present.
+Adding another scale for x, which will replace the existing scale.
+Saved: results/job-44542861/clusters_plots/subset/Epithelial/job-44831032/DEG_T10H/for_pub/DEG_all_clusters_P4_vs_N4.pdf
+PASS: all original columns by gene/cluster identical: 1 9890 rows
+PASS: all original columns by gene/cluster identical: 2 10073 rows
+PASS: all original columns by gene/cluster identical: 3 6313 rows
+PASS: all original columns by gene/cluster identical: 4 4892 rows
+PASS: all original columns by gene/cluster identical: 5 3498 rows
+PASS: ggplot_build exact rendered point x/logFC coordinates; approved threshold grey colours for 32706 rows; named-only labels, 9.5 pt, plain text layers.
+DEG rows: 34666 ; labels: 48 
+   
+    Down Not significant Significant, small effect   Up
+  1  231            9325                        20  314
+  2  455            9270                        47  301
+  3  243            5842                         3  225
+  4    3            4881                         0    8
+  5  101            3318                         0   79
+       cluster               gene display_gene      logFC          FDR
+19781        1                HK2          HK2 -1.5169276 7.339231e-05
+19783        1               NAB2         NAB2 -2.9422379 7.738263e-05
+19786        1              CIRBP        CIRBP -1.2030637 5.842969e-04
+19789        1             CEP128       CEP128 -1.4138953 1.072284e-03
+19790        1             METRNL       METRNL -1.3352297 1.132019e-03
+201471       2              EPHA2        EPHA2 -2.4283631 2.344699e-07
+201481       2                 F3           F3 -2.3770531 2.344699e-07
+201491       2          TNFRSF12A    TNFRSF12A -2.1109495 2.344699e-07
+201511       2           SERPINE1     SERPINE1 -3.0888755 7.984093e-07
+201521       2              KCNRG        KCNRG -1.9732848 9.479302e-07
+12627        3              DUSP5        DUSP5 -2.4933209 1.106901e-04
+12628        3            FAM110C      FAM110C -2.2267373 1.106901e-04
+12629        3                 F3           F3 -3.1820013 1.106901e-04
+12631        3                CPM          CPM -1.1752472 1.164909e-04
+12632        3              SGMS2        SGMS2 -2.3092848 1.456942e-04
+9788         4              USP16        USP16 -1.4306757 6.026992e-03
+9790         4           SLA-DQB1     SLA-DQB1 -2.2514436 1.983230e-02
+9793         4            HLA-DRA      HLA-DRA -3.6374889 4.656662e-02
+6997         5               CCN1         CCN1 -2.1673834 1.718194e-04
+6998         5            GADD45A      GADD45A -2.8968191 1.718194e-04
+6999         5            GADD45B      GADD45B -1.8482328 1.718194e-04
+7001         5              ACTN1        ACTN1 -1.6503703 2.325684e-04
+7003         5                ADM          ADM -2.6050295 9.412515e-04
+19782        1               IRF2         IRF2  1.4653239 7.339231e-05
+19784        1 ENSSSCG00000017032        PTTG1  3.5817745 2.663006e-04
+19787        1            PLA2G4A      PLA2G4A  1.2620915 1.059936e-03
+19788        1             LACTB2       LACTB2  1.2870472 1.059936e-03
+19792        1              TASOR        TASOR  0.8998998 1.316852e-03
+201501       2               PDK4         PDK4  3.3082882 3.304127e-07
+201631       2               IRF2         IRF2  1.3388323 4.532555e-06
+201671       2              YPEL2        YPEL2  1.4977810 6.673906e-06
+201761       2                JHY          JHY  1.0657658 1.935840e-05
+201811       2              SETD7        SETD7  1.3559553 3.490170e-05
+12637        3             CDKN1B       CDKN1B  1.4972347 1.149096e-03
+12638        3              WBP1L        WBP1L  1.7226897 1.376738e-03
+12639        3              FNBP4        FNBP4  1.4290941 1.551752e-03
+12641        3            CAMK2N1      CAMK2N1  2.8430247 1.577127e-03
+12646        3              SHMT2        SHMT2  1.9876643 1.750428e-03
+9785         4             NFE2L2       NFE2L2  1.2007551 6.026992e-03
+9787         4             ATP1B1       ATP1B1  1.0040020 6.026992e-03
+9789         4              FNBP4        FNBP4  0.9068345 6.026992e-03
+9791         4             DDIT4L       DDIT4L  1.2333518 4.341365e-02
+9792         4               FUT2         FUT2  1.7215860 4.656662e-02
+7002         5           TOR1AIP2     TOR1AIP2  1.8376385 9.412515e-04
+7010         5               BBS9         BBS9  1.6305490 1.824910e-03
+7012         5               DNM3         DNM3  1.3567336 2.019050e-03
+7013         5              CPEB3        CPEB3  2.0156376 2.079925e-03
+7014         5               GPD2         GPD2  1.0953897 2.079925e-03
+EXPECTED_PDF_LABELS_JSON: ["HK2","NAB2","CIRBP","CEP128","METRNL","IRF2","PTTG1","PLA2G4A","LACTB2","TASOR","EPHA2","F3","TNFRSF12A","SERPINE1","KCNRG","PDK4","IRF2","YPEL2","JHY","SETD7","DUSP5","FAM110C","F3","CPM","SGMS2","CDKN1B","WBP1L","FNBP4","CAMK2N1","SHMT2","USP16","SLA-DQB1","HLA-DRA","NFE2L2","ATP1B1","FNBP4","DDIT4L","FUT2","CCN1","GADD45A","GADD45B","ACTN1","ADM","TOR1AIP2","BBS9","DNM3","CPEB3","GPD2"] 
+PASS: source RDS and all volcano CSV MD5 hashes unchanged.
+                                           data/job-44542861/subsets/Epithelial/job-44831032/subclustered.rds 
+                                                                           "e5a7847fceea605193cc228d31042522" 
+results/job-44542861/clusters_plots/subset/Epithelial/job-44831032/DEG_T10H/cluster_01/plots/volcano_data.csv 
+                                                                           "2556b9e1da86e1a4265172c45696eb2a" 
+results/job-44542861/clusters_plots/subset/Epithelial/job-44831032/DEG_T10H/cluster_02/plots/volcano_data.csv 
+                                                                           "4f9933ee671295673b3840f8c8de6ba0" 
+results/job-44542861/clusters_plots/subset/Epithelial/job-44831032/DEG_T10H/cluster_03/plots/volcano_data.csv 
+                                                                           "1e8c3b5e109b782fd875b0f292134440" 
+results/job-44542861/clusters_plots/subset/Epithelial/job-44831032/DEG_T10H/cluster_04/plots/volcano_data.csv 
+                                                                           "136796d99c8a369c08ef4474884ab112" 
+results/job-44542861/clusters_plots/subset/Epithelial/job-44831032/DEG_T10H/cluster_05/plots/volcano_data.csv 
+                                                                           "ac28b41d50b1d2d56ca6a70b7e7ca2e1" 
+R VALIDATION COMPLETE: 2026-11-04 19:52:37 
+UMAP pages=1; dimensions pt= 799.0 461.0 ; mm= 281.8694444444444 162.63055555555556
+EXTRACTED TEXT: 'Cluster 1\nCluster 2\nCluster 3\nCluster 4\nCluster 5\nCluster 6\nCluster 7\nn\xa0= 9,426 cells\nCluster 1\nCluster 2\nCluster 3\nCluster 4\nCluster 5\nCluster 6\nCluster 7\nSCGB1A1\n CAPS\n SFTPC\nPOU2F3\n AGER\n FOXI1\nCOL17A1\n0\n2\n4\n6\n8\nscRNA−seq − Epithelial cells'
+IMAGE DRAWS (name,width_px,height_px,width_pt,height_pt,effective_dpi): [('/Im0', 3000, 3000, 360.0, 360.0, (600.0, 600.0)), ('/Im1', 1000, 1000, 120.0, 120.0, (600.0, 600.0)), ('/Im2', 1000, 1000, 120.0, 120.0, (600.0, 600.0)), ('/Im3', 1000, 1000, 120.0, 120.0, (600.0, 600.0)), ('/Im4', 1000, 1000, 120.0, 120.0, (600.0, 600.0)), ('/Im5', 1000, 1000, 120.0, 120.0, (600.0, 600.0)), ('/Im6', 1000, 1000, 120.0, 120.0, (600.0, 600.0)), ('/Im7', 1000, 1000, 120.0, 120.0, (600.0, 600.0)), ('/Im8', 1, 256, 12.24, 360.0, (5.88235294117647, 51.2))]
+Traceback (most recent call last):
+  File "/tmp/epithelial-pub.0uY31D/check_pdf.py", line 36, in <module>
+    assert len(draws)==8
+           ^^^^^^^^^^^^^
+AssertionError
+Testing Quick Look thumbnails with files:
+	/Users/fbraza/Documents/PROJECTS/REVOLUTION/RESULTS/SINGLE_CELLS/analysis/results/job-44542861/clusters_plots/subset/Epithelial/job-44831032/for_pub/clusters_and_markers.pdf
+	/Users/fbraza/Documents/PROJECTS/REVOLUTION/RESULTS/SINGLE_CELLS/analysis/results/job-44542861/clusters_plots/subset/Epithelial/job-44831032/DEG_T10H/for_pub/DEG_all_clusters_P4_vs_N4.pdf
+* /Users/fbraza/Documents/PROJECTS/REVOLUTION/RESULTS/SINGLE_CELLS/analysis/results/job-44542861/clusters_plots/subset/Epithelial/job-44831032/for_pub/clusters_and_markers.pdf produced one thumbnail
+* /Users/fbraza/Documents/PROJECTS/REVOLUTION/RESULTS/SINGLE_CELLS/analysis/results/job-44542861/clusters_plots/subset/Epithelial/job-44831032/DEG_T10H/for_pub/DEG_all_clusters_P4_vs_N4.pdf produced one thumbnail
+Done producing thumbnails
+
+PDF validator correction: shared colour bar is an additional 1x256 gradient, not a ninth UMAP; validate eight UMAP rasters independently.
+UMAP pages=1; dimensions pt= 799.0 461.0 ; mm= 281.8694444444444 162.63055555555556
+EXTRACTED TEXT: 'Cluster 1\nCluster 2\nCluster 3\nCluster 4\nCluster 5\nCluster 6\nCluster 7\nn\xa0= 9,426 cells\nCluster 1\nCluster 2\nCluster 3\nCluster 4\nCluster 5\nCluster 6\nCluster 7\nSCGB1A1\n CAPS\n SFTPC\nPOU2F3\n AGER\n FOXI1\nCOL17A1\n0\n2\n4\n6\n8\nscRNA−seq − Epithelial cells'
+IMAGE DRAWS (name,width_px,height_px,width_pt,height_pt,effective_dpi): [('/Im0', 3000, 3000, 360.0, 360.0, (600.0, 600.0)), ('/Im1', 1000, 1000, 120.0, 120.0, (600.0, 600.0)), ('/Im2', 1000, 1000, 120.0, 120.0, (600.0, 600.0)), ('/Im3', 1000, 1000, 120.0, 120.0, (600.0, 600.0)), ('/Im4', 1000, 1000, 120.0, 120.0, (600.0, 600.0)), ('/Im5', 1000, 1000, 120.0, 120.0, (600.0, 600.0)), ('/Im6', 1000, 1000, 120.0, 120.0, (600.0, 600.0)), ('/Im7', 1000, 1000, 120.0, 120.0, (600.0, 600.0)), ('/Im8', 1, 256, 12.24, 360.0, (5.88235294117647, 51.2))]
+Colour bar is a separate 1x256 raster gradient, not a UMAP image.
+PASS: UMAP reopened; editable text; expected labels, coverage, image counts and ~600 dpi.
+DEG pages=1; dimensions pt= 481.0 481.0 ; mm= 169.6861111111111 169.6861111111111
+EXTRACTED TEXT: 'Cluster 1 Cluster 2 Cluster 3 Cluster 4 Cluster 5\nHK2\nNAB2\nCIRBP\nCEP128\nMETRNL\nIRF2\nPTTG1\nPLA2G4A\nLACTB2\nTASOR\nEPHA2\nF3\nTNFRSF12A\nSERPINE1\nKCNRG\nPDK4\nIRF2\nYPEL2\nJHY\nSETD7\nDUSP5\nFAM110C\nF3\nCPM\nSGMS2\nCDKN1B\nWBP1L\nFNBP4\nCAMK2N1\nSHMT2\nUSP16\nSLA-DQB1\nHLA-DRA\nNFE2L2\nATP1B1\nFNBP4\nDDIT4L\nFUT2\nCCN1\nGADD45A\nGADD45B\nACTN1\nADM\nTOR1AIP2\nBBS9\nDNM3\nCPEB3\nGPD2\n-4\n-2\n0\n2\n4\nLog2 fold change (P4 / N4)\nBelow threshold Down Up\nSaved DEG: resolution 0.3; clusters 1, 2, 3, 4, 5\nEpithelial: P4 vs N4\nDashed guides: log2FC +/-0.5. FDR <= 0.05 within each cluster; no global FDR\nadjustment.'
+Traceback (most recent call last):
+  File "/tmp/epithelial-pub.0uY31D/check_pdf.py", line 18, in <module>
+    assert abs(w*25.4/72-170)<0.1 and abs(h*25.4/72-170)<0.1
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+
+PDF dimension check refined to nominal 170 mm: Cairo MediaBox is integer-point rounded (481 pt = 169.686 mm, <1 pt deviation).
+UMAP pages=1; dimensions pt= 799.0 461.0 ; mm= 281.8694444444444 162.63055555555556
+EXTRACTED TEXT: 'Cluster 1\nCluster 2\nCluster 3\nCluster 4\nCluster 5\nCluster 6\nCluster 7\nn\xa0= 9,426 cells\nCluster 1\nCluster 2\nCluster 3\nCluster 4\nCluster 5\nCluster 6\nCluster 7\nSCGB1A1\n CAPS\n SFTPC\nPOU2F3\n AGER\n FOXI1\nCOL17A1\n0\n2\n4\n6\n8\nscRNA−seq − Epithelial cells'
+IMAGE DRAWS (name,width_px,height_px,width_pt,height_pt,effective_dpi): [('/Im0', 3000, 3000, 360.0, 360.0, (600.0, 600.0)), ('/Im1', 1000, 1000, 120.0, 120.0, (600.0, 600.0)), ('/Im2', 1000, 1000, 120.0, 120.0, (600.0, 600.0)), ('/Im3', 1000, 1000, 120.0, 120.0, (600.0, 600.0)), ('/Im4', 1000, 1000, 120.0, 120.0, (600.0, 600.0)), ('/Im5', 1000, 1000, 120.0, 120.0, (600.0, 600.0)), ('/Im6', 1000, 1000, 120.0, 120.0, (600.0, 600.0)), ('/Im7', 1000, 1000, 120.0, 120.0, (600.0, 600.0)), ('/Im8', 1, 256, 12.24, 360.0, (5.88235294117647, 51.2))]
+Colour bar is a separate 1x256 raster gradient, not a UMAP image.
+PASS: UMAP reopened; editable text; expected labels, coverage, image counts and ~600 dpi.
+DEG pages=1; dimensions pt= 481.0 481.0 ; mm= 169.6861111111111 169.6861111111111
+EXTRACTED TEXT: 'Cluster 1 Cluster 2 Cluster 3 Cluster 4 Cluster 5\nHK2\nNAB2\nCIRBP\nCEP128\nMETRNL\nIRF2\nPTTG1\nPLA2G4A\nLACTB2\nTASOR\nEPHA2\nF3\nTNFRSF12A\nSERPINE1\nKCNRG\nPDK4\nIRF2\nYPEL2\nJHY\nSETD7\nDUSP5\nFAM110C\nF3\nCPM\nSGMS2\nCDKN1B\nWBP1L\nFNBP4\nCAMK2N1\nSHMT2\nUSP16\nSLA-DQB1\nHLA-DRA\nNFE2L2\nATP1B1\nFNBP4\nDDIT4L\nFUT2\nCCN1\nGADD45A\nGADD45B\nACTN1\nADM\nTOR1AIP2\nBBS9\nDNM3\nCPEB3\nGPD2\n-4\n-2\n0\n2\n4\nLog2 fold change (P4 / N4)\nBelow threshold Down Up\nSaved DEG: resolution 0.3; clusters 1, 2, 3, 4, 5\nEpithelial: P4 vs N4\nDashed guides: log2FC +/-0.5. FDR <= 0.05 within each cluster; no global FDR\nadjustment.'
+PASS: all 48 expected named-label instances occur exactly once per annotation; no duplicated halo text.
+IMAGE DRAWS (name,width_px,height_px,width_pt,height_pt,effective_dpi): [('/x6', 3634, 3159, 436.097002, 379.122967, (599.9766079565941, 599.9320004266584))]
+PASS: DEG reopened; editable text; expected labels, coverage, image counts and ~600 dpi.
+PYTHON PDF VALIDATION COMPLETE
+/private/tmp/epithelial-pub.0uY31D/renders/DEG_all_clusters_P4_vs_N4.pdf.png
+  /private/tmp/epithelial-pub.0uY31D/deg-label-detail.png
+
+Initial visual validation BLOCKED: TNFRSF12A/KCNRG overlap in cluster 2. Supervisor-approved shared-script spacing correction; rerun DEG only.
+The following package(s) were loaded before renv activated this project:
+- BiocManager [~/Library/Caches/org.R-project.R/R/renv/cache/v5/macos/R-4.6/aarch64-apple-darwin23/BiocManager/1.30.27/594af2c6021b55271b6759d004a25ca2/BiocManager]
+These packages are not managed by renv and may cause `renv::status()`
+and `renv::snapshot()` to report inconsistencies. Restart R in a clean
+session to recover. The paths above may help identify where each
+package was loaded from.
+Set `RENV_CONFIG_NAMESPACES_CHECK=FALSE` to silence this check.
+
+- One or more packages recorded in the lockfile are not installed.
+- Use `renv::status()` for more details.
+APPROVED DEG LABEL-SPACING RERUN: 2026-11-04 19:54:35 
+                                           data/job-44542861/subsets/Epithelial/job-44831032/subclustered.rds 
+                                                                           "e5a7847fceea605193cc228d31042522" 
+results/job-44542861/clusters_plots/subset/Epithelial/job-44831032/DEG_T10H/cluster_01/plots/volcano_data.csv 
+                                                                           "2556b9e1da86e1a4265172c45696eb2a" 
+results/job-44542861/clusters_plots/subset/Epithelial/job-44831032/DEG_T10H/cluster_02/plots/volcano_data.csv 
+                                                                           "4f9933ee671295673b3840f8c8de6ba0" 
+results/job-44542861/clusters_plots/subset/Epithelial/job-44831032/DEG_T10H/cluster_03/plots/volcano_data.csv 
+                                                                           "1e8c3b5e109b782fd875b0f292134440" 
+results/job-44542861/clusters_plots/subset/Epithelial/job-44831032/DEG_T10H/cluster_04/plots/volcano_data.csv 
+                                                                           "136796d99c8a369c08ef4474884ab112" 
+results/job-44542861/clusters_plots/subset/Epithelial/job-44831032/DEG_T10H/cluster_05/plots/volcano_data.csv 
+                                                                           "ac28b41d50b1d2d56ca6a70b7e7ca2e1" 
+Scale for x is already present.
+Adding another scale for x, which will replace the existing scale.
+Saved: results/job-44542861/clusters_plots/subset/Epithelial/job-44831032/DEG_T10H/for_pub/DEG_all_clusters_P4_vs_N4.pdf
+PASS: all original columns by gene/cluster identical: 1 9890 rows
+PASS: all original columns by gene/cluster identical: 2 10073 rows
+PASS: all original columns by gene/cluster identical: 3 6313 rows
+PASS: all original columns by gene/cluster identical: 4 4892 rows
+PASS: all original columns by gene/cluster identical: 5 3498 rows
+PASS: ggplot_build exact rendered point x/logFC coordinates; approved threshold grey colours for 32706 rows; named-only labels, 9.5 pt, plain text layers.
+DEG rows: 34666 ; labels: 48 
+   
+    Down Not significant Significant, small effect   Up
+  1  231            9325                        20  314
+  2  455            9270                        47  301
+  3  243            5842                         3  225
+  4    3            4881                         0    8
+  5  101            3318                         0   79
+       cluster               gene display_gene      logFC          FDR
+19781        1                HK2          HK2 -1.5169276 7.339231e-05
+19783        1               NAB2         NAB2 -2.9422379 7.738263e-05
+19786        1              CIRBP        CIRBP -1.2030637 5.842969e-04
+19789        1             CEP128       CEP128 -1.4138953 1.072284e-03
+19790        1             METRNL       METRNL -1.3352297 1.132019e-03
+201471       2              EPHA2        EPHA2 -2.4283631 2.344699e-07
+201481       2                 F3           F3 -2.3770531 2.344699e-07
+201491       2          TNFRSF12A    TNFRSF12A -2.1109495 2.344699e-07
+201511       2           SERPINE1     SERPINE1 -3.0888755 7.984093e-07
+201521       2              KCNRG        KCNRG -1.9732848 9.479302e-07
+12627        3              DUSP5        DUSP5 -2.4933209 1.106901e-04
+12628        3            FAM110C      FAM110C -2.2267373 1.106901e-04
+12629        3                 F3           F3 -3.1820013 1.106901e-04
+12631        3                CPM          CPM -1.1752472 1.164909e-04
+12632        3              SGMS2        SGMS2 -2.3092848 1.456942e-04
+9788         4              USP16        USP16 -1.4306757 6.026992e-03
+9790         4           SLA-DQB1     SLA-DQB1 -2.2514436 1.983230e-02
+9793         4            HLA-DRA      HLA-DRA -3.6374889 4.656662e-02
+6997         5               CCN1         CCN1 -2.1673834 1.718194e-04
+6998         5            GADD45A      GADD45A -2.8968191 1.718194e-04
+6999         5            GADD45B      GADD45B -1.8482328 1.718194e-04
+7001         5              ACTN1        ACTN1 -1.6503703 2.325684e-04
+7003         5                ADM          ADM -2.6050295 9.412515e-04
+19782        1               IRF2         IRF2  1.4653239 7.339231e-05
+19784        1 ENSSSCG00000017032        PTTG1  3.5817745 2.663006e-04
+19787        1            PLA2G4A      PLA2G4A  1.2620915 1.059936e-03
+19788        1             LACTB2       LACTB2  1.2870472 1.059936e-03
+19792        1              TASOR        TASOR  0.8998998 1.316852e-03
+201501       2               PDK4         PDK4  3.3082882 3.304127e-07
+201631       2               IRF2         IRF2  1.3388323 4.532555e-06
+201671       2              YPEL2        YPEL2  1.4977810 6.673906e-06
+201761       2                JHY          JHY  1.0657658 1.935840e-05
+201811       2              SETD7        SETD7  1.3559553 3.490170e-05
+12637        3             CDKN1B       CDKN1B  1.4972347 1.149096e-03
+12638        3              WBP1L        WBP1L  1.7226897 1.376738e-03
+12639        3              FNBP4        FNBP4  1.4290941 1.551752e-03
+12641        3            CAMK2N1      CAMK2N1  2.8430247 1.577127e-03
+12646        3              SHMT2        SHMT2  1.9876643 1.750428e-03
+9785         4             NFE2L2       NFE2L2  1.2007551 6.026992e-03
+9787         4             ATP1B1       ATP1B1  1.0040020 6.026992e-03
+9789         4              FNBP4        FNBP4  0.9068345 6.026992e-03
+9791         4             DDIT4L       DDIT4L  1.2333518 4.341365e-02
+9792         4               FUT2         FUT2  1.7215860 4.656662e-02
+7002         5           TOR1AIP2     TOR1AIP2  1.8376385 9.412515e-04
+7010         5               BBS9         BBS9  1.6305490 1.824910e-03
+7012         5               DNM3         DNM3  1.3567336 2.019050e-03
+7013         5              CPEB3        CPEB3  2.0156376 2.079925e-03
+7014         5               GPD2         GPD2  1.0953897 2.079925e-03
+EXPECTED_PDF_LABELS_JSON: ["HK2","NAB2","CIRBP","CEP128","METRNL","IRF2","PTTG1","PLA2G4A","LACTB2","TASOR","EPHA2","F3","TNFRSF12A","SERPINE1","KCNRG","PDK4","IRF2","YPEL2","JHY","SETD7","DUSP5","FAM110C","F3","CPM","SGMS2","CDKN1B","WBP1L","FNBP4","CAMK2N1","SHMT2","USP16","SLA-DQB1","HLA-DRA","NFE2L2","ATP1B1","FNBP4","DDIT4L","FUT2","CCN1","GADD45A","GADD45B","ACTN1","ADM","TOR1AIP2","BBS9","DNM3","CPEB3","GPD2"] 
+PASS: source RDS and all volcano CSV MD5 hashes unchanged.
+                                           data/job-44542861/subsets/Epithelial/job-44831032/subclustered.rds 
+                                                                           "e5a7847fceea605193cc228d31042522" 
+results/job-44542861/clusters_plots/subset/Epithelial/job-44831032/DEG_T10H/cluster_01/plots/volcano_data.csv 
+                                                                           "2556b9e1da86e1a4265172c45696eb2a" 
+results/job-44542861/clusters_plots/subset/Epithelial/job-44831032/DEG_T10H/cluster_02/plots/volcano_data.csv 
+                                                                           "4f9933ee671295673b3840f8c8de6ba0" 
+results/job-44542861/clusters_plots/subset/Epithelial/job-44831032/DEG_T10H/cluster_03/plots/volcano_data.csv 
+                                                                           "1e8c3b5e109b782fd875b0f292134440" 
+results/job-44542861/clusters_plots/subset/Epithelial/job-44831032/DEG_T10H/cluster_04/plots/volcano_data.csv 
+                                                                           "136796d99c8a369c08ef4474884ab112" 
+results/job-44542861/clusters_plots/subset/Epithelial/job-44831032/DEG_T10H/cluster_05/plots/volcano_data.csv 
+                                                                           "ac28b41d50b1d2d56ca6a70b7e7ca2e1" 
+R VALIDATION COMPLETE: 2026-11-04 19:54:41 
+UMAP pages=1; dimensions pt= 799.0 461.0 ; mm= 281.8694444444444 162.63055555555556
+EXTRACTED TEXT: 'Cluster 1\nCluster 2\nCluster 3\nCluster 4\nCluster 5\nCluster 6\nCluster 7\nn\xa0= 9,426 cells\nCluster 1\nCluster 2\nCluster 3\nCluster 4\nCluster 5\nCluster 6\nCluster 7\nSCGB1A1\n CAPS\n SFTPC\nPOU2F3\n AGER\n FOXI1\nCOL17A1\n0\n2\n4\n6\n8\nscRNA−seq − Epithelial cells'
+IMAGE DRAWS (name,width_px,height_px,width_pt,height_pt,effective_dpi): [('/Im0', 3000, 3000, 360.0, 360.0, (600.0, 600.0)), ('/Im1', 1000, 1000, 120.0, 120.0, (600.0, 600.0)), ('/Im2', 1000, 1000, 120.0, 120.0, (600.0, 600.0)), ('/Im3', 1000, 1000, 120.0, 120.0, (600.0, 600.0)), ('/Im4', 1000, 1000, 120.0, 120.0, (600.0, 600.0)), ('/Im5', 1000, 1000, 120.0, 120.0, (600.0, 600.0)), ('/Im6', 1000, 1000, 120.0, 120.0, (600.0, 600.0)), ('/Im7', 1000, 1000, 120.0, 120.0, (600.0, 600.0)), ('/Im8', 1, 256, 12.24, 360.0, (5.88235294117647, 51.2))]
+Colour bar is a separate 1x256 raster gradient, not a UMAP image.
+PASS: UMAP reopened; editable text; expected labels, coverage, image counts and ~600 dpi.
+DEG pages=1; dimensions pt= 481.0 481.0 ; mm= 169.6861111111111 169.6861111111111
+EXTRACTED TEXT: 'Cluster 1 Cluster 2 Cluster 3 Cluster 4 Cluster 5\nHK2\nNAB2\nCIRBP\nCEP128\nMETRNL\nIRF2\nPTTG1\nPLA2G4A\nLACTB2\nTASOR\nEPHA2\nF3\nTNFRSF12A\nSERPINE1\nKCNRG\nPDK4\nIRF2\nYPEL2\nJHY\nSETD7\nDUSP5\nFAM110C\nF3\nCPM\nSGMS2\nCDKN1B\nWBP1L\nFNBP4\nCAMK2N1\nSHMT2\nUSP16\nSLA-DQB1\nHLA-DRA\nNFE2L2\nATP1B1\nFNBP4\nDDIT4L\nFUT2\nCCN1\nGADD45A\nGADD45B\nACTN1\nADM\nTOR1AIP2\nBBS9\nDNM3\nCPEB3\nGPD2\n-4\n-2\n0\n2\n4\nLog2 fold change (P4 / N4)\nBelow threshold Down Up\nSaved DEG: resolution 0.3; clusters 1, 2, 3, 4, 5\nEpithelial: P4 vs N4\nDashed guides: log2FC +/-0.5. FDR <= 0.05 within each cluster; no global FDR\nadjustment.'
+PASS: all 48 expected named-label instances occur exactly once per annotation; no duplicated halo text.
+IMAGE DRAWS (name,width_px,height_px,width_pt,height_pt,effective_dpi): [('/x6', 3634, 3159, 436.097002, 379.122967, (599.9766079565941, 599.9320004266584))]
+PASS: DEG reopened; editable text; expected labels, coverage, image counts and ~600 dpi.
+PYTHON PDF VALIDATION COMPLETE
+Testing Quick Look thumbnails with files:
+	/Users/fbraza/Documents/PROJECTS/REVOLUTION/RESULTS/SINGLE_CELLS/analysis/results/job-44542861/clusters_plots/subset/Epithelial/job-44831032/DEG_T10H/for_pub/DEG_all_clusters_P4_vs_N4.pdf
+* /Users/fbraza/Documents/PROJECTS/REVOLUTION/RESULTS/SINGLE_CELLS/analysis/results/job-44542861/clusters_plots/subset/Epithelial/job-44831032/DEG_T10H/for_pub/DEG_all_clusters_P4_vs_N4.pdf produced one thumbnail
+Done producing thumbnails
+FINAL VISUAL VALIDATION: PASS for both PDFs. Supervisor-approved DEG spacing correction resolved cluster2 label overlap; all48labels retained. No clipping or text-text overlap observed. Labels overlay point clouds by approved style.
+
+FINAL OUTPUT INVENTORY
+for_pub/plot-publication.log
+for_pub/clusters_and_markers.pdf
+for_pub/.INFO
+DEG_T10H/for_pub/DEG_all_clusters_P4_vs_N4.pdf
+DEG_T10H/for_pub/.INFO
+
+STAGED FILE CHECK
+PASS: no staged files
+
+--- Parent final harmonization: plain labels without leaders; fixed spacing, data unchanged ---
+The following package(s) were loaded before renv activated this project:
+- BiocManager [~/Library/Caches/org.R-project.R/R/renv/cache/v5/macos/R-4.6/aarch64-apple-darwin23/BiocManager/1.30.27/594af2c6021b55271b6759d004a25ca2/BiocManager]
+These packages are not managed by renv and may cause `renv::status()`
+and `renv::snapshot()` to report inconsistencies. Restart R in a clean
+session to recover. The paths above may help identify where each
+package was loaded from.
+Set `RENV_CONFIG_NAMESPACES_CHECK=FALSE` to silence this check.
+
+- One or more packages recorded in the lockfile are not installed.
+- Use `renv::status()` for more details.
+Scale for x is already present.
+Adding another scale for x, which will replace the existing scale.
+Saved: results/job-44542861/clusters_plots/subset/Epithelial/job-44831032/DEG_T10H/for_pub/DEG_all_clusters_P4_vs_N4.pdf
+
+PARENT FINAL ACCEPTANCE: final plain no-leader label layout rendered and inspected; six-PDF cross-check passed. Epithelial retains34666 rows/48 exact named-label occurrences, saved res0.3 C1-5, nominal170mm; same source DEG, no refit.
+
+--- Final straight connectors with reserved label column ---
+The following package(s) were loaded before renv activated this project:
+- BiocManager [~/Library/Caches/org.R-project.R/R/renv/cache/v5/macos/R-4.6/aarch64-apple-darwin23/BiocManager/1.30.27/594af2c6021b55271b6759d004a25ca2/BiocManager]
+These packages are not managed by renv and may cause `renv::status()`
+and `renv::snapshot()` to report inconsistencies. Restart R in a clean
+session to recover. The paths above may help identify where each
+package was loaded from.
+Set `RENV_CONFIG_NAMESPACES_CHECK=FALSE` to silence this check.
+
+- One or more packages recorded in the lockfile are not installed.
+- Use `renv::status()` for more details.
+Scale for x is already present.
+Adding another scale for x, which will replace the existing scale.
+Saved: results/job-44542861/clusters_plots/subset/Epithelial/job-44831032/DEG_T10H/for_pub/DEG_all_clusters_P4_vs_N4.pdf
+CONNECTOR VALIDATION PASS: 34666 unchanged gene-cluster rows; 48 unchanged named labels; grey threshold colours correct; source CSV hashes unchanged. Only horizontal jitter/layout changed.
+
+--- Final margin/label-column clearance; no data changes ---
+The following package(s) were loaded before renv activated this project:
+- BiocManager [~/Library/Caches/org.R-project.R/R/renv/cache/v5/macos/R-4.6/aarch64-apple-darwin23/BiocManager/1.30.27/594af2c6021b55271b6759d004a25ca2/BiocManager]
+These packages are not managed by renv and may cause `renv::status()`
+and `renv::snapshot()` to report inconsistencies. Restart R in a clean
+session to recover. The paths above may help identify where each
+package was loaded from.
+Set `RENV_CONFIG_NAMESPACES_CHECK=FALSE` to silence this check.
+
+- One or more packages recorded in the lockfile are not installed.
+- Use `renv::status()` for more details.
+Scale for x is already present.
+Adding another scale for x, which will replace the existing scale.
+Scale for y is already present.
+Adding another scale for y, which will replace the existing scale.
+Saved: results/job-44542861/clusters_plots/subset/Epithelial/job-44831032/DEG_T10H/for_pub/DEG_all_clusters_P4_vs_N4.pdf
+CONNECTOR VALIDATION PASS: 34666 unchanged gene-cluster rows; 48 unchanged named labels; grey threshold colours correct; source CSV hashes unchanged. Only horizontal jitter/layout changed.
+
+--- Final connector PDF: do not clip label glyphs at panel edge ---
+The following package(s) were loaded before renv activated this project:
+- BiocManager [~/Library/Caches/org.R-project.R/R/renv/cache/v5/macos/R-4.6/aarch64-apple-darwin23/BiocManager/1.30.27/594af2c6021b55271b6759d004a25ca2/BiocManager]
+These packages are not managed by renv and may cause `renv::status()`
+and `renv::snapshot()` to report inconsistencies. Restart R in a clean
+session to recover. The paths above may help identify where each
+package was loaded from.
+Set `RENV_CONFIG_NAMESPACES_CHECK=FALSE` to silence this check.
+
+- One or more packages recorded in the lockfile are not installed.
+- Use `renv::status()` for more details.
+Scale for x is already present.
+Adding another scale for x, which will replace the existing scale.
+Scale for y is already present.
+Adding another scale for y, which will replace the existing scale.
+Saved: results/job-44542861/clusters_plots/subset/Epithelial/job-44831032/DEG_T10H/for_pub/DEG_all_clusters_P4_vs_N4.pdf
+CONNECTOR VALIDATION PASS: 34666 unchanged gene-cluster rows; 48 unchanged named labels; grey threshold colours correct; source CSV hashes unchanged. Only horizontal jitter/layout changed.
+
+--- Final connector label-column allowance for long symbols ---
+The following package(s) were loaded before renv activated this project:
+- BiocManager [~/Library/Caches/org.R-project.R/R/renv/cache/v5/macos/R-4.6/aarch64-apple-darwin23/BiocManager/1.30.27/594af2c6021b55271b6759d004a25ca2/BiocManager]
+These packages are not managed by renv and may cause `renv::status()`
+and `renv::snapshot()` to report inconsistencies. Restart R in a clean
+session to recover. The paths above may help identify where each
+package was loaded from.
+Set `RENV_CONFIG_NAMESPACES_CHECK=FALSE` to silence this check.
+
+- One or more packages recorded in the lockfile are not installed.
+- Use `renv::status()` for more details.
+Scale for x is already present.
+Adding another scale for x, which will replace the existing scale.
+Scale for y is already present.
+Adding another scale for y, which will replace the existing scale.
+Saved: results/job-44542861/clusters_plots/subset/Epithelial/job-44831032/DEG_T10H/for_pub/DEG_all_clusters_P4_vs_N4.pdf
+CONNECTOR VALIDATION PASS: 34666 unchanged gene-cluster rows; 48 unchanged named labels; grey threshold colours correct; source CSV hashes unchanged. Only horizontal jitter/layout changed.
+FINAL CONNECTOR PDF PASS: 48 thin grey editable vector connector strokes for 48 unchanged plain gene labels; PDF reopened; 170mm layout and all gene names checked; final render inspected.

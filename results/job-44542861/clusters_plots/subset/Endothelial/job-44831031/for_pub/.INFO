@@ -1,0 +1,13 @@
+# Publication cluster/marker UMAP
+Status: completed (PDF written)
+Date: 2026-11-04 16:05:47.260146
+Script: R/clusters/plot_for_pub.R; input (read-only): data/job-44542861/subsets/Endothelial/job-44831031/subclustered.rds
+Clusters: harmony_snn_res.0.3 ; reduction: umap_harmony ; cells: 13836
+Markers: 1=PDPN, 2=ACKR1, 3=GPIHBP1, 4=EDNRB, 5=GJA5
+Expression: stored RNA log-normalized data; one viridis scale over all markers; no clipping.
+Colours: viz_palette; cells rasterized at 600 dpi (one image per UMAP); seed 1234.
+Output: results/job-44542861/clusters_plots/subset/Endothelial/job-44831031/for_pub/clusters_and_markers.pdf
+Validation: PDF reopened (pypdf): all 5 gene and cluster labels, title and n=13,836 present; exactly one image per UMAP (main 3000 px, 5 tiles 1000 px = 600 dpi), colour-bar image, no mask objects; Quick Look render inspected.
+Checks: embedding rows and joined data columns identical to colnames(object); real-cell two-cluster run (IDs 5/2, 4017 cells) PASS; missing gene stops. Source RDS not written.
+Review: reviewer subagent OK with notes; both notes applied (palette-size check; .INFO written before rendering).
+Evidence: logs/plot-for-pub-endothelial-20261104.log

@@ -1,0 +1,25 @@
+# Publication cluster/marker UMAP
+Parent acceptance: saved PDF reopened and independently visually inspected; 9426 cells, 7 requested marker titles, plain cluster text; exactly one 600-dpi image per UMAP; source integrity checks PASS. Evidence: for_pub/plot-publication.log.
+Status: completed and validated
+Date: 2026-11-04 19:52:28.769914
+Script: R/clusters/plot_for_pub.R; input (read-only): data/job-44542861/subsets/Epithelial/job-44831032/subclustered.rds
+Cluster column: harmony_snn_res.0.3
+Markers: 1=SCGB1A1, 2=CAPS, 3=SFTPC, 4=POU2F3, 5=AGER, 6=FOXI1, 7=COL17A1
+Display aliases: 
+Expression: stored RNA log-normalized data; one viridis scale over all markers; no clipping.
+Colours: viz_palette; cells rasterized at 600 dpi (one image per UMAP); seed 1234; plain text labels.
+Output: results/job-44542861/clusters_plots/subset/Epithelial/job-44831032/for_pub/clusters_and_markers.pdf
+Reduction: umap_harmony ; cells: 9426
+Clusters plotted: 1, 2, 3, 4, 5, 6, 7
+
+## Run validation
+Original console log: results/job-44542861/clusters_plots/subset/Epithelial/job-44831032/for_pub/plot-publication.log
+Producer: subset job-44831032; local publication rendering; seed 1234.
+Source RDS and all volcano CSV MD5 hashes unchanged (before/after in original log).
+Cell validation: 9426 cells; exact metadata/embedding/RNA-data ID alignment; markers all present; FOXI1 is the saved feature.
+Cluster counts: 1=3171, 2=2982, 3=1287, 4=776, 5=663, 6=292, 7=255.
+Shared normalized RNA expression range: 0 to 8.55985117537853; no normalization recomputed.
+
+Final PDF validation: pypdf reopened one page; seven marker names and all cluster labels present as editable text. Eight UMAP images: main3000x3000 px plus seven1000x1000 px, each exactly600dpi; separate1x256 shared colour-bar gradient.
+Visual validation: qlmanage -t -s 1800 render inspected; no clipping or label-label overlap observed; cluster text overlays corresponding cells by design.
+Final outcome: PASS; no DE recomputation, no dropped cells or gene-cluster pairs. Detailed checks and original invocation/retry history are in the single shared console log.
