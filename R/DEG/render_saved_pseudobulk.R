@@ -6,7 +6,8 @@ source("R/DEG/pseudobulk_hallmark.R")
 
 # Construct only production targets: previews are never discovered recursively.
 saved_pseudobulk_figure_paths <- function(directory, contrasts, hallmark_contrasts = character(),
-                                          diagnostics_only = FALSE, reactome_contrasts = character()) {
+                                          diagnostics_only = FALSE, reactome_contrasts = character(),
+                                          gobp_contrasts = character()) {
   stems <- file.path("diagnostics", c("sample_mds", "sample_qc"))
   if (!diagnostics_only) {
     stems <- c(stems, file.path("plots", c("heatmap_groups", paste0("volcano_", contrasts))))
@@ -20,20 +21,35 @@ saved_pseudobulk_figure_paths <- function(directory, contrasts, hallmark_contras
         file.path("gsea", "reactome", paste0(reactome_contrasts, "_gsea_dotplot")),
         file.path("gsea", "reactome", paste0(reactome_contrasts, "_running_scores")))
     }
+    if (length(gobp_contrasts)) {
+      stems <- c(stems,
+        file.path("gsea", "gobp", paste0(gobp_contrasts, "_gsea_dotplot")),
+        file.path("gsea", "gobp", paste0(gobp_contrasts, "_running_scores")))
+    }
   }
   file.path(directory, paste0(stems, ".pdf"))
 }
 
-# Historical roots contain Hallmark only; a present Reactome directory must be complete.
+# New runs record selection before execution; missing requested results must not disappear.
+# Legacy roots retain their historical Hallmark requirement and optional collection discovery.
 saved_pseudobulk_collections <- function(input_dir) {
-  c("hallmark", if (dir.exists(file.path(input_dir, "gsea", "reactome"))) "reactome")
+  manifest <- file.path(input_dir, "gsea", "selected_collections.rds")
+  if (file.exists(manifest)) {
+    selected <- readRDS(manifest)
+    stopifnot(length(selected) > 0L, !anyDuplicated(selected),
+      all(selected %in% pseudobulk_gsea_collections()$collection))
+    return(selected)
+  }
+  c("hallmark", c("reactome", "gobp")[vapply(c("reactome", "gobp"), function(collection)
+    dir.exists(file.path(input_dir, "gsea", collection)), logical(1))])
 }
 
 read_saved_pseudobulk_gsea <- function(input_dir, contrasts, collection = "hallmark") {
   directory <- file.path(input_dir, "gsea", collection)
   path <- file.path(directory, "gsea_results.rds")
-  if (file.exists(file.path(directory, "unresolved_collisions.csv")) || !file.exists(path)) {
-    status <- if (file.exists(file.path(directory, "unresolved_collisions.csv"))) "blocked by identifier collisions" else "missing saved results"
+  blocked <- any(file.exists(file.path(directory, c("unresolved_collisions.csv", "unresolved_mapping_conflicts.csv"))))
+  if (blocked || !file.exists(path)) {
+    status <- if (blocked) "blocked by identifier mapping" else "missing saved results"
     stop(collection, " GSEA ", status, " in ", input_dir,
       "; full regeneration unavailable. Use --diagnostics-only for an explicitly partial replacement.")
   }
@@ -148,7 +164,8 @@ render_saved_pseudobulk <- function(input_dir, output_dir, label, fdr_cutoff, lo
         gsea$ranks[[contrast]], gsea$pathways, gsea$database_version,
         pb$sample_info, contrast, file.path(output_dir, "gsea", collection),
         label, gsea$parameters$pathway_fdr, seed,
-        collection_label = if (collection == "hallmark") "Hallmark" else "Reactome")
+        collection_label = pseudobulk_gsea_collections()$label[match(collection, pseudobulk_gsea_collections()$collection)],
+        significant_only = isTRUE(gsea$parameters$significant_only))
     }
   }
   invisible(c(samples = nrow(sample_info), genes = nrow(pb$dge), heatmap_genes = nrow(z_scores)))

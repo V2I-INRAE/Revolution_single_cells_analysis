@@ -78,7 +78,9 @@ Endothelial, Epithelial, Granulocytes, Macrophage_Monocytes, NK_cells, Stromal a
 DC. It does not repeat QC, cell normalization, integration or clustering. The
 original full-source gene intersection, frozen references and final approved
 GSEA exclusions are retained. Counts, filtering, TMM normalization, edgeR tests,
-diagnostics, heatmaps, volcanoes and both GSEA collections are recalculated.
+diagnostics, heatmaps, volcanoes and selected GSEA collections are recalculated
+(Hallmark and Reactome by default; optional GO:BP has the additional mapping
+policy described below).
 The six first-minus-second contrasts remain P4/Control, N4/Control, P4/N4,
 P4/P10, N4/N10 and P10/N10. Original sample/time labels are audited; the existing
 REVO31-N8 display grouping applies only when that specimen is selected.
@@ -94,23 +96,56 @@ minimum by default).
 
 ## Pseudobulk pathway enrichment
 
-`R/DEG/run_pseudobulk.R` runs **Hallmark and Reactome GSEA** for each eligible
-cluster/contrast, writing separate `gsea/hallmark/` and `gsea/reactome/` outputs.
-Supply the existing frozen `hallmark_pig.rds` and `reactome_pig.rds` directory;
-no reference download or database update is performed. Both collections use
-the same pig aliases, approved collision exclusions and signed edgeR rankings.
-Reactome is MSigDB `C2:CP:REACTOME`; database version and reference hashes are
-saved with results. BH correction is separate **within each collection,
-cluster and contrast**, not pooled across collections. Reporting remains
-`padj < 0.01`; unstarred terms on plots may be nonsignificant.
+`R/DEG/run_pseudobulk.R` defaults to **Hallmark and Reactome GSEA** for each
+eligible cluster/contrast. **GO Biological Process (GO:BP)** is optional:
+append `--collections=hallmark,reactome,gobp` to the CLI, or
+`--collections=gobp` for GO only. The R interface accepts
+`collections = c("hallmark", "reactome", "gobp")`; omitted selection retains
+historical defaults. This driver runs a new DE analysis; adding enrichment to
+an existing fit instead uses the saved-fit helpers described below.
+
+Supply the existing frozen `hallmark_pig.rds` and `reactome_pig.rds` directory,
+plus `gobp_pig.rds` when GO is selected. H/Reactome references remain required
+for historical DE-display aliases even in GO-only runs. No runtime reference
+download/update occurs. References are MSigDB **2026.1.Hs human gene sets
+projected to pig**: H, `C2:CP:REACTOME`, and `C5:GO:BP` respectively. Database
+versions and reference hashes are saved with results.
+
+GSEA uses all tested source genes, not just significant DEGs, ranked by
+`sign(logFC) * sqrt(pmax(F, 0))`, after approved exclusions. Terms require
+**15–500 matched genes**; GO has no hierarchy-depth filter or redundancy
+reduction. BH correction is separate **within each collection, cluster and
+contrast**, not pooled across collections. Reporting remains `padj < 0.01`.
+Hallmark/Reactome retain the top-eight-per-direction display, including
+possibly nonsignificant unstarred terms. **GO figures show significant terms
+only**, with explicit no-significant-term figures when none pass; all tested
+terms remain in tables.
+
+Hallmark/Reactome mappings and exclusions are unchanged. GO has its own mapping
+and records raw-reference versus approved assignments under `gsea/gobp/`.
+The owner-approved GO-only workaround maps `ENSSSCG00000014800` to pig
+IL18BP/NCBI100525765, retaining RNF121 separately, and additionally excludes
+`ENSSSCG00000007481`, `ZFP64`, `ENSSSCG00000014098`, and
+`ENSSSCG00000051837`. Original BD identities/model-fragment handling remain
+unresolved; this is not a general gene-annotation correction. New canonical-ID
+conflicts/collisions block enrichment pending review. See
+[reference/mapping decisions and validated pilot](logs/gobp-support-pilot-20261104.INFO).
 
 Each collection exports full NES/FDR/leading-edge tables, pathway mapping
 coverage, ranked genes, dotplots/running-score plots and `gsea_results.rds`.
-Historical Hallmark-only analyses remain readable; saved-figure regeneration
-also includes Reactome when that collection's output directory exists.
+GO additionally exports GO accessions, MSigDB IDs, term descriptions, and
+mapping/exclusion decisions. Selected collections are recorded before execution
+in `gsea/selected_collections.rds`; a missing requested result blocks full
+saved-figure regeneration. Historical Hallmark-only and Hallmark+Reactome
+layouts remain readable, as do new GO-only layouts. Renderers read saved
+results and never rerun enrichment.
+
 Existing results are not backfilled automatically. For enrichment-only work,
-`prepare_pseudobulk_gsea(..., collection = "reactome")` and
-`run_pseudobulk_gsea()` accept the existing frozen references and saved
+`prepare_pseudobulk_gsea(..., collection = "reactome")` (or `"gobp"`) and
+`run_pseudobulk_gsea()` accept frozen references and a saved
 `pseudobulk_fit.rds`, respectively; use a new output directory and the original
-run's approved exclusions. Do not rerun differential expression just to add a
-collection.
+run's approved exclusions. Record selected collections before execution and
+validate source-level gene statistics/order, GO-specific exclusions/mapping,
+and saved outputs. Do not rerun differential expression just to add a
+collection. Only one GO pilot (two-pig Endothelial C1, P4_vs_N4) has been run;
+other clusters/cohorts require separate rollout approval.

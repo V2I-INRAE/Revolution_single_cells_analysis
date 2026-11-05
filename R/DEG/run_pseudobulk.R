@@ -3,7 +3,8 @@
 #   --output-name=DEG_T10H_TWO_SUCCESS_PIGS
 # Use --all instead of --pigs for all observed pigs; the default pair minimum is 3.
 # output_root must be a NEW directory, never an existing historical DEG directory.
-# Supply reference_dir pointing to the existing frozen Hallmark/Reactome inputs;
+# Optional --collections=hallmark,reactome,gobp adds GO:BP; defaults remain Hallmark/Reactome.
+# Supply reference_dir pointing to the existing frozen Hallmark/Reactome inputs (plus GO when selected);
 # the default references location is not populated or downloaded by this driver.
 # Example (choose an unused output path and supply the true frozen references):
 # run_pseudobulk(
@@ -27,7 +28,11 @@ source("R/DEG/pseudobulk_hallmark.R")
 run_pseudobulk <- function(input, subset_label, cluster_col, clusters, output_root,
     mapping_file = "results/misc/Ensembl_ID/gene-mapping/pig_to_human_orthologues_annotated.csv",
     reference_dir = file.path(output_root, "references"), gsea_exclusions = list(),
-    pigs = NULL, min_matched_pigs = 3L, log_path = NULL) {
+    pigs = NULL, min_matched_pigs = 3L, log_path = NULL,
+    collections = c("hallmark", "reactome")) {
+  specs <- pseudobulk_gsea_collections()
+  if (!length(collections) || anyNA(collections) || anyDuplicated(collections) ||
+      !all(collections %in% specs$collection)) stop("Select unique collections from hallmark, reactome, gobp.")
   if (length(min_matched_pigs) != 1L || !is.finite(min_matched_pigs) ||
       min_matched_pigs < 2L || min_matched_pigs %% 1 != 0) {
     stop("min_matched_pigs must be an integer >=2; single-pig inference is not supported.")
@@ -116,7 +121,8 @@ run_pseudobulk <- function(input, subset_label, cluster_col, clusters, output_ro
     tolower(basename(output_root)), "-", format(Sys.Date(), "%Y%m%d"), ".log")
   info <- c(paste("#", subset_label, "paired pseudobulk pipeline"), "Status: running",
     paste("Started:", Sys.time()), paste("Producer allocation:", Sys.getenv("SLURM_JOB_ID", unset = "local")),
-    "Script: R/DEG/run_pseudobulk.R; count/DE, diagnostics, DE plotting and Hallmark/Reactome GSEA modules.",
+    "Script: R/DEG/run_pseudobulk.R; count/DE, diagnostics, DE plotting and selected GSEA collections.",
+    paste("Selected GSEA collections:", paste(collections, collapse = ", ")),
     paste("Input (read-only):", input), paste("Source producer:", basename(dirname(input))),
     paste("Population:", subset_label, "; cluster column:", cluster_col, "; clusters:", paste(clusters, collapse = ", ")),
     "Groups (ordered): Control/T0H, P4/T4H positive, N4/T4H negative, P10/T10H positive, N10/T10H negative airway-pressure ventilation.",
@@ -142,16 +148,17 @@ run_pseudobulk <- function(input, subset_label, cluster_col, clusters, output_ro
     "Heatmap: TMM log2 CPM prior.count=2, row z-scores over all samples, Euclidean/complete row clustering, fixed Control/P4/N4/P10/N10 then pig order; RdBu blue-low/white-zero/red-high saturated at +/-2.5; pig effects retained.",
     "Volcano: exact logFC and -log10(BH FDR), four classes, +/-0.5 and FDR0.05 dashed guides; five labels per direction.",
     paste("Pig display-name mapping:", mapping_file, "; pig_safe_name only when pig_rename_status=rename. Original feature IDs retained; no human rename."),
-    paste("References:", reference_dir, "; frozen MSigDB Hallmark (H) and Reactome (C2:CP:REACTOME) pig projections, taxon9823. Versions and reference hashes are saved per collection."),
+    paste("References:", reference_dir, "; frozen MSigDB pig projections, taxon9823. H/Reactome remain the historical DE-display alias source; GO:BP (C5:GO:BP) uses its own mapping when selected. Versions and reference hashes saved per collection."),
     "GSEA exclusions: eight previously approved features B2M/ENSSSCG00000004687, LDHB/ENSSSCG00000000576, ARFIP2/TRIM3, GNA12/ENSSSCG00000032549; absent/filtered members need no exclusion.",
     paste("Additional approved GSEA exclusions by cluster:", paste(names(gsea_exclusions),
       vapply(gsea_exclusions, paste, character(1), collapse = ","), sep = "=", collapse = "; ")),
     "GSEA mapping: exact unambiguous pig symbol/Ensembl aliases, then existing safe pig name; NCBI canonical ID or Ensembl fallback; unmatched/ambiguous features remain SOURCE:<feature> nonhits. Additional tested-ID collisions block GSEA for that cluster pending owner decision.",
     "GSEA ranks: all tested features minus approved exclusions; sign(logFC)*sqrt(pmax(F,0)), decreasing with gene-ID tie-breaker. Numerical negative F values receive zero rank, matching edgeR P=1; original DE statistics unchanged. No gene FDR/fold-change filtering.",
     "GSEA: fgseaMultilevel(minSize=15,maxSize=500,gseaParam=1,scoreType=std,eps=0,nproc=1); seed1234 reset per contrast. BH separately per collection/cluster/contrast, not across collections/clusters/contrasts; pathway reporting FDR<0.01.",
-    "GSEA direction: positive NES favours first phenotype; negative favours second. Display up to eight terms/direction, including nonsignificant terms; stars mark FDR<0.01. Lowest-FDR running score in each direction.",
+    "GSEA direction: positive NES favours first phenotype; negative favours second. Hallmark/Reactome display up to eight terms/direction including nonsignificant terms, stars mark FDR<0.01. GO:BP dotplots/running scores show significant terms only; explicit no-significant-term output.",
+    if ("gobp" %in% collections) "GO-only approved workaround (Nov4): ENSSSCG00000014800->NCBI:100525765/IL18BP; RNF121 retained separately. Additionally exclude ENSSSCG00000007481,ZFP64,ENSSSCG00000014098,ENSSSCG00000051837; original BD provenance unresolved. GO ranks differ only by these four extra exclusions and canonical-ID annotation, not source statistics. No GO depth/redundancy filtering.",
     "Interpretation: pressure is confounded with left/right lung, and Control is azygo lung at T0H. Baseline contrasts also combine time/perfusion effects; no claim of isolated pressure effects or pathway activation.",
-    "Hallmark and Reactome use identical ranks/exclusions; separate gsea/hallmark and gsea/reactome outputs. No ORA/GO analysis in this run. Source RDS and input references are read-only.",
+    "Hallmark/Reactome retain identical historical ranks/exclusions; GO:BP has separately audited mapping and approved GO-only exclusions. Selected outputs under gsea/<collection>; no ORA. Source RDS/references read-only; no automatic reference download or historical backfill.",
     "Verification: one basic reopening of saved results and figure inspection after execution; no repeated audits or reruns.",
     paste("Evidence:", log_path),
     paste("R:", getRversion(), "; Seurat:", packageVersion("Seurat"), "; edgeR:", packageVersion("edgeR"),
@@ -161,11 +168,12 @@ run_pseudobulk <- function(input, subset_label, cluster_col, clusters, output_ro
   on.exit(if (!finished) writeLines(c(info, "Status: failed; see execution log."), info_path))
   write.csv(sample_panel, file.path(output_root, "sample_panel.csv"), row.names = FALSE)
   write.csv(cohort_audit, file.path(output_root, "cohort_audit.csv"), row.names = FALSE)
-  reference <- reactome_reference <- NULL
+  reference <- references <- NULL
   summaries <- eligibility <- list()
   for (cluster in as.character(clusters)) {
     directory <- file.path(output_root, sprintf("cluster_%02d", as.integer(cluster)))
-    dir.create(directory, recursive = TRUE, showWarnings = FALSE)
+    dir.create(file.path(directory, "gsea"), recursive = TRUE, showWarnings = FALSE)
+    saveRDS(collections, file.path(directory, "gsea", "selected_collections.rds"))
     label <- paste(subset_label, "cluster", cluster)
     cluster_info <- c(paste("#", label), "Status: running", paste("Started:", Sys.time()),
       paste("Run settings:", info_path), paste("Input:", input), paste("Cluster column:", cluster_col),
@@ -194,7 +202,9 @@ run_pseudobulk <- function(input, subset_label, cluster_col, clusters, output_ro
     if (pb$status != "eligible") {
       summaries[[cluster]] <- data.frame(s, pb$contrast_status, tested = NA_integer_,
         up = NA_integer_, down = NA_integer_, heatmap_genes = NA_integer_,
-        hallmark_status = paste("not run:", pb$status), reactome_status = paste("not run:", pb$status))
+        hallmark_status = if ("hallmark" %in% collections) paste("not run:", pb$status) else "not selected",
+        reactome_status = if ("reactome" %in% collections) paste("not run:", pb$status) else "not selected",
+        gobp_status = if ("gobp" %in% collections) paste("not run:", pb$status) else "not selected")
       write.csv(pb$contrast_status, file.path(directory, "DEG_summary.csv"), row.names = FALSE)
       cluster_info[cluster_info == "Status: running"] <- paste("Status:", pb$status, "; no fit, diagnostics, DE plots or GSEA.")
       writeLines(c(cluster_info, paste("Reason:", pb$reason), paste("Finished:", Sys.time()),
@@ -207,17 +217,20 @@ run_pseudobulk <- function(input, subset_label, cluster_col, clusters, output_ro
     }
     if (is.null(reference)) {
       reference <- prepare_hallmark(common_genes, mapping_file, reference_dir)
-      reactome_reference <- prepare_pseudobulk_gsea(common_genes, mapping_file, reference_dir, "reactome")
-      stopifnot(identical(reference$mapping, reactome_reference$mapping))
+      references <- setNames(lapply(collections, function(collection) {
+        if (collection == "hallmark") return(reference)
+        selected <- prepare_pseudobulk_gsea(common_genes, mapping_file, reference_dir, collection)
+        if (collection == "reactome") stopifnot(identical(reference$mapping, selected$mapping))
+        selected
+      }), collections)
       write.csv(reference$mapping, file.path(output_root, "candidate_gene_mapping.csv"), row.names = FALSE)
     }
     plot_pseudobulk_diagnostics(pb, file.path(directory, "diagnostics"), label)
     pb <- fit_pseudobulk(pb, directory)
     plots <- plot_pseudobulk_de(pb, file.path(directory, "plots"), label, reference$mapping)
-    gsea <- run_pseudobulk_hallmark(pb, reference, file.path(directory, "gsea", "hallmark"), label,
-      excluded_features = gsea_exclusions[[cluster]])
-    reactome <- run_pseudobulk_gsea(pb, reactome_reference, file.path(directory, "gsea", "reactome"), label,
-      excluded_features = gsea_exclusions[[cluster]])
+    gsea <- setNames(lapply(collections, function(collection)
+      run_pseudobulk_gsea(pb, references[[collection]], file.path(directory, "gsea", collection), label,
+        excluded_features = gsea_exclusions[[cluster]])), collections)
     s$status <- pb$status
     s$tested_contrasts <- length(pb$results)
     eligibility[[cluster]] <- s
@@ -225,21 +238,23 @@ run_pseudobulk <- function(input, subset_label, cluster_col, clusters, output_ro
       up_fdr_logfc = vapply(pb$results, function(x) sum(x$FDR <= 0.05 & x$logFC >= 0.5), integer(1)),
       down_fdr_logfc = vapply(pb$results, function(x) sum(x$FDR <= 0.05 & x$logFC <= -0.5), integer(1)))
     contrast_summary <- merge(pb$contrast_status, stats, by = "contrast", all.x = TRUE, sort = FALSE)
-    contrast_summary$hallmark_status <- ifelse(contrast_summary$contrast_status == "tested",
-      gsea$status, "not run: skipped contrast")
-    contrast_summary$reactome_status <- ifelse(contrast_summary$contrast_status == "tested",
-      reactome$status, "not run: skipped contrast")
+    for (collection in specs$collection) {
+      contrast_summary[[paste0(collection, "_status")]] <- if (!collection %in% collections) "not selected" else
+        ifelse(contrast_summary$contrast_status == "tested", gsea[[collection]]$status, "not run: skipped contrast")
+    }
     s <- data.frame(s, heatmap_genes = plots$n_heatmap_genes, contrast_summary, row.names = NULL)
-    if (!is.null(gsea$summary)) s <- merge(s, gsea$summary, by = "contrast", all.x = TRUE, sort = FALSE)
-    if (!is.null(reactome$summary)) {
+    for (collection in collections) {
+      coverage <- gsea[[collection]]$summary
+      if (is.null(coverage)) next
       # Historical unprefixed coverage columns remain Hallmark-only.
-      coverage <- reactome$summary
-      names(coverage)[names(coverage) != "contrast"] <- paste0("reactome_", names(coverage)[names(coverage) != "contrast"])
+      if (collection != "hallmark") names(coverage)[names(coverage) != "contrast"] <-
+        paste0(collection, "_", names(coverage)[names(coverage) != "contrast"])
       s <- merge(s, coverage, by = "contrast", all.x = TRUE, sort = FALSE)
     }
     s <- s[match(pb$contrast_status$contrast, s$contrast), , drop = FALSE]
     summaries[[cluster]] <- s
-    cluster_info[cluster_info == "Status: running"] <- paste("Status: DE/diagnostics/plots completed; Hallmark", gsea$status, "; Reactome", reactome$status)
+    collection_status <- paste(collections, vapply(gsea, function(x) x$status, character(1)), collapse = "; ")
+    cluster_info[cluster_info == "Status: running"] <- paste("Status: DE/diagnostics/plots completed;", collection_status)
     writeLines(c(cluster_info, paste("Finished:", Sys.time()),
       paste("Cells:", sum(pb$sample_info$n_cells), "; samples:", ncol(pb$counts),
         "; pigs:", nlevels(pb$sample_info$pig), "; min cells per sample:", min(pb$sample_info$n_cells)),
@@ -251,7 +266,7 @@ run_pseudobulk <- function(input, subset_label, cluster_col, clusters, output_ro
         "; filterByExpr minimum retained group size:", pb$filter_min_group_size),
       paste("Heatmap genes:", plots$n_heatmap_genes),
       "Validation: one saved-output review and figure inspection pending."), file.path(directory, ".INFO"))
-    cat(label, "completed; Hallmark", gsea$status, "; Reactome", reactome$status, "\n")
+    cat(label, "completed;", collection_status, "\n")
     print(s, row.names = FALSE)
   }
   # Some clusters may require an additional mapping decision before GSEA.
@@ -261,10 +276,11 @@ run_pseudobulk <- function(input, subset_label, cluster_col, clusters, output_ro
   completed <- summary$contrast_status == "tested"
   info[info == "Status: running"] <- if (!any(completed)) {
     "Status: no contrasts tested; see cluster statuses and requested-contrast skip reasons. No models or figures run."
-  } else if (all(summary$hallmark_status[completed] == "completed" & summary$reactome_status[completed] == "completed")) {
+  } else if (all(vapply(collections, function(collection)
+    all(summary[[paste0(collection, "_status")]][completed] == "completed"), logical(1)))) {
     "Status: supported contrasts completed; saved-output and figure review pending. See skipped-contrast/blocked-cluster audits."
   } else {
-    "Status: supported contrasts DE/plots completed; some Hallmark/Reactome analyses blocked by identifier collisions. See contrast/cluster audits."
+    "Status: supported contrasts DE/plots completed; some selected GSEA analyses blocked by identifier mapping. See contrast/cluster audits."
   }
   writeLines(c(info, paste("Finished:", Sys.time()), paste("Original count layers:", length(count_layers),
     "; candidate genes:", length(common_genes)), "Summary: cluster_summary.csv"), info_path)
@@ -274,9 +290,10 @@ run_pseudobulk <- function(input, subset_label, cluster_col, clusters, output_ro
 
 parse_pseudobulk_args <- function(args) {
   usage <- paste("Usage: Rscript R/DEG/run_pseudobulk.R",
-    "(--all | --pigs=REVO26,REVO30) [--min-matched-pigs=3] --output-name=<NEW folder name>")
+    "(--all | --pigs=REVO26,REVO30) [--min-matched-pigs=3] --output-name=<NEW folder name>",
+    "[--collections=hallmark,reactome | --collections=hallmark,reactome,gobp | --collections=gobp]")
   if (identical(args, "--help")) return(list(help = usage))
-  if (any(!grepl("^(--all|--pigs=REVO[0-9]+(,REVO[0-9]+)*|--min-matched-pigs=[0-9]+|--output-name=[A-Za-z0-9_-]+)$", args)) ||
+  if (any(!grepl("^(--all|--pigs=REVO[0-9]+(,REVO[0-9]+)*|--min-matched-pigs=[0-9]+|--output-name=[A-Za-z0-9_-]+|--collections=[a-z]+(,[a-z]+)*)$", args)) ||
       anyDuplicated(sub("=.*$", "", args)) ||
       sum(c("--all" %in% args, any(startsWith(args, "--pigs=")))) != 1L ||
       sum(startsWith(args, "--output-name=")) != 1L) stop(usage)
@@ -285,7 +302,11 @@ parse_pseudobulk_args <- function(args) {
   minimum <- args[startsWith(args, "--min-matched-pigs=")]
   minimum <- if (length(minimum)) as.integer(sub("^--min-matched-pigs=", "", minimum)) else 3L
   if (anyDuplicated(pigs) || is.na(minimum) || minimum < 2L) stop(usage)
-  list(pigs = pigs, min_matched_pigs = minimum,
+  selected <- args[startsWith(args, "--collections=")]
+  selected <- if (length(selected)) strsplit(sub("^--collections=", "", selected), ",", fixed = TRUE)[[1L]] else
+    c("hallmark", "reactome")
+  if (anyDuplicated(selected) || !all(selected %in% pseudobulk_gsea_collections()$collection)) stop(usage)
+  list(pigs = pigs, min_matched_pigs = minimum, collections = selected,
     output_name = sub("^--output-name=", "", args[startsWith(args, "--output-name=")]))
 }
 
@@ -308,8 +329,12 @@ run_pseudobulk_cli <- function(args) {
   reference_dir <- file.path(roots[1], "DEG", "references")
   mapping_file <- "results/misc/Ensembl_ID/gene-mapping/pig_to_human_orthologues_annotated.csv"
   if (any(file.exists(outputs))) stop("A requested output directory already exists; nothing started.")
-  if (!all(file.exists(c(inputs, mapping_file, file.path(reference_dir,
-      c("hallmark_pig.rds", "reactome_pig.rds")))))) stop("Required source objects/references are missing.")
+  specs <- pseudobulk_gsea_collections()
+  required_refs <- unique(c("hallmark_pig.rds", "reactome_pig.rds",
+    specs$file[match(options$collections, specs$collection)]))
+  if (!all(file.exists(c(inputs, mapping_file, file.path(reference_dir, required_refs))))) {
+    stop("Required source objects/references are missing; no analysis started.")
+  }
   dir.create("logs", showWarnings = FALSE)
   stem <- file.path("logs", paste0(tolower(options$output_name), "-", format(Sys.time(), "%Y%m%d-%H%M%S")))
   log_path <- paste0(stem, ".log")
@@ -319,7 +344,8 @@ run_pseudobulk_cli <- function(args) {
     paste("Command:", paste(commandArgs(), collapse = " ")),
     paste("Pigs:", if (is.null(options$pigs)) "all observed pigs" else paste(options$pigs, collapse = ", ")),
     paste("Minimum directly matched pigs:", options$min_matched_pigs),
-    "Methods: original RNA sums; full-source gene intersection; >=10 cells; filterByExpr; TMM; paired ~pig+condition edgeR QL; original six contrasts; Hallmark+Reactome; seed1234.",
+    paste("Methods: original RNA sums; full-source gene intersection; >=10 cells; filterByExpr; TMM; paired ~pig+condition edgeR QL; original six contrasts; seed1234. Selected GSEA:",
+      paste(options$collections, collapse = ", ")),
     "FDR: BH per cluster/contrast (DE<=0.05); per collection/cluster/contrast (GSEA<0.01). Heatmap/volcano additionally require abs(log2FC)>=0.5.",
     paste("Input:", inputs), paste("Output:", outputs), paste("References:", reference_dir),
     paste("Mapping:", mapping_file), paste("Evidence:", log_path), "Validation: pending.")
@@ -355,7 +381,7 @@ run_pseudobulk_cli <- function(args) {
     run_pseudobulk(inputs[i], names(cases)[i], paste0("harmony_snn_res.", case$resolution),
       case$clusters, outputs[i], mapping_file = mapping_file, reference_dir = reference_dir,
       gsea_exclusions = exclusions, pigs = options$pigs,
-      min_matched_pigs = options$min_matched_pigs, log_path = log_path)
+      min_matched_pigs = options$min_matched_pigs, log_path = log_path, collections = options$collections)
     gc()
   }
   finished <- TRUE

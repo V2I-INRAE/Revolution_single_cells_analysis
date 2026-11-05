@@ -1,13 +1,21 @@
 source("R/DEG/publication_style.R")
 
+# Frozen collection metadata; adding a collection never changes the historical alias union.
+pseudobulk_gsea_collections <- function() {
+  data.frame(collection = c("hallmark", "reactome", "gobp"),
+    file = c("hallmark_pig.rds", "reactome_pig.rds", "gobp_pig.rds"),
+    id = c("H", "C2:CP:REACTOME", "C5:GO:BP"),
+    label = c("Hallmark", "Reactome", "GO:BP"), stringsAsFactors = FALSE)
+}
+
 # Pig identifiers only. Human orthologue names are not pig feature renames.
 prepare_hallmark <- function(common_genes, mapping_file, reference_dir) {
   prepare_pseudobulk_gsea(common_genes, mapping_file, reference_dir, "hallmark")
 }
 
-# Both collections use the SAME union of pig aliases and approved exclusions.
+# Historical collections retain their alias union; GO:BP has an independent mapping.
 prepare_pseudobulk_gsea <- function(common_genes, mapping_file, reference_dir,
-    collection = c("hallmark", "reactome")) {
+    collection = c("hallmark", "reactome", "gobp")) {
   collection <- match.arg(collection)
   paths <- file.path(reference_dir, c("hallmark_pig.rds", "reactome_pig.rds"))
   hallmark <- readRDS(paths[1])
@@ -15,7 +23,16 @@ prepare_pseudobulk_gsea <- function(common_genes, mapping_file, reference_dir,
   stopifnot(all(hallmark$gs_collection == "H"),
     all(reactome$gs_collection == "C2"), all(reactome$gs_subcollection == "CP:REACTOME"),
     identical(unique(hallmark$db_version), unique(reactome$db_version)))
+  selected <- if (collection == "hallmark") hallmark else reactome
   reference <- dplyr::bind_rows(hallmark, reactome)
+  if (collection == "gobp") {
+    paths <- c(paths, file.path(reference_dir, "gobp_pig.rds"))
+    selected <- readRDS(paths[3])
+    stopifnot(all(selected$gs_collection == "C5"), all(selected$gs_subcollection == "GO:BP"),
+      identical(unique(selected$db_version), unique(hallmark$db_version)),
+      all(grepl("^GO:[0-9]{7}$", selected$gs_exact_source)))
+    reference <- selected
+  }
   stopifnot(all(reference$ortholog_taxon_id == 9823))
   reference$pig_gene <- ifelse(!is.na(reference$ncbi_gene),
     paste0("NCBI:", reference$ncbi_gene), reference$ensembl_gene)
@@ -41,16 +58,44 @@ prepare_pseudobulk_gsea <- function(common_genes, mapping_file, reference_dir,
     mapping$safe_name, mapping$gene)
   mapping$excluded <- mapping$gene %in% c("B2M", "ENSSSCG00000004687", "LDHB",
     "ENSSSCG00000000576", "ARFIP2", "TRIM3", "GNA12", "ENSSSCG00000032549")
+  if (collection == "gobp") {
+    # Owner-approved GO-only workaround; retain the unmodified reference assignment for audit.
+    mapping$reference_pig_gene <- mapping$pig_gene
+    mapping$mapping_decision <- "reference_alias"
+    il18bp <- mapping$gene == "ENSSSCG00000014800"
+    mapping$pig_gene[il18bp] <- "NCBI:100525765"
+    mapping$match_method[il18bp] <- "approved_Ensembl_NCBI_IL18BP"
+    mapping$mapping_decision[il18bp] <- "approved_GO_only_IL18BP_correction"
+    mapping$excluded_reason <- ifelse(mapping$excluded, "historical_approved_exclusion", "")
+    split_models <- mapping$gene %in% c("ENSSSCG00000007481", "ZFP64",
+      "ENSSSCG00000014098", "ENSSSCG00000051837")
+    mapping$excluded[split_models] <- TRUE
+    mapping$excluded_reason[split_models] <- "approved_GO_only_unresolved_split_models"
+  }
   mapping$rank_id <- ifelse(!is.na(mapping$pig_gene), mapping$pig_gene,
     paste0("SOURCE:", mapping$gene))
-  selected <- if (collection == "hallmark") hallmark else reactome
+  if (collection == "gobp") {
+    historical <- prepare_pseudobulk_gsea(common_genes, mapping_file, reference_dir, "hallmark")$mapping
+    mapping$historical_rank_id <- historical$rank_id
+    mapping$mapping_change <- ifelse(mapping$rank_id == historical$rank_id, "unchanged",
+      ifelse(is.na(historical$pig_gene) & !is.na(mapping$pig_gene), "new_GO_mapping",
+        ifelse(!is.na(historical$pig_gene) & is.na(mapping$pig_gene), "not_mapped_in_GO",
+          "conflicting_canonical_ID")))
+  }
   selected$pig_gene <- ifelse(!is.na(selected$ncbi_gene),
     paste0("NCBI:", selected$ncbi_gene), selected$ensembl_gene)
   members <- unique(selected[, c("gs_name", "pig_gene")])
   stopifnot(!anyNA(members), all(nzchar(members$pig_gene)))
-  list(mapping = mapping, pathways = split(members$pig_gene, members$gs_name),
+  terms <- NULL
+  if (collection == "gobp") {
+    terms <- unique(as.data.frame(selected[, c("gs_name", "gs_exact_source", "gs_id", "gs_description")]))
+    names(terms) <- c("pathway", "go_id", "msigdb_id", "description")
+    stopifnot(!anyDuplicated(terms$pathway), !anyDuplicated(terms$go_id))
+  }
+  specs <- pseudobulk_gsea_collections()
+  list(mapping = mapping, pathways = split(members$pig_gene, members$gs_name), terms = terms,
     database_version = unique(selected$db_version), collection = collection,
-    collection_id = if (collection == "hallmark") "H" else "C2:CP:REACTOME",
+    collection_id = specs$id[match(collection, specs$collection)],
     reference_files = tools::md5sum(paths))
 }
 
@@ -63,13 +108,24 @@ run_pseudobulk_hallmark <- function(pb, reference, output_dir, label,
 run_pseudobulk_gsea <- function(pb, reference, output_dir, label,
     pathway_fdr = 0.01, seed = 1234, excluded_features = character()) {
   collection <- if (is.null(reference$collection)) "hallmark" else reference$collection
-  collection_label <- if (collection == "hallmark") "Hallmark" else "Reactome"
+  specs <- pseudobulk_gsea_collections()
+  collection_label <- specs$label[match(collection, specs$collection)]
+  significant_only <- collection == "gobp"
   dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
   mapping <- reference$mapping[match(rownames(pb$dge), reference$mapping$gene), ]
   mapping$excluded <- mapping$excluded | mapping$gene %in% excluded_features
+  if (collection == "gobp") {
+    mapping$excluded_reason[mapping$excluded & mapping$excluded_reason == ""] <- "additional_historical_approved_exclusion"
+  }
   write.csv(mapping, file.path(output_dir, "tested_gene_mapping.csv"), row.names = FALSE)
   write.csv(mapping[mapping$excluded, ], file.path(output_dir, "excluded_features.csv"), row.names = FALSE)
   ranked_mapping <- mapping[!mapping$excluded, ]
+  if (collection == "gobp" && any(ranked_mapping$mapping_change == "conflicting_canonical_ID")) {
+    write.csv(ranked_mapping[ranked_mapping$mapping_change == "conflicting_canonical_ID", ],
+      file.path(output_dir, "unresolved_mapping_conflicts.csv"), row.names = FALSE)
+    return(list(status = "blocked: conflicting canonical identifiers", summary = NULL))
+  }
+  unlink(file.path(output_dir, "unresolved_mapping_conflicts.csv"))
   collisions <- duplicated(ranked_mapping$rank_id) | duplicated(ranked_mapping$rank_id, fromLast = TRUE)
   # Additional collision pairs need a scientific decision, never arbitrary rank selection.
   if (any(collisions)) {
@@ -82,6 +138,10 @@ run_pseudobulk_gsea <- function(pb, reference, output_dir, label,
   coverage <- data.frame(pathway = names(pathways), reference_size = lengths(pathways),
     matched_size = unname(matched_size), eligible = matched_size >= 15 & matched_size <= 500,
     row.names = NULL)
+  if (!is.null(reference$terms)) {
+    coverage <- cbind(coverage, reference$terms[match(coverage$pathway, reference$terms$pathway), -1])
+    write.csv(reference$terms, file.path(output_dir, "pathway_metadata.csv"), row.names = FALSE)
+  }
   write.csv(coverage, file.path(output_dir, "pathway_coverage.csv"), row.names = FALSE)
   results <- ranks <- rank_tables <- plot_tables <- list()
   for (contrast in names(pb$results)) {
@@ -97,6 +157,9 @@ run_pseudobulk_gsea <- function(pb, reference, output_dir, label,
     result <- as.data.frame(fgsea::fgseaMultilevel(pathways, ranks[[contrast]],
       minSize = 15, maxSize = 500, gseaParam = 1, scoreType = "std", eps = 0, nproc = 1))
     result <- result[order(result$padj, result$pval, result$pathway), ]
+    if (!is.null(reference$terms)) {
+      result <- cbind(result, reference$terms[match(result$pathway, reference$terms$pathway), -1])
+    }
     groups <- strsplit(contrast, "_vs_", fixed = TRUE)[[1]]
     result$direction <- ifelse(result$NES > 0, groups[1], groups[2])
     result$leading_edge_source_genes <- vapply(result$leadingEdge, function(ids)
@@ -107,12 +170,18 @@ run_pseudobulk_gsea <- function(pb, reference, output_dir, label,
     csv <- result
     csv$leadingEdge <- vapply(csv$leadingEdge, paste, collapse = ";", character(1))
     write.csv(csv, file.path(output_dir, paste0(contrast, "_gsea.csv")), row.names = FALSE)
+    if (collection == "gobp" && any(!is.finite(result$NES) | is.na(result$pval) | is.na(result$padj))) {
+      stop("GO:BP enrichment has unavailable estimates in ", contrast,
+        "; results retained in CSV, no automatic retry or term deletion.")
+    }
     display <- result[is.finite(result$NES) & !is.na(result$padj), ]
+    if (significant_only) display <- display[display$padj < pathway_fdr, ]
     display <- dplyr::slice_head(dplyr::group_by(display, direction), n = 8)
     display <- as.data.frame(dplyr::ungroup(display))
     display <- display[order(display$NES), ]
-    display$label <- factor(paste0(gsub("_", " ", sub(paste0("^", toupper(collection), "_"), "", display$pathway)),
-      ifelse(display$padj < pathway_fdr, " *", "")))
+    display$label <- if (nrow(display)) factor(paste0(gsub("_", " ",
+      sub(paste0("^", toupper(collection), "_"), "", display$pathway)),
+      ifelse(display$padj < pathway_fdr, " *", ""))) else factor(character())
     display$label <- factor(display$label, levels = as.character(display$label))
     display$neg_log10_fdr <- -log10(display$padj)
     plot_tables[[contrast]] <- display
@@ -120,7 +189,7 @@ run_pseudobulk_gsea <- function(pb, reference, output_dir, label,
       file.path(output_dir, paste0(contrast, "_displayed_pathways.csv")), row.names = FALSE)
     render_pseudobulk_gsea(result, display, ranks[[contrast]], pathways,
       reference$database_version, pb$sample_info, contrast, output_dir,
-      label, pathway_fdr, seed, collection_label)
+      label, pathway_fdr, seed, collection_label, significant_only)
   }
   summary <- do.call(rbind, lapply(names(results), function(contrast) {
     x <- results[[contrast]]
@@ -134,14 +203,14 @@ run_pseudobulk_gsea <- function(pb, reference, output_dir, label,
   }))
   write.csv(summary, file.path(output_dir, "coverage_summary.csv"), row.names = FALSE)
   saveRDS(list(results = results, ranks = ranks, rank_tables = rank_tables, mapping = mapping,
-    pathways = pathways, coverage = coverage, summary = summary, plot_tables = plot_tables,
+    pathways = pathways, terms = reference$terms, coverage = coverage, summary = summary, plot_tables = plot_tables,
     database_version = reference$database_version, taxon = 9823L,
     collection = collection, collection_id = reference$collection_id,
     reference_files = reference$reference_files,
     fdr_scope = "BH within collection/cluster/contrast; not across collections, clusters or contrasts",
     parameters = list(minSize = 15L, maxSize = 500L, gseaParam = 1, scoreType = "std",
       eps = 0, nproc = 1L, seed = seed, pathway_fdr = pathway_fdr,
-      excluded_features = excluded_features)),
+      excluded_features = excluded_features, significant_only = significant_only)),
     file.path(output_dir, "gsea_results.rds"))
   list(status = "completed", summary = summary)
 }
@@ -155,13 +224,18 @@ render_pseudobulk_hallmark <- function(result, display, ranks, pathways,
 
 render_pseudobulk_gsea <- function(result, display, ranks, pathways,
     database_version, sample_info, contrast, output_dir, label, pathway_fdr = 0.01, seed = 1234,
-    collection_label = "Hallmark") {
+    collection_label = "Hallmark", significant_only = FALSE) {
   groups <- strsplit(contrast, "_vs_", fixed = TRUE)[[1]]
   n_samples <- vapply(groups, function(group) sum(sample_info$condition == group), integer(1))
   paired_pigs <- intersect(as.character(sample_info$pig[sample_info$condition == groups[1]]),
     as.character(sample_info$pig[sample_info$condition == groups[2]]))
   n_model_pigs <- length(unique(sample_info$pig))
-  figure <- plotthis::ScatterPlot(display, x = "NES", y = "label", size_by = "size",
+  figure <- if (!nrow(display)) {
+    ggplot2::ggplot() + ggplot2::annotate("text", x = 0, y = 0,
+      label = paste0("No significant ", collection_label, " terms (FDR < ", pathway_fdr, ")")) +
+      ggplot2::theme_void() + ggplot2::labs(title = paste(label, collection_label, "GSEA"),
+        subtitle = contrast)
+  } else plotthis::ScatterPlot(display, x = "NES", y = "label", size_by = "size",
     size_name = "Matched genes", color_by = "neg_log10_fdr", color_name = "-log10(BH FDR)",
     palette = "viridis", lower_cutoff = 0, upper_cutoff = max(display$neg_log10_fdr),
     shape = 21, alpha = 1, border_size = 0.3, aspect.ratio = NULL,
@@ -177,29 +251,46 @@ render_pseudobulk_gsea <- function(result, display, ranks, pathways,
     deg_theme() +
     ggplot2::theme(legend.position = "bottom", legend.box = "vertical") +
     ggplot2::scale_size_continuous(range = c(2, 5)) +
-    ggplot2::labs(caption = deg_wrap(paste0("Up to eight terms per direction by FDR; unstarred terms may not be significant.\n",
+    ggplot2::labs(caption = deg_wrap(paste0(
+      if (significant_only) "Up to eight significant terms per direction by FDR.\n" else
+        "Up to eight terms per direction by FDR; unstarred terms may not be significant.\n",
       "Pig orthologue projection of MSigDB ", database_version,
       ". BH across ", nrow(result), " pathways in this collection/cluster/contrast.\n",
       length(ranks), " ranked features; no gene FDR/logFC filtering.")))
-  # Reactome names can span several lines; keep the historical Hallmark dimensions.
+  if (!nrow(display)) {
+    figure <- figure + ggplot2::labs(caption = deg_wrap(paste0("MSigDB ", database_version,
+      "; BH across ", nrow(result), " terms; ", length(ranks), " ranked features. All tested terms remain in tables.")))
+  }
+  # Long term names need room; keep the historical Hallmark dimensions.
   dotplot_height <- 170
-  if (collection_label == "Reactome" && nrow(display)) {
+  if (collection_label != "Hallmark" && nrow(display)) {
     label_lines <- vapply(as.character(display$label), function(x) length(strwrap(x, width = 32)), integer(1))
     dotplot_height <- max(dotplot_height, 90 + 4 * nrow(display) * max(label_lines))
   }
   save_deg_figure(figure, output_dir, paste0(contrast, "_gsea_dotplot"), height = dotplot_height)
-  top <- as.data.frame(dplyr::ungroup(dplyr::slice_head(dplyr::group_by(
-    result[is.finite(result$NES) & !is.na(result$padj), ], direction), n = 1)))
+  candidates <- result[is.finite(result$NES) & !is.na(result$padj), ]
+  if (significant_only) candidates <- candidates[candidates$padj < pathway_fdr, ]
+  top <- as.data.frame(dplyr::ungroup(dplyr::slice_head(dplyr::group_by(candidates, direction), n = 1)))
   running <- lapply(seq_len(nrow(top)), function(i) {
     fgsea::plotEnrichment(pathways[[top$pathway[i]]], ranks) +
-      ggplot2::labs(title = paste(strwrap(gsub("_", " ", top$pathway[i]), width = 34), collapse = "\n"),
+      ggplot2::labs(title = paste(strwrap(gsub("_", " ",
+        if (collection_label == "GO:BP") sub("^GOBP_", "", top$pathway[i]) else top$pathway[i]),
+        width = if (collection_label == "GO:BP") 24 else 34), collapse = "\n"),
         subtitle = sprintf("%s minus %s | NES %.2f\nBH FDR %.3g | favours %s",
           groups[1], groups[2], top$NES[i], top$padj[i], top$direction[i]),
         x = paste0("Rank: ", groups[1], " higher (left)\nto ", groups[2], " higher (right)"),
         y = "Running enrichment score") + deg_theme()
   })
+  if (!length(running)) {
+    running <- list(ggplot2::ggplot() + ggplot2::annotate("text", x = 0, y = 0,
+      label = paste0("No significant ", collection_label, " terms (FDR < ", pathway_fdr, ")")) +
+      ggplot2::theme_void())
+  }
   figure <- patchwork::wrap_plots(running, ncol = 2) +
     patchwork::plot_annotation(title = paste(label, paste0(collection_label, ":"), groups[1], "minus", groups[2]),
-      caption = deg_wrap("Lowest-FDR pathway in each direction, regardless of significance. Pig orthologue projection; no claim of pathway activation."), theme = deg_theme())
-  save_deg_figure(figure, output_dir, paste0(contrast, "_running_scores"), height = 110)
+      caption = deg_wrap(paste(if (significant_only) "Lowest-FDR significant term in each available direction." else
+        "Lowest-FDR pathway in each direction, regardless of significance.",
+        "Pig orthologue projection; no claim of pathway activation.")), theme = deg_theme())
+  save_deg_figure(figure, output_dir, paste0(contrast, "_running_scores"),
+    height = if (collection_label == "GO:BP") 140 else 110)
 }
