@@ -1,149 +1,138 @@
-# The driver validates the original observed specimen panel before cluster selection.
-# Zero cell counts below are audit metadata only: absent populations never become libraries.
+# Population count aggregation is shared; every comparison is filtered and fitted independently.
+pseudobulk_comparisons <- function() {
+  data.frame(contrast = c("P4_vs_Control", "N4_vs_Control", "P4_vs_N4", "P4_vs_P10", "N4_vs_N10", "P10_vs_N10"),
+    group1 = c("P4", "N4", "P4", "P4", "N4", "P10"),
+    group2 = c("Control", "Control", "N4", "P10", "N10", "N10"))
+}
+
 prepare_pseudobulk <- function(object, common_genes, cluster_col, cluster, sample_panel,
     min_matched_pigs = 3L) {
+  if (min_matched_pigs < 3L) stop("At least three complete pig pairs are required.")
   cells <- colnames(object)[as.character(object[[cluster_col, drop = TRUE]]) == cluster &
     object$sample %in% sample_panel$sample]
-  sample_audit <- sample_panel
-  sample_audit$n_cells <- as.integer(table(factor(object$sample[match(cells, colnames(object))],
-    levels = sample_audit$sample)))
-  sample_audit$retained <- sample_audit$n_cells >= 10L
-  sample_audit$exclusion_reason <- ifelse(sample_audit$n_cells == 0L, "absent_cluster_population",
-    ifelse(sample_audit$n_cells < 10L, "below_10_cells", ""))
-  sample_info <- droplevels(sample_audit[sample_audit$retained, ])
-  group_counts <- do.call(rbind, lapply(levels(sample_panel$condition), function(group) {
-    x <- sample_audit[sample_audit$condition == group, ]
-    data.frame(condition = group, panel_samples = nrow(x), observed_samples = sum(x$n_cells > 0L),
-      retained_samples = sum(x$retained), retained_pigs = length(unique(x$pig[x$retained])),
-      excluded_samples = sum(!x$retained), absent_samples = sum(x$n_cells == 0L),
-      below_10_samples = sum(x$n_cells > 0L & x$n_cells < 10L),
-      observed_cells = sum(x$n_cells), retained_cells = sum(x$n_cells[x$retained]))
-  }))
-  contrast_status <- data.frame(
-    contrast = c("P4_vs_Control", "N4_vs_Control", "P4_vs_N4", "P4_vs_P10", "N4_vs_N10", "P10_vs_N10"),
-    group1 = c("P4", "N4", "P4", "P4", "N4", "P10"),
-    group2 = c("Control", "Control", "N4", "P10", "N10", "N10"),
-    group1_samples = 0L, group2_samples = 0L, matched_pigs = 0L, matched_pig_ids = "",
-    min_matched_pigs = min_matched_pigs,
-    eligible = FALSE, contrast_status = "skipped", skip_reason = "")
-  for (i in seq_len(nrow(contrast_status))) {
-    first <- as.character(sample_info$pig[sample_info$condition == contrast_status$group1[i]])
-    second <- as.character(sample_info$pig[sample_info$condition == contrast_status$group2[i]])
-    paired <- intersect(first, second)
-    contrast_status$group1_samples[i] <- length(first)
-    contrast_status$group2_samples[i] <- length(second)
-    contrast_status$matched_pigs[i] <- length(paired)
-    contrast_status$matched_pig_ids[i] <- paste(paired, collapse = ";")
-    contrast_status$eligible[i] <- length(paired) >= min_matched_pigs
-    contrast_status$contrast_status[i] <- if (contrast_status$eligible[i]) "pending" else "skipped"
-    contrast_status$skip_reason[i] <- if (!length(first) || !length(second)) {
-      "missing_group_after_sample_filter"
-    } else if (length(paired) < min_matched_pigs) {
-      paste0("fewer_than_", min_matched_pigs, "_directly_matched_pigs")
-    } else ""
+  audit <- sample_panel
+  audit$n_cells <- as.integer(table(factor(object$sample[match(cells, colnames(object))], levels = audit$sample)))
+  audit$passes_cell_filter <- audit$n_cells >= 25L
+  audit$exclusion_reason <- ifelse(audit$n_cells == 0L, "absent_cluster_population",
+    ifelse(audit$n_cells < 25L, "below_25_cells", ""))
+  comparisons <- pseudobulk_comparisons()
+  comparisons$matched_pigs <- vapply(seq_len(nrow(comparisons)), function(i) {
+    passing <- audit[audit$passes_cell_filter, ]
+    length(intersect(as.character(passing$pig[passing$condition == comparisons$group1[i]]),
+      as.character(passing$pig[passing$condition == comparisons$group2[i]])))
+  }, integer(1))
+  population <- list(sample_audit = audit, min_matched_pigs = min_matched_pigs,
+    min_cells = 25L, candidate_genes = common_genes, counts = NULL)
+  if (!any(comparisons$matched_pigs >= min_matched_pigs)) return(population)
+  passing <- audit$sample[audit$passes_cell_filter]
+  cells <- cells[object$sample[match(cells, colnames(object))] %in% passing]
+  selected <- subset(object, cells = cells, features = common_genes)
+  counts <- Seurat::AggregateExpression(selected, assays = "RNA", group.by = "sample",
+    return.seurat = FALSE, verbose = FALSE)$RNA
+  if (anyDuplicated(colnames(counts)) || !setequal(colnames(counts), passing) ||
+      !setequal(rownames(counts), common_genes)) stop("Aggregated count IDs disagree with population/sample IDs.")
+  counts <- counts[common_genes, passing, drop = FALSE]
+  if (any(!is.finite(counts)) || any(counts < 0 | counts != round(counts)) || any(colSums(counts) <= 0)) {
+    stop("Pseudobulk libraries must have nonnegative integer raw counts and positive sizes.")
   }
-  pb <- list(status = "eligible", reason = "", min_matched_pigs = min_matched_pigs,
-    sample_audit = sample_audit,
-    sample_info = sample_info, group_counts = group_counts, contrast_status = contrast_status,
-    contrasts = matrix(numeric(), nrow = 0L, ncol = 0L, dimnames = list(NULL, character())),
-    results = list(), design_rank = NA_integer_, residual_df = NA_integer_,
-    filter_min_group_size = if (nrow(sample_info)) min(as.integer(table(sample_info$condition))) else NA_integer_)
-  if (!any(contrast_status$eligible)) {
-    pb$status <- "no_eligible_contrasts"
-    pb$reason <- paste("No requested contrast has at least", min_matched_pigs,
-      "directly matched pigs after sample filtering.")
-    return(pb)
+  population$counts <- counts
+  population
+}
+
+prepare_paired_comparison <- function(population, contrast) {
+  spec <- pseudobulk_comparisons()
+  spec <- spec[match(contrast, spec$contrast), ]
+  if (anyNA(spec)) stop("Unknown comparison: ", contrast)
+  audit <- population$sample_audit
+  audit$in_comparison <- audit$condition %in% c(spec$group1, spec$group2)
+  passing <- audit[audit$passes_cell_filter & audit$in_comparison, ]
+  pairs <- intersect(as.character(passing$pig[passing$condition == spec$group1]),
+    as.character(passing$pig[passing$condition == spec$group2]))
+  audit$paired_pig <- as.character(audit$pig) %in% pairs
+  audit$retained <- audit$passes_cell_filter & audit$in_comparison & audit$paired_pig
+  audit$exclusion_reason <- ifelse(!audit$in_comparison, "outside_comparison",
+    ifelse(audit$n_cells == 0L, "absent_cluster_population",
+      ifelse(!audit$passes_cell_filter, "below_25_cells", ifelse(!audit$paired_pig, "unmatched_pig", ""))))
+  samples <- droplevels(audit[audit$retained, ])
+  samples$condition <- factor(as.character(samples$condition), levels = c(spec$group2, spec$group1))
+  eligible <- length(pairs) >= population$min_matched_pigs
+  reason <- if (eligible) "" else if (!all(c(spec$group1, spec$group2) %in% as.character(passing$condition))) {
+    "missing_group_after_25_cell_filter"
+  } else paste0("fewer_than_", population$min_matched_pigs, "_complete_pig_pairs")
+  status <- data.frame(spec, group1_passing_samples = sum(passing$condition == spec$group1),
+    group2_passing_samples = sum(passing$condition == spec$group2),
+    group1_samples = sum(samples$condition == spec$group1), group2_samples = sum(samples$condition == spec$group2),
+    matched_pigs = length(pairs), matched_pig_ids = paste(pairs, collapse = ";"),
+    min_cells = population$min_cells, min_matched_pigs = population$min_matched_pigs,
+    eligible, contrast_status = if (eligible) "pending" else "skipped", skip_reason = reason)
+  pb <- list(status = if (eligible) "eligible" else "no_eligible_contrast", reason = reason,
+    min_cells = population$min_cells, min_matched_pigs = population$min_matched_pigs,
+    model_scope = "comparison_specific_complete_pairs", sample_audit = audit, sample_info = samples,
+    contrast_status = status, results = list(), design_rank = NA_integer_, residual_df = NA_integer_,
+    filter_min_group_size = length(pairs), candidate_genes = population$candidate_genes)
+  if (!eligible) return(pb)
+  if (anyDuplicated(paste(samples$pig, samples$condition)) || !all(table(samples$pig, samples$condition) == 1L)) {
+    stop("Each retained pig must contribute exactly one specimen per compared condition.")
   }
-  # Only observed levels enter the joint model; all passing specimens remain, including sparse late groups.
-  design <- model.matrix(~ pig + condition, data = sample_info,
+  design <- model.matrix(~ pig + condition, data = samples,
     contrasts.arg = list(pig = "contr.treatment", condition = "contr.treatment"))
   pb$design <- design
   pb$design_rank <- qr(design)$rank
   pb$residual_df <- nrow(design) - pb$design_rank
-  if (pb$design_rank != ncol(design) || pb$residual_df <= 0L) {
-    pb$status <- "blocked"
-    pb$reason <- if (pb$design_rank != ncol(design)) "rank_deficient_joint_design" else "nonpositive_residual_df"
-    pending <- pb$contrast_status$eligible
-    pb$contrast_status$contrast_status[pending] <- "skipped"
-    pb$contrast_status$skip_reason[pending] <- pb$reason
-    return(pb)
-  }
-  supported <- which(contrast_status$eligible)
-  pb$contrasts <- matrix(0, nrow = ncol(design), ncol = length(supported),
-    dimnames = list(colnames(design), contrast_status$contrast[supported]))
-  for (i in supported) {
-    # Same-pig design-row differences work even when Control is absent or the reference level changes.
-    first <- which(sample_info$condition == contrast_status$group1[i])
-    second <- which(sample_info$condition == contrast_status$group2[i])
-    paired <- intersect(as.character(sample_info$pig[first]), as.character(sample_info$pig[second]))[1]
-    first <- first[as.character(sample_info$pig[first]) == paired]
-    second <- second[as.character(sample_info$pig[second]) == paired]
-    pb$contrasts[, contrast_status$contrast[i]] <- design[first, ] - design[second, ]
-  }
-  cells <- cells[object$sample[match(cells, colnames(object))] %in% sample_info$sample]
-  population <- subset(object, cells = cells, features = common_genes)
-  counts <- Seurat::AggregateExpression(population, assays = "RNA", group.by = "sample",
-    return.seurat = FALSE, verbose = FALSE)$RNA
-  if (anyDuplicated(colnames(counts)) || !setequal(colnames(counts), sample_info$sample) ||
-      !setequal(rownames(counts), common_genes)) {
-    stop("Aggregated count IDs do not match the retained specimens/common-layer genes.")
-  }
-  counts <- counts[common_genes, sample_info$sample, drop = FALSE]
-  if (any(!is.finite(counts)) || any(counts < 0 | counts != round(counts)) || any(colSums(counts) <= 0)) {
-    stop("Pseudobulk libraries must contain nonnegative integer raw counts and have positive sizes.")
-  }
-  y <- edgeR::DGEList(counts = counts, samples = sample_info)
-  # Keep the approved group-based rule: a retained singleton group reduces its minimum group size to 1.
-  keep <- edgeR::filterByExpr(y, group = sample_info$condition)
-  if (!any(keep)) stop("No genes retained by filterByExpr; cluster cannot be fitted.")
+  if (pb$design_rank != ncol(design) || pb$residual_df <= 0L) stop("Invalid complete-pair model rank/residual df.")
+  pb$contrasts <- matrix(0, nrow = ncol(design), ncol = 1L,
+    dimnames = list(colnames(design), contrast))
+  same_pig <- as.character(samples$pig) == pairs[1]
+  pb$contrasts[, contrast] <- design[same_pig & samples$condition == spec$group1, ] -
+    design[same_pig & samples$condition == spec$group2, ]
+  pb$counts <- population$counts[, samples$sample, drop = FALSE]
+  y <- edgeR::DGEList(counts = pb$counts, samples = samples)
+  keep <- edgeR::filterByExpr(y, group = samples$condition,
+    min.count = 10, min.total.count = 15, large.n = 10, min.prop = 0.7)
+  if (!any(keep)) stop("No genes retained by comparison-specific filterByExpr: ", contrast)
   y <- y[keep, , keep.lib.sizes = FALSE]
   if (any(y$samples$lib.size <= 0)) stop("A filtered pseudobulk library has zero counts.")
   y <- edgeR::normLibSizes(y, method = "TMM")
-  sample_info$library_size <- y$samples$lib.size
-  sample_info$tmm_factor <- y$samples$norm.factors
-  sample_info$effective_library_size <- sample_info$library_size * sample_info$tmm_factor
-  pb$counts <- counts
-  pb$sample_info <- sample_info
+  pb$sample_info$library_size <- y$samples$lib.size
+  pb$sample_info$tmm_factor <- y$samples$norm.factors
+  pb$sample_info$effective_library_size <- y$samples$lib.size * y$samples$norm.factors
   pb$keep <- keep
   pb$dge <- y
+  pb$parameters <- list(min_cells = 25L, min_matched_pigs = population$min_matched_pigs,
+    model = "~pig+condition", model_scope = pb$model_scope,
+    filterByExpr = list(min.count = 10, min.total.count = 15, large.n = 10, min.prop = 0.7),
+    normalization = "TMM", legacy = FALSE, robust = FALSE, fdr = "BH within population/contrast")
   pb
 }
 
-fit_pseudobulk <- function(pb, output_dir, fdr_cutoff = 0.05) {
-  if (pb$status != "eligible" || !ncol(pb$contrasts)) stop("No supported contrasts/model available to fit.")
+fit_pseudobulk <- function(pb, output_dir, gene_mapping, fdr_cutoff = 0.05) {
+  if (pb$status != "eligible" || ncol(pb$contrasts) != 1L) stop("One eligible complete-pair comparison is required.")
+  if (any(pb$sample_info$n_cells < 25L) || nlevels(pb$sample_info$pig) < 3L ||
+      !all(table(pb$sample_info$pig, pb$sample_info$condition) == 1L)) stop("Pair/cell eligibility violated before fitting.")
   if (qr(pb$design)$rank != ncol(pb$design) || nrow(pb$design) <= ncol(pb$design)) {
-    stop("Joint pig + condition design must be full rank with positive residual degrees of freedom.")
+    stop("Paired pig + condition design must be full rank with positive residual degrees of freedom.")
   }
-  # edgeR v4 estimates the NB dispersion internally; retain the approved settings.
   pb$fit <- edgeR::glmQLFit(pb$dge, pb$design, legacy = FALSE, robust = FALSE)
-  contrasts <- pb$contrasts
-  pb$results <- setNames(lapply(seq_len(ncol(contrasts)), function(i) {
-    test <- edgeR::glmQLFTest(pb$fit, contrast = contrasts[, i])
-    tab <- edgeR::topTags(test, n = Inf, adjust.method = "BH", sort.by = "PValue")$table
-    tab <- data.frame(gene = rownames(tab), tab, row.names = NULL)
-    tab$direction <- ifelse(tab$logFC > 0, "up", ifelse(tab$logFC < 0, "down", "unchanged"))
-    tab
-  }), colnames(contrasts))
+  test <- edgeR::glmQLFTest(pb$fit, contrast = pb$contrasts[, 1L])
+  tab <- edgeR::topTags(test, n = Inf, adjust.method = "BH", sort.by = "PValue")$table
+  tab <- data.frame(gene = rownames(tab), tab, row.names = NULL)
+  tab$direction <- ifelse(tab$logFC > 0, "up", ifelse(tab$logFC < 0, "down", "unchanged"))
+  tab <- annotate_pig_genes(tab, gene_mapping)
+  contrast <- colnames(pb$contrasts)[1L]
+  pb$results <- setNames(list(tab), contrast)
   pb$status <- "completed"
-  pb$contrast_status$contrast_status[pb$contrast_status$contrast %in% names(pb$results)] <- "tested"
+  pb$contrast_status$contrast_status <- "tested"
   write.csv(pb$sample_info, file.path(output_dir, "sample_metadata.csv"), row.names = FALSE)
   write.csv(pb$sample_audit, file.path(output_dir, "sample_audit.csv"), row.names = FALSE)
   write.csv(pb$contrast_status, file.path(output_dir, "contrast_status.csv"), row.names = FALSE)
   write.csv(data.frame(gene = rownames(pb$counts), tested = pb$keep),
     file.path(output_dir, "gene_filter.csv"), row.names = FALSE)
-  for (contrast in names(pb$results)) {
-    tab <- pb$results[[contrast]]
-    write.csv(tab, file.path(output_dir, paste0(contrast, "_all.csv")), row.names = FALSE)
-    write.csv(tab[tab$FDR <= fdr_cutoff, ],
-      file.path(output_dir, paste0(contrast, "_significant.csv")), row.names = FALSE)
-  }
-  pb$summary <- data.frame(contrast = names(pb$results),
-    tested = vapply(pb$results, nrow, integer(1)),
-    up = vapply(pb$results, function(x) sum(x$FDR <= fdr_cutoff & x$logFC > 0), integer(1)),
-    down = vapply(pb$results, function(x) sum(x$FDR <= fdr_cutoff & x$logFC < 0), integer(1)))
-  summary <- merge(pb$contrast_status, pb$summary, by = "contrast", all.x = TRUE, sort = FALSE)
-  summary <- summary[match(pb$contrast_status$contrast, summary$contrast), , drop = FALSE]
-  write.csv(summary, file.path(output_dir, "DEG_summary.csv"), row.names = FALSE)
+  write.csv(tab, file.path(output_dir, paste0(contrast, "_all.csv")), row.names = FALSE)
+  write.csv(tab[tab$FDR <= fdr_cutoff, ], file.path(output_dir, paste0(contrast, "_significant.csv")), row.names = FALSE)
+  pb$summary <- data.frame(contrast, tested = nrow(tab),
+    up = sum(tab$FDR <= fdr_cutoff & tab$logFC > 0), down = sum(tab$FDR <= fdr_cutoff & tab$logFC < 0))
+  write.csv(merge(pb$contrast_status, pb$summary, by = "contrast", sort = FALSE),
+    file.path(output_dir, "DEG_summary.csv"), row.names = FALSE)
   saveRDS(pb, file.path(output_dir, "pseudobulk_fit.rds"))
   pb
 }

@@ -144,8 +144,13 @@ run_pseudobulk_gsea <- function(pb, reference, output_dir, label,
   }
   write.csv(coverage, file.path(output_dir, "pathway_coverage.csv"), row.names = FALSE)
   results <- ranks <- rank_tables <- plot_tables <- list()
+  retry_audit <- list()
+  nperm_by_contrast <- setNames(rep(1000L, length(pb$results)), names(pb$results))
   for (contrast in names(pb$results)) {
-    tab <- merge(pb$results[[contrast]], mapping, by = "gene", sort = FALSE)
+    # Display annotations must never feed back into canonical IDs or rank joins.
+    statistics <- pb$results[[contrast]][, setdiff(names(pb$results[[contrast]]),
+      c("gene_symbol", "display_gene", "mapping_source", "mapping_status")), drop = FALSE]
+    tab <- merge(statistics, mapping, by = "gene", sort = FALSE)
     tab <- tab[!tab$excluded, ]
     # Near-zero deviance differences can be negative numerically; edgeR assigns P=1.
     tab$rank_statistic <- sign(tab$logFC) * sqrt(pmax(tab$F, 0))
@@ -155,7 +160,25 @@ run_pseudobulk_gsea <- function(pb, reference, output_dir, label,
     write.csv(tab, file.path(output_dir, paste0(contrast, "_ranked_genes.csv")), row.names = FALSE)
     set.seed(seed)
     result <- as.data.frame(fgsea::fgseaMultilevel(pathways, ranks[[contrast]],
-      minSize = 15, maxSize = 500, gseaParam = 1, scoreType = "std", eps = 0, nproc = 1))
+      minSize = 15, maxSize = 500, gseaParam = 1, scoreType = "std", eps = 0, nproc = 1,
+      nPermSimple = 1000L))
+    missing_initial <- !is.finite(result$NES) | is.na(result$pval) | is.na(result$padj)
+    retried <- any(missing_initial)
+    if (retried) {
+      write.csv(result[missing_initial, c("pathway", "NES", "pval", "padj")],
+        file.path(output_dir, paste0(contrast, "_initial_unavailable.csv")), row.names = FALSE)
+      message("Owner-approved uniform ", collection_label, " retry for ", contrast, ": nPermSimple=10000",
+        "; initial unavailable pathways=", sum(missing_initial), "; seed=", seed)
+      set.seed(seed)
+      nperm_by_contrast[[contrast]] <- 10000L
+      result <- as.data.frame(fgsea::fgseaMultilevel(pathways, ranks[[contrast]],
+        minSize = 15, maxSize = 500, gseaParam = 1, scoreType = "std", eps = 0, nproc = 1,
+        nPermSimple = 10000L))
+    }
+    retry_audit[[contrast]] <- data.frame(contrast = contrast, initial_unavailable = sum(missing_initial),
+      retried = retried, nPermSimple = if (retried) 10000L else 1000L,
+      final_unavailable = sum(!is.finite(result$NES) | is.na(result$pval) | is.na(result$padj)), seed = seed)
+    write.csv(do.call(rbind, retry_audit), file.path(output_dir, "retry_audit.csv"), row.names = FALSE)
     result <- result[order(result$padj, result$pval, result$pathway), ]
     if (!is.null(reference$terms)) {
       result <- cbind(result, reference$terms[match(result$pathway, reference$terms$pathway), -1])
@@ -170,9 +193,9 @@ run_pseudobulk_gsea <- function(pb, reference, output_dir, label,
     csv <- result
     csv$leadingEdge <- vapply(csv$leadingEdge, paste, collapse = ";", character(1))
     write.csv(csv, file.path(output_dir, paste0(contrast, "_gsea.csv")), row.names = FALSE)
-    if (collection == "gobp" && any(!is.finite(result$NES) | is.na(result$pval) | is.na(result$padj))) {
-      stop("GO:BP enrichment has unavailable estimates in ", contrast,
-        "; results retained in CSV, no automatic retry or term deletion.")
+    if (any(!is.finite(result$NES) | is.na(result$pval) | is.na(result$padj))) {
+      stop(collection_label, " enrichment has unavailable estimates in ", contrast,
+        "; results retained in CSV; no further retry or term deletion.")
     }
     display <- result[is.finite(result$NES) & !is.na(result$padj), ]
     if (significant_only) display <- display[display$padj < pathway_fdr, ]
@@ -210,7 +233,10 @@ run_pseudobulk_gsea <- function(pb, reference, output_dir, label,
     fdr_scope = "BH within collection/cluster/contrast; not across collections, clusters or contrasts",
     parameters = list(minSize = 15L, maxSize = 500L, gseaParam = 1, scoreType = "std",
       eps = 0, nproc = 1L, seed = seed, pathway_fdr = pathway_fdr,
-      excluded_features = excluded_features, significant_only = significant_only)),
+      excluded_features = excluded_features, significant_only = significant_only,
+      retry_rule = "If any unavailable estimates at1000, retry whole contrast once at10000 with the same seed; never drop pathways",
+      retry_audit = retry_audit,
+      nPermSimple_by_contrast = nperm_by_contrast)),
     file.path(output_dir, "gsea_results.rds"))
   list(status = "completed", summary = summary)
 }
@@ -241,7 +267,7 @@ render_pseudobulk_gsea <- function(result, display, ranks, pathways,
     shape = 21, alpha = 1, border_size = 0.3, aspect.ratio = NULL,
     theme = "theme_classic", theme_args = list(base_size = 10),
     title = paste(label, collection_label, "GSEA"),
-    subtitle = sprintf("%s (n=%d samples) minus %s (n=%d samples) | %d directly paired pigs\n%d pigs in joint model | * pathway FDR < %g",
+    subtitle = sprintf("%s (n=%d samples) minus %s (n=%d samples) | %d directly paired pigs\n%d pigs in paired model | * pathway FDR < %g",
       groups[1], n_samples[1], groups[2], n_samples[2], length(paired_pigs), n_model_pigs, pathway_fdr),
     xlab = paste("NES: negative favours", groups[2], "; positive favours", groups[1]),
     ylab = "", combine = FALSE, seed = seed)[[1]] +

@@ -1,43 +1,14 @@
-# The driver sources R/utils/save_plots.R before calling this module.
+# Prepare saved display tables without producing redundant diagnostic figures.
+# Explicit legacy render helpers below remain available for requested replotting.
 source("R/plots/publications/publication_style.R")
-plot_pseudobulk_de <- function(pb, output_dir, label, mapping,
-                              fdr_cutoff = 0.05, logfc_cutoff = 0.5, seed = 1234) {
+prepare_pseudobulk_plot_data <- function(pb, output_dir, mapping,
+                                         fdr_cutoff = 0.05, logfc_cutoff = 0.5) {
   dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
-  sample_info <- pb$sample_info
-  condition_levels <- c("Control", "P4", "N4", "P10", "N10")
-  sample_info$condition <- factor(sample_info$condition,
-    levels = condition_levels[condition_levels %in% sample_info$condition])
-  sample_info <- sample_info[order(sample_info$condition, sample_info$pig), ]
-  log2_cpm <- edgeR::cpm(pb$dge, log = TRUE, prior.count = 2)
-  passes <- vapply(pb$results, function(tab) {
-    genes <- tab$gene[tab$FDR <= fdr_cutoff & abs(tab$logFC) >= logfc_cutoff]
-    rownames(log2_cpm) %in% genes
-  }, logical(nrow(log2_cpm)))
-  rownames(passes) <- rownames(log2_cpm)
-  # Union of genes passing both thresholds within at least one contrast.
-  selected <- rownames(log2_cpm)[rowSums(passes) > 0]
-  z_scores <- log2_cpm[selected, sample_info$sample, drop = FALSE]
-  if (length(selected)) z_scores <- t(scale(t(z_scores)))
-  if (any(!is.finite(z_scores))) {
-    stop("Heatmap row z-scores are undefined for some selected genes; review constant rows before plotting.")
-  }
-  row_hc <- if (length(selected) > 1) {
-    stats::hclust(stats::dist(z_scores, method = "euclidean"), method = "complete")
-  } else FALSE
-  gene_order <- if (length(selected) > 1) rownames(z_scores)[row_hc$order] else selected
-  csv <- setNames(file.path(output_dir, paste0(c("heatmap_genes", "heatmap_zscores",
-    "volcano_data", "volcano_summary"), ".csv")),
-    c("heatmap_genes", "heatmap_zscores", "volcano_data", "volcano_summary"))
-  write.csv(data.frame(gene = gene_order, row_order = seq_along(gene_order),
-    passes[gene_order, , drop = FALSE], check.names = FALSE), csv[["heatmap_genes"]], row.names = FALSE)
-  write.csv(data.frame(gene = gene_order, z_scores[gene_order, , drop = FALSE],
-    check.names = FALSE), csv[["heatmap_zscores"]], row.names = FALSE)
-
+  csv <- c(volcano_data = file.path(output_dir, "volcano_data.csv"),
+    volcano_summary = file.path(output_dir, "volcano_summary.csv"))
   class_levels <- c("Not significant", "Significant, small effect", "Down", "Up")
   volcano_data <- lapply(names(pb$results), function(comparison) {
-    tab <- pb$results[[comparison]]
-    safe_symbol <- mapping$safe_name[match(tab$gene, mapping$gene)]
-    tab$display_gene <- ifelse(!is.na(safe_symbol) & nzchar(safe_symbol), safe_symbol, tab$gene)
+    tab <- annotate_pig_genes(pb$results[[comparison]], mapping)
     tab$contrast <- comparison
     tab$neg_log10_fdr <- -log10(tab$FDR)
     tab$class <- "Not significant"
@@ -59,12 +30,7 @@ plot_pseudobulk_de <- function(pb, output_dir, label, mapping,
   class_counts <- as.data.frame(table(plot_data$contrast, plot_data$class), responseName = "n_genes")
   names(class_counts)[1:2] <- c("contrast", "class")
   write.csv(class_counts, csv[["volcano_summary"]], row.names = FALSE)
-  render_pseudobulk_heatmap(z_scores, row_hc, sample_info, output_dir, label,
-    fdr_cutoff, logfc_cutoff)
-  render_pseudobulk_volcano(plot_data, output_dir, label, fdr_cutoff, logfc_cutoff, seed)
-  stems <- c("heatmap_groups", paste0("volcano_", names(volcano_data)))
-  list(csv = csv, png = setNames(file.path(output_dir, paste0(stems, ".png")), stems),
-    n_heatmap_genes = length(selected))
+  list(csv = csv)
 }
 
 # Render from either freshly prepared or saved matrices/tables, without DE tests.

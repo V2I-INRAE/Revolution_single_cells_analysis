@@ -1,16 +1,28 @@
 # Combine saved per-cluster volcano results; no differential-expression refit.
-# Usage: Rscript R/plots/publications/plot_DEG_for_pub.R <DEG_T10H_directory> [output_dir]
+# Usage: Rscript R/plots/publications/plot_DEG_for_pub.R <res0.X/DEG> [output_dir]
 # Or source and call plot_DEG_for_pub(input_dir, output_dir, contrast).
 # Final-size PDF: 170 mm wide for up to five clusters; place at 100%, not 20%.
 suppressPackageStartupMessages({ library(ggplot2); library(plotthis) })
 source("R/utils/save_plots.R")
 source("R/plots/publications/publication_style.R")
+source("R/plots/publications/publication_paths.R")
 
-plot_DEG_for_pub <- function(input_dir, output_dir = file.path(dirname(input_dir), "publications_figures"),
-  contrast = "P4_vs_N4") {
+plot_DEG_for_pub <- function(input_dir, output_dir = NULL, contrast = "P4_vs_N4") {
+  record <- readLines(file.path(input_dir, ".INFO"))
+  population_line <- grep("^Population:", record, value = TRUE)
+  population <- trimws(sub("^Population: ([^;]+).*", "\\1", population_line))
+  cluster_col <- sub(".*cluster column: ([^ ;]+).*", "\\1", population_line)
+  resolution <- sub(".*_res[.]", "", cluster_col)
+  if (is.null(output_dir)) {
+    input_line <- grep("^Input \\(read-only\\): ", record, value = TRUE)
+    if (length(input_line) != 1L) stop("Saved run record must identify its input subset object")
+    output_dir <- subset_publication_dir(sub("^Input \\(read-only\\): ", "", input_line), resolution)
+  }
   dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
-  stem <- paste0("DEG_", basename(input_dir), "_", contrast)
+  stem <- paste0("DEG_", contrast)
   info_path <- file.path(output_dir, paste0(stem, ".INFO"))
+  out <- file.path(output_dir, paste0(stem, ".pdf"))
+  if (file.exists(info_path) || file.exists(out)) stop("Publication output already exists: ", stem)
   info <- c("# Combined-cluster differential-expression plot", "Status: running",
     paste("Started:", Sys.time()), paste("Input (read-only):", normalizePath(input_dir)),
     paste("Producer:", Sys.getenv("SLURM_JOB_ID", unset = "manual/local")),
@@ -28,16 +40,11 @@ plot_DEG_for_pub <- function(input_dir, output_dir = file.path(dirname(input_dir
     "Label layout: plain left-aligned column at cluster-0.18, right of gene cloud; separate signs; vertical repel/nudge +/-0.6, padding0.35, force10, force_pull0; thin grey straight connectors.")
   writeLines(info, info_path)
   done <- FALSE
+  skipped <- FALSE
   on.exit({
-    info[info == "Status: running"] <- paste("Status:", if (done) "completed" else "failed/incomplete")
+    info[info == "Status: running"] <- paste("Status:", if (skipped) "skipped; no eligible clusters" else if (done) "completed" else "failed/incomplete")
     writeLines(c(info, paste("Finished:", Sys.time())), info_path)
   }, add = TRUE)
-  record <- readLines(file.path(input_dir, ".INFO"))
-  population_line <- grep("^Population:", record, value = TRUE)
-  population <- trimws(sub("^Population: ([^;]+).*", "\\1", population_line))
-  cluster_col <- sub(".*cluster column: ([^ ;]+).*", "\\1", population_line)
-  resolution <- sub(".*_res[.]", "", cluster_col)
-
   folders <- list.dirs(input_dir, recursive = FALSE)
   folders <- folders[grepl("^cluster_[0-9]+$", basename(folders))]
   ids <- as.integer(sub("cluster_", "", basename(folders)))
@@ -49,7 +56,13 @@ plot_DEG_for_pub <- function(input_dir, output_dir = file.path(dirname(input_dir
   }, logical(1))
   skipped_ids <- ids[!available]
   paths <- paths[available]; ids <- ids[available]
-  stopifnot(length(ids) > 0, max(ids) <= length(viz_palette))
+  if (!length(ids)) {
+    info <- c(info, "Skip reason: no cluster has a tested result for this contrast; see source cluster_summary.csv.",
+      "No PDF generated: unsupported comparisons must not be displayed as tested results.")
+    skipped <- TRUE
+    return(invisible(list(pdf = NULL, status = "skipped")))
+  }
+  stopifnot(max(ids) <= length(viz_palette))
   dat <- do.call(rbind, lapply(seq_along(paths), function(i) {
     d <- read.csv(paths[i], stringsAsFactors = FALSE)
     d <- d[d$contrast == contrast, ]
@@ -109,7 +122,6 @@ plot_DEG_for_pub <- function(input_dir, output_dir = file.path(dirname(input_dir
       max.time = Inf, max.iter = 100000)
   }
   p <- ggrastr::rasterise(p, layers = "Point", dpi = 600)
-  out <- file.path(output_dir, paste0(stem, ".pdf"))
   info <- c(info, paste("Actual inputs:", paste(paths, collapse = "; ")),
     paste("Saved DEG cluster column:", cluster_col, "; clusters plotted:", paste(ids, collapse = ", ")),
     paste("Clusters without this saved contrast:", paste(skipped_ids, collapse = ", ")),

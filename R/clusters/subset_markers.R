@@ -1,5 +1,5 @@
 # Subset marker entry point: cluster markers for one subclustered subset,
-# then a top-5 dotplot and a top-25 heatmap.
+# with pig gene-name annotation. Publication plots are generated explicitly.
 # Usage: Rscript R/clusters/subset_markers.R <data/job-XXX/subsets/<Folder>/<subrun>/subclustered.rds> <resolution>
 suppressPackageStartupMessages({
   library(Seurat)
@@ -7,8 +7,8 @@ suppressPackageStartupMessages({
 })
 source("R/config.R")
 source("R/cell_cycle.R") # for rename_cc_features() used below
-source("R/utils/save_plots.R")
-source("R/plots/marker_cluster_plots.R")
+source("R/utils/pig_gene_mapping.R")
+source("R/plots/publications/publication_paths.R")
 
 run_subset_markers <- function(input, resolution) {
   if (basename(input) != "subclustered.rds") {
@@ -24,13 +24,13 @@ run_subset_markers <- function(input, resolution) {
   subrun <- parts[subsets_idx + 2L]
   cfg <- config$markers
   sel.clust <- paste0(cfg$cluster_prefix, resolution)
-  directory <- file.path("results", parent_job, "clusters_plots", "subset",
-    folder, subrun, paste0("markers_res", resolution))
+  directory <- file.path(subset_resolution_dir(input, as.character(resolution)), "Markers")
+  if (dir.exists(directory)) stop("Marker results already exist; refusing to overwrite: ", directory)
   dir.create(directory, recursive = TRUE, showWarnings = FALSE)
 
   info_path <- file.path(directory, ".INFO")
   info <- c(
-    "# Subset markers and plots",
+    "# Subset marker tables",
     "Status: running",
     paste("Started:", Sys.time()),
     paste("Marker producer job:", Sys.getenv("SLURM_JOB_ID", unset = "manual")),
@@ -48,13 +48,9 @@ run_subset_markers <- function(input, resolution) {
     paste("Significance: adjusted p <", cfg$adjusted_p_cutoff,
       "; ranking: descending avg_log2FC, adjusted p, gene."),
     "Reuse normalized/scaled RNA; join layers and translate existing feature IDs in memory only.",
-    "Dotplot: RNA data slot; scale=FALSE (no gene-wise scaling); YlOrRd colour, capped at the 75th percentile of plotted values.",
+    "Gene annotation: unflagged pig Ensembl symbols and unambiguous frozen MSigDB pig rescue; feature keys retained; no human renaming.",
     "No normalization, QC, reclustering or source RDS writes. Exploratory cluster markers, not condition DE.",
-    paste("Heatmap: display scaling recomputed over exactly the plotted top25 genes;",
-      "at most", cluster_heatmap_max_cells_per_ident,
-      "cells per cluster; RdBu palette, fixed limits",
-      paste(cluster_heatmap_disp_limits, collapse = " to "), ";",
-      "dotplot top5 and heatmap top25; PNG and PDF exports."),
+    "No exploratory dotplot or heatmap images exported; use the publication scripts explicitly.",
     paste("Seurat:", packageVersion("Seurat"), "; presto:", packageVersion("presto"))
   )
   completed <- FALSE
@@ -67,20 +63,10 @@ run_subset_markers <- function(input, resolution) {
   }, add = TRUE)
   input_info <- file.info(input)[, c("size", "mtime")]
 
-  # Idempotent reruns remove only outputs generated here. Sibling subcluster
-  # figures and records are never touched.
+  # These annotated tables are reopened after writing.
   pipeline_csvs <- c("markers_prefiltered.csv", "markers_significant.csv",
     "markers_top5.csv", "markers_top20.csv", "markers_top25.csv",
     "cluster_summary.csv", "sample_cluster_counts.csv")
-  for (csv in pipeline_csvs) {
-    csv_path <- file.path(directory, csv)
-    if (file.exists(csv_path)) file.remove(csv_path)
-  }
-  for (stem in c("dotplot_top5.png", "dotplot_top5.pdf",
-    "heatmap_top25.png", "heatmap_top25.pdf")) {
-    stem_path <- file.path(directory, stem)
-    if (file.exists(stem_path)) file.remove(stem_path)
-  }
 
   # Retain normalized/scaled expression for discovery and heatmap plotting.
   message("Loading subset marker input: ", input, " (resolution ", resolution, ")")
@@ -126,11 +112,11 @@ run_subset_markers <- function(input, resolution) {
     dplyr::mutate(cluster = factor(cluster, levels = levels(Idents(alldata))),
       pct_difference = pct.1 - pct.2) |>
     dplyr::arrange(cluster, dplyr::desc(avg_log2FC), p_val_adj, gene)
+  gene_mapping <- prepare_pig_gene_mapping(rownames(alldata[["RNA"]]))
+  markers <- annotate_pig_genes(markers, gene_mapping)
   significant <- dplyr::filter(markers, p_val_adj < cfg$adjusted_p_cutoff)
-  top5 <- significant |> dplyr::group_by(cluster) |> dplyr::slice_head(n = 5) |> dplyr::ungroup()
-  top25 <- significant |> dplyr::group_by(cluster) |> dplyr::slice_head(n = 25) |> dplyr::ungroup()
 
-  # Save marker results before rendering figures.
+  # Save annotation alongside the unchanged marker statistics.
   write.csv(markers, file.path(directory, "markers_prefiltered.csv"), row.names = FALSE)
   write.csv(significant, file.path(directory, "markers_significant.csv"), row.names = FALSE)
   saved_tables <- list(markers_prefiltered.csv = markers,
@@ -154,8 +140,10 @@ run_subset_markers <- function(input, resolution) {
 
   # Reopen the actual CSVs and compare every column with its source table.
   for (csv in pipeline_csvs) {
-    reopened <- read.csv(file.path(directory, csv), stringsAsFactors = FALSE, check.names = FALSE)
     expected <- as.data.frame(saved_tables[[csv]])
+    # Unmapped-name columns may be entirely blank; retain them as character.
+    reopened <- read.csv(file.path(directory, csv), stringsAsFactors = FALSE, check.names = FALSE,
+      colClasses = ifelse(vapply(expected, is.character, logical(1)), "character", NA_character_))
     for (column in names(expected)) {
       if (is.factor(expected[[column]]) || is.character(expected[[column]])) {
         expected[[column]] <- as.character(expected[[column]])
@@ -169,48 +157,14 @@ run_subset_markers <- function(input, resolution) {
   stopifnot(sum(summary$n_cells) == ncol(alldata), sum(composition$n_cells) == ncol(alldata))
   rm(saved_tables, reopened, expected)
 
-  # Display scaling over exactly the plotted top25 genes, one provenance for
-  # the whole heatmap: stored scale.data covers HVGs only, so recompute here.
-  heatmap_genes <- unique(as.character(top25$gene))
-  hvg_overlap <- intersect(heatmap_genes,
-    rownames(GetAssayData(alldata, assay = "RNA", layer = "scale.data")))
-  alldata <- Seurat::ScaleData(alldata, assay = "RNA",
-    features = heatmap_genes,
-    vars.to.regress = config$norm$vars_to_regress,
-    verbose = FALSE)
-  info <- c(info, paste(
-    "Heatmap display scaling: ScaleData over exactly the plotted top25 genes",
-    paste0("(", length(heatmap_genes), " genes),"),
-    "same regression covariates as the pipeline; stored HVG-only scale.data untouched.",
-    paste0("Top25 genes already scaled: ", length(hvg_overlap),
-      "/", length(heatmap_genes), ".")))
-  writeLines(info, info_path)
-
-  # Top-5 dotplot and top-25 heatmap exports: PDF and PNG.
-  plot_cluster_dotplot(alldata, top5, sel.clust, directory,
-    level_label = "Subcluster")
-  plot_cluster_heatmap(alldata, heatmap_genes, sel.clust, directory,
-    seed = config$run$seed, level_label = "Subcluster")
-  figures <- file.path(directory, c("dotplot_top5.png", "dotplot_top5.pdf",
-    "heatmap_top25.png", "heatmap_top25.pdf"))
-  stopifnot(all(file.exists(figures)), all(file.size(figures) > 0))
-  for (path in figures[grepl("\\.png$", figures)]) {
-    image <- png::readPNG(path, native = TRUE)
-    stopifnot(all(dim(image) > 0))
-    rm(image)
-  }
-  for (path in figures[grepl("\\.pdf$", figures)]) {
-    stopifnot(identical(rawToChar(readBin(path, what = "raw", n = 5L)), "%PDF-"))
-  }
   stopifnot(identical(file.info(input)[, c("size", "mtime")], input_info))
   validation <- c(
-    "Validation: all seven CSVs reopened and values matched; cluster/sample counts conserve cells; PNGs decoded; nonempty PDF signatures checked; source RDS size/mtime unchanged.",
-    "PDF page rendering and visual/biological review remain pending; no PDF parser is installed.",
+    "Validation: all seven annotated CSVs reopened and values matched; cluster/sample counts conserve cells; source RDS size/mtime unchanged. No plots generated.",
     paste("Marker rows:", nrow(markers), "; significant rows:", nrow(significant)),
     capture.output(print(counts))
   )
   completed <- TRUE
-  message("Subset marker tables and plots completed: ", directory)
+  message("Annotated subset marker tables completed: ", directory)
   invisible(directory)
 }
 

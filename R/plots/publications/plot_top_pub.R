@@ -6,6 +6,8 @@ suppressPackageStartupMessages({ library(Seurat); library(ggplot2) })
 source('R/clusters/markers.R') # feature names used by the marker producer
 source('R/cell_cycle.R')       # collision-checked rename_cc_features()
 source('R/plots/dotplot_colour.R')
+source('R/plots/publications/publication_paths.R')
+source('R/utils/pig_gene_mapping.R')
 
 args <- commandArgs(trailingOnly = TRUE)
 if (length(args) < 3L || length(args) > 4L) stop('Usage: plot_top_pub.R <subclustered.rds> <panel.csv> <resolution> [output_dir]')
@@ -35,6 +37,9 @@ cat('Feature translations:', paste(names(rename_map), rename_map, sep = '=', col
 obj[[cluster_col]] <- factor(as.character(metadata[[cluster_col]]), levels = cluster_ids)
 plot <- Seurat::DotPlot(obj, features = genes, group.by = cluster_col,
   assay = 'RNA', scale = FALSE, dot.scale = 12)
+# Labels are separate from the expression feature keys, including collisions.
+gene_mapping <- prepare_pig_gene_mapping(rownames(obj[['RNA']]))
+axis_labels <- setNames(gene_mapping$display_gene, gene_mapping$gene)
 dat <- plot$data
 if (nrow(dat) != length(genes) * length(cluster_ids) || anyNA(dat$pct.exp) ||
     anyNA(dat$avg.exp.scaled) || !setequal(as.character(dat$features.plot), genes) ||
@@ -54,6 +59,7 @@ cat('Cells:', ncol(obj), '; clusters:', length(cluster_ids), '; genes:', length(
 
 # Seurat uses log1p(mean(expm1(log-normalized expression))) when scale=FALSE.
 plot <- plot + dotplot_colour_scale(plot) +
+  scale_x_discrete(labels = axis_labels) +
   labs(colour = 'Average expression\n(log1p mean)',
     caption = 'YlOrRd colour capped at the 75th percentile of plotted values.') +
   scale_size_area(max_size = 12, limits = c(0, 100), breaks = c(25, 50, 75, 100),
@@ -70,9 +76,9 @@ plot <- plot + dotplot_colour_scale(plot) +
     legend.title = element_text(size = 40), legend.text = element_text(size = 36),
     legend.key.height = grid::unit(0.6, 'in'),
     plot.margin = margin(35, 45, 35, 35))
-out_dir <- if (length(args) == 4L) args[[4L]] else file.path(dirname(dirname(panel_path)), 'publications_figures')
+out_dir <- if (length(args) == 4L) args[[4L]] else subset_publication_dir(input, resolution)
 dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
-stem <- paste0('dotplot_top5_plus_canonical_res', resolution, '_pub_ylorrd_p75')
+stem <- 'dotplot'
 out <- file.path(out_dir, paste0(stem, '.pdf'))
 info_path <- file.path(out_dir, paste0(stem, '.INFO'))
 if (file.exists(out) || file.exists(info_path)) stop('Output already exists; refusing to overwrite: ', out)

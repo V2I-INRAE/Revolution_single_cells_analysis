@@ -58,17 +58,22 @@ See [app/README.md](app/README.md) for navigation and data preparation.
 
 ## Pseudobulk DEG and pathway enrichment
 
-Run one saved subset locally from the project root, choosing a new output directory:
+Run paired differential expression and pathway enrichment for a saved subset from the project root. Replace the job IDs, subset label, and resolution with values from the input. The matching `DEG/` output directory must not already exist.
 
 ```bash
+source_job=SOURCE_JOB
+subset=SUBSET
+subset_job=SUBSET_JOB
+resolution=RESOLUTION
+
 Rscript R/DEG/main.R \
-  --input=data/job-44542861/subsets/DC/job-44831038/subclustered.rds \
-  --subset=DC --cluster-col=harmony_snn_res.0.2 --clusters=1,2,3 \
-  --output-root=results/job-44542861/clusters_plots/subset/DC/job-44831038/DEG_NEW
+  --input=data/job-${source_job}/subsets/${subset}/job-${subset_job}/subclustered.rds \
+  --subset=${subset} --cluster-col=harmony_snn_res.${resolution} --clusters=all \
+  --output-root=results/job-${source_job}/clusters_plots/subset/${subset}/job-${subset_job}/res${resolution}/DEG
 ```
 
-The driver retains the paired edgeR pseudobulk design, existing count filtering and GSEA ranking. It runs Hallmark, Reactome and GO:BP GSEA and ORA. The default frozen references are `results/misc/msigdb_pig_2026.1/` (MSigDB 2026.1.Hs pig projection); supply `--references=<directory>` to select an equivalent frozen reference explicitly. No database is downloaded by the analysis. Historical analyses may require their approved extra GSEA exclusions: supply `--gsea-exclusions=<CSV>` with `cluster,gene` columns. Unresolved GSEA identifier collisions block enrichment rather than being silently resolved.
+The workflow excludes specimens with fewer than 25 cells and skips contrasts with fewer than three complete pig pairs. Each contrast uses its own paired edgeR model. It writes DEG tables, sample and model audits, and Hallmark, Reactome, and GO:BP GSEA results under `res0.X/DEG/`. Combined DEG plots go in the sibling `publication_figures/` directory. The workflow uses frozen pig pathway references in `results/misc/msigdb_pig_2026.1/` by default.
 
-ORA uses all genes with DEG FDR <= 0.05, without a fold-change cutoff, as a combined non-directional query. The background is the tested, unambiguous genes, including unannotated nonhits. Multiple tested features mapping to the same pig gene collapse to one background gene; any significant feature selects that gene. Ambiguous mappings and collapsed features are recorded. Terms with 15–500 background genes are tested with the hypergeometric upper tail, with BH adjustment per collection, cluster and contrast; report FDR <= 0.05.
+> Optional settings: `--pigs=<pig,pig>` limits the pig set. `--min-matched-pigs=<n>` raises the minimum pair count, which cannot be lower than three. `--references=<dir>` selects another frozen reference directory. `--gsea-exclusions=<CSV>` applies approved gene exclusions to GSEA. Run `Rscript R/DEG/main.R --help` for all options.
 
-Optional `--pigs=REVO26,REVO30` restricts animals; `--min-matched-pigs=2` permits an exploratory two-pig contrast (default: 3). Existing output directories are never overwritten. Detailed methods, exclusions, status and logs are recorded for each run. Source objects and references are read-only. Publication figures are also collected under the subset job's `publications_figures/` directory, with the analysis name and cluster preserved to avoid collisions. Existing results are not automatically regenerated.
+Each run writes its settings and status to `.INFO` files and its execution log under `logs/`. The source object and reference files are read-only. Existing result directories are not overwritten.
