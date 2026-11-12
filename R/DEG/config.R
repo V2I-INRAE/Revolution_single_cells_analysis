@@ -21,9 +21,10 @@ deg_config <- list(
   gsea_nperm_retry = 10000L, # whole contrast rerun once if any estimate is unavailable
   pathway_fdr = 0.05,
   seed = 1234,
-  collections = c("hallmark", "reactome", "gobp"),
+  collections = c("hallmark", "reactome", "gobp", "kegg"),
 
   # Frozen references
   reference_dir = "results/misc/msigdb_pig_2026.1",
+  kegg_reference = "results/misc/kegg_pig/kegg_pig.rds", # built by R/DEG/build_kegg_reference.R
   mapping_file = "results/misc/Ensembl_ID/gene-mapping/pig_to_human_orthologues_annotated.csv"
 )

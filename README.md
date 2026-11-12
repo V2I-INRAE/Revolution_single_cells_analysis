@@ -71,7 +71,7 @@ Rscript R/DEG/main.R \
   --subset=${subset} --cluster-col=harmony_snn_res.${resolution} --clusters=all
 ```
 
-Settings are in `R/DEG/config.R`. The workflow excludes specimens with fewer than 20 cells and skips contrasts with fewer than three complete pig pairs. Each contrast uses its own paired edgeR model. It writes DEG tables, sample and model audits, and Hallmark, Reactome, and GO:BP GSEA results under `res0.X/DEG/`. Combined DEG plots go in the sibling `publication_figures/` directory. The workflow uses frozen pig pathway references in `results/misc/msigdb_pig_2026.1/`.
+Settings are in `R/DEG/config.R`. The workflow excludes specimens with fewer than 20 cells and skips contrasts with fewer than three complete pig pairs. Each contrast uses its own paired edgeR model. It writes DEG tables, sample and model audits, and Hallmark, Reactome, GO:BP, and KEGG GSEA results under `res0.X/DEG/`. Combined DEG plots go in the sibling `publication_figures/` directory. The workflow uses frozen pig pathway references in `results/misc/msigdb_pig_2026.1/`. KEGG uses a frozen snapshot of the native pig (`ssc`) pathways in `results/misc/kegg_pig/`, built once with `Rscript R/DEG/build_kegg_reference.R` (KEGG REST API, academic use only); rebuilding it takes the current KEGG release and requires a DEG rerun.
 
 > Optional settings: `--clusters=1,2` runs selected clusters. `--output-root=<dir>/DEG` writes elsewhere, for example for a test run. `--gsea-exclusions=<CSV>` applies approved gene exclusions to GSEA.
 

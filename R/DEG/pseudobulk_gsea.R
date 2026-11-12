@@ -3,11 +3,13 @@ source("R/plots/publications/publication_style.R")
 pseudobulk_gsea_labels <- c(
   hallmark = "Hallmark",
   reactome = "Reactome",
-  gobp = "GO:BP"
+  gobp = "GO:BP",
+  kegg = "KEGG"
 )
 
 # Pig identifiers only; human orthologue names are not pig feature renames.
 # Hallmark and Reactome share one alias union; GO:BP has an independent mapping.
+# KEGG uses native pig NCBI Gene IDs; its aliases are the Hallmark/Reactome union plus KEGG symbols.
 prepare_pseudobulk_gsea <- function(common_genes, collection) {
   reference_dir <- deg_config$reference_dir
   hallmark <- readRDS(file.path(reference_dir, "hallmark_pig.rds"))
@@ -17,6 +19,10 @@ prepare_pseudobulk_gsea <- function(common_genes, collection) {
   if (collection == "gobp") {
     selected <- readRDS(file.path(reference_dir, "gobp_pig.rds"))
     reference <- selected
+  }
+  if (collection == "kegg") {
+    selected <- readRDS(deg_config$kegg_reference)
+    reference <- dplyr::bind_rows(hallmark, reactome, selected)
   }
   reference$pig_gene <- ifelse(
     !is.na(reference$ncbi_gene),
@@ -147,11 +153,26 @@ prepare_pseudobulk_gsea <- function(common_genes, collection) {
     )]))
     names(terms) <- c("pathway", "go_id", "msigdb_id", "description")
   }
+  if (collection == "kegg") {
+    terms <- unique(as.data.frame(selected[, c(
+      "gs_name",
+      "gs_id",
+      "gs_description"
+    )]))
+    names(terms) <- c("pathway", "kegg_id", "description")
+  }
   list(
     mapping = mapping,
     pathways = split(members$pig_gene, members$gs_name),
     terms = terms,
-    database_version = unique(selected$db_version),
+    database_version = if (collection == "kegg") {
+      paste0("Native pig (ssc) pathways, ", unique(selected$db_version))
+    } else {
+      paste0(
+        "Pig orthologue projection of MSigDB ",
+        unique(selected$db_version)
+      )
+    },
     collection = collection
   )
 }
@@ -534,7 +555,6 @@ render_pseudobulk_gsea <- function(
           } else {
             "Up to eight terms per direction by FDR; unstarred terms may not be significant.\n"
           },
-          "Pig orthologue projection of MSigDB ",
           database_version,
           ". BH across ",
           nrow(result),
@@ -548,7 +568,6 @@ render_pseudobulk_gsea <- function(
     figure <- figure +
       ggplot2::labs(
         caption = deg_wrap(paste0(
-          "MSigDB ",
           database_version,
           "; BH across ",
           nrow(result),
@@ -655,7 +674,11 @@ render_pseudobulk_gsea <- function(
         } else {
           "Lowest-FDR pathway in each direction, regardless of significance."
         },
-        "Pig orthologue projection; no claim of pathway activation."
+        if (collection_label == "KEGG") {
+          "Native pig KEGG pathways; no claim of pathway activation."
+        } else {
+          "Pig orthologue projection; no claim of pathway activation."
+        }
       )),
       theme = deg_theme()
     )
