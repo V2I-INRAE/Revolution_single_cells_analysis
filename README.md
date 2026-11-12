@@ -58,7 +58,7 @@ See [app/README.md](app/README.md) for navigation and data preparation.
 
 ## Pseudobulk DEG and pathway enrichment
 
-Run paired differential expression and pathway enrichment for a saved subset from the project root. Replace the job IDs, subset label, and resolution with values from the input. The matching `DEG/` output directory must not already exist.
+Run paired differential expression and pathway enrichment for a saved subset from the project root. Replace the job IDs, subset label, and resolution with values from the input. Each run replaces the matching `res0.X/DEG/` directory and its `DEG_<contrast>.pdf` publication figures.
 
 ```bash
 source_job=SOURCE_JOB
@@ -68,12 +68,11 @@ resolution=RESOLUTION
 
 Rscript R/DEG/main.R \
   --input=data/job-${source_job}/subsets/${subset}/job-${subset_job}/subclustered.rds \
-  --subset=${subset} --cluster-col=harmony_snn_res.${resolution} --clusters=all \
-  --output-root=results/job-${source_job}/clusters_plots/subset/${subset}/job-${subset_job}/res${resolution}/DEG
+  --subset=${subset} --cluster-col=harmony_snn_res.${resolution} --clusters=all
 ```
 
-The workflow excludes specimens with fewer than 25 cells and skips contrasts with fewer than three complete pig pairs. Each contrast uses its own paired edgeR model. It writes DEG tables, sample and model audits, and Hallmark, Reactome, and GO:BP GSEA results under `res0.X/DEG/`. Combined DEG plots go in the sibling `publication_figures/` directory. The workflow uses frozen pig pathway references in `results/misc/msigdb_pig_2026.1/` by default.
+Settings are in `R/DEG/config.R`. The workflow excludes specimens with fewer than 20 cells and skips contrasts with fewer than three complete pig pairs. Each contrast uses its own paired edgeR model. It writes DEG tables, sample and model audits, and Hallmark, Reactome, and GO:BP GSEA results under `res0.X/DEG/`. Combined DEG plots go in the sibling `publication_figures/` directory. The workflow uses frozen pig pathway references in `results/misc/msigdb_pig_2026.1/`.
 
-> Optional settings: `--pigs=<pig,pig>` limits the pig set. `--min-matched-pigs=<n>` raises the minimum pair count, which cannot be lower than three. `--references=<dir>` selects another frozen reference directory. `--gsea-exclusions=<CSV>` applies approved gene exclusions to GSEA. Run `Rscript R/DEG/main.R --help` for all options.
+> Optional settings: `--clusters=1,2` runs selected clusters. `--output-root=<dir>/DEG` writes elsewhere, for example for a test run. `--gsea-exclusions=<CSV>` applies approved gene exclusions to GSEA.
 
-Each run writes its settings and status to `.INFO` files and its execution log under `logs/`. The source object and reference files are read-only. Existing result directories are not overwritten.
+The pipeline writes no `.INFO` or log files; redirect the console output to `logs/` if needed. The source object and reference files are read-only.
