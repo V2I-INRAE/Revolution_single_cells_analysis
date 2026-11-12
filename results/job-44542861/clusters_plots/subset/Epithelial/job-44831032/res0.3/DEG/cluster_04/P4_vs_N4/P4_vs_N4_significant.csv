@@ -1,0 +1,7 @@
+"gene","logFC","logCPM","F","PValue","FDR","direction","gene_symbol","display_gene","mapping_source","mapping_status"
+"BHLHE40",-2.03924660727026,7.9747030441381,59.8117386143949,3.23215647497215e-06,0.0135556642560332,"down","BHLHE40","BHLHE40","existing_feature_name","existing_feature_name"
+"S100A2",-2.27783708755056,7.03433820941811,43.4193789163558,1.14883484175771e-05,0.0164388137804481,"down","S100A2","S100A2","existing_feature_name","existing_feature_name"
+"MYC",-2.49672628127786,7.00398024908344,45.3602348397715,1.17588081405208e-05,0.0164388137804481,"down","MYC","MYC","existing_feature_name","existing_feature_name"
+"F3",-1.79409700364754,7.8541049381399,38.6786097175794,2.46074412548473e-05,0.0258009021557074,"down","F3","F3","existing_feature_name","existing_feature_name"
+"SLA-DQB1",-2.29874788849702,7.05759139550914,32.8680672874057,4.72938715753984e-05,0.0339427466331062,"down","SLA-DQB1","SLA-DQB1","existing_feature_name","existing_feature_name"
+"FNBP4",1.09089315875169,9.50834849966327,35.3298605727639,4.85590080588072e-05,0.0339427466331062,"up","FNBP4","FNBP4","existing_feature_name","existing_feature_name"

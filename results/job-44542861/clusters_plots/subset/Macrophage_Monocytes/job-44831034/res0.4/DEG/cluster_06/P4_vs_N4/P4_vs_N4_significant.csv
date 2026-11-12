@@ -1,0 +1,5 @@
+"gene","logFC","logCPM","F","PValue","FDR","direction","gene_symbol","display_gene","mapping_source","mapping_status"
+"ENSSSCG00000011253",2.02243413373362,7.90163465675218,52.654635514838,2.1754924216324e-05,0.0493302181175059,"up","OXSR1","OXSR1","pig_Ensembl_annotation:NCBI Gene","mapped"
+"ATP1B1",-3.02534235055744,8.37366172500736,48.2172451415644,3.21998871641435e-05,0.0493302181175059,"down","ATP1B1","ATP1B1","existing_feature_name","existing_feature_name"
+"NUDT7",2.25608921540602,5.9872353973269,42.8190778271338,5.05991640062995e-05,0.0493302181175059,"up","NUDT7","NUDT7","existing_feature_name","existing_feature_name"
+"NETO2",2.94623704182268,7.43092790761729,42.9647439442016,5.36052356615114e-05,0.0493302181175059,"up","NETO2","NETO2","existing_feature_name","existing_feature_name"

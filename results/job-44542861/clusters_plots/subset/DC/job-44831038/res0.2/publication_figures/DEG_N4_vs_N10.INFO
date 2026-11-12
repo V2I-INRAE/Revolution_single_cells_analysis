@@ -1,0 +1,20 @@
+# Combined-cluster differential-expression plot
+Status: skipped; no eligible clusters
+Started: 2026-11-06 15:35:56.166967
+Input (read-only): /Users/fbraza/Documents/PROJECTS/REVOLUTION/RESULTS/SINGLE_CELLS/analysis/results/job-44542861/clusters_plots/subset/DC/job-44831038/res0.2/DEG
+Producer: manual/local
+Contrast: N4_vs_N10 ; source record: results/job-44542861/clusters_plots/subset/DC/job-44831038/res0.2/DEG/.INFO
+Method: display saved per-cluster edgeR results; no refitting or pooling of counts.
+Thresholds: BH FDR <= 0.05 AND abs(log2FC) >= 0.5; no raw-p cutoff.
+FDR families remain per cluster/contrast, not global across the figure.
+All tested gene-cluster pairs retained; saved volcano display names/classes reused.
+Grey: fails either FDR or fold-change threshold (including significant small effects).
+Labels: up to five named genes per cluster/direction; rank FDR, PValue, descending abs(logFC), gene ID.
+Ensembl gene IDs and LOC placeholders excluded from labels only; their points remain plotted.
+Seed: 1234; gene cloud at cluster-0.32 with jitter +/-0.10; points rasterized at 600 dpi; PDF only.
+Positive logFC favours the first condition; negative favours the second.
+Typography: plain editable labels (no halo), thin grey connector lines; gene labels 9.5 pt, axes/legend 10 pt, axis titles 11 pt, title 12 pt.
+Label layout: plain left-aligned column at cluster-0.18, right of gene cloud; separate signs; vertical repel/nudge +/-0.6, padding0.35, force10, force_pull0; thin grey straight connectors.
+Skip reason: no cluster has a tested result for this contrast; see source cluster_summary.csv.
+No PDF generated: unsupported comparisons must not be displayed as tested results.
+Finished: 2026-11-06 15:35:56.347813

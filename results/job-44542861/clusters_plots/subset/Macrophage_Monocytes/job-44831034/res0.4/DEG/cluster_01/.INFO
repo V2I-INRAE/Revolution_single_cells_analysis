@@ -1,0 +1,5 @@
+# Macrophage_Monocytes cluster 1
+Status: completed/validated; tested 6 ; skipped 0 ; all six comparisons assessed.
+Run settings: results/job-44542861/clusters_plots/subset/Macrophage_Monocytes/job-44831034/res0.4/DEG/.INFO
+Evidence: logs/paired-deg25-rerun-20261106-continuation.log
+Validation: logs/paired-deg25-validation-20261106.log; model and GSEA settings are comparison-specific.

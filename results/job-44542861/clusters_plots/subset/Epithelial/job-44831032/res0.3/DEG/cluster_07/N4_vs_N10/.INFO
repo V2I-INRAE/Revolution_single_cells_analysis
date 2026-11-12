@@ -1,0 +1,15 @@
+# Epithelial cluster 7 N4_vs_N10
+Status: skipped and eligibility verified; missing_group_after_25_cell_filter ; no fit or GSEA.
+Started: 2026-11-06 13:36:28.816929
+Run settings: results/job-44542861/clusters_plots/subset/Epithelial/job-44831032/res0.3/DEG/.INFO
+Input: data/job-44542861/subsets/Epithelial/job-44831032/subclustered.rds
+Cluster column: harmony_snn_res.0.3
+Method: >=25 cells/specimen, >=3 complete pig pairs; separate filterByExpr/TMM/~pig+condition edgeR fit.
+Seed: 1234 for GSEA/labels; deterministic DE.
+Evidence: logs/paired-deg25-rerun-20261106.log
+Matched pigs: 
+Retained specimens: 0 ; minimum cells: NA
+Finished: 2026-11-06 13:36:28.818607
+Uniform GSEA policy (owner-approved): initial nPermSimple1000; if any estimate unavailable, retry that whole contrast once at10000 with seed1234; preserve initial terms/retry audit; stop if still unavailable. No pathway deletion or collection-specific overrides.
+Validation: original counts/metadata, >=25 cells, complete pairs, filterByExpr/TMM/design, saved-fit statistics/FDR and GSEA ranks/retries passed where fitted; skipped comparisons verified separately.
+Evidence: logs/paired-deg25-validation-20261106.log.

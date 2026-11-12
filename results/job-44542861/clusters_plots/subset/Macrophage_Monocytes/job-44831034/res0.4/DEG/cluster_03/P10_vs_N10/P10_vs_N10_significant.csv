@@ -1,0 +1,2 @@
+"gene","logFC","logCPM","F","PValue","FDR","direction","gene_symbol","display_gene","mapping_source","mapping_status"
+"CCL8",1.83528041993097,5.6204905273054,69.7566671463422,1.35179475953044e-06,0.0100992586484519,"up","CCL8","CCL8","existing_feature_name","existing_feature_name"

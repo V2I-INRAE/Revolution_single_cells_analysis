@@ -1,0 +1,12 @@
+# Stromal cluster 6 N4_vs_Control
+Status: skipped and eligibility verified; missing_group_after_25_cell_filter ; no fit or GSEA.
+Run settings: results/job-44542861/clusters_plots/subset/Stromal/job-44831036/res0.3/DEG/.INFO
+Input: data/job-44542861/subsets/Stromal/job-44831036/subclustered.rds
+Cluster column: harmony_snn_res.0.3
+Method: >=25 cells/specimen, >=3 complete pig pairs; comparison-specific filterByExpr/TMM/~pig+condition.
+Matched pigs: 
+Evidence: logs/paired-deg25-stromal-completion-20261106.log
+Finished: 2026-11-06 15:25:05.397117
+Uniform GSEA policy (owner-approved): initial nPermSimple1000; if any estimate unavailable, retry that whole contrast once at10000 with seed1234; preserve initial terms/retry audit; stop if still unavailable. No pathway deletion or collection-specific overrides.
+Validation: original counts/metadata, >=25 cells, complete pairs, filterByExpr/TMM/design, saved-fit statistics/FDR and GSEA ranks/retries passed where fitted; skipped comparisons verified separately.
+Evidence: logs/paired-deg25-validation-20261106.log.

@@ -1,0 +1,12 @@
+# Epithelial cluster 4
+Status: completed/validated; tested 3 ; skipped 3 ; all six comparisons assessed.
+Started: 2026-11-06 13:35:51.923294
+Run settings: results/job-44542861/clusters_plots/subset/Epithelial/job-44831032/res0.3/DEG/.INFO
+Input: data/job-44542861/subsets/Epithelial/job-44831032/subclustered.rds
+Cluster column: harmony_snn_res.0.3
+Each comparison below has its own complete-pair model, filtered gene universe and normalization.
+population_sample_audit.csv records the 25-cell gate only; comparison sample_audit.csv records actual pair retention.
+Evidence: logs/paired-deg25-rerun-20261106.log
+Finished: 2026-11-06 13:36:21.314948
+Summary: DEG_summary.csv; comparison-specific models and audits in <contrast>/; no shared joint fit.
+Validation: logs/paired-deg25-validation-20261106.log; model and GSEA settings are comparison-specific.

@@ -1,0 +1,3 @@
+"gene","logFC","logCPM","F","PValue","FDR","direction","gene_symbol","display_gene","mapping_source","mapping_status"
+"OLR1",-1.84183390621849,9.38489730820923,100.431196432545,2.7212786816352e-06,0.0203823773254476,"down","OLR1","OLR1","existing_feature_name","existing_feature_name"
+"APOLD1",1.95039753657578,8.62006369539938,77.8589675040764,8.02822152143375e-06,0.0300656895977694,"up","APOLD1","APOLD1","existing_feature_name","existing_feature_name"

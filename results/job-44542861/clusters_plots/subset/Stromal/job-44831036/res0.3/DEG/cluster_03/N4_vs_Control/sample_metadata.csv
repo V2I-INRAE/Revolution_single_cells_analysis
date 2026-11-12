@@ -1,0 +1,7 @@
+"sample","pig","pressure","time_point","time_point_original","condition","n_cells","passes_cell_filter","exclusion_reason","in_comparison","paired_pig","retained","library_size","tmm_factor","effective_library_size"
+"REVO26-C","REVO26","None","T0H","T0H","Control",27,TRUE,"",TRUE,TRUE,TRUE,178584,1.04554834710301,186718.206019045
+"REVO26-N4","REVO26","negative","T4H","T4H","N4",45,TRUE,"",TRUE,TRUE,TRUE,353792,0.928490201690178,328492.405436371
+"REVO30-C","REVO30","None","T0H","T0H","Control",106,TRUE,"",TRUE,TRUE,TRUE,651936,1.01449191265017,661383.799565502
+"REVO30-N4","REVO30","negative","T4H","T4H","N4",136,TRUE,"",TRUE,TRUE,TRUE,899249,0.971433893472288,873560.957271061
+"REVO31-C","REVO31","None","T0H","T0H","Control",33,TRUE,"",TRUE,TRUE,TRUE,166133,1.04353353308822,173365.356452545
+"REVO31-N4","REVO31","negative","T4H","T4H","N4",184,TRUE,"",TRUE,TRUE,TRUE,1232266,1.00163687503641,1234283.06545362

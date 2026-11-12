@@ -1,0 +1,8 @@
+# Stromal resolution 0.3
+Status: organized; current paired DEG/GSEA completed and independently validated.
+Input (read-only): data/job-44542861/subsets/Stromal/job-44831036/subclustered.rds
+Markers: unchanged by this rerun; original marker run records retained.
+DEG: current comparison-specific >=25-cell/>=3-complete-pair workflow; previous joint-model results removed by owner request.
+Publication: existing UMAP/dotplot files preserved byte-identically where present; DEG figures replaced; GSEA remains in comparison analysis folders.
+Publication contrasts with no eligible cluster (INFO only, no fabricated PDF): 
+Producer and validation: logs/paired-deg25-rerun-20261106.INFO; logs/paired-deg25-validation-20261106.log.

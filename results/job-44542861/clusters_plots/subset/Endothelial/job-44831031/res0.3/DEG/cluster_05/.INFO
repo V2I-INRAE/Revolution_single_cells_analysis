@@ -1,0 +1,12 @@
+# Endothelial cluster 5
+Status: completed/validated; tested 6 ; skipped 0 ; all six comparisons assessed.
+Started: 2026-11-06 13:29:36.065248
+Run settings: results/job-44542861/clusters_plots/subset/Endothelial/job-44831031/res0.3/DEG/.INFO
+Input: data/job-44542861/subsets/Endothelial/job-44831031/subclustered.rds
+Cluster column: harmony_snn_res.0.3
+Each comparison below has its own complete-pair model, filtered gene universe and normalization.
+population_sample_audit.csv records the 25-cell gate only; comparison sample_audit.csv records actual pair retention.
+Evidence: logs/paired-deg25-rerun-20261106.log
+Finished: 2026-11-06 13:30:50.456838
+Summary: DEG_summary.csv; comparison-specific models and audits in <contrast>/; no shared joint fit.
+Validation: logs/paired-deg25-validation-20261106.log; model and GSEA settings are comparison-specific.

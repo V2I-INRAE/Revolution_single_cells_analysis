@@ -1,0 +1,2 @@
+"contrast","group1","group2","group1_passing_samples","group2_passing_samples","group1_samples","group2_samples","matched_pigs","matched_pig_ids","min_cells","min_matched_pigs","eligible","contrast_status","skip_reason"
+"P10_vs_N10","P10","N10",1,1,1,1,1,"REVO26",25,3,FALSE,"skipped","fewer_than_3_complete_pig_pairs"

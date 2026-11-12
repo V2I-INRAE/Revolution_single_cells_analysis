@@ -1,0 +1,17 @@
+# Endothelial cluster 4 N4_vs_N10
+Status: completed and independently validated; paired DEG and all three GSEA collections complete.
+Started: 2026-11-06 13:29:17.948151
+Run settings: results/job-44542861/clusters_plots/subset/Endothelial/job-44831031/res0.3/DEG/.INFO
+Input: data/job-44542861/subsets/Endothelial/job-44831031/subclustered.rds
+Cluster column: harmony_snn_res.0.3
+Method: >=25 cells/specimen, >=3 complete pig pairs; separate filterByExpr/TMM/~pig+condition edgeR fit.
+Seed: 1234 for GSEA/labels; deterministic DE.
+Evidence: logs/paired-deg25-rerun-20261106.log
+Tested genes: 4230 ; filtered: 11672
+Design rank: 5 ; residual df: 3
+Matched pigs: REVO26;REVO27;REVO30;REVO31
+Retained specimens: 8 ; minimum cells: 36
+Finished: 2026-11-06 13:29:27.600398
+Uniform GSEA policy (owner-approved): initial nPermSimple1000; if any estimate unavailable, retry that whole contrast once at10000 with seed1234; preserve initial terms/retry audit; stop if still unavailable. No pathway deletion or collection-specific overrides.
+Validation: original counts/metadata, >=25 cells, complete pairs, filterByExpr/TMM/design, saved-fit statistics/FDR and GSEA ranks/retries passed where fitted; skipped comparisons verified separately.
+Evidence: logs/paired-deg25-validation-20261106.log.

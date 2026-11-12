@@ -1,0 +1,8 @@
+# Saved subset markers
+Status: moved and annotated; saved-output validation passed.
+Source marker folder: results/job-44542861/clusters_plots/subset/Macrophage_Monocytes/job-44831034/markers_res0.2
+Evidence: logs/subset-organization-20261106.INFO
+
+Pig annotation: gene key retained; gene_symbol/display_gene/mapping_source/mapping_status added from DEG/gene_display_mapping.csv. Review-required identities unresolved; collision labels ID-qualified. Statistics and ordering unchanged; no analyses or plots rerun. Existing PDFs retain their previous labels.
+
+Cleanup validation: saved feature IDs, sample alignment, statistical values and GSEA ranks checked; original ORA and nonpublication/non-GSEA figures removed. Existing publication PDFs were not regenerated. Evidence: logs/subset-organization-20261106.log.

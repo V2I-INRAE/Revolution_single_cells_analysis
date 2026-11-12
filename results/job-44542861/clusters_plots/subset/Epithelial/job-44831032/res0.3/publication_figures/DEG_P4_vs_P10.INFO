@@ -1,0 +1,34 @@
+# Combined-cluster differential-expression plot
+Status: completed
+Started: 2026-11-06 13:36:34.473879
+Input (read-only): /Users/fbraza/Documents/PROJECTS/REVOLUTION/RESULTS/SINGLE_CELLS/analysis/results/job-44542861/clusters_plots/subset/Epithelial/job-44831032/res0.3/DEG
+Producer: manual/local
+Contrast: P4_vs_P10 ; source record: results/job-44542861/clusters_plots/subset/Epithelial/job-44831032/res0.3/DEG/.INFO
+Method: display saved per-cluster edgeR results; no refitting or pooling of counts.
+Thresholds: BH FDR <= 0.05 AND abs(log2FC) >= 0.5; no raw-p cutoff.
+FDR families remain per cluster/contrast, not global across the figure.
+All tested gene-cluster pairs retained; saved volcano display names/classes reused.
+Grey: fails either FDR or fold-change threshold (including significant small effects).
+Labels: up to five named genes per cluster/direction; rank FDR, PValue, descending abs(logFC), gene ID.
+Ensembl gene IDs and LOC placeholders excluded from labels only; their points remain plotted.
+Seed: 1234; gene cloud at cluster-0.32 with jitter +/-0.10; points rasterized at 600 dpi; PDF only.
+Positive logFC favours the first condition; negative favours the second.
+Typography: plain editable labels (no halo), thin grey connector lines; gene labels 9.5 pt, axes/legend 10 pt, axis titles 11 pt, title 12 pt.
+Label layout: plain left-aligned column at cluster-0.18, right of gene cloud; separate signs; vertical repel/nudge +/-0.6, padding0.35, force10, force_pull0; thin grey straight connectors.
+Actual inputs: results/job-44542861/clusters_plots/subset/Epithelial/job-44831032/res0.3/DEG/cluster_01/plots/volcano_data.csv; results/job-44542861/clusters_plots/subset/Epithelial/job-44831032/res0.3/DEG/cluster_02/plots/volcano_data.csv; results/job-44542861/clusters_plots/subset/Epithelial/job-44831032/res0.3/DEG/cluster_03/plots/volcano_data.csv; results/job-44542861/clusters_plots/subset/Epithelial/job-44831032/res0.3/DEG/cluster_04/plots/volcano_data.csv
+Saved DEG cluster column: harmony_snn_res.0.3 ; clusters plotted: 1, 2, 3, 4
+Clusters without this saved contrast: 5, 6, 7
+Gene-cluster pairs: 25770 ; named gene labels: 37
+Versions: R 4.6.1 ; plotthis 0.14.1.1 ; ggplot2 4.0.3 ; ggrastr 1.0.2
+Producer analysis: inherited from input .INFO; no changes to the saved model, cohort or adjustment families.
+PDF dimensions (mm): 170 x 170; place at 100%.
+   
+    Down Not significant Significant, small effect   Up
+  1  346            7924                         0  384
+  2  497            7880                        49  476
+  3   20            4436                         0   23
+  4    9            3723                         0    3
+Output: results/job-44542861/clusters_plots/subset/Epithelial/job-44831032/res0.3/publication_figures/DEG_P4_vs_P10.pdf
+Validation: saved classes match approved thresholds; complete unique gene rows; nonempty PDF signature checked.
+External PDF reopening and source-table checks PASS; visual inspection representative, not exhaustive.
+Finished: 2026-11-06 13:36:36.402587

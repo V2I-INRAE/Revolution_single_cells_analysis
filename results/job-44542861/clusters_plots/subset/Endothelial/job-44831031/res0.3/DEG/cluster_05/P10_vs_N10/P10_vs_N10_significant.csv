@@ -1,0 +1,2 @@
+"gene","logFC","logCPM","F","PValue","FDR","direction","gene_symbol","display_gene","mapping_source","mapping_status"
+"ENSSSCG00000006286",1.73253387582655,11.0578503284464,67.5920700594306,7.10834236081207e-06,0.0477751690070179,"up","SELE","SELE","pig_Ensembl_annotation:NCBI Gene","mapped"

@@ -1,0 +1,2 @@
+"contrast","input_features","excluded_features","ranked_features","pathway_matched_features","reference_pathways","tested_pathways","positive_FDR_lt_0.01","negative_FDR_lt_0.01","missing_pvalues"
+"P4_vs_P10",7215,4,7211,6325,7534,2621,108,12,0

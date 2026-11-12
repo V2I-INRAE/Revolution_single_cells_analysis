@@ -1,0 +1,2 @@
+"gene","logFC","logCPM","F","PValue","FDR","direction","gene_symbol","display_gene","mapping_source","mapping_status"
+"SFTPC",-3.36139049032665,6.21833573319256,76.5284750635141,1.03083853939461e-06,0.0093682606460182,"down","SFTPC","SFTPC","existing_feature_name","existing_feature_name"

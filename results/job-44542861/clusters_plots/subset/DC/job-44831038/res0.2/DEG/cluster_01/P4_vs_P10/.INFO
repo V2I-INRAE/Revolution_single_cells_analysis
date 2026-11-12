@@ -1,0 +1,15 @@
+# DC cluster 1 P4_vs_P10
+Status: skipped and eligibility verified; fewer_than_3_complete_pig_pairs ; no fit or GSEA.
+Started: 2026-11-06 13:21:39.580128
+Run settings: results/job-44542861/clusters_plots/subset/DC/job-44831038/res0.2/DEG/.INFO
+Input: data/job-44542861/subsets/DC/job-44831038/subclustered.rds
+Cluster column: harmony_snn_res.0.2
+Method: >=25 cells/specimen, >=3 complete pig pairs; separate filterByExpr/TMM/~pig+condition edgeR fit.
+Seed: 1234 for GSEA/labels; deterministic DE.
+Evidence: logs/paired-deg25-rerun-20261106.log
+Matched pigs: REVO26
+Retained specimens: 2 ; minimum cells: 38
+Finished: 2026-11-06 13:21:39.581765
+Uniform GSEA policy (owner-approved): initial nPermSimple1000; if any estimate unavailable, retry that whole contrast once at10000 with seed1234; preserve initial terms/retry audit; stop if still unavailable. No pathway deletion or collection-specific overrides.
+Validation: original counts/metadata, >=25 cells, complete pairs, filterByExpr/TMM/design, saved-fit statistics/FDR and GSEA ranks/retries passed where fitted; skipped comparisons verified separately.
+Evidence: logs/paired-deg25-validation-20261106.log.

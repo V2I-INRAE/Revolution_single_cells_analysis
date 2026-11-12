@@ -1,0 +1,2 @@
+"gene","logFC","logCPM","F","PValue","FDR","direction","gene_symbol","display_gene","mapping_source","mapping_status"
+"MITF",1.36737480474121,7.4716023764299,98.2842203396138,3.77135800601475e-06,0.0338441667459764,"up","MITF","MITF","existing_feature_name","existing_feature_name"

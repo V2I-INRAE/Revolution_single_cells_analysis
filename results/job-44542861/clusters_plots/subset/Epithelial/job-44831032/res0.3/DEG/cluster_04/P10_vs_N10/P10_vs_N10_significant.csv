@@ -1,0 +1,2 @@
+"gene","logFC","logCPM","F","PValue","FDR","direction","gene_symbol","display_gene","mapping_source","mapping_status"
+"ENSSSCG00000063583",-1.01862376101785,10.2538606010769,34.4258533702582,1.29830849323351e-05,0.0451941186494586,"down","","ENSSSCG00000063583","","unmapped"
