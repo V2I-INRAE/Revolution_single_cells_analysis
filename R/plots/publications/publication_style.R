@@ -20,19 +20,41 @@ deg_theme <- function() {
       legend.text = ggplot2::element_text(size = 9),
       legend.key.size = grid::unit(3.5, "mm"),
       legend.spacing.x = grid::unit(1, "mm"),
-      plot.margin = ggplot2::margin(3, 3, 3, 3, unit = "mm"))
+      plot.margin = ggplot2::margin(3, 3, 3, 3, unit = "mm")
+    )
 }
 
 deg_wrap <- function(x, width = 95) {
-  paste(vapply(strsplit(x, "\n", fixed = TRUE)[[1]], function(line)
-    paste(strwrap(line, width = width), collapse = "\n"), character(1)), collapse = "\n")
+  paste(
+    vapply(
+      strsplit(x, "\n", fixed = TRUE)[[1]],
+      function(line) {
+        paste(strwrap(line, width = width), collapse = "\n")
+      },
+      character(1)
+    ),
+    collapse = "\n"
+  )
 }
 
 save_deg_figure <- function(figure, directory, stem, width = 170, height) {
   dir.create(directory, recursive = TRUE, showWarnings = FALSE)
   # Cairo embeds fonts while keeping text as text (not outlines).
-  ggplot2::ggsave(file.path(directory, paste0(stem, ".pdf")), figure,
-    width = width, height = height, units = "mm", device = grDevices::cairo_pdf,
-    family = "sans", bg = "white")
-  save_figure(figure, directory, stem, width = width / 25.4, height = height / 25.4)
+  ggplot2::ggsave(
+    file.path(directory, paste0(stem, ".pdf")),
+    figure,
+    width = width,
+    height = height,
+    units = "mm",
+    device = grDevices::cairo_pdf,
+    family = "sans",
+    bg = "white"
+  )
+  save_figure(
+    figure,
+    directory,
+    stem,
+    width = width / 25.4,
+    height = height / 25.4
+  )
 }
