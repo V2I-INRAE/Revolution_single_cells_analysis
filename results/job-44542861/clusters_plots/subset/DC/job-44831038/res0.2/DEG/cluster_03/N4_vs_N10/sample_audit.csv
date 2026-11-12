@@ -1,7 +1,7 @@
 "sample","pig","pressure","time_point","time_point_original","condition","n_cells","passes_cell_filter","exclusion_reason","in_comparison","paired_pig","retained"
 "REVO26-C","REVO26","None","T0H","T0H","Control",50,TRUE,"outside_comparison",FALSE,FALSE,FALSE
 "REVO26-N4","REVO26","negative","T4H","T4H","N4",51,TRUE,"unmatched_pig",TRUE,FALSE,FALSE
-"REVO26-N10","REVO26","negative","T10H","T10H","N10",12,FALSE,"below_25_cells",TRUE,FALSE,FALSE
+"REVO26-N10","REVO26","negative","T10H","T10H","N10",12,FALSE,"below_20_cells",TRUE,FALSE,FALSE
 "REVO26-P4","REVO26","positive","T4H","T4H","P4",57,TRUE,"outside_comparison",FALSE,FALSE,FALSE
 "REVO26-P10","REVO26","positive","T10H","T10H","P10",12,FALSE,"outside_comparison",FALSE,FALSE,FALSE
 "REVO27-C","REVO27","None","T0H","T0H","Control",108,TRUE,"outside_comparison",FALSE,TRUE,FALSE
@@ -14,11 +14,11 @@
 "REVO29-P4","REVO29","positive","T4H","T4H","P4",77,TRUE,"outside_comparison",FALSE,FALSE,FALSE
 "REVO30-C","REVO30","None","T0H","T0H","Control",62,TRUE,"outside_comparison",FALSE,FALSE,FALSE
 "REVO30-N4","REVO30","negative","T4H","T4H","N4",43,TRUE,"unmatched_pig",TRUE,FALSE,FALSE
-"REVO30-N10","REVO30","negative","T10H","T10H","N10",13,FALSE,"below_25_cells",TRUE,FALSE,FALSE
+"REVO30-N10","REVO30","negative","T10H","T10H","N10",13,FALSE,"below_20_cells",TRUE,FALSE,FALSE
 "REVO30-P10","REVO30","positive","T10H","T10H","P10",13,FALSE,"outside_comparison",FALSE,FALSE,FALSE
 "REVO30-P4","REVO30","positive","T4H","T4H","P4",53,TRUE,"outside_comparison",FALSE,FALSE,FALSE
 "REVO31-C","REVO31","None","T0H","T0H","Control",40,TRUE,"outside_comparison",FALSE,FALSE,FALSE
 "REVO31-N4","REVO31","negative","T4H","T4H","N4",58,TRUE,"unmatched_pig",TRUE,FALSE,FALSE
-"REVO31-N8","REVO31","negative","T10H","T8H","N10",17,FALSE,"below_25_cells",TRUE,FALSE,FALSE
+"REVO31-N8","REVO31","negative","T10H","T8H","N10",17,FALSE,"below_20_cells",TRUE,FALSE,FALSE
 "REVO31-P10","REVO31","positive","T10H","T10H","P10",19,FALSE,"outside_comparison",FALSE,FALSE,FALSE
 "REVO31-P4","REVO31","positive","T4H","T4H","P4",82,TRUE,"outside_comparison",FALSE,FALSE,FALSE

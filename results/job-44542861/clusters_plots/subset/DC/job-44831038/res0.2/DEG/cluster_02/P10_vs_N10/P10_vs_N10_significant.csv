@@ -1,0 +1,3 @@
+"gene","logFC","logCPM","F","PValue","FDR","direction","gene_symbol","display_gene","mapping_source","mapping_status"
+"LAMP3",-4.3126629917783,7.46283075656781,72.8803961224732,6.86620263803866e-07,0.00225417432606809,"down","LAMP3","LAMP3","existing_feature_name","existing_feature_name"
+"LYZ",3.33491938220278,7.33032302563541,50.0934322938647,8.25977926712221e-06,0.0135584276669811,"up","LYZ","LYZ","existing_feature_name","existing_feature_name"

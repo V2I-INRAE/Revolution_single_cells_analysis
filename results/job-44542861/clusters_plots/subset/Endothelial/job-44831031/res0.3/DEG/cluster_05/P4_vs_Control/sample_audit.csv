@@ -1,6 +1,6 @@
 "sample","pig","pressure","time_point","time_point_original","condition","n_cells","passes_cell_filter","exclusion_reason","in_comparison","paired_pig","retained"
 "REVO26-C","REVO26","None","T0H","T0H","Control",50,TRUE,"",TRUE,TRUE,TRUE
-"REVO26-N4","REVO26","negative","T4H","T4H","N4",22,FALSE,"outside_comparison",FALSE,TRUE,FALSE
+"REVO26-N4","REVO26","negative","T4H","T4H","N4",22,TRUE,"outside_comparison",FALSE,TRUE,FALSE
 "REVO26-N10","REVO26","negative","T10H","T10H","N10",37,TRUE,"outside_comparison",FALSE,TRUE,FALSE
 "REVO26-P4","REVO26","positive","T4H","T4H","P4",104,TRUE,"",TRUE,TRUE,TRUE
 "REVO26-P10","REVO26","positive","T10H","T10H","P10",88,TRUE,"outside_comparison",FALSE,TRUE,FALSE

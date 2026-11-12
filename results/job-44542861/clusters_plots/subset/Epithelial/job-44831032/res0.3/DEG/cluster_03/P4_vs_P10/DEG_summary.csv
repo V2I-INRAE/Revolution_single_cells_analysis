@@ -1,2 +1,2 @@
 "contrast","group1","group2","group1_passing_samples","group2_passing_samples","group1_samples","group2_samples","matched_pigs","matched_pig_ids","min_cells","min_matched_pigs","eligible","contrast_status","skip_reason","tested","up","down"
-"P4_vs_P10","P4","P10",5,3,3,3,3,"REVO27;REVO30;REVO31",25,3,TRUE,"tested","",4479,23,20
+"P4_vs_P10","P4","P10",5,3,3,3,3,"REVO27;REVO30;REVO31",20,3,TRUE,"tested","",4479,23,20

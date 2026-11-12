@@ -1,5 +1,0 @@
-# Stromal cluster 4
-Status: completed/validated; tested 4 ; skipped 2 ; all six comparisons assessed.
-Run settings: results/job-44542861/clusters_plots/subset/Stromal/job-44831036/res0.3/DEG/.INFO
-Evidence: logs/paired-deg25-stromal-completion-20261106.log
-Validation: logs/paired-deg25-validation-20261106.log; model and GSEA settings are comparison-specific.

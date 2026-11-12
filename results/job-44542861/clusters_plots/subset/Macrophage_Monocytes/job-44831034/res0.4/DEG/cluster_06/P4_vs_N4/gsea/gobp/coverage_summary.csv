@@ -1,2 +1,2 @@
-"contrast","input_features","excluded_features","ranked_features","pathway_matched_features","reference_pathways","tested_pathways","positive_FDR_lt_0.01","negative_FDR_lt_0.01","missing_pvalues"
-"P4_vs_N4",3681,3,3678,3310,7534,2013,5,39,0
+"contrast","input_features","excluded_features","ranked_features","pathway_matched_features","reference_pathways","tested_pathways","significant_positive","significant_negative"
+"P4_vs_N4",3681,3,3678,3310,7534,2013,10,85

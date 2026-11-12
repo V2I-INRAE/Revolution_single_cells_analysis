@@ -1,0 +1,4 @@
+"gene","logFC","logCPM","F","PValue","FDR","direction","gene_symbol","display_gene","mapping_source","mapping_status"
+"SFTPD",-2.68255724293448,7.8407581456006,28.6571453359197,1.28159500080787e-05,0.0279617869497833,"down","SFTPD","SFTPD","existing_feature_name","existing_feature_name"
+"PTGS2",1.73088630963201,11.3695651042455,26.605154499922,2.16674056178096e-05,0.0279617869497833,"up","PTGS2","PTGS2","existing_feature_name","existing_feature_name"
+"ITGA9",-1.99168462744339,8.32193773079733,23.4773223451286,4.97298186264264e-05,0.0427842206249355,"down","ITGA9","ITGA9","existing_feature_name","existing_feature_name"

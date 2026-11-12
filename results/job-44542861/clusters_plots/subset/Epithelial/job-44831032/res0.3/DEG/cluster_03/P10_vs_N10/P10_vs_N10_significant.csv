@@ -1,0 +1,2 @@
+"gene","logFC","logCPM","F","PValue","FDR","direction","gene_symbol","display_gene","mapping_source","mapping_status"
+"CD274",3.013271998814,6.55954133198694,50.4089495062843,1.05795236259494e-05,0.0458410758712388,"up","CD274","CD274","existing_feature_name","existing_feature_name"

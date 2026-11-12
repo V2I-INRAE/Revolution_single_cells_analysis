@@ -1,5 +1,7 @@
-"sample","pig","pressure","time_point","time_point_original","condition","n_cells","passes_cell_filter","exclusion_reason","in_comparison","paired_pig","retained"
-"REVO27-P4","REVO27","positive","T4H","T4H","P4",36,TRUE,"",TRUE,TRUE,TRUE
-"REVO27-P10","REVO27","positive","T10H","T10H","P10",39,TRUE,"",TRUE,TRUE,TRUE
-"REVO30-P10","REVO30","positive","T10H","T10H","P10",28,TRUE,"",TRUE,TRUE,TRUE
-"REVO30-P4","REVO30","positive","T4H","T4H","P4",26,TRUE,"",TRUE,TRUE,TRUE
+"sample","pig","pressure","time_point","time_point_original","condition","n_cells","passes_cell_filter","exclusion_reason","in_comparison","paired_pig","retained","library_size","tmm_factor","effective_library_size"
+"REVO27-P4","REVO27","positive","T4H","T4H","P4",36,TRUE,"",TRUE,TRUE,TRUE,116139,0.989021095084578,114863.920962028
+"REVO27-P10","REVO27","positive","T10H","T10H","P10",39,TRUE,"",TRUE,TRUE,TRUE,116584,1.00636570925503,117326.139847788
+"REVO30-P10","REVO30","positive","T10H","T10H","P10",28,TRUE,"",TRUE,TRUE,TRUE,52682,1.00370861149725,52877.3770708982
+"REVO30-P4","REVO30","positive","T4H","T4H","P4",26,TRUE,"",TRUE,TRUE,TRUE,80784,0.997883291451553,80613.0038166223
+"REVO31-P10","REVO31","positive","T10H","T10H","P10",21,TRUE,"",TRUE,TRUE,TRUE,54319,0.991282977840319,53845.5000733083
+"REVO31-P4","REVO31","positive","T4H","T4H","P4",40,TRUE,"",TRUE,TRUE,TRUE,100560,1.01193720870285,101760.405707158

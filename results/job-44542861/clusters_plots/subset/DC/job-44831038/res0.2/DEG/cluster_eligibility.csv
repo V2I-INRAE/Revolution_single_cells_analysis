@@ -1,5 +1,5 @@
-"cluster","requested","tested","skipped","observed_cells","samples_passing_25"
+"cluster","requested","tested","skipped","observed_cells","samples_passing_min_cells"
 "1",6,3,3,4487,17
-"2",6,4,2,1459,21
+"2",6,6,0,1459,23
 "3",6,3,3,1160,16
-"4",6,0,6,330,2
+"4",6,0,6,330,5

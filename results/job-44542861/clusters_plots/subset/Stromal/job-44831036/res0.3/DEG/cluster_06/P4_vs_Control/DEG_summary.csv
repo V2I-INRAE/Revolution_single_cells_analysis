@@ -1,2 +1,0 @@
-"contrast","group1","group2","group1_passing_samples","group2_passing_samples","group1_samples","group2_samples","matched_pigs","matched_pig_ids","min_cells","min_matched_pigs","eligible","contrast_status","skip_reason"
-"P4_vs_Control","P4","Control",0,0,0,0,0,"",25,3,FALSE,"skipped","missing_group_after_25_cell_filter"
