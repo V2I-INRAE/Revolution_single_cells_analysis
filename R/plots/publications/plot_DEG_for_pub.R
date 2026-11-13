@@ -1,5 +1,5 @@
 # Combine saved per-cluster DEG tables of one contrast into one figure; no refit.
-# Called by R/DEG/main.R. Final-size PDF: 170 mm wide for up to five clusters; place at 100%.
+# Called by R/plots/publications/main.R. Final-size PDF: 170 mm wide for up to five clusters; place at 100%.
 suppressPackageStartupMessages({
   library(ggplot2)
   library(plotthis)

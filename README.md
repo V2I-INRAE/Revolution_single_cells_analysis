@@ -71,7 +71,17 @@ Rscript R/DEG/main.R \
   --subset=${subset} --cluster-col=harmony_snn_res.${resolution} --clusters=all
 ```
 
-Settings are in `R/DEG/config.R`. The workflow excludes specimens with fewer than 20 cells and skips contrasts with fewer than three complete pig pairs. Each contrast uses its own paired edgeR model. It writes DEG tables, sample and model audits, and Hallmark, Reactome, GO:BP, and KEGG GSEA results under `res0.X/DEG/`. Combined DEG plots go in the sibling `publication_figures/` directory. The workflow uses frozen pig pathway references in `results/misc/msigdb_pig_2026.1/`. KEGG uses a frozen snapshot of the native pig (`ssc`) pathways in `results/misc/kegg_pig/`, built once with `Rscript R/DEG/build_kegg_reference.R` (KEGG REST API, academic use only); rebuilding it takes the current KEGG release and requires a DEG rerun.
+Settings are in `R/DEG/config.R`. The workflow excludes specimens with fewer than 20 cells and skips contrasts with fewer than three complete pig pairs. Each contrast uses its own paired edgeR model. It writes DEG tables, sample and model audits, and Hallmark, Reactome, GO:BP, and KEGG GSEA results under `res0.X/DEG/`. Each `_gsea.csv` also records `collapsed_into` and `main_pathway` from `fgsea::collapsePathways` (significant terms explained by a more significant pathway).
+
+Publication figures are made afterwards from the saved results, without refitting:
+
+```bash
+Rscript R/plots/publications/main.R \
+  --input=data/job-${source_job}/subsets/${subset}/job-${subset_job}/subclustered.rds \
+  --subset=${subset} --cluster-col=harmony_snn_res.${resolution}
+```
+
+It replaces, in `res0.X/publication_figures/`, the UMAP, the marker dot plot (`Markers/markers_top5_plus_canonical.csv`, colour capped at the 90th percentile), the top-25 marker heatmap (`Markers/markers_top25.csv`), one DEG plot per contrast, and one GSEA figure per collection and contrast with clusters on the x-axis (`gsea_hallmark/`, `gsea_gobp/`, `gsea_reactome/`). GSEA labels favour the terms in `R/plots/publications/gsea_label_whitelist.csv`. The workflow uses frozen pig pathway references in `results/misc/msigdb_pig_2026.1/`. KEGG uses a frozen snapshot of the native pig (`ssc`) pathways in `results/misc/kegg_pig/`, built once with `Rscript R/DEG/build_kegg_reference.R` (KEGG REST API, academic use only); rebuilding it takes the current KEGG release and requires a DEG rerun.
 
 > Optional settings: `--clusters=1,2` runs selected clusters. `--output-root=<dir>/DEG` writes elsewhere, for example for a test run. `--gsea-exclusions=<CSV>` applies approved gene exclusions to GSEA.
 
