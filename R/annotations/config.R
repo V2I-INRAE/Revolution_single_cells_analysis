@@ -12,7 +12,7 @@ annotation_config <- list(
   ),
   # Pig features enter a human model only through a verified one-to-one
   # Ensembl orthologue; symbol-named features must also keep the same symbol.
-  # R/annotations/summary.R: one figure per subset and resolution, one combined CSV.
+  # R/annotations/azimuth_summary_subset.R: one figure per subset/resolution and one CSV.
   # Resolutions are those retained for Markers/DEG/publication figures (Nov 6).
   summary = list(
     parent_job = "44542861",
@@ -26,6 +26,16 @@ annotation_config <- list(
     # Figures only: labels below this fraction of a subset's cells are drawn as Other.
     min_label_fraction = 0.01,
     output_dir = "results/job-44542861/clusters_plots/subset/azimuth_ph_v1_summary"
+  ),
+  # Parent summary: retain the original parent UMAP and 24 clusters at res0.7,
+  # restricted by barcode to the cleaned cells; never refit an embedding.
+  parent_summary = list(
+    input = "data/job-44542861/clean_annotated_object.rds",
+    reference = "data/job-44542861/annotated_clustered.rds",
+    parent_job = "44542861",
+    input_producer_job = "44827588",
+    resolution = "0.7",
+    output_dir = "results/job-44542861/clusters_plots/res0.7/annotations/azimuth_ph_v1"
   ),
   orthology = list(
     file = "results/misc/Ensembl_ID/gene-mapping/sscrofa_hsapiens_orthology_ensembl116.tsv",

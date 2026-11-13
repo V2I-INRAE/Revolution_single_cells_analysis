@@ -2,7 +2,7 @@
 # annotation_config$summary: a 2 x 2 UMAP figure (your clusters | final label /
 # medium | fine) and one combined CSV with per-cluster statistics, marker detection
 # and the curated verdicts/notes in R/annotations/azimuth_notes.csv.
-# Usage: Rscript R/annotations/summary.R   (inputs read-only; outputs replaced)
+# Usage: Rscript R/annotations/azimuth_summary_subset.R   (inputs read-only; outputs replaced)
 suppressPackageStartupMessages({
   library(Seurat)
   library(ggplot2)

@@ -69,6 +69,15 @@ Rscript R/annotations/azimuth.R --input=data/job-SOURCE_JOB/subsets/SUBSET/job-S
 
 The model is human: pig features enter only through verified one-to-one Ensembl orthologues; unmapped model genes are zero-filled. Settings are in `R/annotations/config.R`. Output goes to `<input folder>/annotations/azimuth_ph_v1/`: `predictions.rds`/`.csv` (one row per cell barcode) and `gene_mapping.csv`; the input object is not modified. `False` in the broad/medium/fine columns marks an inconsistent hierarchy. Join the predictions by barcode to colour an existing UMAP, e.g. `obj$azimuth_ph_v1_medium <- p$azimuth_ph_v1_medium[match(colnames(obj), p$cell)]`.
 
+For the full cleaned parent (234,183 cells), use the unchanged prediction script through Slurm, then the parent summary:
+
+```bash
+prediction_job=$(sbatch --parsable scripts/sbatch_azimuth_parent.sh)
+sbatch --dependency=afterok:"$prediction_job" scripts/sbatch_azimuth_summary_parent.sh
+```
+
+`R/annotations/azimuth_summary_parent.R` produces a resolution-0.7 table and a two-panel figure (24 original clusters | Azimuth final labels), using the original parent UMAP restricted to cleaned cells. Outputs: `results/job-44542861/clusters_plots/res0.7/annotations/azimuth_ph_v1/`. The former subset summary is retained as `R/annotations/azimuth_summary_subset.R`; it is not run by the parent jobs.
+
 ## Pseudobulk DEG and pathway enrichment
 
 Run paired differential expression and pathway enrichment for a saved subset from the project root. Replace the job IDs, subset label, and resolution with values from the input. Each run replaces the matching `res0.X/DEG/` directory and its `DEG_<contrast>.pdf` publication figures.
