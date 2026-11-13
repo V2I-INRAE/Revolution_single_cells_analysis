@@ -1,1 +1,1 @@
-"pathway","pval","padj","log2err","ES","NES","size","go_id","msigdb_id","description","direction","leading_edge_source_genes","leading_edge_display_genes","label","neg_log10_fdr"
+"pathway","pval","padj","log2err","ES","NES","size","go_id","msigdb_id","description","direction","leading_edge_source_genes","leading_edge_display_genes","collapsed_into","main_pathway","label","neg_log10_fdr"
