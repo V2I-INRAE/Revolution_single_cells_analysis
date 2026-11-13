@@ -14,7 +14,9 @@ source("R/io.R") # for save_final_object()
 
 args <- commandArgs(trailingOnly = TRUE)
 if (length(args) < 2L) {
-  stop("Usage: Rscript R/clusters/add_resolution.R <data/job-XXX/clustered.rds> <res> [<res> ...]")
+  stop(
+    "Usage: Rscript R/clusters/add_resolution.R <data/job-XXX/clustered.rds> <res> [<res> ...]"
+  )
 }
 
 input <- args[[1L]]
@@ -63,24 +65,49 @@ active_column <- tail(partitions$column, 1L)
 Idents(obj) <- active_column
 obj$seurat_clusters <- Idents(obj)
 
-counts <- vapply(partitions$column,
-  function(column) length(unique(obj[[]][[column]])), integer(1))
-message("Clusters: ", paste(sprintf("%s at %s", counts, partitions$resolution), collapse = "; "))
+counts <- vapply(
+  partitions$column,
+  function(column) length(unique(obj[[]][[column]])),
+  integer(1)
+)
+message(
+  "Clusters: ",
+  paste(sprintf("%s at %s", counts, partitions$resolution), collapse = "; ")
+)
 
 save_final_object(obj, input)
 message("Object overwritten: ", input)
 
 job_id <- basename(dirname(input))
-info_paths <- c(file.path("data", job_id, ".INFO"), file.path("results", job_id, ".INFO"))
+info_paths <- c(
+  file.path("data", job_id, ".INFO"),
+  file.path("results", job_id, ".INFO")
+)
 lines <- readLines(info_paths[[1L]])
 lines[[grep("^- resolutions: ", lines)]] <-
   paste0("- resolutions: ", paste(partitions$resolution, collapse = ", "))
 lines[[grep("^- Leiden clusters: ", lines)]] <-
-  paste0("- Leiden clusters: ",
-    paste(sprintf("%s at resolution %s", counts, partitions$resolution), collapse = "; "))
-lines <- c(lines, paste0("- Extra resolutions ", paste(todo, collapse = ", "),
-  " added ", format(Sys.time(), "%Y-%m-%d %H:%M:%S %Z"),
-  " via R/clusters/add_resolution.R; active identity: ", active_column, ". ",
-  "cluster_assignments.csv and cluster figures still cover the old resolutions only."))
-for (path in info_paths) writeLines(lines, path)
+  paste0(
+    "- Leiden clusters: ",
+    paste(
+      sprintf("%s at resolution %s", counts, partitions$resolution),
+      collapse = "; "
+    )
+  )
+lines <- c(
+  lines,
+  paste0(
+    "- Extra resolutions ",
+    paste(todo, collapse = ", "),
+    " added ",
+    format(Sys.time(), "%Y-%m-%d %H:%M:%S %Z"),
+    " via R/clusters/add_resolution.R; active identity: ",
+    active_column,
+    ". ",
+    "cluster_assignments.csv and cluster figures still cover the old resolutions only."
+  )
+)
+for (path in info_paths) {
+  writeLines(lines, path)
+}
 message("Updated both .INFO copies.")
