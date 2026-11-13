@@ -2,7 +2,7 @@
 # Usage: Rscript R/DEG/main.R --input=<subclustered.rds> --subset=<label>
 #   --cluster-col=harmony_snn_res.X [--clusters=all|1,2] [--output-root=<res0.X/DEG>]
 #   [--gsea-exclusions=<approved CSV>]
-# Every run replaces <output_root> and the DEG_<contrast> publication figures.
+# Every run replaces <output_root>. Figures: R/plots/publications/main.R.
 suppressPackageStartupMessages({
   library(Seurat)
   library(edgeR)
@@ -13,7 +13,6 @@ source("R/utils/save_plots.R")
 source("R/utils/pig_gene_mapping.R")
 source("R/DEG/pseudobulk_de.R")
 source("R/DEG/pseudobulk_gsea.R")
-source("R/plots/publications/plot_DEG_for_pub.R")
 source("R/plots/publications/publication_paths.R")
 
 run_pseudobulk <- function(
@@ -32,7 +31,6 @@ run_pseudobulk <- function(
   if (basename(output_root) != "DEG") {
     stop("output_root must be a DEG folder: ", output_root)
   }
-  publication_dir <- file.path(dirname(output_root), "publication_figures")
   contrasts <- pseudobulk_comparisons()$contrast
 
   object <- readRDS(input)
@@ -114,14 +112,6 @@ run_pseudobulk <- function(
 
   # Idempotent: replace every output of a previous run.
   unlink(output_root, recursive = TRUE)
-  unlink(file.path(
-    publication_dir,
-    as.vector(outer(
-      paste0("DEG_", contrasts),
-      c(".pdf", ".png", ".INFO"),
-      paste0
-    ))
-  ))
   dir.create(output_root, recursive = TRUE)
   write.csv(
     sample_panel,
@@ -295,15 +285,6 @@ run_pseudobulk <- function(
     file.path(output_root, "cluster_eligibility.csv"),
     row.names = FALSE
   )
-  for (contrast in contrasts) {
-    plot_DEG_for_pub(
-      output_root,
-      publication_dir,
-      contrast,
-      subset_label,
-      resolution
-    )
-  }
   invisible(summary)
 }
 

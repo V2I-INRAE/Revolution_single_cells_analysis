@@ -377,6 +377,34 @@ run_pseudobulk_gsea <- function(
     },
     character(1)
   )
+  # Significant pathways explained by a more significant one are grouped under it
+  # (fgsea::collapsePathways); statistics are unchanged, only two columns are added.
+  significant <- which(result$padj < deg_config$pathway_fdr)
+  result$collapsed_into <- NA_character_
+  if (length(significant) > 1) {
+    significant <- significant[order(
+      result$pval[significant],
+      result$pathway[significant]
+    )]
+    set.seed(seed)
+    collapsed <- fgsea::collapsePathways(
+      data.table::as.data.table(
+        result[significant, c("pathway", "pval", "padj", "ES", "NES")]
+      ),
+      pathways,
+      ranks,
+      pval.threshold = deg_config$pathway_fdr
+    )
+    result$collapsed_into[match(
+      names(collapsed$parentPathways),
+      result$pathway
+    )] <- unname(collapsed$parentPathways)
+  }
+  result$main_pathway <- ifelse(
+    result$padj < deg_config$pathway_fdr,
+    is.na(result$collapsed_into),
+    NA
+  )
   csv <- result
   csv$leadingEdge <- vapply(
     csv$leadingEdge,
