@@ -1,0 +1,9 @@
+[project]
+name = "revolution-azimuth"
+version = "0.1.0"
+description = "Python environment for local Pan-human Azimuth inference (AzimuthAPI::ANNotate via reticulate)"
+# tensorflow 2.17 (pinned by panhumanpy 1.0.0) supports Python <= 3.12.
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "panhumanpy==1.0.0",
+]

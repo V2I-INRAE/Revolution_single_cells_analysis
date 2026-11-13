@@ -13,7 +13,8 @@ renv::restore()
 ```
 
 Dependencies, including scDblFinder (Bioconductor) for doublet detection, are
-locked in `renv.lock`; the pipeline needs no Python environment.
+locked in `renv.lock`; the pipeline needs no Python environment. Only the
+Azimuth annotation step below uses Python, through its own uv environment.
 
 ## Usage
 
@@ -55,6 +56,18 @@ with the node printed by the launcher, for example `n005`. Leave this tunnel
 open, then visit **http://127.0.0.1:3838** in your local browser.
 The app listens only on the compute node's loopback address, not publicly.
 See [app/README.md](app/README.md) for navigation and data preparation.
+
+## Cell annotation with Pan-human Azimuth
+
+Local Pan-human Azimuth (v1) predictions for any saved object, written to their own `azimuth_ph_v1_*` columns so other annotation models can be added alongside:
+
+```bash
+(cd R/annotations && uv sync)                    # once: Python 3.12 + panhumanpy
+Rscript R/annotations/build_orthology_reference.R # once: Ensembl 116 pig-human orthology
+Rscript R/annotations/azimuth.R --input=data/job-SOURCE_JOB/subsets/SUBSET/job-SUBSET_JOB/subclustered.rds
+```
+
+The model is human: pig features enter only through verified one-to-one Ensembl orthologues; unmapped model genes are zero-filled. Settings are in `R/annotations/config.R`. Output goes to `<input folder>/annotations/azimuth_ph_v1/`: `predictions.rds`/`.csv` (one row per cell barcode) and `gene_mapping.csv`; the input object is not modified. `False` in the broad/medium/fine columns marks an inconsistent hierarchy. Join the predictions by barcode to colour an existing UMAP, e.g. `obj$azimuth_ph_v1_medium <- p$azimuth_ph_v1_medium[match(colnames(obj), p$cell)]`.
 
 ## Pseudobulk DEG and pathway enrichment
 
